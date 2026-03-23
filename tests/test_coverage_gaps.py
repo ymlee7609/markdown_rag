@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 from markdown_rag.api.app import create_app
@@ -309,6 +310,60 @@ class TestAskRouteEmbeddingBackends:
         )
         assert response.status_code == 200
         mock_local_emb.assert_called_once()
+
+
+# ============================================================
+# api/routes/ask.py:37-61 - _get_llm_backend branches
+# ============================================================
+
+
+class TestGetLLMBackend:
+    """_get_llm_backend 함수 직접 테스트."""
+
+    def test_openai_backend_returns_openai_llm(self, monkeypatch):
+        monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+        from markdown_rag.api.routes.ask import _get_llm_backend
+
+        settings = Settings(llm_backend="openai")
+        llm = _get_llm_backend(settings)
+        assert llm.model_name == "gpt-4o-mini"
+
+    def test_openai_backend_with_model_override(self, monkeypatch):
+        monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+        from markdown_rag.api.routes.ask import _get_llm_backend
+
+        settings = Settings(llm_backend="openai")
+        llm = _get_llm_backend(settings, model_override="gpt-4o")
+        assert llm.model_name == "gpt-4o"
+
+    def test_openai_backend_missing_key_raises(self, monkeypatch):
+        monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+        from markdown_rag.api.routes.ask import _get_llm_backend
+
+        settings = Settings(llm_backend="openai")
+        with pytest.raises(HTTPException) as exc:
+            _get_llm_backend(settings)
+        assert exc.value.status_code == 400
+
+    @patch("markdown_rag.llm.local.LocalLLM")
+    def test_local_backend_returns_local_llm(self, mock_local_cls):
+        mock_local_cls.return_value = MagicMock()
+        from markdown_rag.api.routes.ask import _get_llm_backend
+
+        settings = Settings(
+            llm_backend="local",
+            local_llm_model_path="/models/test.gguf",
+        )
+        _get_llm_backend(settings)
+        mock_local_cls.assert_called_once()
+
+    def test_local_backend_missing_path_raises(self):
+        from markdown_rag.api.routes.ask import _get_llm_backend
+
+        settings = Settings(llm_backend="local", local_llm_model_path="")
+        with pytest.raises(HTTPException) as exc:
+            _get_llm_backend(settings)
+        assert exc.value.status_code == 400
 
 
 # ============================================================
