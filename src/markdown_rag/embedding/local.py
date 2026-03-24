@@ -42,10 +42,23 @@ class LocalEmbedding:
     def _load_model(self) -> SentenceTransformer:
         """Load the sentence-transformers model on first use."""
         if self._model is None:
-            from sentence_transformers import SentenceTransformer
+            import os
+            import sys
+            from contextlib import redirect_stderr
 
             logger.info("Loading sentence-transformers model: %s", self.model_name)
-            self._model = SentenceTransformer(self.model_name)
+            # HuggingFace Hub 인증 경고 등 불필요한 출력 억제
+            devnull = open(os.devnull, "w")  # noqa: SIM115
+            old_stdout = sys.stdout
+            try:
+                sys.stdout = devnull
+                with redirect_stderr(devnull):
+                    from sentence_transformers import SentenceTransformer
+
+                    self._model = SentenceTransformer(self.model_name)
+            finally:
+                sys.stdout = old_stdout
+                devnull.close()
         return self._model
 
     def _encode(self, texts: list[str]) -> list[list[float]]:

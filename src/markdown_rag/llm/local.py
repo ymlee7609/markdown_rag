@@ -42,14 +42,19 @@ class LocalLLM:
     def _load_model(self) -> Llama:
         """모델을 최초 사용 시 로드한다."""
         if self._model is None:
+            import os
+            from contextlib import redirect_stderr
+
             from llama_cpp import Llama
 
             logger.info("로컬 LLM 모델 로드 중: %s", self._model_path)
-            self._model = Llama(
-                model_path=self._model_path,
-                n_ctx=self._context_size,
-                verbose=False,
-            )
+            # llama.cpp C 레벨 stderr 경고(n_ctx_seq < n_ctx_train) 억제
+            with open(os.devnull, "w") as devnull, redirect_stderr(devnull):
+                self._model = Llama(
+                    model_path=self._model_path,
+                    n_ctx=self._context_size,
+                    verbose=False,
+                )
         return self._model
 
     def generate(self, messages: list[dict[str, str]]) -> str:

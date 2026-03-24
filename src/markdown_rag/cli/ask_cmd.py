@@ -62,6 +62,9 @@ def handle_ask(args: argparse.Namespace) -> None:
     """
     settings = get_settings()
 
+    # 로컬 LLM이 첫 글자를 누락하는 현상 방지용 더미 공백 추가
+    args.question = " " + args.question
+
     # CLI에서 --llm-backend 옵션으로 오버라이드 가능
     if getattr(args, "llm_backend", None):
         settings.llm_backend = args.llm_backend

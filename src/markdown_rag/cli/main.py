@@ -132,8 +132,35 @@ def handle_serve(args: argparse.Namespace) -> None:
     )
 
 
+def _suppress_library_warnings() -> None:
+    """서드파티 라이브러리의 불필요한 경고 메시지를 억제한다."""
+    import logging
+    import os
+    import warnings
+
+    # tqdm 진행바 억제 (Loading weights 등)
+    os.environ.setdefault("TQDM_DISABLE", "1")
+
+    # transformers 라이브러리 로그 레벨 조정 (LOAD REPORT 억제)
+    os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
+
+    # tokenizers 병렬 처리 경고 억제
+    os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
+    # HuggingFace Hub 인증 경고 억제 (로거 레벨)
+    logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
+
+    # sentence-transformers 로그 레벨 조정
+    logging.getLogger("sentence_transformers").setLevel(logging.WARNING)
+
+    # FutureWarning 및 HF Hub 인증 경고 필터링
+    warnings.filterwarnings("ignore", category=FutureWarning)
+    warnings.filterwarnings("ignore", module="huggingface_hub.*")
+
+
 def main() -> None:
     """CLI entry point registered as 'mdrag' in pyproject.toml."""
+    _suppress_library_warnings()
     parser = build_parser()
     args = parser.parse_args()
 
