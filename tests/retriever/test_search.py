@@ -109,7 +109,7 @@ class TestSemanticSearchSearch:
     ) -> None:
         search_engine.search("what is Python?")
         mock_store.search.assert_called_once_with(
-            query_embedding=[0.1, 0.2, 0.3], top_k=5
+            query_embedding=[0.1, 0.2, 0.3], top_k=5, where=None
         )
 
     def test_returns_list_of_search_results(
@@ -140,7 +140,7 @@ class TestSemanticSearchSearch:
     ) -> None:
         search_engine.search("query", top_k=3)
         mock_store.search.assert_called_once_with(
-            query_embedding=[0.1, 0.2, 0.3], top_k=3
+            query_embedding=[0.1, 0.2, 0.3], top_k=3, where=None
         )
 
     def test_uses_default_top_k_when_none(
@@ -150,7 +150,7 @@ class TestSemanticSearchSearch:
     ) -> None:
         search_engine.search("query", top_k=None)
         mock_store.search.assert_called_once_with(
-            query_embedding=[0.1, 0.2, 0.3], top_k=5
+            query_embedding=[0.1, 0.2, 0.3], top_k=5, where=None
         )
 
     def test_returns_correct_count(

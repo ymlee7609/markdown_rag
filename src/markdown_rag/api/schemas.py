@@ -19,6 +19,8 @@ class SearchRequest(BaseModel):
 
     query: str
     top_k: int = 5
+    doc_type: str | None = None
+    language: str | None = None
 
 
 class AskRequest(BaseModel):
@@ -28,6 +30,8 @@ class AskRequest(BaseModel):
     top_k: int = 5
     show_sources: bool = True
     model: str = "gpt-4o-mini"
+    doc_type: str | None = None
+    language: str | None = None
 
 
 class DeleteRequest(BaseModel):

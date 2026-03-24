@@ -50,6 +50,18 @@ def build_parser() -> argparse.ArgumentParser:
         default="local",
         help="Embedding backend (default: local)",
     )
+    search_parser.add_argument(
+        "--doc-type",
+        choices=["rfc", "ccie", "telecom_manual"],
+        default=None,
+        help="Filter by document type",
+    )
+    search_parser.add_argument(
+        "--language",
+        choices=["en", "ko"],
+        default=None,
+        help="Filter by language",
+    )
 
     # -- ask --
     ask_parser = subparsers.add_parser(
@@ -70,6 +82,18 @@ def build_parser() -> argparse.ArgumentParser:
         choices=["local", "openai"],
         default=None,
         help="LLM backend (default: from settings)",
+    )
+    ask_parser.add_argument(
+        "--doc-type",
+        choices=["rfc", "ccie", "telecom_manual"],
+        default=None,
+        help="Filter by document type",
+    )
+    ask_parser.add_argument(
+        "--language",
+        choices=["en", "ko"],
+        default=None,
+        help="Filter by language",
     )
 
     # -- status --

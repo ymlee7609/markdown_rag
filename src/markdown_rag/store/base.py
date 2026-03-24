@@ -15,8 +15,19 @@ class VectorStore(Protocol):
         """Add chunks with their embeddings to the store."""
         ...
 
-    def search(self, query_embedding: list[float], top_k: int = 5) -> list[SearchResult]:
-        """Search for similar chunks by query embedding."""
+    def search(
+        self,
+        query_embedding: list[float],
+        top_k: int = 5,
+        where: dict | None = None,
+    ) -> list[SearchResult]:
+        """Search for similar chunks by query embedding.
+
+        Args:
+            query_embedding: Query vector to search with.
+            top_k: Maximum number of results to return.
+            where: Optional metadata filter (ChromaDB where clause).
+        """
         ...
 
     def delete_by_document(self, doc_path: str) -> int:

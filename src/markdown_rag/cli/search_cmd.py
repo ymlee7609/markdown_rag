@@ -14,6 +14,21 @@ from markdown_rag.retriever.search import SemanticSearch
 from markdown_rag.store.chroma import ChromaStore
 
 
+def _build_where_filter(args: argparse.Namespace) -> dict | None:
+    """CLI 인자에서 메타데이터 필터를 구성한다."""
+    conditions = []
+    if getattr(args, "doc_type", None):
+        conditions.append({"doc_type": args.doc_type})
+    if getattr(args, "language", None):
+        conditions.append({"language": args.language})
+
+    if not conditions:
+        return None
+    if len(conditions) == 1:
+        return conditions[0]
+    return {"$and": conditions}
+
+
 def handle_search(args: argparse.Namespace) -> None:
     """Execute the search subcommand.
 
@@ -21,7 +36,7 @@ def handle_search(args: argparse.Namespace) -> None:
     and performs a similarity search. Prints ranked results.
 
     Args:
-        args: Parsed arguments with query, top_k, and backend.
+        args: Parsed arguments with query, top_k, backend, doc_type, language.
     """
     settings = get_settings()
 
@@ -42,7 +57,8 @@ def handle_search(args: argparse.Namespace) -> None:
         embedding_backend=embedding,
         vector_store=store,
     )
-    results = search_engine.search(args.query, top_k=args.top_k)
+    where = _build_where_filter(args)
+    results = search_engine.search(args.query, top_k=args.top_k, where=where)
 
     if not results:
         print("No results found.")

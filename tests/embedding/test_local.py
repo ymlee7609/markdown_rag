@@ -12,9 +12,9 @@ class TestLocalEmbeddingInit:
     """Test LocalEmbedding initialization and lazy loading."""
 
     def test_default_model_name(self) -> None:
-        """Default model should be all-MiniLM-L6-v2."""
+        """Default model should be intfloat/multilingual-e5-small."""
         backend = LocalEmbedding()
-        assert backend.model_name == "all-MiniLM-L6-v2"
+        assert backend.model_name == "intfloat/multilingual-e5-small"
 
     def test_custom_model_name(self) -> None:
         """Should accept a custom model name."""

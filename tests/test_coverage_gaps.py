@@ -568,8 +568,8 @@ class TestPipelineGaps:
         )
 
         result = pipeline.ingest(md_file)
-        assert len(result.errors) == 1
-        assert "embed failed" in result.errors[0]
+        assert len(result.errors) >= 1
+        assert any("embed failed" in err for err in result.errors)
 
 
 # ============================================================

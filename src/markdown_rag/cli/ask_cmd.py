@@ -9,6 +9,7 @@ import argparse
 import os
 import sys
 
+from markdown_rag.cli.search_cmd import _build_where_filter
 from markdown_rag.config import get_settings
 from markdown_rag.embedding.local import LocalEmbedding
 from markdown_rag.embedding.openai import OpenAIEmbedding
@@ -91,10 +92,12 @@ def handle_ask(args: argparse.Namespace) -> None:
         llm_backend=llm_backend,
     )
 
+    where = _build_where_filter(args)
     response = rag.ask(
         query=args.question,
         top_k=args.top_k,
         show_sources=args.show_sources,
+        where=where,
     )
 
     # 답변 출력

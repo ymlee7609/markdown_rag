@@ -276,4 +276,4 @@ class TestHandleSearch:
 
             handle_search(args)
 
-            mock_engine.search.assert_called_once_with("test", top_k=10)
+            mock_engine.search.assert_called_once_with("test", top_k=10, where=None)

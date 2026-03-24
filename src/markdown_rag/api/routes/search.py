@@ -29,6 +29,24 @@ def _get_embedding_backend(settings: Settings) -> object:
     return LocalEmbedding(model_name=settings.local_model)
 
 
+def _build_where_filter(
+    doc_type: str | None = None,
+    language: str | None = None,
+) -> dict | None:
+    """메타데이터 필터를 ChromaDB where 절로 변환한다."""
+    conditions = []
+    if doc_type:
+        conditions.append({"doc_type": doc_type})
+    if language:
+        conditions.append({"language": language})
+
+    if not conditions:
+        return None
+    if len(conditions) == 1:
+        return conditions[0]
+    return {"$and": conditions}
+
+
 @router.post("/api/v1/search", response_model=SearchResponse)
 def search_documents(body: SearchRequest, request: Request) -> SearchResponse:
     """Run semantic search over indexed documents."""
@@ -42,7 +60,8 @@ def search_documents(body: SearchRequest, request: Request) -> SearchResponse:
             vector_store=store,
             top_k=body.top_k,
         )
-        results = engine.search(query=body.query, top_k=body.top_k)
+        where = _build_where_filter(doc_type=body.doc_type, language=body.language)
+        results = engine.search(query=body.query, top_k=body.top_k, where=where)
     except Exception as exc:
         logger.exception("Search failed: %s", exc)
         raise HTTPException(

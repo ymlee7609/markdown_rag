@@ -21,6 +21,9 @@ dependencies = [
     "fastapi>=0.135",
     "uvicorn>=0.42",
     "llama-cpp-python>=0.3",
+    "rank-bm25>=0.2.2",
+    "kiwipiepy>=0.18",
+    "tqdm>=4.60",
 ]
 
 [project.optional-dependencies]

@@ -107,7 +107,7 @@ class TestRAGEngineAsk:
     ) -> None:
         rag_engine.ask("what is Python?")
         mock_search_engine.search.assert_called_once_with(
-            "what is Python?", top_k=None
+            "what is Python?", top_k=None, where=None
         )
 
     def test_passes_top_k_to_search(
@@ -116,7 +116,7 @@ class TestRAGEngineAsk:
         mock_search_engine: MagicMock,
     ) -> None:
         rag_engine.ask("query", top_k=3)
-        mock_search_engine.search.assert_called_once_with("query", top_k=3)
+        mock_search_engine.search.assert_called_once_with("query", top_k=3, where=None)
 
     def test_calls_llm_with_correct_messages(
         self,

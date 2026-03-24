@@ -24,7 +24,8 @@ class Settings(BaseSettings):
     embedding_backend: Literal["local", "openai"] = "local"
 
     # 로컬 임베딩 모델 (sentence-transformers)
-    local_model: str = "all-MiniLM-L6-v2"
+    # multilingual-e5-small: 384차원, 한국어+영어 다국어 지원
+    local_model: str = "intfloat/multilingual-e5-small"
 
     # OpenAI 설정
     openai_embedding_model: str = "text-embedding-3-small"
@@ -48,6 +49,16 @@ class Settings(BaseSettings):
 
     # Search settings
     search_top_k: int = 5
+    search_mode: Literal["vector", "bm25", "hybrid"] = "vector"
+    hybrid_alpha: float = 0.7
+
+    # BM25 인덱스 저장 경로
+    bm25_index_path: Path = Path("./data/bm25_index.pkl")
+
+    # 리랭킹 설정
+    rerank_enabled: bool = False
+    rerank_model: str = "BAAI/bge-reranker-v2-m3"
+    initial_top_k: int = 20
 
     # API server settings
     api_host: str = "0.0.0.0"

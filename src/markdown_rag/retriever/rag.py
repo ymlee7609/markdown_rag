@@ -39,6 +39,7 @@ class RAGEngine:
         query: str,
         top_k: int | None = None,
         show_sources: bool = True,
+        where: dict | None = None,
     ) -> RAGResponse:
         """질문에 대해 인덱싱된 문서 기반으로 답변을 생성한다.
 
@@ -46,11 +47,12 @@ class RAGEngine:
             query: 사용자 질문.
             top_k: 검색할 청크 수. None이면 검색 엔진 기본값 사용.
             show_sources: 응답에 소스 청크를 포함할지 여부.
+            where: 선택적 메타데이터 필터 (ChromaDB where 절).
 
         Returns:
             답변, 소스, 모델명, 질문을 포함하는 RAGResponse.
         """
-        search_results = self.search_engine.search(query, top_k=top_k)
+        search_results = self.search_engine.search(query, top_k=top_k, where=where)
 
         context = self._build_context(search_results)
 

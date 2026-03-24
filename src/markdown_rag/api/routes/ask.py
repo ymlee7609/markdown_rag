@@ -14,6 +14,7 @@ from markdown_rag.api.schemas import (
     SearchResultResponse,
 )
 from markdown_rag.config import Settings
+from markdown_rag.api.routes.search import _build_where_filter
 from markdown_rag.embedding.local import LocalEmbedding
 from markdown_rag.embedding.openai import OpenAIEmbedding
 from markdown_rag.llm.base import LLMBackend
@@ -79,10 +80,12 @@ def ask_question(body: AskRequest, request: Request) -> AskResponse:
             search_engine=search_engine,
             llm_backend=llm_backend,
         )
+        where = _build_where_filter(doc_type=body.doc_type, language=body.language)
         rag_response = rag_engine.ask(
             query=body.query,
             top_k=body.top_k,
             show_sources=body.show_sources,
+            where=where,
         )
     except HTTPException:
         raise
