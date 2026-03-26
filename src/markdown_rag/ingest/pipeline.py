@@ -7,6 +7,7 @@ Supports incremental indexing, batch embedding, and BM25 index building.
 from __future__ import annotations
 
 import logging
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from markdown_rag.chunker.splitter import split_markdown
 from markdown_rag.config import Settings
 from markdown_rag.embedding.local import LocalEmbedding
 from markdown_rag.embedding.openai import OpenAIEmbedding
+from markdown_rag.ingest.directory_index import generate_directory_index
 from markdown_rag.ingest.scanner import MarkdownScanner
 from markdown_rag.models import Chunk, Document
 from markdown_rag.retriever.bm25 import BM25Index
@@ -35,20 +37,71 @@ _EMBED_BATCH_SIZE = 128
 _STORE_BATCH_SIZE = 500
 
 
-def detect_doc_metadata(doc_path: Path) -> dict[str, str]:
-    """문서 경로에서 doc_type과 language를 자동 추론한다.
+# 벤더-카테고리 디렉토리 패턴 (예: 다산_L2, 유비쿼스_OLT)
+_VENDOR_CATEGORY_RE = re.compile(
+    r"(?:^|[/\\])(?P<vendor>다산|유비쿼스)_(?P<category>L2|L3|OLT)(?:[/\\]|$)"
+)
+
+# 장비 모델명 추출 패턴
+_MODEL_NAME_PATTERNS = [
+    re.compile(r"\[(?P<model>[A-Za-z0-9]+[A-Za-z0-9_\-]*)\]"),
+    re.compile(r"(?:^|[/\\])_(?P<model>[A-Za-z0-9]+[A-Za-z0-9_\-]*)_"),
+    re.compile(r"(?:^|[/\\])(?P<model>[A-Z]\d{3,}[A-Za-z0-9_\-]*)"),
+]
+
+
+def _extract_telecom_metadata(doc_path: Path) -> dict[str, str]:
+    """통신 장비 매뉴얼 경로에서 벤더, 카테고리, 모델명을 추출한다.
 
     Args:
         doc_path: 문서 파일 경로.
 
     Returns:
-        doc_type, language 키를 포함하는 메타데이터 딕셔너리.
+        vendor, category, model_name 키를 포함하는 메타데이터 딕셔너리.
     """
     path_str = str(doc_path)
+    result: dict[str, str] = {}
+
+    # 벤더 및 카테고리 추출
+    vc_match = _VENDOR_CATEGORY_RE.search(path_str)
+    if vc_match:
+        result["vendor"] = vc_match.group("vendor")
+        result["category"] = vc_match.group("category")
+
+    # 모델명 추출 (벤더-카테고리 다음 디렉토리/파일에서)
+    for pattern in _MODEL_NAME_PATTERNS:
+        match = pattern.search(path_str)
+        if match:
+            result["model_name"] = match.group("model")
+            break
+
+    return result
+
+
+def detect_doc_metadata(doc_path: Path) -> dict[str, str]:
+    """문서 경로에서 doc_type, language, 벤더/카테고리/모델명을 자동 추론한다.
+
+    Args:
+        doc_path: 문서 파일 경로.
+
+    Returns:
+        doc_type, language 및 확장 메타데이터를 포함하는 딕셔너리.
+    """
+    path_str = str(doc_path)
+    metadata: dict[str, str] = {"doc_type": "unknown", "language": "en"}
+
     for pattern, doc_type, language in _DOC_TYPE_PATTERNS:
         if pattern in path_str:
-            return {"doc_type": doc_type, "language": language}
-    return {"doc_type": "unknown", "language": "en"}
+            metadata["doc_type"] = doc_type
+            metadata["language"] = language
+            break
+
+    # 통신 장비 매뉴얼인 경우 벤더/카테고리/모델명 추출
+    if metadata["doc_type"] == "telecom_manual":
+        telecom_meta = _extract_telecom_metadata(doc_path)
+        metadata.update(telecom_meta)
+
+    return metadata
 
 
 @dataclass
@@ -134,6 +187,12 @@ class IngestPipeline:
         """
         documents = self._scanner.scan(path)
 
+        # 디렉토리 인덱스 문서 생성 (가입자망장비_manual 등)
+        index_docs = generate_directory_index(path)
+        if index_docs:
+            logger.info("디렉토리 인덱스 문서 %d개 추가", len(index_docs))
+            documents.extend(index_docs)
+
         total_chunks = 0
         errors: list[str] = []
 
@@ -198,9 +257,11 @@ class IngestPipeline:
         fm_metadata, _body = extract_frontmatter(doc.content)
         base_metadata = {**doc.metadata, **fm_metadata}
 
-        # 문서 유형/언어 자동 추론
+        # 문서 유형/언어 자동 추론 (기존 메타데이터가 없는 키만 채움)
         doc_meta = detect_doc_metadata(doc.path)
-        base_metadata.update(doc_meta)
+        for key, value in doc_meta.items():
+            if key not in base_metadata:
+                base_metadata[key] = value
 
         # 구조 인식 청킹
         chunks = split_markdown(

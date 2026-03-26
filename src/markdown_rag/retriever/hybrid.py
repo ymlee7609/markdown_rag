@@ -10,6 +10,7 @@ import logging
 
 from markdown_rag.models import SearchResult
 from markdown_rag.retriever.bm25 import BM25Index
+from markdown_rag.retriever.query_filter import QueryAnalyzer, merge_filters
 from markdown_rag.retriever.search import SemanticSearch
 
 logger = logging.getLogger(__name__)
@@ -62,9 +63,14 @@ class HybridSearch:
         """
         fetch_k = top_k * 3
 
-        # 1. 벡터 검색
+        # 쿼리 분석 및 자동 필터 생성
+        analyzer = QueryAnalyzer()
+        intent = analyzer.analyze(query)
+        effective_where = merge_filters(intent.metadata_filter, where)
+
+        # 1. 벡터 검색 (자동 필터 적용)
         vector_results = self.semantic_search.search(
-            query, top_k=fetch_k, where=where
+            query, top_k=fetch_k, where=effective_where
         )
 
         # 2. BM25 검색

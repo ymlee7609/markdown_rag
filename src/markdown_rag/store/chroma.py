@@ -80,8 +80,8 @@ class ChromaStore:
                 "headers": "|||".join(chunk.headers),
                 "chunk_index": chunk.chunk_index,
             }
-            # 확장 메타데이터 (doc_type, language 등)
-            for key in ("doc_type", "language"):
+            # 확장 메타데이터 (doc_type, language, vendor, category, model_name)
+            for key in ("doc_type", "language", "vendor", "category", "model_name"):
                 if key in chunk.metadata:
                     meta[key] = chunk.metadata[key]
             metadatas.append(meta)

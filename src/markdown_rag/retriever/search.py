@@ -6,6 +6,7 @@ import logging
 
 from markdown_rag.embedding.base import EmbeddingBackend
 from markdown_rag.models import SearchResult
+from markdown_rag.retriever.query_filter import QueryAnalyzer, merge_filters
 from markdown_rag.retriever.reranker import CrossEncoderReranker
 from markdown_rag.store.base import VectorStore
 
@@ -59,6 +60,11 @@ class SemanticSearch:
         """
         effective_top_k = top_k if top_k is not None else self.top_k
 
+        # 쿼리 분석 및 자동 필터 생성
+        analyzer = QueryAnalyzer()
+        intent = analyzer.analyze(query)
+        effective_where = merge_filters(intent.metadata_filter, where)
+
         query_embedding = self.embedding_backend.embed_query(query)
 
         # 리랭킹 활성화 시 더 넓은 후보를 검색
@@ -67,8 +73,23 @@ class SemanticSearch:
         results = self.vector_store.search(
             query_embedding=query_embedding,
             top_k=fetch_k,
-            where=where,
+            where=effective_where,
         )
+
+        # 자동 필터 결과가 부족하면 필터 없이 재검색 (fallback)
+        if len(results) < effective_top_k and intent.metadata_filter is not None:
+            fallback_results = self.vector_store.search(
+                query_embedding=query_embedding,
+                top_k=fetch_k,
+                where=where,
+            )
+            # 기존 결과에 없는 것만 추가
+            existing_ids = {r.chunk.chunk_id for r in results}
+            for r in fallback_results:
+                if r.chunk.chunk_id not in existing_ids:
+                    results.append(r)
+                    if len(results) >= fetch_k:
+                        break
 
         # 리랭킹
         if self.reranker and results:

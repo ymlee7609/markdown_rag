@@ -62,6 +62,18 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Filter by language",
     )
+    search_parser.add_argument(
+        "--vendor",
+        choices=["다산", "유비쿼스"],
+        default=None,
+        help="Filter by vendor",
+    )
+    search_parser.add_argument(
+        "--category",
+        choices=["L2", "L3", "OLT"],
+        default=None,
+        help="Filter by equipment category",
+    )
 
     # -- ask --
     ask_parser = subparsers.add_parser(
@@ -94,6 +106,18 @@ def build_parser() -> argparse.ArgumentParser:
         choices=["en", "ko"],
         default=None,
         help="Filter by language",
+    )
+    ask_parser.add_argument(
+        "--vendor",
+        choices=["다산", "유비쿼스"],
+        default=None,
+        help="Filter by vendor",
+    )
+    ask_parser.add_argument(
+        "--category",
+        choices=["L2", "L3", "OLT"],
+        default=None,
+        help="Filter by equipment category",
     )
 
     # -- status --

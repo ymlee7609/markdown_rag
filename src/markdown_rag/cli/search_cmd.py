@@ -21,6 +21,10 @@ def _build_where_filter(args: argparse.Namespace) -> dict | None:
         conditions.append({"doc_type": args.doc_type})
     if getattr(args, "language", None):
         conditions.append({"language": args.language})
+    if getattr(args, "vendor", None):
+        conditions.append({"vendor": args.vendor})
+    if getattr(args, "category", None):
+        conditions.append({"category": args.category})
 
     if not conditions:
         return None
