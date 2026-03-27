@@ -76,12 +76,13 @@ class SemanticSearch:
             where=effective_where,
         )
 
-        # 자동 필터 결과가 부족하면 필터 없이 재검색 (fallback)
+        # 자동 필터 결과가 부족하면 폴백 필터로 재검색
         if len(results) < effective_top_k and intent.metadata_filter is not None:
+            fallback_where = merge_filters(intent.fallback_filter, where)
             fallback_results = self.vector_store.search(
                 query_embedding=query_embedding,
                 top_k=fetch_k,
-                where=where,
+                where=fallback_where,
             )
             # 기존 결과에 없는 것만 추가
             existing_ids = {r.chunk.chunk_id for r in results}

@@ -1,0 +1,816 @@
+{
+  "version": "1.0.0",
+  "description": "RAG 기능 검증 데이터셋 - 100개 테스트 케이스",
+  "categories": {
+    "rfc": 30,
+    "ccie": 30,
+    "ko": 30,
+    "edge": 10
+  },
+  "pass_criteria": {
+    "hit_at_k": 5,
+    "require_keyword_match": true
+  },
+  "test_cases": [
+    {
+      "id": "RFC-001",
+      "category": "rfc",
+      "query": "TCP three-way handshake",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["TCP", "SYN", "connection", "handshake"],
+      "notes": "RFC 793 - TCP 연결 수립 3단계 핸드쉐이크"
+    },
+    {
+      "id": "RFC-002",
+      "category": "rfc",
+      "query": "IP fragmentation and reassembly",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["fragmentation", "offset", "datagram", "fragment"],
+      "notes": "RFC 791 - IP 데이터그램 단편화 및 재조립"
+    },
+    {
+      "id": "RFC-003",
+      "category": "rfc",
+      "query": "DNS resource record types A MX CNAME",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["DNS", "record", "CNAME", "MX"],
+      "notes": "RFC 1035 - DNS 리소스 레코드 유형"
+    },
+    {
+      "id": "RFC-004",
+      "category": "rfc",
+      "query": "HTTP persistent connections keep-alive",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["persistent", "keep-alive", "HTTP", "connection"],
+      "notes": "RFC 2616 - HTTP/1.1 지속 연결"
+    },
+    {
+      "id": "RFC-005",
+      "category": "rfc",
+      "query": "BGP autonomous system path attribute",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["AS-PATH", "autonomous", "BGP", "path"],
+      "notes": "BGP 경로 속성 및 AS-PATH"
+    },
+    {
+      "id": "RFC-006",
+      "category": "rfc",
+      "query": "OSPF hello packet neighbor relationship",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["hello", "OSPF", "neighbor", "interval"],
+      "notes": "OSPF 헬로 패킷 및 이웃 관계"
+    },
+    {
+      "id": "RFC-007",
+      "category": "rfc",
+      "query": "DHCP lease assignment discover offer request",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["DHCP", "discover", "offer", "lease"],
+      "notes": "RFC 2131 - DHCP 임대 할당 과정"
+    },
+    {
+      "id": "RFC-008",
+      "category": "rfc",
+      "query": "IPv6 addressing architecture prefix",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["IPv6", "address", "prefix", "unicast"],
+      "notes": "RFC 4291 - IPv6 주소 체계"
+    },
+    {
+      "id": "RFC-009",
+      "category": "rfc",
+      "query": "TLS handshake certificate authentication",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["TLS", "certificate", "handshake", "SSL"],
+      "notes": "TLS/SSL 핸드쉐이크 및 인증서"
+    },
+    {
+      "id": "RFC-010",
+      "category": "rfc",
+      "query": "SMTP mail transaction MAIL FROM RCPT TO",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["SMTP", "MAIL", "RCPT", "transaction"],
+      "notes": "RFC 5321 - SMTP 메일 전송 절차"
+    },
+    {
+      "id": "RFC-011",
+      "category": "rfc",
+      "query": "RTP real-time transport protocol payload format",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["RTP", "payload", "timestamp", "sequence"],
+      "notes": "RFC 3550 - RTP 실시간 전송 프로토콜"
+    },
+    {
+      "id": "RFC-012",
+      "category": "rfc",
+      "query": "ICMP echo request reply ping",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["ICMP", "echo", "ping", "reply"],
+      "notes": "RFC 792 - ICMP 에코 요청/응답"
+    },
+    {
+      "id": "RFC-013",
+      "category": "rfc",
+      "query": "ARP address resolution protocol hardware",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["ARP", "hardware", "address", "resolution"],
+      "notes": "RFC 826 - ARP 주소 변환 프로토콜"
+    },
+    {
+      "id": "RFC-014",
+      "category": "rfc",
+      "query": "NAT network address translation mapping",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["NAT", "translation", "mapping", "address"],
+      "notes": "NAT 네트워크 주소 변환"
+    },
+    {
+      "id": "RFC-015",
+      "category": "rfc",
+      "query": "SNMP management information base MIB OID",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["SNMP", "MIB", "OID", "management"],
+      "notes": "SNMP 관리 정보 베이스"
+    },
+    {
+      "id": "RFC-016",
+      "category": "rfc",
+      "query": "FTP data transfer passive mode PASV",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["FTP", "PASV", "passive", "data"],
+      "notes": "RFC 959 - FTP 수동 모드 데이터 전송"
+    },
+    {
+      "id": "RFC-017",
+      "category": "rfc",
+      "query": "PPP point-to-point protocol link control LCP",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["PPP", "LCP", "link", "point-to-point"],
+      "notes": "RFC 1661 - PPP 링크 제어 프로토콜"
+    },
+    {
+      "id": "RFC-018",
+      "category": "rfc",
+      "query": "MPLS label distribution protocol LSP",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["MPLS", "label", "LSP", "distribution"],
+      "notes": "MPLS 레이블 배포 프로토콜"
+    },
+    {
+      "id": "RFC-019",
+      "category": "rfc",
+      "query": "SIP session initiation protocol INVITE",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["SIP", "INVITE", "session", "initiation"],
+      "notes": "RFC 3261 - SIP 세션 개시 프로토콜"
+    },
+    {
+      "id": "RFC-020",
+      "category": "rfc",
+      "query": "SSH transport layer protocol key exchange",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["SSH", "transport", "key", "exchange"],
+      "notes": "RFC 4253 - SSH 전송 계층 프로토콜"
+    },
+    {
+      "id": "RFC-021",
+      "category": "rfc",
+      "query": "NTP network time protocol clock stratum",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["NTP", "stratum", "clock", "synchronization"],
+      "notes": "RFC 5905 - NTP 네트워크 시간 프로토콜"
+    },
+    {
+      "id": "RFC-022",
+      "category": "rfc",
+      "query": "RADIUS authentication authorization accounting",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["RADIUS", "authentication", "Access-Request", "accounting"],
+      "notes": "RFC 2865 - RADIUS 인증 프로토콜"
+    },
+    {
+      "id": "RFC-023",
+      "category": "rfc",
+      "query": "VRRP virtual router redundancy protocol",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["VRRP", "virtual", "router", "redundancy"],
+      "notes": "RFC 5798 - VRRP 가상 라우터 이중화"
+    },
+    {
+      "id": "RFC-024",
+      "category": "rfc",
+      "query": "IS-IS intermediate system link state routing",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["IS-IS", "link state", "LSP", "routing"],
+      "notes": "IS-IS 링크 상태 라우팅 프로토콜"
+    },
+    {
+      "id": "RFC-025",
+      "category": "rfc",
+      "query": "PIM sparse mode multicast routing protocol",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["PIM", "multicast", "sparse", "mode"],
+      "notes": "RFC 7761 - PIM 희소 모드 멀티캐스트"
+    },
+    {
+      "id": "RFC-026",
+      "category": "rfc",
+      "query": "GRE generic routing encapsulation tunnel",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["GRE", "tunnel", "encapsulation", "routing"],
+      "notes": "RFC 2784 - GRE 터널 캡슐화"
+    },
+    {
+      "id": "RFC-027",
+      "category": "rfc",
+      "query": "IPsec security association ESP AH",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["IPsec", "ESP", "SA", "security"],
+      "notes": "RFC 4301 - IPsec 보안 연계"
+    },
+    {
+      "id": "RFC-028",
+      "category": "rfc",
+      "query": "LDAP lightweight directory access protocol search",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["LDAP", "directory", "search", "protocol"],
+      "notes": "RFC 4511 - LDAP 경량 디렉토리 접근"
+    },
+    {
+      "id": "RFC-029",
+      "category": "rfc",
+      "query": "X.509 certificate public key infrastructure PKI",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["certificate", "X.509", "public key", "PKI"],
+      "notes": "RFC 5280 - X.509 인증서 구조"
+    },
+    {
+      "id": "RFC-030",
+      "category": "rfc",
+      "query": "private IP address ranges RFC1918",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": ["private", "10.0.0.0", "192.168", "172.16"],
+      "notes": "RFC 1918 - 사설 IP 주소 범위"
+    },
+    {
+      "id": "CCIE-001",
+      "category": "ccie",
+      "query": "STP root bridge election priority",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["root bridge", "priority", "election", "STP"],
+      "notes": "스패닝트리 루트 브리지 선출 과정"
+    },
+    {
+      "id": "CCIE-002",
+      "category": "ccie",
+      "query": "VLAN 802.1Q trunk encapsulation",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["802.1Q", "trunk", "encapsulation", "VLAN"],
+      "notes": "802.1Q 트렁크 캡슐화 방식"
+    },
+    {
+      "id": "CCIE-003",
+      "category": "ccie",
+      "query": "RSTP rapid spanning tree port states discarding",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["RSTP", "discarding", "port state", "rapid"],
+      "notes": "RSTP 신속 스패닝트리 포트 상태"
+    },
+    {
+      "id": "CCIE-004",
+      "category": "ccie",
+      "query": "EtherChannel LACP active passive negotiation",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["LACP", "EtherChannel", "active", "passive"],
+      "notes": "EtherChannel LACP 협상"
+    },
+    {
+      "id": "CCIE-005",
+      "category": "ccie",
+      "query": "port security maximum MAC violation shutdown",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["port security", "maximum", "violation", "shutdown"],
+      "notes": "포트 보안 MAC 제한 및 위반 처리"
+    },
+    {
+      "id": "CCIE-006",
+      "category": "ccie",
+      "query": "VTP VLAN trunking protocol domain mode",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["VTP", "domain", "transparent", "server"],
+      "notes": "VTP 도메인 및 동작 모드"
+    },
+    {
+      "id": "CCIE-007",
+      "category": "ccie",
+      "query": "MSTP multiple spanning tree instances region",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["MSTP", "instance", "region", "multiple"],
+      "notes": "MSTP 다중 스패닝트리 인스턴스"
+    },
+    {
+      "id": "CCIE-008",
+      "category": "ccie",
+      "query": "BPDU guard portfast edge port",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["BPDU guard", "portfast", "edge", "BPDU"],
+      "notes": "BPDU 가드 및 PortFast 설정"
+    },
+    {
+      "id": "CCIE-009",
+      "category": "ccie",
+      "query": "IGMP snooping multicast group membership",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["IGMP", "snooping", "multicast", "group"],
+      "notes": "IGMP 스누핑 멀티캐스트 그룹"
+    },
+    {
+      "id": "CCIE-010",
+      "category": "ccie",
+      "query": "spanning tree topology change notification TCN",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["topology change", "TCN", "BPDU", "notification"],
+      "notes": "스패닝트리 토폴로지 변경 알림"
+    },
+    {
+      "id": "CCIE-011",
+      "category": "ccie",
+      "query": "EIGRP feasibility condition successor route",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["EIGRP", "feasibility", "successor", "condition"],
+      "notes": "EIGRP 실현 가능성 조건 및 후계 경로"
+    },
+    {
+      "id": "CCIE-012",
+      "category": "ccie",
+      "query": "OSPF stub area LSA type filtering",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["stub", "LSA", "area", "OSPF"],
+      "notes": "OSPF 스텁 영역 LSA 필터링"
+    },
+    {
+      "id": "CCIE-013",
+      "category": "ccie",
+      "query": "BGP route reflector cluster iBGP",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["route reflector", "cluster", "iBGP", "BGP"],
+      "notes": "BGP 루트 리플렉터 클러스터"
+    },
+    {
+      "id": "CCIE-014",
+      "category": "ccie",
+      "query": "HSRP hot standby router protocol preemption",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["HSRP", "preemption", "active", "standby"],
+      "notes": "HSRP 선점 및 액티브/스탠바이"
+    },
+    {
+      "id": "CCIE-015",
+      "category": "ccie",
+      "query": "policy-based routing route-map match set",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["policy-based", "route-map", "match", "set ip"],
+      "notes": "정책 기반 라우팅 route-map"
+    },
+    {
+      "id": "CCIE-016",
+      "category": "ccie",
+      "query": "NAT overload PAT inside outside interface",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["NAT", "overload", "PAT", "inside"],
+      "notes": "NAT 오버로드 PAT 설정"
+    },
+    {
+      "id": "CCIE-017",
+      "category": "ccie",
+      "query": "access-list wildcard mask extended permit deny",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["access-list", "wildcard", "extended", "permit"],
+      "notes": "확장 ACL 와일드카드 마스크"
+    },
+    {
+      "id": "CCIE-018",
+      "category": "ccie",
+      "query": "ip helper-address DHCP relay broadcast",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["helper-address", "DHCP", "relay", "broadcast"],
+      "notes": "DHCP 릴레이 helper-address"
+    },
+    {
+      "id": "CCIE-019",
+      "category": "ccie",
+      "query": "CDP Cisco discovery protocol neighbor device",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["CDP", "neighbor", "device", "discovery"],
+      "notes": "CDP 이웃 장치 탐색"
+    },
+    {
+      "id": "CCIE-020",
+      "category": "ccie",
+      "query": "QoS DSCP differentiated services traffic marking",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["DSCP", "QoS", "marking", "traffic"],
+      "notes": "QoS DSCP 트래픽 마킹"
+    },
+    {
+      "id": "CCIE-021",
+      "category": "ccie",
+      "query": "GRE tunnel interface keepalive configuration",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["GRE", "tunnel", "keepalive", "interface"],
+      "notes": "GRE 터널 인터페이스 킵얼라이브"
+    },
+    {
+      "id": "CCIE-022",
+      "category": "ccie",
+      "query": "Frame Relay DLCI PVC LMI",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["Frame Relay", "DLCI", "PVC", "LMI"],
+      "notes": "Frame Relay DLCI 및 PVC"
+    },
+    {
+      "id": "CCIE-023",
+      "category": "ccie",
+      "query": "route redistribution between OSPF EIGRP metric",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["redistribution", "metric", "seed", "redistribute"],
+      "notes": "라우팅 프로토콜 간 재배포"
+    },
+    {
+      "id": "CCIE-024",
+      "category": "ccie",
+      "query": "default route propagation ip route 0.0.0.0",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["default route", "0.0.0.0", "propagate", "gateway"],
+      "notes": "기본 경로 전파"
+    },
+    {
+      "id": "CCIE-025",
+      "category": "ccie",
+      "query": "EIGRP metric bandwidth delay reliability",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["bandwidth", "delay", "metric", "EIGRP"],
+      "notes": "EIGRP 메트릭 계산 요소"
+    },
+    {
+      "id": "CCIE-026",
+      "category": "ccie",
+      "query": "loopback interface routing protocol stability",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["loopback", "interface", "stability", "router-id"],
+      "notes": "루프백 인터페이스 안정성"
+    },
+    {
+      "id": "CCIE-027",
+      "category": "ccie",
+      "query": "OSPF designated router DR BDR election",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["DR", "BDR", "election", "OSPF"],
+      "notes": "OSPF DR/BDR 선출"
+    },
+    {
+      "id": "CCIE-028",
+      "category": "ccie",
+      "query": "BGP community attribute no-export local-AS",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["community", "no-export", "local-AS", "BGP"],
+      "notes": "BGP 커뮤니티 속성"
+    },
+    {
+      "id": "CCIE-029",
+      "category": "ccie",
+      "query": "VRF virtual routing forwarding route leaking",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["VRF", "route leaking", "import", "export"],
+      "notes": "VRF 가상 라우팅 포워딩"
+    },
+    {
+      "id": "CCIE-030",
+      "category": "ccie",
+      "query": "extended range VLAN 1006 4094 VTPv3",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": ["extended range", "4094", "VTPv3", "VLAN"],
+      "notes": "확장 범위 VLAN VTPv3 지원"
+    },
+    {
+      "id": "KO-001",
+      "category": "ko",
+      "query": "다산 V3024V 포트 설정 방법",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["V3024V", "포트", "설정", "다산"],
+      "notes": "다산 L2 스위치 V3024V 포트 구성"
+    },
+    {
+      "id": "KO-002",
+      "category": "ko",
+      "query": "유비쿼스 E5708R LED 상태 표시",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["E5708R", "LED", "상태", "유비쿼스"],
+      "notes": "유비쿼스 스위치 LED 상태 확인"
+    },
+    {
+      "id": "KO-003",
+      "category": "ko",
+      "query": "다산 L2 스위치 VLAN 생성 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["VLAN", "다산", "L2", "스위치"],
+      "notes": "다산 L2 스위치 VLAN 생성 방법"
+    },
+    {
+      "id": "KO-004",
+      "category": "ko",
+      "query": "BGP Route-Reflector 설정 구성",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["Route-Reflector", "BGP", "Full Mesh", "설정"],
+      "notes": "BGP 루트 리플렉터 설정 (한국어 매뉴얼)"
+    },
+    {
+      "id": "KO-005",
+      "category": "ko",
+      "query": "IGMP QRV Querier Robustness Variable 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["IGMP", "QRV", "Querier", "설정"],
+      "notes": "IGMP 쿼리어 견고성 변수 설정"
+    },
+    {
+      "id": "KO-006",
+      "category": "ko",
+      "query": "다산 OLT V8500 PON 포트 구성",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["V8500", "PON", "OLT", "다산"],
+      "notes": "다산 OLT V8500 PON 포트 설정"
+    },
+    {
+      "id": "KO-007",
+      "category": "ko",
+      "query": "유비쿼스 OLT U9532H 업링크 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["U9532H", "OLT", "업링크", "유비쿼스"],
+      "notes": "유비쿼스 OLT 업링크 포트 구성"
+    },
+    {
+      "id": "KO-008",
+      "category": "ko",
+      "query": "L2 스위치 포트 보안 MAC 주소 제한",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["포트 보안", "MAC", "스위치", "제한"],
+      "notes": "L2 스위치 포트 보안 MAC 제한"
+    },
+    {
+      "id": "KO-009",
+      "category": "ko",
+      "query": "다산 L3 스위치 OSPF 라우팅 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["OSPF", "다산", "L3", "라우팅"],
+      "notes": "다산 L3 스위치 OSPF 설정"
+    },
+    {
+      "id": "KO-010",
+      "category": "ko",
+      "query": "유비쿼스 L3 BGP 라우팅 프로토콜 활성화",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["BGP", "유비쿼스", "라우팅", "L3"],
+      "notes": "유비쿼스 L3 BGP 프로토콜 설정"
+    },
+    {
+      "id": "KO-011",
+      "category": "ko",
+      "query": "스위치 콘솔 포트 접속 시리얼 케이블",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["콘솔", "포트", "접속", "시리얼"],
+      "notes": "스위치 콘솔 포트 연결 방법"
+    },
+    {
+      "id": "KO-012",
+      "category": "ko",
+      "query": "스위치 전원 공급 장치 AC 설치",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["전원", "공급", "설치", "AC"],
+      "notes": "스위치 전원 공급 장치 설치 절차"
+    },
+    {
+      "id": "KO-013",
+      "category": "ko",
+      "query": "Syslog 서버 로그 로컬 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["Syslog", "서버", "로그", "설정"],
+      "notes": "Syslog 서버 로그 설정 방법"
+    },
+    {
+      "id": "KO-014",
+      "category": "ko",
+      "query": "다산 스패닝트리 Root 스위치 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["스패닝트리", "Root", "다산", "Bridge"],
+      "notes": "다산 스위치 스패닝트리 루트 설정"
+    },
+    {
+      "id": "KO-015",
+      "category": "ko",
+      "query": "포트채널 링크 어그리게이션 LACP 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["포트채널", "어그리게이션", "LACP", "링크"],
+      "notes": "링크 어그리게이션 포트채널 설정"
+    },
+    {
+      "id": "KO-016",
+      "category": "ko",
+      "query": "MAC 주소 테이블 조회 확인",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["MAC", "주소", "테이블", "조회"],
+      "notes": "MAC 주소 테이블 확인 명령어"
+    },
+    {
+      "id": "KO-017",
+      "category": "ko",
+      "query": "OLT 광 케이블 SFP 모듈 연결 방법",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["광 케이블", "SFP", "OLT", "모듈"],
+      "notes": "OLT 광 케이블 및 SFP 모듈 설치"
+    },
+    {
+      "id": "KO-018",
+      "category": "ko",
+      "query": "스위치 펌웨어 소프트웨어 업그레이드 절차",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["펌웨어", "업그레이드", "소프트웨어", "절차"],
+      "notes": "스위치 소프트웨어 업그레이드 방법"
+    },
+    {
+      "id": "KO-019",
+      "category": "ko",
+      "query": "다산 배터리 내장형 V3024VB 스위치 사양",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["배터리", "V3024VB", "내장형", "다산"],
+      "notes": "다산 배터리 내장형 스위치 V3024VB"
+    },
+    {
+      "id": "KO-020",
+      "category": "ko",
+      "query": "스위치 날짜 시간 clock 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["시간", "날짜", "clock", "설정"],
+      "notes": "스위치 시스템 시간 설정"
+    },
+    {
+      "id": "KO-021",
+      "category": "ko",
+      "query": "ARP 테이블 확인 주소 명령어",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["ARP", "테이블", "주소", "명령어"],
+      "notes": "ARP 테이블 조회 및 관리"
+    },
+    {
+      "id": "KO-022",
+      "category": "ko",
+      "query": "DHCP 서버 IP 주소 할당 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["DHCP", "서버", "IP", "할당"],
+      "notes": "DHCP 서버 주소 풀 설정"
+    },
+    {
+      "id": "KO-023",
+      "category": "ko",
+      "query": "SNMP 커뮤니티 스트링 MIB 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["SNMP", "커뮤니티", "스트링", "MIB"],
+      "notes": "SNMP 커뮤니티 문자열 구성"
+    },
+    {
+      "id": "KO-024",
+      "category": "ko",
+      "query": "ACL 접근 제어 목록 패킷 필터링",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["ACL", "접근", "제어", "필터링"],
+      "notes": "ACL 접근 제어 목록 설정"
+    },
+    {
+      "id": "KO-025",
+      "category": "ko",
+      "query": "QoS 트래픽 우선순위 큐 분류",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["QoS", "우선순위", "큐", "트래픽"],
+      "notes": "QoS 서비스 품질 트래픽 분류"
+    },
+    {
+      "id": "KO-026",
+      "category": "ko",
+      "query": "포트 미러링 스패닝 모니터링 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["미러링", "모니터링", "포트", "스패닝"],
+      "notes": "포트 미러링을 통한 트래픽 모니터링"
+    },
+    {
+      "id": "KO-027",
+      "category": "ko",
+      "query": "RSTP 빠른 수렴 포트 전환 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["RSTP", "수렴", "포트", "전환"],
+      "notes": "RSTP 빠른 수렴 포트 상태 전환"
+    },
+    {
+      "id": "KO-028",
+      "category": "ko",
+      "query": "다산 V6824XG L3 스위치 사양 스펙",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["V6824XG", "L3", "스위치", "다산"],
+      "notes": "다산 V6824XG L3 스위치 제품 사양"
+    },
+    {
+      "id": "KO-029",
+      "category": "ko",
+      "query": "유비쿼스 E5924L 배터리 내장형 스위치",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["E5924L", "배터리", "유비쿼스", "내장형"],
+      "notes": "유비쿼스 배터리 내장형 E5924L"
+    },
+    {
+      "id": "KO-030",
+      "category": "ko",
+      "query": "Designated 스위치 선출 과정 STP",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": ["Designated", "스위치", "선출", "STP"],
+      "notes": "STP Designated 스위치 선출 방식"
+    },
+    {
+      "id": "EDGE-001",
+      "category": "edge",
+      "query": "VLAN trunking 802.1Q IEEE standard",
+      "expected_path_contains": null,
+      "expected_keywords": ["VLAN", "trunk", "802.1Q"],
+      "notes": "교차 도메인 - RFC+CCIE+한국어 모두 포함 가능"
+    },
+    {
+      "id": "EDGE-002",
+      "category": "edge",
+      "query": "spanning tree protocol loop prevention",
+      "expected_path_contains": null,
+      "expected_keywords": ["spanning tree", "STP", "loop"],
+      "notes": "교차 도메인 - 루프 방지 스패닝트리"
+    },
+    {
+      "id": "EDGE-003",
+      "category": "edge",
+      "query": "BGP route reflector iBGP scalability",
+      "expected_path_contains": null,
+      "expected_keywords": ["BGP", "route reflector", "iBGP"],
+      "notes": "교차 도메인 - BGP 루트 리플렉터 확장성"
+    },
+    {
+      "id": "EDGE-004",
+      "category": "edge",
+      "query": "OSPF link state database flooding",
+      "expected_path_contains": null,
+      "expected_keywords": ["OSPF", "link state", "database"],
+      "notes": "교차 도메인 - OSPF 링크 상태 데이터베이스"
+    },
+    {
+      "id": "EDGE-005",
+      "category": "edge",
+      "query": "IPv6 address configuration prefix delegation",
+      "expected_path_contains": null,
+      "expected_keywords": ["IPv6", "address", "prefix"],
+      "notes": "교차 도메인 - IPv6 주소 설정"
+    },
+    {
+      "id": "EDGE-006",
+      "category": "edge",
+      "query": "access control list packet filtering security",
+      "expected_path_contains": null,
+      "expected_keywords": ["access-list", "ACL", "security"],
+      "notes": "교차 도메인 - ACL 패킷 필터링 보안"
+    },
+    {
+      "id": "EDGE-007",
+      "category": "edge",
+      "query": "멀티캐스트 라우팅 IGMP 그룹 관리",
+      "expected_path_contains": null,
+      "expected_keywords": ["멀티캐스트", "IGMP", "그룹"],
+      "notes": "교차 도메인 - 한국어 멀티캐스트 쿼리"
+    },
+    {
+      "id": "EDGE-008",
+      "category": "edge",
+      "query": "link aggregation port channel bonding IEEE 802.3ad",
+      "expected_path_contains": null,
+      "expected_keywords": ["aggregation", "channel", "bonding"],
+      "notes": "교차 도메인 - 링크 어그리게이션"
+    },
+    {
+      "id": "EDGE-009",
+      "category": "edge",
+      "query": "quality of service traffic shaping policing",
+      "expected_path_contains": null,
+      "expected_keywords": ["QoS", "traffic", "shaping"],
+      "notes": "교차 도메인 - 서비스 품질 트래픽 제어"
+    },
+    {
+      "id": "EDGE-010",
+      "category": "edge",
+      "query": "IP routing table longest prefix match forwarding",
+      "expected_path_contains": null,
+      "expected_keywords": ["routing", "table", "forwarding"],
+      "notes": "교차 도메인 - IP 라우팅 테이블 포워딩"
+    }
+  ]
+}

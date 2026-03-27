@@ -107,7 +107,8 @@ class TestSemanticSearchSearch:
         mock_embedding: MagicMock,
         mock_store: MagicMock,
     ) -> None:
-        search_engine.search("what is Python?")
+        # 한국어 쿼리 사용 (자동 필터 미적용 → where=None 검증)
+        search_engine.search("파이썬 프로그래밍")
         mock_store.search.assert_called_once_with(
             query_embedding=[0.1, 0.2, 0.3], top_k=5, where=None
         )
@@ -138,7 +139,8 @@ class TestSemanticSearchSearch:
         search_engine: SemanticSearch,
         mock_store: MagicMock,
     ) -> None:
-        search_engine.search("query", top_k=3)
+        # 한국어 쿼리 사용 (자동 필터 미적용)
+        search_engine.search("검색 테스트", top_k=3)
         mock_store.search.assert_called_once_with(
             query_embedding=[0.1, 0.2, 0.3], top_k=3, where=None
         )
@@ -148,7 +150,8 @@ class TestSemanticSearchSearch:
         search_engine: SemanticSearch,
         mock_store: MagicMock,
     ) -> None:
-        search_engine.search("query", top_k=None)
+        # 한국어 쿼리 사용 (자동 필터 미적용)
+        search_engine.search("검색 테스트", top_k=None)
         mock_store.search.assert_called_once_with(
             query_embedding=[0.1, 0.2, 0.3], top_k=5, where=None
         )

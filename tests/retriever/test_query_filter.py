@@ -104,6 +104,61 @@ class TestQueryAnalyzer:
         intent = self.analyzer.analyze("RSTP 설정 방법")
         assert intent.metadata_filter is None
 
+    # -- 언어 자동 감지 --
+
+    # -- CCIE 우선 검색 (영어 쿼리) --
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "TCP three-way handshake",
+            "BGP autonomous system path",
+            "OSPF hello packet neighbor",
+            "IPv6 addressing architecture",
+            "HTTP persistent connections keep-alive",
+        ],
+    )
+    def test_english_query_gets_ccie_primary_filter(self, query: str) -> None:
+        """영어 쿼리는 doc_type=ccie 1차 필터 + language=en 폴백을 생성해야 한다."""
+        intent = self.analyzer.analyze(query)
+        assert intent.detected_language == "en"
+        assert intent.metadata_filter == {"doc_type": "ccie"}
+        assert intent.fallback_filter == {"language": "en"}
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "다산 L2 스위치 VLAN 설정",
+            "IGMP QRV 설정 방법",
+            "유비쿼스 OLT 업링크 구성",
+            "스패닝트리 Root 스위치",
+        ],
+    )
+    def test_korean_query_no_language_filter(self, query: str) -> None:
+        """한국어 쿼리는 language 필터를 생성하지 않아야 한다."""
+        intent = self.analyzer.analyze(query)
+        assert intent.detected_language is None
+        assert intent.fallback_filter is None
+
+    def test_english_vendor_query_uses_vendor_filter(self) -> None:
+        """영어 벤더 쿼리는 vendor/category 필터만 사용하고 CCIE 우선을 건너뛰어야 한다."""
+        intent = self.analyzer.analyze("dasan L2 equipment")
+        assert intent.detected_vendor == "다산"
+        assert intent.detected_language == "en"
+        assert intent.metadata_filter is not None
+        assert "$and" in intent.metadata_filter
+        conditions = intent.metadata_filter["$and"]
+        assert {"vendor": "다산"} in conditions
+        assert {"category": "L2"} in conditions
+        # vendor 감지 시 CCIE 우선 및 language 필터 미적용
+        assert intent.fallback_filter is None
+
+    def test_mixed_query_no_language_filter(self) -> None:
+        """한국어 문자가 포함된 혼합 쿼리는 언어 필터를 생성하지 않아야 한다."""
+        intent = self.analyzer.analyze("OSPF 설정 how to configure")
+        assert intent.detected_language is None
+        assert intent.fallback_filter is None
+
     def test_original_query_preserved(self) -> None:
         """원본 쿼리가 보존되어야 한다."""
         query = "다산 L2 장비 목록"
