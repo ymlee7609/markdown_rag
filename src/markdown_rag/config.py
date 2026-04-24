@@ -38,6 +38,10 @@ class Settings(BaseSettings):
     local_llm_model_path: str = ""
     local_llm_context_size: int = 4096
     local_llm_max_tokens: int = 1024
+    # EXAONE 등 외부 Jinja chat template이 필요한 모델용 (선택)
+    local_llm_chat_template_path: str = ""
+    # 한국어 코드 스위칭 방지용 기본값 0.1
+    local_llm_temperature: float = 0.1
 
     # ChromaDB settings
     chroma_path: Path = Path("./data/chroma")

@@ -72,6 +72,8 @@ def _mock_settings(**overrides):
         "local_llm_model_path": "",
         "local_llm_context_size": 4096,
         "local_llm_max_tokens": 1024,
+        "local_llm_chat_template_path": "",
+        "local_llm_temperature": 0.1,
     }
     defaults.update(overrides)
     settings = MagicMock()
@@ -114,6 +116,26 @@ class TestCreateLLMBackend:
             model_path="/models/test.gguf",
             context_size=4096,
             max_tokens=1024,
+            chat_template_path=None,
+            temperature=0.1,
+        )
+
+    @patch("markdown_rag.llm.local.LocalLLM")
+    def test_local_backend_passes_chat_template_path(self, mock_local_cls) -> None:
+        mock_local_cls.return_value = MagicMock()
+        settings = _mock_settings(
+            llm_backend="local",
+            local_llm_model_path="/models/exaone.gguf",
+            local_llm_chat_template_path="/models/exaone-chat_template.jinja",
+            local_llm_temperature=0.2,
+        )
+        _create_llm_backend(settings)
+        mock_local_cls.assert_called_once_with(
+            model_path="/models/exaone.gguf",
+            context_size=4096,
+            max_tokens=1024,
+            chat_template_path="/models/exaone-chat_template.jinja",
+            temperature=0.2,
         )
 
     def test_local_backend_missing_model_path_exits(self) -> None:

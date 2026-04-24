@@ -6,14 +6,11 @@ import argparse
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from markdown_rag.config import Settings
 from markdown_rag.ingest.pipeline import IngestPipeline
 from markdown_rag.models import Chunk, SearchResult
 from markdown_rag.retriever.search import SemanticSearch
 from markdown_rag.store.chroma import ChromaStore
-
 
 # ============================================================
 # api/routes/search.py: _build_where_filter 분기 (39, 41, 45-47)
@@ -239,7 +236,8 @@ class TestSemanticSearchWithReranker:
             initial_top_k=20,
         )
 
-        results = engine.search("query")
+        # 한국어 쿼리: QueryAnalyzer가 자동 필터를 만들지 않으므로 where=None 그대로 전달
+        results = engine.search("스패닝트리 설정")
 
         # 리랭커가 호출되어야 함
         mock_reranker.rerank.assert_called_once()

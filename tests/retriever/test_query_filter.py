@@ -6,7 +6,6 @@ import pytest
 
 from markdown_rag.retriever.query_filter import (
     QueryAnalyzer,
-    QueryIntent,
     merge_filters,
 )
 
@@ -119,10 +118,13 @@ class TestQueryAnalyzer:
         ],
     )
     def test_english_query_gets_ccie_primary_filter(self, query: str) -> None:
-        """영어 쿼리는 doc_type=ccie 1차 필터 + language=en 폴백을 생성해야 한다."""
+        """영어 쿼리는 doc_type ∈ {ccie, rfc} 1차 필터 + language=en 폴백을 생성해야 한다.
+
+        RFC 콘텐츠가 추가된 후 영어 기술 문서 둘 다 우선 검색 대상에 포함된다.
+        """
         intent = self.analyzer.analyze(query)
         assert intent.detected_language == "en"
-        assert intent.metadata_filter == {"doc_type": "ccie"}
+        assert intent.metadata_filter == {"doc_type": {"$in": ["ccie", "rfc"]}}
         assert intent.fallback_filter == {"language": "en"}
 
     @pytest.mark.parametrize(

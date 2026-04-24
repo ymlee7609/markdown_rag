@@ -9,7 +9,8 @@ class TestSettings:
     def test_default_settings(self):
         settings = Settings()
         assert settings.embedding_backend == "local"
-        assert settings.local_model == "all-MiniLM-L6-v2"
+        # 다국어(한국어+영어) 지원을 위해 multilingual-e5-small이 기본값
+        assert settings.local_model == "intfloat/multilingual-e5-small"
         assert settings.chunk_max_size == 1000
         assert settings.chunk_overlap == 100
         assert settings.search_top_k == 5

@@ -92,9 +92,14 @@ class TestBM25Index:
     def test_save_and_load(
         self, index_with_data: BM25Index, tmp_path: Path
     ) -> None:
+        # bm25s는 디렉토리 기반 저장이므로 .pkl 확장자는 자동으로 디렉토리로 매핑됨
         save_path = tmp_path / "bm25.pkl"
         index_with_data.save(save_path)
-        assert save_path.exists()
+
+        # 실제 저장 위치는 확장자 제거한 디렉토리
+        save_dir = save_path.with_suffix("")
+        assert save_dir.is_dir()
+        assert (save_dir / "chunks.pkl").exists()
 
         loaded = BM25Index.load(save_path)
         assert loaded.size == index_with_data.size

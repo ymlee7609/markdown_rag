@@ -7,6 +7,7 @@ import os
 
 from fastapi import APIRouter, HTTPException, Request
 
+from markdown_rag.api.routes.search import _build_where_filter
 from markdown_rag.api.schemas import (
     AskRequest,
     AskResponse,
@@ -14,7 +15,6 @@ from markdown_rag.api.schemas import (
     SearchResultResponse,
 )
 from markdown_rag.config import Settings
-from markdown_rag.api.routes.search import _build_where_filter
 from markdown_rag.embedding.local import LocalEmbedding
 from markdown_rag.embedding.openai import OpenAIEmbedding
 from markdown_rag.llm.base import LLMBackend
@@ -47,6 +47,8 @@ def _get_llm_backend(settings: Settings, model_override: str | None = None) -> L
             model_path=settings.local_llm_model_path,
             context_size=settings.local_llm_context_size,
             max_tokens=settings.local_llm_max_tokens,
+            chat_template_path=settings.local_llm_chat_template_path or None,
+            temperature=settings.local_llm_temperature,
         )
 
     # OpenAI 백엔드

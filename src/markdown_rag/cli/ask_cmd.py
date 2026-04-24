@@ -34,6 +34,8 @@ def _create_llm_backend(settings, model_override: str | None = None):
             model_path=settings.local_llm_model_path,
             context_size=settings.local_llm_context_size,
             max_tokens=settings.local_llm_max_tokens,
+            chat_template_path=settings.local_llm_chat_template_path or None,
+            temperature=settings.local_llm_temperature,
         )
 
     # OpenAI 백엔드

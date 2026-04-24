@@ -77,8 +77,13 @@ class TestHybridSearchFusion:
         assert len(results) == 1
 
     def test_passes_where_to_semantic(self, hybrid_engine: HybridSearch) -> None:
+        """사용자 where 필터가 semantic_search로 전달되어야 한다.
+
+        한국어 쿼리는 QueryAnalyzer가 자동 필터를 만들지 않으므로
+        사용자 필터만 그대로 전달된다.
+        """
         where = {"doc_type": "rfc"}
-        hybrid_engine.search("test", top_k=3, where=where)
+        hybrid_engine.search("스패닝트리", top_k=3, where=where)
         hybrid_engine.semantic_search.search.assert_called_once()
         call_kwargs = hybrid_engine.semantic_search.search.call_args
         assert call_kwargs.kwargs.get("where") == where or call_kwargs[1].get("where") == where
