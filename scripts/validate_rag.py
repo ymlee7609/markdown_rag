@@ -25,11 +25,13 @@ from typing import Any
 _PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT / "src"))
 
-from markdown_rag.config import Settings
-from markdown_rag.embedding.local import LocalEmbedding
-from markdown_rag.models import SearchResult
-from markdown_rag.retriever.search import SemanticSearch
-from markdown_rag.store.chroma import ChromaStore
+from markdown_rag.config import Settings  # noqa: E402
+from markdown_rag.embedding.local import LocalEmbedding  # noqa: E402
+from markdown_rag.models import SearchResult  # noqa: E402
+from markdown_rag.retriever.bm25 import BM25Index  # noqa: E402
+from markdown_rag.retriever.hybrid import HybridSearch  # noqa: E402
+from markdown_rag.retriever.search import SemanticSearch  # noqa: E402
+from markdown_rag.store.chroma import ChromaStore  # noqa: E402
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -234,14 +236,25 @@ def print_summary(
     print(f"  Hit@1     : {overall['hit_at_1']}/{overall['total']} ({overall['hit_at_1_pct']}%)")
     print(f"  Hit@3     : {overall['hit_at_3']}/{overall['total']} ({overall['hit_at_3_pct']}%)")
     print(f"  Hit@5     : {overall['hit_at_5']}/{overall['total']} ({overall['hit_at_5_pct']}%)")
-    print(f"  키워드 매치: {overall['keyword_match']}/{overall['total']} ({overall['keyword_match_pct']}%)")
+    kw_match = overall["keyword_match"]
+    kw_pct = overall["keyword_match_pct"]
+    print(f"  키워드 매치: {kw_match}/{overall['total']} ({kw_pct}%)")
     print(f"  평균 MRR  : {overall['avg_mrr']}")
     print(f"  평균 응답 : {overall['avg_elapsed_ms']}ms")
 
     # 카테고리별 요약
-    cat_labels = {"rfc": "IETF RFC", "ccie": "Cisco CCIE", "ko": "한국어 매뉴얼", "edge": "교차/엣지"}
+    cat_labels = {
+        "rfc": "IETF RFC",
+        "ccie": "Cisco CCIE",
+        "ko": "한국어 매뉴얼",
+        "edge": "교차/엣지",
+    }
     print("\n[카테고리별]")
-    print(f"  {'카테고리':<14} {'통과':>6} {'Hit@1':>6} {'Hit@3':>6} {'Hit@5':>6} {'키워드':>6} {'MRR':>6}")
+    header = (
+        f"  {'카테고리':<14} {'통과':>6} {'Hit@1':>6} {'Hit@3':>6} "
+        f"{'Hit@5':>6} {'키워드':>6} {'MRR':>6}"
+    )
+    print(header)
     print("  " + "-" * 54)
     for cat, label in cat_labels.items():
         if cat not in by_cat:
@@ -278,9 +291,9 @@ def print_summary(
 # ---------------------------------------------------------------------------
 
 
-def build_search_engine(settings: Settings) -> SemanticSearch:
-    """검색 엔진을 초기화합니다."""
-    print("검색 엔진 초기화 중...")
+def build_search_engine(settings: Settings):
+    """검색 엔진을 초기화합니다. search_mode에 따라 Semantic/Hybrid 선택."""
+    print(f"검색 엔진 초기화 중... (mode={settings.search_mode})")
 
     # 임베딩 백엔드
     embedding = LocalEmbedding(model_name=settings.local_model)
@@ -292,11 +305,25 @@ def build_search_engine(settings: Settings) -> SemanticSearch:
     )
 
     # 시맨틱 검색 엔진
-    engine = SemanticSearch(
+    semantic = SemanticSearch(
         embedding_backend=embedding,
         vector_store=store,
         top_k=settings.search_top_k,
     )
+
+    if settings.search_mode == "hybrid":
+        chunk_count = store.count()
+        print(f"인덱스 로드 완료: {chunk_count:,}개 청크")
+        print(f"BM25 인덱스 로드 중: {settings.bm25_index_path}")
+        bm25 = BM25Index.load(settings.bm25_index_path)
+        print(f"BM25 로드 완료: {bm25.size:,}개 청크 (alpha={settings.hybrid_alpha})")
+        return HybridSearch(
+            semantic_search=semantic,
+            bm25_index=bm25,
+            alpha=settings.hybrid_alpha,
+        )
+
+    engine = semantic
 
     chunk_count = store.count()
     print(f"인덱스 로드 완료: {chunk_count:,}개 청크")
@@ -332,6 +359,11 @@ def main() -> None:
         type=Path,
         default=None,
         help="결과 JSON 저장 경로 (기본값: scripts/validation_results_<timestamp>.json)",
+    )
+    parser.add_argument(
+        "--export-review",
+        action="store_true",
+        help="결과에 리뷰 템플릿 정보를 포함하여 저장",
     )
     parser.add_argument(
         "--env-file",
@@ -411,7 +443,7 @@ def main() -> None:
     else:
         output_path = args.output
 
-    report = {
+    report: dict[str, Any] = {
         "run_at": datetime.now().isoformat(),
         "dataset": str(args.dataset),
         "top_k": args.top_k,
@@ -421,10 +453,21 @@ def main() -> None:
         "results": eval_results,
     }
 
+    # --export-review 플래그: 리뷰 워크플로우 안내 포함
+    if getattr(args, "export_review", False):
+        report["review_template"] = {
+            "ready_for_review": True,
+            "failed_count": len(failed_cases),
+            "review_cmd": f"python scripts/review_rag.py --results {output_path.name}",
+        }
+
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
     print(f"\n리포트 저장: {output_path}")
+
+    if getattr(args, "export_review", False):
+        print(f"\n리뷰 시작: python scripts/review_rag.py --results {output_path.name}")
 
 
 if __name__ == "__main__":
