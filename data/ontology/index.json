@@ -1,0 +1,431 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-05-22T09:50:23.690506",
+  "count": 53,
+  "entities": {
+    "feat:power-supply": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-power-supply.md",
+      "name_en": "Power Supply",
+      "name_ko": "전원 공급 장치",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "feat:clock-config": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-clock-config.md",
+      "name_en": "System Clock Configuration",
+      "name_ko": "시스템 시간 / 클록 설정",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "feat:console-access": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-console-access.md",
+      "name_en": "Console Access (Serial)",
+      "name_ko": "콘솔 접속 (시리얼)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "feat:dot1q-tunnel": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-dot1q-tunnel.md",
+      "name_en": "802.1Q Tunneling (Q-in-Q)",
+      "name_ko": "Q-in-Q (이중 VLAN 태깅 터널)",
+      "source": "human",
+      "confidence": 0.95
+    },
+    "feat:firmware-upgrade": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-firmware-upgrade.md",
+      "name_en": "Firmware / Software Upgrade",
+      "name_ko": "펌웨어 / 소프트웨어 업그레이드",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "feat:mac-address-table": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-mac-address-table.md",
+      "name_en": "MAC Address Table",
+      "name_ko": "MAC 주소 테이블",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "feat:port-mirroring": {
+      "type": "Feature",
+      "path": "input_ontology/features/feat-port-mirroring.md",
+      "name_en": "Port Mirroring (SPAN)",
+      "name_ko": "포트 미러링",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:dasan-v6824xg": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-dasan-v6824xg.md",
+      "name_en": "V6824XG",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:ubiquoss-p8624": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-ubiquoss-p8624.md",
+      "name_en": "P8624",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:dasan-v8500": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-dasan-v8500.md",
+      "name_en": "V8500 / V8500M",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:ubiquoss-e5924l": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-ubiquoss-e5924l.md",
+      "name_en": "E5924L / E5924LB",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:dasan-v3024v": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-dasan-v3024v.md",
+      "name_en": "V3024V",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:ubiquoss-u9532h": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-ubiquoss-u9532h.md",
+      "name_en": "U9532H",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:dasan-v3024vb": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-dasan-v3024vb.md",
+      "name_en": "V3024VB",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "model:ubiquoss-e5708r": {
+      "type": "DeviceModel",
+      "path": "input_ontology/devices/model-ubiquoss-e5708r.md",
+      "name_en": "E5708R",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "vendor:dasan": {
+      "type": "Vendor",
+      "path": "input_ontology/vendors/vendor-dasan.md",
+      "name_en": "Dasan Networks",
+      "name_ko": "다산네트웍스",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "vendor:ubiquoss": {
+      "type": "Vendor",
+      "path": "input_ontology/vendors/vendor-ubiquoss.md",
+      "name_en": "Ubiquoss",
+      "name_ko": "유비쿼스",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:4861": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-4861.md",
+      "name_en": "Neighbor Discovery for IP version 6 (IPv6)",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:2516": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-2516.md",
+      "name_en": "A Method for Transmitting PPP Over Ethernet (PPPoE)",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:2131": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-2131.md",
+      "name_en": "Dynamic Host Configuration Protocol",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:5905": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-5905.md",
+      "name_en": "Network Time Protocol Version 4: Protocol and Algorithms Specification",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:1661": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-1661.md",
+      "name_en": "The Point-to-Point Protocol (PPP)",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:3376": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-3376.md",
+      "name_en": "Internet Group Management Protocol, Version 3",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:4271": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-4271.md",
+      "name_en": "A Border Gateway Protocol 4 (BGP-4)",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:8200": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-8200.md",
+      "name_en": "Internet Protocol, Version 6 (IPv6) Specification",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "rfc:2328": {
+      "type": "RFC",
+      "path": "input_ontology/rfcs/rfc-2328.md",
+      "name_en": "OSPF Version 2",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "std:ieee-802.1q": {
+      "type": "Standard",
+      "path": "input_ontology/standards/std-ieee-802.1q.md",
+      "name_en": "IEEE Standard for Local and metropolitan area networks - Bridges and Bridged Networks",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "std:ieee-802.1d": {
+      "type": "Standard",
+      "path": "input_ontology/standards/std-ieee-802.1d.md",
+      "name_en": "IEEE Standard for Local and metropolitan area networks - Media Access Control (MAC) Bridges",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "std:itu-t-g.984": {
+      "type": "Standard",
+      "path": "input_ontology/standards/std-itu-t-g.984.md",
+      "name_en": "Gigabit-capable Passive Optical Networks (GPON)",
+      "name_ko": "",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:dhcp": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-dhcp.md",
+      "name_en": "DHCP",
+      "name_ko": "동적 호스트 구성 프로토콜 (DHCPv4)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:ntp": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-ntp.md",
+      "name_en": "NTP",
+      "name_ko": "네트워크 시간 프로토콜 (NTP)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:ospf": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-ospf.md",
+      "name_en": "OSPF",
+      "name_ko": "개방형 최단 경로 우선 (OSPFv2)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:gpon": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-gpon.md",
+      "name_en": "GPON",
+      "name_ko": "기가비트 수동 광 네트워크 (GPON)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:acl": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-acl.md",
+      "name_en": "ACL",
+      "name_ko": "접근 제어 목록 (ACL)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:bgp": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-bgp.md",
+      "name_en": "BGP",
+      "name_ko": "경계 경로 프로토콜 (BGP-4)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:ipv6": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-ipv6.md",
+      "name_en": "IPv6",
+      "name_ko": "인터넷 프로토콜 버전 6 (IPv6)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:stp": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-stp.md",
+      "name_en": "STP",
+      "name_ko": "스패닝 트리 프로토콜",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:pppoe": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-pppoe.md",
+      "name_en": "PPPoE",
+      "name_ko": "PPP over Ethernet (PPPoE)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:vlan": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-vlan.md",
+      "name_en": "VLAN",
+      "name_ko": "가상 LAN (VLAN)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "proto:igmp": {
+      "type": "Protocol",
+      "path": "input_ontology/protocols/proto-igmp.md",
+      "name_en": "IGMP",
+      "name_ko": "인터넷 그룹 관리 프로토콜 (IGMP)",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:acl-standard": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-acl-standard.md",
+      "name_en": "Standard ACL",
+      "name_ko": "표준 ACL",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:igmp-snooping": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-igmp-snooping.md",
+      "name_en": "IGMP Snooping",
+      "name_ko": "IGMP 스누핑",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:stp-port-states": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-stp-port-states.md",
+      "name_en": "STP Port States",
+      "name_ko": "STP 포트 상태",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:acl-extended": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-acl-extended.md",
+      "name_en": "Extended ACL",
+      "name_ko": "확장 ACL",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:ipv6-header": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-ipv6-header.md",
+      "name_en": "IPv6 Header",
+      "name_ko": "IPv6 헤더",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:bgp-as-path": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-bgp-as-path.md",
+      "name_en": "BGP AS_PATH",
+      "name_ko": "BGP AS-PATH 경로 속성",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:stp-root-bridge": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-stp-root-bridge.md",
+      "name_en": "STP Root Bridge",
+      "name_ko": "STP 루트 브리지",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:mac-learning": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-mac-learning.md",
+      "name_en": "MAC Address Learning",
+      "name_ko": "MAC 주소 학습",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:gpon-olt-onu": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-gpon-olt-onu.md",
+      "name_en": "GPON OLT-ONU Architecture",
+      "name_ko": "GPON OLT-ONU 구조",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:pppoe-discovery": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-pppoe-discovery.md",
+      "name_en": "PPPoE Discovery",
+      "name_ko": "PPPoE 발견 단계",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:ospf-area": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-ospf-area.md",
+      "name_en": "OSPF Area",
+      "name_ko": "OSPF 영역",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:vlan-trunk": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-vlan-trunk.md",
+      "name_en": "VLAN Trunk",
+      "name_ko": "VLAN 트렁크",
+      "source": "human",
+      "confidence": 1.0
+    },
+    "concept:dhcp-discover": {
+      "type": "Concept",
+      "path": "input_ontology/concepts/concept-dhcp-discover.md",
+      "name_en": "DHCP Discovery (DORA)",
+      "name_ko": "DHCP 발견·할당 절차 (DORA)",
+      "source": "human",
+      "confidence": 1.0
+    }
+  }
+}

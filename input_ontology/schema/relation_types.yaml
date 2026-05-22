@@ -1,0 +1,182 @@
+# 온톨로지 관계 타입 정의
+# 관계 인스턴스는 _relations/relations.jsonl 에 5-tuple로 저장된다:
+#   {predicate, subject_id, object_id, evidence, confidence, source}
+# 카드 frontmatter의 관계 필드(예: defined_by, related)도 같은 의미를 갖는다.
+
+version: 1.0.0
+last_updated: 2026-05-22
+
+# 관계 인스턴스 스키마 (relations.jsonl 한 줄)
+instance_schema:
+  predicate:    "관계 타입 이름 (아래 relations 키 중 하나)"
+  subject_id:   "subject 엔티티 ID"
+  object_id:    "object 엔티티 ID"
+  evidence:     "list[str] - doc_path#anchor 형식의 근거 위치 (검증용)"
+  confidence:   "float 0.0~1.0"
+  source:       "human | llm | llm-reviewed"
+  created_at:   "ISO datetime (선택)"
+
+relations:
+
+  defined_by:
+    description: "subject 개체가 object 표준 문서에 의해 정의됨"
+    domain: [Protocol, Concept]
+    range:  [RFC, Standard]
+    cardinality: many_to_many
+    inverse: defines
+    examples:
+      - { s: "proto:ospf",  o: "rfc:2328" }
+      - { s: "proto:vlan",  o: "std:ieee-802.1q" }
+
+  defines:
+    description: "표준 문서가 정의하는 개체 (defined_by의 역관계)"
+    domain: [RFC, Standard]
+    range:  [Protocol, Concept]
+    cardinality: many_to_many
+    inverse: defined_by
+
+  obsoletes:
+    description: "RFC가 다른 RFC를 폐기"
+    domain: [RFC]
+    range:  [RFC]
+    cardinality: many_to_many
+    inverse: obsoleted_by
+
+  obsoleted_by:
+    domain: [RFC]
+    range:  [RFC]
+    cardinality: many_to_many
+    inverse: obsoletes
+
+  updates:
+    description: "RFC가 다른 RFC를 부분 갱신 (폐기 아님)"
+    domain: [RFC]
+    range:  [RFC]
+    cardinality: many_to_many
+    inverse: updated_by
+
+  updated_by:
+    domain: [RFC]
+    range:  [RFC]
+    cardinality: many_to_many
+    inverse: updates
+
+  extends:
+    description: "subject 프로토콜이 object 프로토콜을 확장 (예: OSPFv3 extends OSPFv2)"
+    domain: [Protocol]
+    range:  [Protocol]
+    cardinality: many_to_many
+    examples:
+      - { s: "proto:ospfv3", o: "proto:ospf" }
+      - { s: "proto:dhcpv6", o: "proto:dhcp" }
+
+  part_of:
+    description: "Concept이 어느 Protocol에 속하는지 (parent_protocol과 동일 의미)"
+    domain: [Concept]
+    range:  [Protocol]
+    cardinality: many_to_one
+    examples:
+      - { s: "concept:ospf-lsa", o: "proto:ospf" }
+
+  implements:
+    description: "Feature가 어떤 Protocol/Concept을 구현하는지"
+    domain: [Feature]
+    range:  [Protocol, Concept]
+    cardinality: many_to_many
+    examples:
+      - { s: "feat:dot1q-tunnel", o: "proto:vlan" }
+
+  configures:
+    description: "Command가 설정하는 대상 Feature/Protocol/Concept"
+    domain: [Command]
+    range:  [Feature, Protocol, Concept]
+    cardinality: many_to_many
+
+  available_on:
+    description: "Command/Feature가 지원되는 장비 모델"
+    domain: [Command, Feature]
+    range:  [DeviceModel]
+    cardinality: many_to_many
+
+  references:
+    description: "한 문서/엔티티가 다른 RFC/Concept을 본문에서 참조"
+    domain: [Protocol, RFC, Concept, Feature]
+    range:  [RFC, Protocol, Concept, Standard]
+    cardinality: many_to_many
+    note: "defined_by 보다 약한 관계. 본문 인용 수준."
+
+  taught_in:
+    description: "Protocol/Concept이 어느 학습용 문서(CCIE 등)에서 설명되는지"
+    domain: [Protocol, Concept]
+    range:  [doc_path]  # 외부 doc 경로 (엔티티 아님)
+    cardinality: many_to_many
+    note: "object는 엔티티가 아닌 input_optimized/ 하위 파일 경로"
+
+  documented_in:
+    description: "Feature/Command/DeviceModel이 어느 매뉴얼에서 문서화되는지"
+    domain: [Feature, Command, DeviceModel, Protocol]
+    range:  [doc_path]
+    cardinality: many_to_many
+    note: "object는 input_optimized/가입자망장비_manual/ 하위 파일 경로"
+
+  related_to:
+    description: "약한 연관 (query expansion용). 정확한 관계가 정의되지 않을 때 사용."
+    domain: ["*"]      # 모든 엔티티 타입 허용
+    range:  ["*"]
+    cardinality: many_to_many
+    note: "최소 confidence 0.5 이상만 인정. 검색 boost 시 가중치를 낮춰 적용한다."
+
+  alias_of:
+    description: "동의어/약어 매핑. canonical ID를 향한 관계."
+    domain: ["*"]
+    range:  ["*"]
+    cardinality: many_to_one
+    note: |
+      이 관계는 카드 frontmatter의 aliases 필드와 alias_dictionary.yaml에서 관리된다.
+      relations.jsonl에는 통상 기록하지 않는다.
+
+  depends_on:
+    description: "subject Protocol/Feature가 동작하려면 object Protocol/Feature가 필요"
+    domain: [Protocol, Feature]
+    range:  [Protocol, Feature]
+    cardinality: many_to_many
+    examples:
+      - { s: "proto:pppoe", o: "proto:ppp" }
+      - { s: "proto:ospfv3", o: "proto:ipv6" }
+
+# 추출 정책
+extraction_policy:
+  # Stage 1 (결정론적) 단계에서 자동 추출 가능한 관계
+  deterministic:
+    - references         # 정규식 "RFC NNNN" 매칭
+    - documented_in      # 파일 경로 기반
+    - taught_in          # 파일 경로 기반
+    - obsoletes          # RFC 본문 헤더 파싱
+    - updates            # RFC 본문 헤더 파싱
+
+  # Stage 2-3 (LLM) 단계에서 추출
+  llm_extracted:
+    - defined_by
+    - defines
+    - extends
+    - part_of
+    - implements
+    - configures
+    - related_to
+    - depends_on
+
+  # 인간 검수 필수 (confidence < 0.85)
+  human_review_required:
+    - defined_by         # 핵심 관계, 환각 비용 큼
+    - obsoletes          # 표준 체인 오류 위험
+    - extends            # 의미 모호
+    - depends_on         # 추론 정확도 낮음
+
+# 검증 규칙 (build_ontology_schema.py가 enforce)
+validation_rules:
+  - "subject_id와 object_id는 각각 entity_types.yaml의 id_prefix 규칙을 따라야 함"
+  - "domain/range 제약을 위반하는 인스턴스는 거부"
+  - "obsoletes는 비순환 DAG여야 함 (A obsoletes B, B obsoletes A 금지)"
+  - "extends는 비순환 DAG여야 함"
+  - "part_of는 단일 parent 강제 (Concept당 1개 Protocol)"
+  - "confidence < 0.5 인스턴스는 인덱스 빌드 시 제외"

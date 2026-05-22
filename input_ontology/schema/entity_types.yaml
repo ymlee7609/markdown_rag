@@ -1,0 +1,202 @@
+# 온톨로지 엔티티 타입 정의
+# 각 카드(보조 문서 md) frontmatter의 type 필드는 아래 정의된 8종 중 하나여야 한다.
+# id_prefix 규칙: <prefix>:<slug> 형식. slug는 lowercase-kebab-case (영어 canonical).
+
+version: 1.0.0
+last_updated: 2026-05-22
+
+entity_types:
+
+  Protocol:
+    description: |
+      네트워킹 프로토콜 또는 표준화된 기술. 계층 무관.
+      예: OSPF, BGP, STP, VLAN, PPPoE, GPON
+    id_prefix: "proto"
+    required_fields:
+      - id           # canonical ID, 예: proto:ospf
+      - type         # 항상 "Protocol"
+      - name_en      # 영어 정식 명칭
+      - name_ko      # 한국어 정식 명칭
+      - source       # human | llm | llm-reviewed
+    optional_fields:
+      - aliases              # list[str], 약어/별칭
+      - layer                # L1 | L2 | L3 | L4 | L7 | multi
+      - family               # IGP | EGP | tunnel | access | management | ...
+      - status               # active | obsolete | experimental
+      - defined_by           # list[RFC|Standard id]
+      - extends              # list[Protocol id] - 상위 프로토콜 확장
+      - related              # list[id] - 약한 연관 (검색 expansion용)
+      - references           # list[RFC|Standard id] - 본문 인용
+      - taught_in            # list[doc_path] - CCIE/이론서에서의 설명 위치
+      - documented_in        # list[doc_path] - 벤더 매뉴얼 위치
+      - vendors_supporting   # list[Vendor slug]
+      - keywords_en          # list[str] - 영어 검색 키워드
+      - keywords_ko          # list[str] - 한국어 검색 키워드
+      - confidence           # float 0.0~1.0
+      - last_reviewed        # ISO date
+
+  RFC:
+    description: |
+      IETF RFC 표준 문서 (또는 draft).
+      IETF_RFC/ 코퍼스의 각 RFC와 1:1 매핑되는 메타데이터 카드.
+    id_prefix: "rfc"
+    required_fields:
+      - id           # rfc:<number>, 예: rfc:2328
+      - type
+      - rfc_number   # int
+      - title        # 원제
+      - source
+    optional_fields:
+      - status              # STD | PS | DS | INFO | EXP | HISTORIC | OBSOLETE | BCP
+      - std_number          # str, 예: "STD 54"
+      - obsoletes           # list[RFC id]
+      - obsoleted_by        # list[RFC id]
+      - updates             # list[RFC id]
+      - updated_by          # list[RFC id]
+      - defines             # list[Protocol|Concept id]
+      - authors             # list[str]
+      - date                # ISO date
+      - category            # standards-track | informational | experimental | bcp
+      - keywords_en
+      - corpus_paths        # list[str] - input_optimized/IETF_RFC/ 내 실제 파일 경로
+      - confidence
+      - last_reviewed
+
+  Concept:
+    description: |
+      프로토콜 하위 메커니즘이나 분리 가능한 개념.
+      예: OSPF LSA, BGP AS-PATH, STP root bridge election
+    id_prefix: "concept"
+    required_fields:
+      - id           # concept:<protocol>-<concept-slug>, 예: concept:ospf-lsa
+      - type
+      - name_en
+      - name_ko
+      - parent_protocol  # 단일 Protocol id (필수)
+      - source
+    optional_fields:
+      - scope               # message | state | algorithm | data-structure | role
+      - aliases
+      - defined_by          # list[RFC|Standard id] (보통 parent_protocol에서 상속)
+      - related
+      - taught_in
+      - documented_in
+      - keywords_en
+      - keywords_ko
+      - confidence
+      - last_reviewed
+
+  Feature:
+    description: |
+      벤더·기기에서 구현된 기능. Protocol의 부분 구현이거나 벤더 특화 확장일 수 있다.
+      예: dot1q-tunnel(Q-in-Q), port-security, storm-control
+    id_prefix: "feat"
+    required_fields:
+      - id           # feat:<feature-slug>, 예: feat:dot1q-tunnel
+      - type
+      - name_en
+      - name_ko
+      - source
+    optional_fields:
+      - implements          # list[Protocol|Concept id]
+      - vendors             # list[Vendor slug] - 이 기능을 제공하는 벤더
+      - device_scope        # list[DeviceModel id] - 지원 모델 (선택)
+      - configures          # list[Concept|Protocol id] - 이 feature가 설정 대상으로 삼는 것
+      - documented_in
+      - related
+      - keywords_en
+      - keywords_ko
+      - confidence
+      - last_reviewed
+
+  Command:
+    description: |
+      CLI 명령어 단위. 1차 구축에서는 생성하지 않고 Feature 레벨까지만 매핑한다.
+      2차 확장에서 다산/유비쿼스 OLT 핵심 명령어 우선 추가.
+    id_prefix: "cmd"
+    required_fields:
+      - id           # cmd:<vendor>-<feature>-<verb>, 예: cmd:dasan-vlan-create
+      - type
+      - syntax       # str, CLI 구문
+      - vendor       # Vendor slug
+      - source
+    optional_fields:
+      - mode                # config | exec | interface | ...
+      - configures          # list[Feature|Concept id]
+      - available_on        # list[DeviceModel id]
+      - description_ko
+      - description_en
+      - example
+      - documented_in
+      - keywords_en
+      - keywords_ko
+      - confidence
+      - last_reviewed
+
+  Vendor:
+    description: |
+      장비 제조사.
+    id_prefix: "vendor"
+    required_fields:
+      - id           # vendor:<slug>, 예: vendor:dasan, vendor:ubiquoss, vendor:cisco
+      - type
+      - name_en
+      - name_ko
+      - source
+    optional_fields:
+      - country
+      - website
+      - corpus_path_prefix  # str, 예: "가입자망장비_manual/다산_"
+      - product_lines       # list[str], 예: ["L2", "L3", "OLT"]
+      - confidence
+      - last_reviewed
+
+  DeviceModel:
+    description: |
+      구체 장비 모델 (V3024V, E61xx 등).
+    id_prefix: "model"
+    required_fields:
+      - id           # model:<vendor>-<model-slug>, 예: model:dasan-v3024v
+      - type
+      - vendor       # Vendor slug
+      - name         # 모델명 원본
+      - source
+    optional_fields:
+      - role                # L2 | L3 | OLT | ONT
+      - os_version          # str, 예: "UMNnos 1.01"
+      - manual_paths        # list[doc_path]
+      - supports_features   # list[Feature id]
+      - keywords_en
+      - keywords_ko
+      - confidence
+      - last_reviewed
+
+  Standard:
+    description: |
+      IETF 외 표준 (IEEE, ITU-T, ANSI 등).
+      예: IEEE 802.1Q (VLAN tagging), ITU-T G.984 (GPON)
+    id_prefix: "std"
+    required_fields:
+      - id           # std:<sdo>-<doc>, 예: std:ieee-802.1q
+      - type
+      - sdo          # Standards Development Organization: ieee | itu-t | ansi | iso | ...
+      - doc_id       # 표준 문서 번호 원문
+      - title
+      - source
+    optional_fields:
+      - status              # active | superseded | withdrawn
+      - year
+      - defines             # list[Protocol|Concept id]
+      - keywords_en
+      - confidence
+      - last_reviewed
+
+# 1차 구축 우선순위
+# Protocol, RFC, Concept는 M1-M2에서 우선 작성
+# Feature, Vendor, DeviceModel은 M3에서 LLM 추출
+# Command는 2차 확장 (M3 이후)
+# Standard는 필요시 추가 (GPON 등 핵심만)
+priority:
+  tier1: [Protocol, RFC, Concept]
+  tier2: [Feature, Vendor, DeviceModel]
+  tier3: [Command, Standard]

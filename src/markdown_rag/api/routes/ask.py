@@ -7,30 +7,20 @@ import os
 
 from fastapi import APIRouter, HTTPException, Request
 
-from markdown_rag.api.routes.search import _build_where_filter
+from markdown_rag.api.routes.search import _build_where_filter, _to_chunk_response
 from markdown_rag.api.schemas import (
     AskRequest,
     AskResponse,
-    ChunkResponse,
     SearchResultResponse,
 )
 from markdown_rag.config import Settings
-from markdown_rag.embedding.local import LocalEmbedding
-from markdown_rag.embedding.openai import OpenAIEmbedding
 from markdown_rag.llm.base import LLMBackend
+from markdown_rag.retriever.builder import build_search_engine
 from markdown_rag.retriever.rag import RAGEngine
-from markdown_rag.retriever.search import SemanticSearch
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
-
-
-def _get_embedding_backend(settings: Settings) -> object:
-    """설정에 따라 임베딩 백엔드를 생성한다."""
-    if settings.embedding_backend == "openai":
-        return OpenAIEmbedding(model_name=settings.openai_embedding_model)
-    return LocalEmbedding(model_name=settings.local_model)
 
 
 def _get_llm_backend(settings: Settings, model_override: str | None = None) -> LLMBackend:
@@ -68,16 +58,11 @@ def _get_llm_backend(settings: Settings, model_override: str | None = None) -> L
 def ask_question(body: AskRequest, request: Request) -> AskResponse:
     """RAG(Retrieval-Augmented Generation) 기반 질의응답."""
     settings = request.app.state.settings
-    store = request.app.state.vector_store
 
     try:
-        embedding = _get_embedding_backend(settings)
         llm_backend = _get_llm_backend(settings, model_override=body.model)
-        search_engine = SemanticSearch(
-            embedding_backend=embedding,
-            vector_store=store,
-            top_k=body.top_k,
-        )
+        # 검색 엔진은 builder가 mode에 따라 SemanticSearch/Hybrid/OntologyAug 자동 선택
+        search_engine = build_search_engine(settings, mode_override=body.mode)
         rag_engine = RAGEngine(
             search_engine=search_engine,
             llm_backend=llm_backend,
@@ -99,12 +84,7 @@ def ask_question(body: AskRequest, request: Request) -> AskResponse:
 
     response_sources = [
         SearchResultResponse(
-            chunk=ChunkResponse(
-                content=r.chunk.content,
-                doc_path=str(r.chunk.doc_path),
-                headers=r.chunk.headers,
-                chunk_index=r.chunk.chunk_index,
-            ),
+            chunk=_to_chunk_response(r.chunk),
             score=r.score,
             rank=r.rank,
         )

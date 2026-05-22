@@ -1,0 +1,331 @@
+# Alias Dictionary (시드)
+# canonical 엔티티 ID에 매핑되는 약어, 별칭, 한국어 동의어를 정의한다.
+# scripts/extract_onto_candidates.py 가 청크 내 토큰을 이 사전과 매칭해
+# onto_protocol_ids / onto_concept_ids 후보를 만든다.
+#
+# 규칙:
+#   - canonical ID는 entity_types.yaml의 id_prefix 규칙을 따른다 (영어 lowercase-kebab).
+#   - aliases는 case-insensitive 매칭이지만 한글은 그대로 매칭.
+#   - 짧은 약어(예: "IP", "AS")는 false positive 위험이 커서 의도적으로 제외하거나
+#     context window 검사를 추가로 요구한다 (요구 토큰 옆에 다른 키워드 동반 필요).
+#
+# 1차 시드: 45개 핵심 프로토콜 + 한국어 네트워킹 용어. M2/M3에서 확장.
+
+version: 1.0.0
+last_updated: 2026-05-22
+
+# 매칭 정책
+match_policy:
+  case_sensitive: false       # 영어는 대소문자 무시
+  korean_exact: true          # 한국어는 정확히 일치
+  min_token_length: 3         # 3자 미만 토큰은 단독 매칭 금지 (IP, AS 등)
+  require_context_tokens:     # 짧은 토큰은 동반 키워드 필요
+    "IP":  ["address", "routing", "subnet", "header", "주소", "라우팅"]
+    "AS":  ["BGP", "path", "number", "경계", "자율시스템"]
+    "DR":  ["OSPF", "designated", "backup", "BDR"]
+    "BDR": ["OSPF", "designated", "backup", "DR"]
+
+# Protocol aliases
+protocols:
+  proto:ospf:
+    canonical: "OSPF"
+    aliases: ["OSPFv2", "Open Shortest Path First", "오에스피에프"]
+    ko_aliases: ["OSPF", "OSPFv2"]
+  proto:ospfv3:
+    canonical: "OSPFv3"
+    aliases: ["OSPF for IPv6", "OSPFv3"]
+  proto:bgp:
+    canonical: "BGP"
+    aliases: ["BGP-4", "BGPv4", "Border Gateway Protocol"]
+    ko_aliases: ["BGP", "비지피"]
+  proto:rip:
+    canonical: "RIP"
+    aliases: ["RIPv1", "RIPv2", "Routing Information Protocol"]
+  proto:ripng:
+    canonical: "RIPng"
+    aliases: ["RIP next generation"]
+  proto:isis:
+    canonical: "IS-IS"
+    aliases: ["ISIS", "Intermediate System to Intermediate System"]
+  proto:eigrp:
+    canonical: "EIGRP"
+    aliases: ["Enhanced IGRP", "Enhanced Interior Gateway Routing Protocol"]
+  proto:stp:
+    canonical: "STP"
+    aliases: ["Spanning Tree Protocol", "802.1D"]
+    ko_aliases: ["스패닝트리"]
+  proto:rstp:
+    canonical: "RSTP"
+    aliases: ["Rapid Spanning Tree Protocol", "802.1w"]
+  proto:mstp:
+    canonical: "MSTP"
+    aliases: ["Multiple Spanning Tree Protocol", "802.1s"]
+  proto:vlan:
+    canonical: "VLAN"
+    aliases: ["Virtual LAN", "802.1Q"]
+    ko_aliases: ["VLAN", "가상랜"]
+  proto:lacp:
+    canonical: "LACP"
+    aliases: ["Link Aggregation Control Protocol", "802.3ad"]
+    ko_aliases: ["LACP", "링크 결합"]
+  proto:lldp:
+    canonical: "LLDP"
+    aliases: ["Link Layer Discovery Protocol", "802.1AB"]
+  proto:pppoe:
+    canonical: "PPPoE"
+    aliases: ["PPP over Ethernet"]
+  proto:ppp:
+    canonical: "PPP"
+    aliases: ["Point-to-Point Protocol"]
+  proto:dhcp:
+    canonical: "DHCP"
+    aliases: ["Dynamic Host Configuration Protocol", "DHCPv4"]
+    ko_aliases: ["DHCP"]
+  proto:dhcpv6:
+    canonical: "DHCPv6"
+    aliases: ["DHCP for IPv6"]
+  proto:igmp:
+    canonical: "IGMP"
+    aliases: ["Internet Group Management Protocol", "IGMPv2", "IGMPv3"]
+    ko_aliases: ["IGMP", "멀티캐스트"]
+  proto:mld:
+    canonical: "MLD"
+    aliases: ["Multicast Listener Discovery"]
+  proto:gpon:
+    canonical: "GPON"
+    aliases: ["Gigabit-capable PON", "G.984"]
+    ko_aliases: ["GPON", "지피온"]
+  proto:tcp:
+    canonical: "TCP"
+    aliases: ["Transmission Control Protocol"]
+    ko_aliases: ["TCP"]
+  proto:udp:
+    canonical: "UDP"
+    aliases: ["User Datagram Protocol"]
+  proto:ipv4:
+    canonical: "IPv4"
+    aliases: ["Internet Protocol version 4"]
+  proto:ipv6:
+    canonical: "IPv6"
+    aliases: ["Internet Protocol version 6"]
+  proto:arp:
+    canonical: "ARP"
+    aliases: ["Address Resolution Protocol"]
+  proto:icmp:
+    canonical: "ICMP"
+    aliases: ["Internet Control Message Protocol", "ICMPv4"]
+  proto:icmpv6:
+    canonical: "ICMPv6"
+    aliases: ["Internet Control Message Protocol for IPv6"]
+  proto:ndp:
+    canonical: "NDP"
+    aliases: ["Neighbor Discovery Protocol", "Neighbor Discovery"]
+  proto:vrrp:
+    canonical: "VRRP"
+    aliases: ["Virtual Router Redundancy Protocol"]
+  proto:nat:
+    canonical: "NAT"
+    aliases: ["Network Address Translation", "PAT", "NAPT"]
+    ko_aliases: ["NAT", "주소변환"]
+  proto:nat64:
+    canonical: "NAT64"
+    aliases: ["IPv6-to-IPv4 NAT"]
+  proto:tls:
+    canonical: "TLS"
+    aliases: ["Transport Layer Security", "SSL"]
+  proto:acl:
+    canonical: "ACL"
+    aliases: ["Access Control List", "Access List"]
+    ko_aliases: ["ACL", "접근 제어 목록"]
+  proto:qos:
+    canonical: "QoS"
+    aliases: ["Quality of Service", "DiffServ", "Differentiated Services"]
+    ko_aliases: ["QoS", "서비스 품질"]
+  proto:snmp:
+    canonical: "SNMP"
+    aliases: ["Simple Network Management Protocol", "SNMPv2c", "SNMPv3"]
+  proto:syslog:
+    canonical: "Syslog"
+    aliases: ["System Logging Protocol"]
+  proto:ntp:
+    canonical: "NTP"
+    aliases: ["Network Time Protocol"]
+  proto:ssh:
+    canonical: "SSH"
+    aliases: ["Secure Shell", "SSHv2"]
+  proto:radius:
+    canonical: "RADIUS"
+    aliases: ["Remote Authentication Dial-In User Service"]
+  proto:mpls:
+    canonical: "MPLS"
+    aliases: ["Multi-Protocol Label Switching"]
+  proto:ntp:
+    canonical: "NTP"
+    aliases: ["NTPv4", "NTPv3", "Network Time Protocol"]
+    ko_aliases: ["NTP", "시간 동기화", "시각 동기"]
+
+# Concept aliases (1차 시드, 핵심 개념만)
+concepts:
+  concept:ospf-lsa:
+    canonical: "LSA"
+    aliases: ["Link State Advertisement", "Link-State Advertisement"]
+    ko_aliases: ["LSA", "링크 상태 광고"]
+    requires_context: ["OSPF", "ospf"]
+  concept:ospf-area:
+    canonical: "OSPF area"
+    aliases: ["area", "stub area", "NSSA", "backbone area"]
+    ko_aliases: ["영역", "OSPF 영역"]
+    requires_context: ["OSPF", "ospf"]
+  concept:ospf-neighbor:
+    canonical: "OSPF neighbor"
+    aliases: ["adjacency", "neighbor relationship", "Hello packet"]
+    ko_aliases: ["인접", "인접관계", "헬로"]
+    requires_context: ["OSPF", "ospf"]
+  concept:bgp-as-path:
+    canonical: "AS-PATH"
+    aliases: ["AS_PATH", "as-path", "Autonomous System Path"]
+    requires_context: ["BGP", "bgp"]
+  concept:stp-root-bridge:
+    canonical: "root bridge"
+    aliases: ["root switch", "root bridge election"]
+    ko_aliases: ["루트 브리지", "루트 스위치"]
+    requires_context: ["STP", "spanning", "스패닝"]
+  concept:vlan-trunk:
+    canonical: "VLAN trunk"
+    aliases: ["trunk port", "trunking", "802.1Q trunk"]
+    ko_aliases: ["트렁크", "트렁크 포트"]
+    requires_context: ["VLAN", "vlan"]
+  concept:mac-learning:
+    canonical: "MAC learning"
+    aliases: ["source MAC learning", "transparent bridge", "L2 learning", "aging"]
+    ko_aliases: ["MAC 학습", "출발지 MAC", "투명 브리지", "에이징"]
+    requires_context: ["MAC", "mac", "주소", "테이블", "table"]
+
+# Feature aliases (Q-in-Q 같은 대표 기능만 시드)
+features:
+  feat:dot1q-tunnel:
+    canonical: "Q-in-Q"
+    aliases: ["dot1q-tunnel", "802.1Q tunneling", "QinQ", "stacked VLAN"]
+    ko_aliases: ["Q-in-Q", "이중 태깅"]
+  feat:port-security:
+    canonical: "port security"
+    aliases: ["port-security", "MAC limit", "MAC lockdown"]
+    ko_aliases: ["포트 보안"]
+  feat:storm-control:
+    canonical: "storm control"
+    aliases: ["storm-control", "broadcast storm protection"]
+    ko_aliases: ["스톰 제어", "스톰컨트롤"]
+  feat:mac-address-table:
+    canonical: "MAC address table"
+    aliases: ["CAM table", "MAC table", "bridge table", "forwarding table", "show mac address-table"]
+    ko_aliases: ["MAC 주소 테이블", "MAC 테이블", "MAC 학습"]
+  feat:port-mirroring:
+    canonical: "port mirroring"
+    aliases: ["SPAN", "port mirror", "monitor session", "RSPAN", "ERSPAN"]
+    ko_aliases: ["포트 미러링", "미러링", "모니터링", "트래픽 캡처"]
+  feat:firmware-upgrade:
+    canonical: "firmware upgrade"
+    aliases: ["software upgrade", "image upgrade", "IOS upgrade", "NOS upgrade", "boot system"]
+    ko_aliases: ["펌웨어", "펌웨어 업그레이드", "소프트웨어 업그레이드", "업그레이드", "업데이트", "이미지"]
+  feat:console-access:
+    canonical: "console port"
+    aliases: ["serial console", "RS-232", "USB console", "out-of-band access"]
+    ko_aliases: ["콘솔", "콘솔 포트", "시리얼", "시리얼 케이블", "터미널"]
+  feat:clock-config:
+    canonical: "clock"
+    aliases: ["clock set", "system time", "timezone", "hardware clock"]
+    ko_aliases: ["클록", "시간 설정", "날짜 설정", "시스템 시간", "시간대"]
+    requires_context: ["set", "time", "date", "timezone", "ntp", "시간", "날짜", "설정"]
+  feat:power-supply:
+    canonical: "power supply"
+    aliases: ["PSU", "AC power", "DC power", "redundant power", "battery backup", "UPS"]
+    ko_aliases: ["전원", "전원 공급", "전원 공급 장치", "PSU", "배터리", "백업 전원"]
+
+# Vendor aliases
+vendors:
+  vendor:dasan:
+    canonical: "Dasan"
+    aliases: ["Dasan Networks", "DSN"]
+    ko_aliases: ["다산", "다산네트웍스"]
+    corpus_path_marker: "가입자망장비_manual/다산_"
+  vendor:ubiquoss:
+    canonical: "Ubiquoss"
+    aliases: ["Ubiquoss Inc"]
+    ko_aliases: ["유비쿼스"]
+    corpus_path_marker: "가입자망장비_manual/유비쿼스_"
+  vendor:cisco:
+    canonical: "Cisco"
+    aliases: ["Cisco Systems"]
+    ko_aliases: ["시스코"]
+    corpus_path_marker: "Cisco_CCIE/"
+
+# Standard aliases
+standards:
+  std:ieee-802.1q:
+    canonical: "IEEE 802.1Q"
+    aliases: ["802.1Q", "dot1q", "VLAN tagging standard"]
+    defines: ["proto:vlan"]
+  std:ieee-802.1d:
+    canonical: "IEEE 802.1D"
+    aliases: ["802.1D", "STP standard"]
+    defines: ["proto:stp"]
+  std:ieee-802.1w:
+    canonical: "IEEE 802.1w"
+    aliases: ["802.1w", "RSTP standard"]
+    defines: ["proto:rstp"]
+  std:ieee-802.3ad:
+    canonical: "IEEE 802.3ad"
+    aliases: ["802.3ad", "LACP standard"]
+    defines: ["proto:lacp"]
+  std:itu-t-g.984:
+    canonical: "ITU-T G.984"
+    aliases: ["G.984", "GPON standard"]
+    defines: ["proto:gpon"]
+
+# Korean networking terminology (general, not entity-bound)
+# 검색 query 정규화에 사용. canonical 한국어 → 영어 매핑.
+ko_term_normalization:
+  "라우팅":         "routing"
+  "라우터":         "router"
+  "스위치":         "switch"
+  "포트":           "port"
+  "인터페이스":     "interface"
+  "주소":           "address"
+  "서브넷":         "subnet"
+  "마스크":         "mask"
+  "프로토콜":       "protocol"
+  "패킷":           "packet"
+  "프레임":         "frame"
+  "헤더":           "header"
+  "페이로드":       "payload"
+  "터널":           "tunnel"
+  "방화벽":         "firewall"
+  "이중화":         "redundancy"
+  "장애조치":       "failover"
+  "부하분산":       "load balancing"
+  "암호화":         "encryption"
+  "인증":           "authentication"
+  "권한":           "authorization"
+  "세션":           "session"
+  "타이머":         "timer"
+  "광 회선":        "optical line"
+  "가입자":         "subscriber"
+  "콘솔":           "console"
+  "시리얼":         "serial"
+  "전원":           "power"
+  "펌웨어":         "firmware"
+  "업그레이드":     "upgrade"
+  "업데이트":       "update"
+  "미러링":         "mirroring"
+  "모니터링":       "monitoring"
+  "재부팅":         "reboot"
+  "백업":           "backup"
+  "복구":           "recovery"
+  "사양":           "specification"
+  "스펙":           "specification"
+  "설치":           "installation"
+  "절차":           "procedure"
+  "조회":           "show"
+  "확인":           "check"
+  "보안":           "security"
+  "필터":           "filter"

@@ -1,0 +1,5156 @@
+{
+  "run_at": "2026-05-22T11:16:41.150347",
+  "dataset": "/home/ymlee/work/markdown_rag/scripts/validation_dataset.json",
+  "top_k": 5,
+  "category_filter": "all",
+  "summary": {
+    "overall": {
+      "total": 100,
+      "passed": 98,
+      "hit_at_1": 84,
+      "hit_at_3": 99,
+      "hit_at_5": 100,
+      "keyword_match": 98,
+      "avg_mrr": 0.8925,
+      "avg_elapsed_ms": 1954.9,
+      "passed_pct": 98.0,
+      "hit_at_1_pct": 84.0,
+      "hit_at_3_pct": 99.0,
+      "hit_at_5_pct": 100.0,
+      "keyword_match_pct": 98.0
+    },
+    "by_category": {
+      "rfc": {
+        "total": 30,
+        "passed": 30,
+        "hit_at_1": 28,
+        "hit_at_3": 29,
+        "hit_at_5": 30,
+        "keyword_match": 30,
+        "avg_mrr": 0.9528,
+        "avg_elapsed_ms": 2745.3,
+        "passed_pct": 100.0,
+        "hit_at_1_pct": 93.3,
+        "hit_at_3_pct": 96.7,
+        "hit_at_5_pct": 100.0,
+        "keyword_match_pct": 100.0
+      },
+      "ccie": {
+        "total": 30,
+        "passed": 28,
+        "hit_at_1": 16,
+        "hit_at_3": 30,
+        "hit_at_5": 30,
+        "keyword_match": 28,
+        "avg_mrr": 0.6889,
+        "avg_elapsed_ms": 2483.0,
+        "passed_pct": 93.3,
+        "hit_at_1_pct": 53.3,
+        "hit_at_3_pct": 100.0,
+        "hit_at_5_pct": 100.0,
+        "keyword_match_pct": 93.3
+      },
+      "ko": {
+        "total": 30,
+        "passed": 30,
+        "hit_at_1": 30,
+        "hit_at_3": 30,
+        "hit_at_5": 30,
+        "keyword_match": 30,
+        "avg_mrr": 1.0,
+        "avg_elapsed_ms": 547.9,
+        "passed_pct": 100.0,
+        "hit_at_1_pct": 100.0,
+        "hit_at_3_pct": 100.0,
+        "hit_at_5_pct": 100.0,
+        "keyword_match_pct": 100.0
+      },
+      "edge": {
+        "total": 10,
+        "passed": 10,
+        "hit_at_1": 10,
+        "hit_at_3": 10,
+        "hit_at_5": 10,
+        "keyword_match": 10,
+        "avg_mrr": 1.0,
+        "avg_elapsed_ms": 2220.3,
+        "passed_pct": 100.0,
+        "hit_at_1_pct": 100.0,
+        "hit_at_3_pct": 100.0,
+        "hit_at_5_pct": 100.0,
+        "keyword_match_pct": 100.0
+      }
+    }
+  },
+  "failed_count": 2,
+  "results": [
+    {
+      "id": "RFC-001",
+      "category": "rfc",
+      "query": "TCP three-way handshake",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "TCP",
+        "SYN",
+        "connection",
+        "handshake"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 12071.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc916.md",
+          "headers": [
+            "Network Working Group                                            G. Finn Request for Comments: 916                                            ISI October 1984",
+            "3.. The Opening and Closing of a Connection"
+          ],
+          "content_preview": "```       A \"three-way handshake\" is the procedure used to establish a       con"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "-*.md` - **관련 프로토콜**: - `proto:ospf` — IGP, BGP와 redistribute 가능 - `proto:tcp` —"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "headers": [
+            "**Part I: IP BGP Routing**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "RFC 793 - TCP 연결 수립 3단계 핸드쉐이크"
+    },
+    {
+      "id": "RFC-002",
+      "category": "rfc",
+      "query": "IP fragmentation and reassembly",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "fragmentation",
+        "offset",
+        "datagram",
+        "fragment"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2395.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8900.md",
+          "headers": [
+            "IP Fragmentation Considered Fragile",
+            "3. Increased Fragility"
+          ],
+          "content_preview": "This section explains how IP fragmentation introduces fragility to Internet comm"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "headers": [
+            "IPv4 헤더와의 주요 차이"
+          ],
+          "content_preview": "대응, 라우터마다 -1 | | Source Address | 128b | 출발지 IPv6 주소 | | Destination Address | 1"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+          "headers": [
+            "**“Do I Know This Already?” Quiz**"
+          ],
+          "content_preview": "Table  7-1 outlines the major headings in this chapter and the corresponding “Do"
+        }
+      ],
+      "notes": "RFC 791 - IP 데이터그램 단편화 및 재조립"
+    },
+    {
+      "id": "RFC-003",
+      "category": "rfc",
+      "query": "DNS resource record types A MX CNAME",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "DNS",
+        "record",
+        "CNAME",
+        "MX"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2381.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1274.md",
+          "headers": [
+            "Network Working Group                                          P. Barker Request for Comments: 1274                                      S. Kille University College London November 1991",
+            "9.. Attribute Types"
+          ],
+          "content_preview": "UTE  ```          WITH ATTRIBUTE-SYNTAX              DNSRecordSyntax ``` ::= {pi"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ospf.md",
+          "headers": [
+            "핵심 개념"
+          ],
+          "content_preview": "C: - RFC 3101 — NSSA (Not-So-Stubby Area) 옵션 - RFC 5709 — HMAC-SHA 인증 - RFC 6549"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "RFC 1035 - DNS 리소스 레코드 유형"
+    },
+    {
+      "id": "RFC-004",
+      "category": "rfc",
+      "query": "HTTP persistent connections keep-alive",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "persistent",
+        "keep-alive",
+        "HTTP",
+        "connection"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2062.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "headers": [
+            "HTTP/1.1",
+            "9. Connection Management"
+          ],
+          "content_preview": "-down)\" connection option or receives an HTTP/1.0 response without a \"keep-alive"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-firmware-upgrade.md",
+          "headers": [
+            "표준 절차 (공통)"
+          ],
+          "content_preview": "OS(Network OS)를 새 버전으로 교체하는 절차다. 보안 패치, 버그 수정, 신규 기능 도입 시 수행. 잘못된 절차는 장비 다운·동작 불"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "headers": [
+            "HTTP/1.1",
+            "9. Connection Management"
+          ],
+          "content_preview": "l version and Connection header field ([HTTP](#HTTP)) in the most recently recei"
+        }
+      ],
+      "notes": "RFC 2616 - HTTP/1.1 지속 연결"
+    },
+    {
+      "id": "RFC-005",
+      "category": "rfc",
+      "query": "BGP autonomous system path attribute",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "AS-PATH",
+        "autonomous",
+        "BGP",
+        "path"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": false,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.25,
+      "elapsed_ms": 2251.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "headers": [
+            "**Part I: IP BGP Routing**",
+            "**Foundation Topics**"
+          ],
+          "content_preview": "Like Interior Gateway Protocols (IGP), BGP exchanges topology information for ro"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- 원래 16비트(0~65535) → **RFC 6793**으로 32비트(0~4,294,967,295) 확장 - 호환성을 위해 AS_TRANS("
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-05.md",
+          "headers": [
+            "**ip prefix-list prefix-lose-2 seq 5 deny 22.2.2.0/24 ip prefix-list prefix-lose-2 seq 10 deny 23.3.16.0/20 ip prefix-list prefix-lose-2 seq 15 permit 0.0.0.0/0 le 32**"
+          ],
+          "content_preview": "`! The` **route map** `refers to ACL lose-2, passing routes that are permitted` "
+        }
+      ],
+      "notes": "BGP 경로 속성 및 AS-PATH"
+    },
+    {
+      "id": "RFC-006",
+      "category": "rfc",
+      "query": "OSPF hello packet neighbor relationship",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "hello",
+        "OSPF",
+        "neighbor",
+        "interval"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2489.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1247__sec-04.md",
+          "headers": [
+            "10.. The Neighbor Data Structure"
+          ],
+          "content_preview": "address is learned during the routing table build process (see Section 15).  Nei"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "headers": [
+            "표준 체인",
+            "폐기 관계 (obsoletes)"
+          ],
+          "content_preview": "ckbone area (0.0.0.0), stub area - **`concept:ospf-neighbor`** — Hello 프로토콜, 인접 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-01.md",
+          "headers": [
+            "Network Working Group                                             J. Moy Request for Comments: 2328                   Ascend Communications, Inc. STD: 54                                                       April 1998 Obsoletes: 2178 Category: Standards Track",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (1998).  All Rights Reserved."
+        }
+      ],
+      "notes": "OSPF 헬로 패킷 및 이웃 관계"
+    },
+    {
+      "id": "RFC-007",
+      "category": "rfc",
+      "query": "DHCP lease assignment discover offer request",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "DHCP",
+        "discover",
+        "offer",
+        "lease"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2292.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2131.md",
+          "headers": [
+            "Network Working Group                                           R. Droms Request for Comments: 2131                           Bucknell University Obsoletes: 1541                                               March 1997 Category: Standards Track",
+            "4.. Specification of the DHCP client-server protocol"
+          ],
+          "content_preview": "an expiration time for the lease, as follows:  o IF the client has not requested"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2131.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "넷·게이트웨이·DNS 등 네트워크 구성 정보를 동적으로 할당받는 절차(DORA: Discover-Offer-Request-Ack)를 정의한다. "
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+          "headers": [
+            "**DHCP**"
+          ],
+          "content_preview": "DHCP represents the next step in the evolution of dynamic IP address assignment."
+        }
+      ],
+      "notes": "RFC 2131 - DHCP 임대 할당 과정"
+    },
+    {
+      "id": "RFC-008",
+      "category": "rfc",
+      "query": "IPv6 addressing architecture prefix",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "IPv6",
+        "address",
+        "prefix",
+        "unicast"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2291.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "headers": [
+            "Network Working Group                                          A. Conta Request for Comments: 2590                                       Lucent Category: Standards Track                                      A. Malis Ascend M. Mueller Lucent May 1999",
+            "5.. Link-Local Addresses"
+          ],
+          "content_preview": "--+-----+-----+-----+-----+-----+              Fig.3   Frame Relay (Pseudo) Inte"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "headers": [
+            "관련 RFC (IPv6 family)"
+          ],
+          "content_preview": "- **`concept:ipv6-extension-header`** — Hop-by-Hop, Routing, Fragment, AH, ESP, "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8200.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                        S. Deering Request for Comments: 8200                                       Retired STD: 86                                                        R. Hinden Obsoletes: 2460                                     Check Point Software Category: Standards Track                                      July 2017 ISSN: 2070-1721",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (c) 2017 IETF Trust and the persons identified as the document authors"
+        }
+      ],
+      "notes": "RFC 4291 - IPv6 주소 체계"
+    },
+    {
+      "id": "RFC-009",
+      "category": "rfc",
+      "query": "TLS handshake certificate authentication",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "TLS",
+        "certificate",
+        "handshake",
+        "SSL"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2311.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8705.md",
+          "headers": [
+            "OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens",
+            "2. Mutual TLS for OAuth Client Authentication"
+          ],
+          "content_preview": "g the handshake matches one of the certificates configured or registered for tha"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ntp.md",
+          "headers": [
+            "관련 기능"
+          ],
+          "content_preview": "(RFC 5906): 자동 키 교환, 구현 복잡도로 보급 저조 - **NTS** (Network Time Security, RFC 8915): "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+          "headers": [
+            "**Implementing NetFlow**"
+          ],
+          "content_preview": "NetFlow is a software feature set in Cisco IOS that is designed to provide netwo"
+        }
+      ],
+      "notes": "TLS/SSL 핸드쉐이크 및 인증서"
+    },
+    {
+      "id": "RFC-010",
+      "category": "rfc",
+      "query": "SMTP mail transaction MAIL FROM RCPT TO",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "SMTP",
+        "MAIL",
+        "RCPT",
+        "transaction"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2374.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3461.md",
+          "headers": [
+            "Network Working Group                                           K. Moore Request for Comments: 3461                       University of Tennessee Obsoletes 1891                                              January 2003 Category: Standards Track",
+            "3.. The Delivery Status Notification service extension"
+          ],
+          "content_preview": "he message:  (a)  for each recipient, a copy of the original recipient address, "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1661.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "RFC 1661은 PPP(Point-to-Point Protocol)의 표준 정의 문서이다 (STD 51). 두 노드 간 데이터 링크에서 다중 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1661.md",
+          "headers": [
+            "Network Working Group                                 W. Simpson, Editor Request for Comments: 1661                                    Daydreamer STD: 51                                                        July 1994 Obsoletes: 1548 Category: Standards Track",
+            "1.. Introduction"
+          ],
+          "content_preview": "The Point-to-Point Protocol is designed for simple links which transport packets"
+        }
+      ],
+      "notes": "RFC 5321 - SMTP 메일 전송 절차"
+    },
+    {
+      "id": "RFC-011",
+      "category": "rfc",
+      "query": "RTP real-time transport protocol payload format",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "RTP",
+        "payload",
+        "timestamp",
+        "sequence"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2262.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3550__sec-01.md",
+          "headers": [
+            "Network Working Group                                     H. Schulzrinne Request for Comments: 3550                           Columbia University Obsoletes: 1889                                               S.  Casner Category: Standards Track                                  Packet Design R. Frederick Blue Coat Systems Inc. V. Jacobson Packet Design July 2003",
+            "1.. Introduction"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2003).  All Rights Reserved.  This memorandu"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "headers": [
+            "Jumbogram (4G+ 페이로드)"
+          ],
+          "content_preview": "만 (Fragment 확장 헤더) | | Options | 헤더 내 IHL 가변 옵션 | 확장 헤더로 분리 | | Broadcast | 있음 |"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "RFC 3550 - RTP 실시간 전송 프로토콜"
+    },
+    {
+      "id": "RFC-012",
+      "category": "rfc",
+      "query": "ICMP echo request reply ping",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "ICMP",
+        "echo",
+        "ping",
+        "reply"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2384.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1812__sec-03.md",
+          "headers": [
+            "4.. INTERNET LAYER - PROTOCOLS"
+          ],
+          "content_preview": "t and multicast       Echo Requests derives from [INTRO:2]'s \"Echo Request/Reply"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-pppoe-discovery.md",
+          "headers": [
+            "4단계 (PADI → PADO → PADR → PADS)"
+          ],
+          "content_preview": "Session ID를 부여받는 4단계 프로토콜이다. 모든 Discovery 패킷은 EtherType 0x8863(Discovery), Sessi"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "RFC 792 - ICMP 에코 요청/응답"
+    },
+    {
+      "id": "RFC-013",
+      "category": "rfc",
+      "query": "ARP address resolution protocol hardware",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "ARP",
+        "hardware",
+        "address",
+        "resolution"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2659.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc985.md",
+          "headers": [
+            "Network Working Group                   Network Technical Advisory Group Request for Comments: 985                                            NSF May 1986",
+            "2.. Protocols Required"
+          ],
+          "content_preview": "d that changing       these procedures not require recompilation or rebooting th"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "IPv4의 ARP를 대체하는 IPv6 주소 해석, 라우터 발견, 자동 주소 구성(SLAAC) 보조, 중복 주소 감지(DAD) 등을 수행한다. I"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-01.md",
+          "headers": [
+            "Network Working Group                                          T. Narten Request for Comments: 4861                                           IBM Obsoletes: 2461                                              E. Nordmark Category: Standards Track                               Sun Microsystems W. Simpson Daydreamer H. Soliman Elevate Technologies September 2007",
+            "1.. Introduction"
+          ],
+          "content_preview": "This specification defines the Neighbor Discovery (ND) protocol for Internet Pro"
+        }
+      ],
+      "notes": "RFC 826 - ARP 주소 변환 프로토콜"
+    },
+    {
+      "id": "RFC-014",
+      "category": "rfc",
+      "query": "NAT network address translation mapping",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "NAT",
+        "translation",
+        "mapping",
+        "address"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2094.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2663.md",
+          "headers": [
+            "Network Working Group                                       P. Srisuresh Request for Comments: 2663                                   M. Holdrege Category: Informational                              Lucent Technologies August 1999",
+            "3.. What is NAT?"
+          ],
+          "content_preview": "protocol to communicate with application clients and do not require changes to a"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md",
+          "headers": [
+            "주요 기능 영역"
+          ],
+          "content_preview": "경 설정 - 제04장 가상 랜 (VLAN) - 제05장 IP 환경 설정 - 제06장 DHCP - 제07장 NAT - 제08장 IGMP Snoop"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2072.md",
+          "headers": [
+            "Network Working Group                                       H. Berkowitz Request for Comments: 2072                             PSC International Category: Informational                                     January 1997",
+            "5.. Moving toward a Renumbering-Friendly Enterprise"
+          ],
+          "content_preview": "band methods may be available to change the edge router addresses.  5.6  Network"
+        }
+      ],
+      "notes": "NAT 네트워크 주소 변환"
+    },
+    {
+      "id": "RFC-015",
+      "category": "rfc",
+      "query": "SNMP management information base MIB OID",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "SNMP",
+        "MIB",
+        "OID",
+        "management"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2502.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2856.md",
+          "headers": [
+            "Network Working Group                                        A. Bierman Request for Comments: 2856                                K. McCloghrie Category: Standards Track                           Cisco Systems, Inc. R. Presuhn BMC Software, Inc. June 2000",
+            "1.. The SNMP Management Framework"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2000).  All Rights Reserved.  The SNMP Manag"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "headers": [
+            "주요 용도"
+          ],
+          "content_preview": "받지 않는다. OSPF/BGP 등 라우팅 프로토콜의 router-id, BGP peer source, 관리 IP, mGRE source 등 안정"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+          "headers": [
+            "**“Do I Know This Already?” Quiz**"
+          ],
+          "content_preview": "Table  7-1 outlines the major headings in this chapter and the corresponding “Do"
+        }
+      ],
+      "notes": "SNMP 관리 정보 베이스"
+    },
+    {
+      "id": "RFC-016",
+      "category": "rfc",
+      "query": "FTP data transfer passive mode PASV",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "FTP",
+        "PASV",
+        "passive",
+        "data"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2334.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1545.md",
+          "headers": [
+            "Network Working Group                                      D. Piscitello Request for Comments: 1545                                      Bellcore Category: Experimental                                     November 1993",
+            "3.. The LPSV Command"
+          ],
+          "content_preview": "f the internet host address, and p1 is the high order 8 bits of the port number "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "ng/Forwarding 5단계 - [BPDU](../concepts/concept-stp-bpdu.md) — Bridge Protocol Da"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "RFC 959 - FTP 수동 모드 데이터 전송"
+    },
+    {
+      "id": "RFC-017",
+      "category": "rfc",
+      "query": "PPP point-to-point protocol link control LCP",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "PPP",
+        "LCP",
+        "link",
+        "point-to-point"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2452.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4170.md",
+          "headers": [
+            "Network Working Group                                        B. Thompson Request for Comments: 4170                                      T. Koren BCP: 110                                                         D. Wing Category: Best Current Practice                            Cisco Systems November 2005",
+            "4.. Example Implementation of TCRTP"
+          ],
+          "content_preview": "The Point-to-Point Protocol is described in [PPP].  Link Control Processing (LCP"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1661.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "다. LCP(Link Control Protocol)로 링크 협상, NCP(Network Control Protocol)로 네트워크 계층 협상을"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1661.md",
+          "headers": [
+            "Network Working Group                                 W. Simpson, Editor Request for Comments: 1661                                    Daydreamer STD: 51                                                        July 1994 Obsoletes: 1548 Category: Standards Track",
+            "1.. Introduction"
+          ],
+          "content_preview": "The Point-to-Point Protocol is designed for simple links which transport packets"
+        }
+      ],
+      "notes": "RFC 1661 - PPP 링크 제어 프로토콜"
+    },
+    {
+      "id": "RFC-018",
+      "category": "rfc",
+      "query": "MPLS label distribution protocol LSP",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "MPLS",
+        "label",
+        "LSP",
+        "distribution"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2778.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3037.md",
+          "headers": [
+            "Network Working Group                                          B. Thomas Request for Comments: 3037                           Cisco Systems, Inc. Category: Informational                                          E. Gray Zaffire, Inc. January 2001",
+            "1.. LDP Applicability"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2001).  All Rights Reserved.  A label distri"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "headers": [
+            "표준"
+          ],
+          "content_preview": "다. 현재는 MPLS L3VPN, Metro Ethernet, IP VPN으로 대부분 대체되어 신규 도입은 거의 없지만 CCIE 시험 범위와 레"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "headers": [
+            "**Policy Routing**"
+          ],
+          "content_preview": "All the options for IP forwarding (routing) in this chapter had one thing in com"
+        }
+      ],
+      "notes": "MPLS 레이블 배포 프로토콜"
+    },
+    {
+      "id": "RFC-019",
+      "category": "rfc",
+      "query": "SIP session initiation protocol INVITE",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "SIP",
+        "INVITE",
+        "session",
+        "initiation"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2234.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6228.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                       C. Holmberg Request for Comments: 6228                                      Ericsson Category: Standards Track                                       May 2011 ISSN: 2070-1721",
+            "1.. Introduction"
+          ],
+          "content_preview": "Trust Legal Provisions and are provided without warranty as described in the Sim"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-pppoe-discovery.md",
+          "headers": [
+            "4단계 (PADI → PADO → PADR → PADS)"
+          ],
+          "content_preview": "Session ID를 부여받는 4단계 프로토콜이다. 모든 Discovery 패킷은 EtherType 0x8863(Discovery), Sessi"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2516.md",
+          "headers": [
+            "Network Working Group                                        L. Mamakos Request for Comments: 2516                                      K. Lidl Category: Informational                                       J. Evarts UUNET Technologies, Inc. D. Carrel D. Simone RedBack Networks, Inc. R. Wheeler RouterWare, Inc. February 1999",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (1999).  All Rights Reserved."
+        }
+      ],
+      "notes": "RFC 3261 - SIP 세션 개시 프로토콜"
+    },
+    {
+      "id": "RFC-020",
+      "category": "rfc",
+      "query": "SSH transport layer protocol key exchange",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "SSH",
+        "transport",
+        "key",
+        "exchange"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2770.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4253.md",
+          "headers": [
+            "Network Working Group                                          T. Ylonen Request for Comments: 4253              SSH Communications Security Corp Category: Standards Track                                C. Lonvick, Ed. Cisco Systems, Inc. January 2006",
+            "1.. Introduction"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2006).  The SSH transport layer is a secure,"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "headers": [
+            "GRE 헤더 (기본 4바이트)"
+          ],
+          "content_preview": ", 2000-03 (현행) - 이전: RFC 1701, RFC 1702 (폐기) - 확장: **RFC 2890** — Key and Sequen"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Route Summarization**"
+          ],
+          "content_preview": "Already a well-known concept to all CCIE Routing and Switching candidates, route"
+        }
+      ],
+      "notes": "RFC 4253 - SSH 전송 계층 프로토콜"
+    },
+    {
+      "id": "RFC-021",
+      "category": "rfc",
+      "query": "NTP network time protocol clock stratum",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "NTP",
+        "stratum",
+        "clock",
+        "synchronization"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2229.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc958.md",
+          "headers": [
+            "Network Working Group                                         D.L. Mills Request for Comments: 958                               M/A-COM Linkabit September 1985",
+            "1.. Introduction"
+          ],
+          "content_preview": "This document describes the Network Time Protocol (NTP), a protocol for synchron"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5905.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "RFC 5905는 NTPv4(Network Time Protocol Version 4)의 현행 표준 정의 문서이다. 2010년 6월 발행, 이전"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1769.md",
+          "headers": [
+            "Network Working Group                                           D. Mills Request for Comments: 1769                        University of Delaware Obsoletes: 1361                                               March 1995 Category: Informational",
+            "1.. Introduction"
+          ],
+          "content_preview": "The Network Time Protocol (NTP) specified in RFC-1305 [MIL92] is used to synchro"
+        }
+      ],
+      "notes": "RFC 5905 - NTP 네트워크 시간 프로토콜"
+    },
+    {
+      "id": "RFC-022",
+      "category": "rfc",
+      "query": "RADIUS authentication authorization accounting",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "RADIUS",
+        "authentication",
+        "Access-Request",
+        "accounting"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2241.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2975__sec-03.md",
+          "headers": [
+            "3.. Review of Accounting Protocols",
+            "3.1.. RADIUS"
+          ],
+          "content_preview": "s RADIUS, TACACS+, and SNMP.  This section describes the characteristics of each"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2516.md",
+          "headers": [
+            "본문 구조"
+          ],
+          "content_preview": "- `depends_on`: `proto:ppp` (RFC 1661) - 일반적으로 RADIUS(`proto:radius`)와 결합해 인증·과금"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2516.md",
+          "headers": [
+            "Network Working Group                                        L. Mamakos Request for Comments: 2516                                      K. Lidl Category: Informational                                       J. Evarts UUNET Technologies, Inc. D. Carrel D. Simone RedBack Networks, Inc. R. Wheeler RouterWare, Inc. February 1999",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (1999).  All Rights Reserved."
+        }
+      ],
+      "notes": "RFC 2865 - RADIUS 인증 프로토콜"
+    },
+    {
+      "id": "RFC-023",
+      "category": "rfc",
+      "query": "VRRP virtual router redundancy protocol",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "VRRP",
+        "virtual",
+        "router",
+        "redundancy"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2757.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7910.md",
+          "headers": [
+            "Independent Submission                                           W. Zhou Request for Comments: 7910                                 Cisco Systems Category: Informational                                        June 2016 ISSN: 2070-1721",
+            "1.. Introduction"
+          ],
+          "content_preview": "se documents carefully, as they describe your rights and restrictions with respe"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "r) | 다수 (load balancing) | | 헬로 멀티캐스트 | 224.0.0.2 | 224.0.0.18 | 224.0.0.102 | |"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "RFC 5798 - VRRP 가상 라우터 이중화"
+    },
+    {
+      "id": "RFC-024",
+      "category": "rfc",
+      "query": "IS-IS intermediate system link state routing",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "IS-IS",
+        "link state",
+        "LSP",
+        "routing"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2507.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-20.md",
+          "headers": [
+            "**IS-IS**"
+          ],
+          "content_preview": "es, Routing Levels, and Router Types - Describe IS-IS Operations - Describe Metr"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "8을 폐기하고 현행 OSPFv2 표준의 기준이 되었다. IPv4 단일 자율 시스템 내부 라우팅을 위한 link-state IGP 프로토콜의 동작"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-01.md",
+          "headers": [
+            "Network Working Group                                             J. Moy Request for Comments: 2328                   Ascend Communications, Inc. STD: 54                                                       April 1998 Obsoletes: 2178 Category: Standards Track",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (1998).  All Rights Reserved."
+        }
+      ],
+      "notes": "IS-IS 링크 상태 라우팅 프로토콜"
+    },
+    {
+      "id": "RFC-025",
+      "category": "rfc",
+      "query": "PIM sparse mode multicast routing protocol",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "PIM",
+        "multicast",
+        "sparse",
+        "mode"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2491.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4602.md",
+          "headers": [
+            "Network Working Group                                        T. Pusateri Request for Comments: 4602                              Juniper Networks Category: Informational                                      August 2006",
+            "2.. RFC 1264 Requirements"
+          ],
+          "content_preview": "rability with new and old Cisco Systems implementations as well as Juniper Netwo"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "IGMP(Internet Group Management Protocol)는 IPv4 호스트가 라우터에 멀티캐스트 그룹 가입·탈퇴를 알리는 L3 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-01.md",
+          "headers": [
+            "**Part IV: IP Multicast**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "RFC 7761 - PIM 희소 모드 멀티캐스트"
+    },
+    {
+      "id": "RFC-026",
+      "category": "rfc",
+      "query": "GRE generic routing encapsulation tunnel",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "GRE",
+        "tunnel",
+        "encapsulation",
+        "routing"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2594.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7059.md",
+          "headers": [
+            "Independent Submission                                       S. Steffann Request for Comments: 7059                   S.J.M. Steffann Consultancy Category: Informational                                   I. van Beijnum ISSN: 2070-1721                                 Institute IMDEA Networks R. van Rein OpenFortress November 2013",
+            "3.. Tunnel Mechanisms"
+          ],
+          "content_preview": "nctionality without requiring IPv4 multicast capability and is implemented more "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2784.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "RFC 2784는 GRE(Generic Routing Encapsulation)의 현행 표준 정의 문서이다. 2000년 3월 발행, 이전 RFC"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2784.md",
+          "headers": [
+            "Network Working Group                                    D. Farinacci Request for Comments: 2784                                      T. Li Category: Standards Track                            Procket Networks S. Hanks Enron Communications D. Meyer Cisco Systems P. Traina Juniper Networks March 2000",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2000).  All Rights Reserved."
+        }
+      ],
+      "notes": "RFC 2784 - GRE 터널 캡슐화"
+    },
+    {
+      "id": "RFC-027",
+      "category": "rfc",
+      "query": "IPsec security association ESP AH",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "IPsec",
+        "ESP",
+        "SA",
+        "security"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2503.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4305.md",
+          "headers": [
+            "Network Working Group                                    D. Eastlake 3rd Request for Comments: 4305                         Motorola Laboratories Obsoletes: 2404, 2406                                      December 2005 Category: Standards Track",
+            "1.. Introduction"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2005).  The Encapsulating Security Payload ("
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "발행, 이전 RFC 2460을 폐기하고 IPv6 사양을 인터넷 표준으로 격상시켰다. 128비트 주소, 단순화된 헤더, 확장 헤더(Extensio"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8200.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                        S. Deering Request for Comments: 8200                                       Retired STD: 86                                                        R. Hinden Obsoletes: 2460                                     Check Point Software Category: Standards Track                                      July 2017 ISSN: 2070-1721",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (c) 2017 IETF Trust and the persons identified as the document authors"
+        }
+      ],
+      "notes": "RFC 4301 - IPsec 보안 연계"
+    },
+    {
+      "id": "RFC-028",
+      "category": "rfc",
+      "query": "LDAP lightweight directory access protocol search",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "LDAP",
+        "directory",
+        "search",
+        "protocol"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2531.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3383.md",
+          "headers": [
+            "Network Working Group                                        K. Zeilenga Request for Comments: 3383                           OpenLDAP Foundation BCP: 64                                                   September 2002 Category: Best Current Practice",
+            "1.. Introduction"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2002).  All Rights Reserved.  The Lightweigh"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-extended.md",
+          "headers": [
+            "Cisco 명령어 형식"
+          ],
+          "content_preview": "터링한다. Cisco IOS에서 번호 100~199 또는 2000~2699가 확장 ACL이며, 적용은 출발지 가까운 인터페이스에 권장된다(불필요"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "headers": [
+            "**Key Topic**"
+          ],
+          "content_preview": "- **Step 1.** Determine the shortest prefix length (in other words, the largest "
+        }
+      ],
+      "notes": "RFC 4511 - LDAP 경량 디렉토리 접근"
+    },
+    {
+      "id": "RFC-029",
+      "category": "rfc",
+      "query": "X.509 certificate public key infrastructure PKI",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "certificate",
+        "X.509",
+        "public key",
+        "PKI"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2388.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4210__sec-01.md",
+          "headers": [
+            "Network Working Group                                           C. Adams Request for Comments: 4210                          University of Ottawa Obsoletes: 2510                                               S. Farrell Category: Standards Track                         Trinity College Dublin T. Kause SSH T. Mononen SafeNet September 2005",
+            "1.. Introduction"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2005).  This document describes the Internet"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "headers": [
+            "GRE 헤더 (기본 4바이트)"
+          ],
+          "content_preview": ", 2000-03 (현행) - 이전: RFC 1701, RFC 1702 (폐기) - 확장: **RFC 2890** — Key and Sequen"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Route Summarization**"
+          ],
+          "content_preview": "Already a well-known concept to all CCIE Routing and Switching candidates, route"
+        }
+      ],
+      "notes": "RFC 5280 - X.509 인증서 구조"
+    },
+    {
+      "id": "RFC-030",
+      "category": "rfc",
+      "query": "private IP address ranges RFC1918",
+      "expected_path_contains": "IETF_RFC",
+      "expected_keywords": [
+        "private",
+        "10.0.0.0",
+        "192.168",
+        "172.16"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2720.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6346.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                      R. Bush, Ed. Request for Comments: 6346                     Internet Initiative Japan Category: Experimental                                       August 2011 ISSN: 2070-1721",
+            "2.. Terminology"
+          ],
+          "content_preview": "```       Public Realm: This realm contains only public routable IPv4       addr"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "headers": [
+            "Cisco 설정 (요약)"
+          ],
+          "content_preview": "비트 (Backward/Forward Explicit Congestion Notification) | | **DE** (Discard Eligi"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "headers": [
+            "**Policy Routing**"
+          ],
+          "content_preview": "All the options for IP forwarding (routing) in this chapter had one thing in com"
+        }
+      ],
+      "notes": "RFC 1918 - 사설 IP 주소 범위"
+    },
+    {
+      "id": "CCIE-001",
+      "category": "ccie",
+      "query": "STP root bridge election priority",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "root bridge",
+        "priority",
+        "election",
+        "STP"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2428.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "headers": [
+            "Electing a Root Switch"
+          ],
+          "content_preview": "wins the election and becomes the root switch.  The original IEEE 802.1D bridge "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "핵심 개념"
+          ],
+          "content_preview": "- **IEEE 802.1D-2004** — STP 마지막 독립 표준판 - IEEE 802.1Q-2014 이후로 802.1D가 흡수 통합됨  -"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "스패닝트리 루트 브리지 선출 과정"
+    },
+    {
+      "id": "CCIE-002",
+      "category": "ccie",
+      "query": "VLAN 802.1Q trunk encapsulation",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "802.1Q",
+        "trunk",
+        "encapsulation",
+        "VLAN"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2397.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md",
+          "headers": [
+            "**Numerics**"
+          ],
+          "content_preview": "zed protocol for carrying VLAN membership information in Ethernet frames to impl"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-vlan.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "nk.md) — 다중 VLAN 전송, 802.1Q tagged - [VLAN Tag](../concepts/concept-vlan-tag.md)"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+          "headers": [
+            "Modifying the Operational State of VLANs"
+          ],
+          "content_preview": "The state of a VLAN—active or suspended—can be manipulated both in **vlan databa"
+        }
+      ],
+      "notes": "802.1Q 트렁크 캡슐화 방식"
+    },
+    {
+      "id": "CCIE-003",
+      "category": "ccie",
+      "query": "RSTP rapid spanning tree port states discarding",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "RSTP",
+        "discarding",
+        "port state",
+        "rapid"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2631.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-08.md",
+          "headers": [
+            "**New Port Roles, States and Types, and New Link Types**"
+          ],
+          "content_preview": "in properly designed networks.  RSTP has significantly reworked the classificati"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- `proto:mstp` — IEEE 802.1s, 다중 인스턴스로 VLAN별 로드 밸런싱 - PVST/Rapid-PVST — Cisco 독점"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "RSTP 신속 스패닝트리 포트 상태"
+    },
+    {
+      "id": "CCIE-004",
+      "category": "ccie",
+      "query": "EtherChannel LACP active passive negotiation",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "LACP",
+        "EtherChannel",
+        "active",
+        "passive"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2306.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "headers": [
+            "**Port-Channel Discovery and Configuration**"
+          ],
+          "content_preview": "gP) or **active** mode (LACP) on ports that you intend to be part of a Port-chan"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-gpon-olt-onu.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "GPON은 한 OLT가 광 분기기(passive splitter)를 통해 다수(보통 32~128개)의 ONU/ONT와 연결되는 점-다점(P2MP"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-12.md",
+          "headers": [
+            "Troubleshooting EtherChannels"
+          ],
+          "content_preview": ".168.250.254 at 7-24-09 11:02:43  174  CCIE Routing and Switching v5.0 Official "
+        }
+      ],
+      "notes": "EtherChannel LACP 협상"
+    },
+    {
+      "id": "CCIE-005",
+      "category": "ccie",
+      "query": "port security maximum MAC violation shutdown",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "port security",
+        "maximum",
+        "violation",
+        "shutdown"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2168.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "headers": [
+            "`fred#` **show port-security interface fastEthernet 0/1**"
+          ],
+          "content_preview": "at the maximum number of MAC ``` ``` ! addresses is 1, and that there are 0 stic"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "이블이 가득 차면 모든 트래픽 플러딩 → `feat:port-security`로 방어 - **Static MAC**: 변하지 않는 서버·게이트웨"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "headers": [
+            "`fred#` **show port-security interface fastEthernet 0/2**"
+          ],
+          "content_preview": "violations ``` ``` ! count is 0. It lists the fact that one sticky MAC address h"
+        }
+      ],
+      "notes": "포트 보안 MAC 제한 및 위반 처리"
+    },
+    {
+      "id": "CCIE-006",
+      "category": "ccie",
+      "query": "VTP VLAN trunking protocol domain mode",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "VTP",
+        "domain",
+        "transparent",
+        "server"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2182.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-06.md",
+          "headers": [
+            "**Example 2-11** _Use of VTPv3 Example_"
+          ],
+          "content_preview": "h1(config-vlan)# **exit**  ! On Switch3, the show vtp status shows:  Switch3(con"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "headers": [
+            "트렁킹 프로토콜"
+          ],
+          "content_preview": "에서 통과시킬 VLAN 목록 제한:  - Cisco: `switchport trunk allowed vlan 10,20,30` - 명시하지 않으"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "headers": [
+            "Troubleshooting Trunking"
+          ],
+          "content_preview": "rotocol  171  Trunks that fail to form can result from several causes. With an 8"
+        }
+      ],
+      "notes": "VTP 도메인 및 동작 모드"
+    },
+    {
+      "id": "CCIE-007",
+      "category": "ccie",
+      "query": "MSTP multiple spanning tree instances region",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "MSTP",
+        "instance",
+        "region",
+        "multiple"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2490.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-09.md",
+          "headers": [
+            "**MST Principles of Operation**"
+          ],
+          "content_preview": "ard on their links to SW2 for the other set of VLANs using the second MST instan"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "변형 프로토콜"
+          ],
+          "content_preview": "L2/` | | Ubiquoss L2 | `spanning-tree enable`, `spanning-tree priority` | `가입자망장"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "MSTP 다중 스패닝트리 인스턴스"
+    },
+    {
+      "id": "CCIE-008",
+      "category": "ccie",
+      "query": "BPDU guard portfast edge port",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "BPDU guard",
+        "portfast",
+        "edge",
+        "BPDU"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2431.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "headers": [
+            "**Root Guard, BPDU Guard, and BPDU Filter: Protecting Access Ports**"
+          ],
+          "content_preview": "n a particular PortFast port, the **spanning-tree bpduguard disable** interface "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "headers": [
+            "수렴 시간 단축 기능 (Cisco)"
+          ],
+          "content_preview": "통합) - **Learning** - **Forwarding** RSTP는 또한 별도 port role(Root, Designated, Alte"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+          "headers": [
+            "**SPAN, RSPAN, and ERSPAN**"
+          ],
+          "content_preview": "Cisco Catalyst switches support a method of directing all traffic from a source "
+        }
+      ],
+      "notes": "BPDU 가드 및 PortFast 설정"
+    },
+    {
+      "id": "CCIE-009",
+      "category": "ccie",
+      "query": "IGMP snooping multicast group membership",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "IGMP",
+        "snooping",
+        "multicast",
+        "group"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2582.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4429.md",
+          "headers": [
+            "Network Working Group                                           N. Moore Request for Comments: 4429                        Monash University CTIE Category: Standards Track                                     April 2006",
+            "Full Copyright Statement"
+          ],
+          "content_preview": "zoic.org> and/or the IPv6 Working Group mailing list.  Please include 'RFC4429' "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "on OLT**: 가입자 채널 변경 시 멀티캐스트 트리 즉시 갱신 - **IGMP Proxy / Querier**: OLT가 IGMP Queri"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-01.md",
+          "headers": [
+            "**Part IV: IP Multicast**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "IGMP 스누핑 멀티캐스트 그룹"
+    },
+    {
+      "id": "CCIE-010",
+      "category": "ccie",
+      "query": "spanning tree topology change notification TCN",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "topology change",
+        "TCN",
+        "BPDU",
+        "notification"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2472.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4188.md",
+          "headers": [
+            "Network Working Group                                    K. Norseth, Ed. Request for Comments: 4188                            L-3 Communications Obsoletes: 1493                                             E. Bell, Ed. Category: Standards Track                            3Com Europe Limited September 2005",
+            "4.. Definitions"
+          ],
+          "content_preview": "::= { dot1dStaticEntry 4 }     -- ----------------------------------------------"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "ng/Forwarding 5단계 - [BPDU](../concepts/concept-stp-bpdu.md) — Bridge Protocol Da"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "스패닝트리 토폴로지 변경 알림"
+    },
+    {
+      "id": "CCIE-011",
+      "category": "ccie",
+      "query": "EIGRP feasibility condition successor route",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "EIGRP",
+        "feasibility",
+        "successor",
+        "condition"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2602.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-09.md",
+          "headers": [
+            "**Computed, Reported, and Feasible Distances, and Feasibility Condition**"
+          ],
+          "content_preview": ", it cannot be trusted. This prevents R1 from pointing toward R4, creating a tem"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "headers": [
+            "한계"
+          ],
+          "content_preview": "ipoint VPN): mGRE + NHRP + IPSec 결합 - **IGP over GRE**: OSPF/EIGRP 등 IGP 인접 관계 멀"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Route Summarization**"
+          ],
+          "content_preview": "Already a well-known concept to all CCIE Routing and Switching candidates, route"
+        }
+      ],
+      "notes": "EIGRP 실현 가능성 조건 및 후계 경로"
+    },
+    {
+      "id": "CCIE-012",
+      "category": "ccie",
+      "query": "OSPF stub area LSA type filtering",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "stub",
+        "LSA",
+        "area",
+        "OSPF"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2470.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-16.md",
+          "headers": [
+            "**Stubby Areas**"
+          ],
+          "content_preview": "pe 5 LSAs are still prohibited in such areas.  **Key Topic**  **Table 9-5** _OSP"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md",
+          "headers": [
+            "영역 유형"
+          ],
+          "content_preview": "며, ABR(Area Border Router)이 영역 간 라우팅 정보를 요약·전달한다. 영역 분할은 LSA flooding 범위를 줄여 라우터"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+          "headers": [
+            "**“Do I Know This Already?” Quiz**"
+          ],
+          "content_preview": "Table  7-1 outlines the major headings in this chapter and the corresponding “Do"
+        }
+      ],
+      "notes": "OSPF 스텁 영역 LSA 필터링"
+    },
+    {
+      "id": "CCIE-013",
+      "category": "ccie",
+      "query": "BGP route reflector cluster iBGP",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "route reflector",
+        "cluster",
+        "iBGP",
+        "BGP"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2690.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4456.md",
+          "headers": [
+            "Network Working Group                                           T. Bates Request for Comments: 4456                                       E. Chen Obsoletes: 2796, 1966                                      Cisco Systems Category: Standards Track                                     R. Chandra Sonoa Systems April 2006",
+            "6.. Operation"
+          ],
+          "content_preview": "cluster.  Due to route reflection, all the IBGP speakers will receive reflected "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "-*.md` - **관련 프로토콜**: - `proto:ospf` — IGP, BGP와 redistribute 가능 - `proto:tcp` —"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "headers": [
+            "**Part I: IP BGP Routing**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "BGP 루트 리플렉터 클러스터"
+    },
+    {
+      "id": "CCIE-014",
+      "category": "ccie",
+      "query": "HSRP hot standby router protocol preemption",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "HSRP",
+        "preemption",
+        "active",
+        "standby"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2576.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2281.md",
+          "headers": [
+            "Network Working Group                                              T. Li Request for Comments: 2281                              Juniper Networks Category: Informational                                          B. Cole Juniper Networks P. Morton Cisco Systems D. Li Cisco Systems March 1998",
+            "1.. Introduction"
+          ],
+          "content_preview": "ng group which is in the process of producing a standards track protocol to addr"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "HSRP(Hot Standby Router Protocol)는 Cisco가 개발한 First-Hop Redundancy Protocol(FHRP"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "HSRP 선점 및 액티브/스탠바이"
+    },
+    {
+      "id": "CCIE-015",
+      "category": "ccie",
+      "query": "policy-based routing route-map match set",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "policy-based",
+        "route-map",
+        "match",
+        "set ip"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2275.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "headers": [
+            "**Policy Routing**"
+          ],
+          "content_preview": "ormal)<br>No<br>**----- End of picture text -----**<br>  **Figure 6-8** _Basic P"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "headers": [
+            "설정 방법",
+            "1. 수동 설정 (`clock set`)"
+          ],
+          "content_preview": "trap timestamp의 신뢰성과 분산 시스템 동기화의 기반이 된다. 수동 설정(`clock set`)과 NTP 자동 동기화 두 방법이 있으"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md",
+          "headers": [
+            "A YANG Data Model for Routing Policy",
+            "4. Route Policy Expression"
+          ],
+          "content_preview": "set does not make sense). In the model, a restricted set of match options is use"
+        }
+      ],
+      "notes": "정책 기반 라우팅 route-map"
+    },
+    {
+      "id": "CCIE-016",
+      "category": "ccie",
+      "query": "NAT overload PAT inside outside interface",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "NAT",
+        "overload",
+        "PAT",
+        "inside"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2419.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "headers": [
+            "Overloading NAT with Port Address Translation"
+          ],
+          "content_preview": "ic NAT entry exists in the NAT table, only host 10.1.1.2 can use Inside Global I"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md",
+          "headers": [
+            "주요 기능 영역"
+          ],
+          "content_preview": "경 설정 - 제04장 가상 랜 (VLAN) - 제05장 IP 환경 설정 - 제06장 DHCP - 제07장 NAT - 제08장 IGMP Snoop"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "headers": [
+            "**Policy Routing**"
+          ],
+          "content_preview": "All the options for IP forwarding (routing) in this chapter had one thing in com"
+        }
+      ],
+      "notes": "NAT 오버로드 PAT 설정"
+    },
+    {
+      "id": "CCIE-017",
+      "category": "ccie",
+      "query": "access-list wildcard mask extended permit deny",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "access-list",
+        "wildcard",
+        "extended",
+        "permit"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 1263.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/__index__.md",
+          "headers": [
+            "가입자망 장비 목록 - 다산 L3",
+            "장비 모델 목록"
+          ],
+          "content_preview": "벤더: 다산 카테고리: L3 장비 수: 3개  - V5524XG (UMN 3.41) - V6824XG - V6848XG (UMN 1.01)"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "headers": [
+            "Cisco 명령어 형식"
+          ],
+          "content_preview": "ACL이다. Cisco IOS에서는 번호 1~99 또는 1300~1999가 표준 ACL이며, 적용은 가능한 한 목적지 가까운 인터페이스에 권장된"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "headers": [
+            "**Key Topic**"
+          ],
+          "content_preview": "- **Step 1.** Determine the shortest prefix length (in other words, the largest "
+        }
+      ],
+      "notes": "확장 ACL 와일드카드 마스크"
+    },
+    {
+      "id": "CCIE-018",
+      "category": "ccie",
+      "query": "ip helper-address DHCP relay broadcast",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "helper-address",
+        "DHCP",
+        "relay",
+        "broadcast"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2683.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4390.md",
+          "headers": [
+            "Network Working Group                                      Vivek Kashyap Request for Comments: 4390                                           IBM Category: Standards Track                                     April 2006",
+            "2.. The DHCP over IPoIB Mechanism"
+          ],
+          "content_preview": "dentifier\" used in DHCP messages MUST conform to [RFC 4361](https://www.rfc-edit"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "headers": [
+            "DHCP Relay와의 상호작용"
+          ],
+          "content_preview": ": 서버 IP - **giaddr** (\"gateway IP\"): DHCP Relay agent IP (relay 시 채워짐) - **xid**"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "DHCP 릴레이 helper-address"
+    },
+    {
+      "id": "CCIE-019",
+      "category": "ccie",
+      "query": "CDP Cisco discovery protocol neighbor device",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "CDP",
+        "neighbor",
+        "device",
+        "discovery"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2776.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5331.md",
+          "headers": [
+            "Network Working Group                                        R. Aggarwal Request for Comments: 5331                              Juniper Networks Category: Standards Track                                     Y. Rekhter Juniper Networks E. Rosen Cisco Systems, Inc. August 2008",
+            "Full Copyright Statement"
+          ],
+          "content_preview": "C. Rosen Cisco Systems, Inc. 1414 Massachusetts Avenue Boxborough, MA 01719  EMa"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-cdp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "벤더 | X | O | | Cisco IOS 기본값 | on | off (활성화 필요) | | 광고 주기 | 60s | 30s | | Holdt"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "CDP 이웃 장치 탐색"
+    },
+    {
+      "id": "CCIE-020",
+      "category": "ccie",
+      "query": "QoS DSCP differentiated services traffic marking",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "DSCP",
+        "QoS",
+        "marking",
+        "traffic"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2484.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8229.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                          T. Pauly Request for Comments: 8229                                    Apple Inc. Category: Standards Track                                      S. Touati ISSN: 2070-1721                                                 Ericsson R. Mantha Cisco Systems August 2017",
+            "12.. Performance Considerations"
+          ],
+          "content_preview": "be negatively impacted if their packets are retransmitted by the TCP connection "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "headers": [
+            "헤더 구조 (40바이트)"
+          ],
+          "content_preview": "됐다. Checksum 필드가 제거되고(L4와 L2가 무결성 책임), 옵션은 확장 헤더(extension header)로 분리됐다. 결과적으로 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+          "headers": [
+            "**DHCP**"
+          ],
+          "content_preview": "DHCP represents the next step in the evolution of dynamic IP address assignment."
+        }
+      ],
+      "notes": "QoS DSCP 트래픽 마킹"
+    },
+    {
+      "id": "CCIE-021",
+      "category": "ccie",
+      "query": "GRE tunnel interface keepalive configuration",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "GRE",
+        "tunnel",
+        "keepalive",
+        "interface"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2729.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8086.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                      L. Yong, Ed. Request for Comments: 8086                           Huawei Technologies Category: Standards Track                                      E. Crabbe ISSN: 2070-1721                                                   Oracle X. Xu Huawei Technologies T. Herbert Facebook March 2017",
+            "4.. Encapsulation Procedures"
+          ],
+          "content_preview": "apsulator decapsulates them by removing the UDP and GRE headers and then process"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "headers": [
+            "Cisco 설정 (point-to-point)"
+          ],
+          "content_preview": "16 | 페이로드 타입 (예: 0x0800 IPv4, 0x86DD IPv6) | 확장 시 Checksum/Key/Sequence Number 필"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Route Summarization**"
+          ],
+          "content_preview": "Already a well-known concept to all CCIE Routing and Switching candidates, route"
+        }
+      ],
+      "notes": "GRE 터널 인터페이스 킵얼라이브"
+    },
+    {
+      "id": "CCIE-022",
+      "category": "ccie",
+      "query": "Frame Relay DLCI PVC LMI",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "Frame Relay",
+        "DLCI",
+        "PVC",
+        "LMI"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2831.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "headers": [
+            "Network Working Group                                          A. Conta Request for Comments: 2590                                       Lucent Category: Standards Track                                      A. Malis Ascend M. Mueller Lucent May 1999",
+            "4.. Stateless Autoconfiguration"
+          ],
+          "content_preview": "```text             +-----------------------------------+-----+-----+          1"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "al0/0.2 multipoint  ip address 10.0.1.1 255.255.255.0  frame-relay map ip 10.0.1"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "headers": [
+            "**Policy Routing**"
+          ],
+          "content_preview": "All the options for IP forwarding (routing) in this chapter had one thing in com"
+        }
+      ],
+      "notes": "Frame Relay DLCI 및 PVC"
+    },
+    {
+      "id": "CCIE-023",
+      "category": "ccie",
+      "query": "route redistribution between OSPF EIGRP metric",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "redistribution",
+        "metric",
+        "seed",
+        "redistribute"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2609.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md",
+          "headers": [
+            "Redistribution Using Default Settings"
+          ],
+          "content_preview": "ght the results of the redistribution.  **Example 11-1** _Route Redistribution w"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "headers": [
+            "한계"
+          ],
+          "content_preview": "ipoint VPN): mGRE + NHRP + IPSec 결합 - **IGP over GRE**: OSPF/EIGRP 등 IGP 인접 관계 멀"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Route Summarization**"
+          ],
+          "content_preview": "Already a well-known concept to all CCIE Routing and Switching candidates, route"
+        }
+      ],
+      "notes": "라우팅 프로토콜 간 재배포"
+    },
+    {
+      "id": "CCIE-024",
+      "category": "ccie",
+      "query": "default route propagation ip route 0.0.0.0",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "default route",
+        "0.0.0.0",
+        "propagate",
+        "gateway"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2851.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Default Routing Using EIGRP**"
+          ],
+          "content_preview": "s default route. In reality, however, configuring **network 0.0.0.0** is almost "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "headers": [
+            "핵심 개념"
+          ],
+          "content_preview": "- RFC 7606 — Revised Error Handling for UPDATE - RFC 8212 — Default EBGP Route P"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "headers": [
+            "**Part I: IP BGP Routing**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "기본 경로 전파"
+    },
+    {
+      "id": "CCIE-025",
+      "category": "ccie",
+      "query": "EIGRP metric bandwidth delay reliability",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "bandwidth",
+        "delay",
+        "metric",
+        "EIGRP"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2464.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "headers": [
+            "Delay Metric Component"
+          ],
+          "content_preview": "Classic Metrics, EIGRP is capable of describing the bandwidth in the range of 1 "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "headers": [
+            "STP 5 상태"
+          ],
+          "content_preview": "으로 전이하며, 총 30~50초의 수렴 시간이 걸린다. RSTP(802.1w)는 이를 3상태로 단순화하고 proposal/agreement 메커"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "headers": [
+            "**Route Summarization**"
+          ],
+          "content_preview": "Already a well-known concept to all CCIE Routing and Switching candidates, route"
+        }
+      ],
+      "notes": "EIGRP 메트릭 계산 요소"
+    },
+    {
+      "id": "CCIE-026",
+      "category": "ccie",
+      "query": "loopback interface routing protocol stability",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "loopback",
+        "interface",
+        "stability",
+        "router-id"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2655.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6606.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                            E. Kim Request for Comments: 6606                                          ETRI Category: Informational                                        D. Kaspar ISSN: 2070-1721                               Simula Research Laboratory C. Gomez Universitat Politecnica de Catalunya/Fundacio i2CAT C. Bormann Universitaet Bremen TZI May 2012",
+            "5.. 6LoWPAN Routing Requirements"
+          ],
+          "content_preview": "c.  Such a path has good properties, including stability and       low control m"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "headers": [
+            "Cisco 설정"
+          ],
+          "content_preview": "중 하나가 죽어도 터널 유지 | | **PIM RP** (Rendezvous Point) | 멀티캐스트 RP 주소 | | **테스트** | 자가"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+          "headers": [
+            "**“Do I Know This Already?” Quiz**"
+          ],
+          "content_preview": "Table  7-1 outlines the major headings in this chapter and the corresponding “Do"
+        }
+      ],
+      "notes": "루프백 인터페이스 안정성"
+    },
+    {
+      "id": "CCIE-027",
+      "category": "ccie",
+      "query": "OSPF designated router DR BDR election",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "DR",
+        "BDR",
+        "election",
+        "OSPF"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2489.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md",
+          "headers": [
+            "Example of OSPF Network Types and NBMA"
+          ],
+          "content_preview": "requiring additional effort to manually define neighbors or worry about which ro"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ospf.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "otally-stubby - [Neighbor / Adjacency](../concepts/concept-ospf-neighbor.md) — H"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "OSPF DR/BDR 선출"
+    },
+    {
+      "id": "CCIE-028",
+      "category": "ccie",
+      "query": "BGP community attribute no-export local-AS",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "community",
+        "no-export",
+        "local-AS",
+        "BGP"
+      ],
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333,
+      "elapsed_ms": 2543.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8195.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                       J. Snijders Request for Comments: 8195                                    J. Heasley Category: Informational                                              NTT ISSN: 2070-1721                                               M. Schmidt i3D.net June 2017",
+            "4.. Examples of Action Communities"
+          ],
+          "content_preview": "-------------------------------+ ```  |    BGP Large    | Description           "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- 원래 16비트(0~65535) → **RFC 6793**으로 32비트(0~4,294,967,295) 확장 - 호환성을 위해 AS_TRANS("
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-05.md",
+          "headers": [
+            "**ip prefix-list prefix-lose-2 seq 5 deny 22.2.2.0/24 ip prefix-list prefix-lose-2 seq 10 deny 23.3.16.0/20 ip prefix-list prefix-lose-2 seq 15 permit 0.0.0.0/0 le 32**"
+          ],
+          "content_preview": "`! The` **route map** `refers to ACL lose-2, passing routes that are permitted` "
+        }
+      ],
+      "notes": "BGP 커뮤니티 속성"
+    },
+    {
+      "id": "CCIE-029",
+      "category": "ccie",
+      "query": "VRF virtual routing forwarding route leaking",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "VRF",
+        "route leaking",
+        "import",
+        "export"
+      ],
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.3333,
+      "elapsed_ms": 2456.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8347.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                       X. Liu, Ed. Request for Comments: 8347                                   A. Kyparlis Category: Standards Track                                          Jabil ISSN: 2070-1721                                                R. Parikh VMware A. Lindem Cisco Systems M. Zhang Huawei Technologies March 2018",
+            "4.. YANG Module"
+          ],
+          "content_preview": "```        description          \"Group of VRRP state attributes.\";         leaf "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "UPDATE message — 경로 광고/철회 - BGP FSM — Idle → Connect → Active → OpenSent → OpenC"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "headers": [
+            "**Part I: IP BGP Routing**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "VRF 가상 라우팅 포워딩"
+    },
+    {
+      "id": "CCIE-030",
+      "category": "ccie",
+      "query": "extended range VLAN 1006 4094 VTPv3",
+      "expected_path_contains": "Cisco_CCIE",
+      "expected_keywords": [
+        "extended range",
+        "4094",
+        "VTPv3",
+        "VLAN"
+      ],
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.3333,
+      "elapsed_ms": 2523.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-03.md",
+          "headers": [
+            "6.5.. Site Belonging to Multiple VPNs",
+            "6.5.2.. Attaching a Site to a VPN"
+          ],
+          "content_preview": "<layer>layer3</layer> ```  </encryption> </security> <site-network-accesses> <si"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-extended.md",
+          "headers": [
+            "Named ACL (권장)"
+          ],
+          "content_preview": "- `gt` (greater than): 초과 - `lt` (less than): 미만 - `range`: 범위 (예: `range 1000 2"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "headers": [
+            "**Key Topic**"
+          ],
+          "content_preview": "- **Step 1.** Determine the shortest prefix length (in other words, the largest "
+        }
+      ],
+      "notes": "확장 범위 VLAN VTPv3 지원"
+    },
+    {
+      "id": "KO-001",
+      "category": "ko",
+      "query": "다산 V3024V 포트 설정 방법",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "V3024V",
+        "포트",
+        "설정",
+        "다산"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 3099.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md",
+          "headers": [
+            "**6.1.3. Auto Nego** 설정"
+          ],
+          "content_preview": "User Manual**  **V3024VB**  사용자는 V3024VB의 포트가 연결된 장비의 전송 속도와 duplex 모드에 맞추어 동작하는"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024v.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "CP snooping, IGMP snooping - MAC address table 학습·조회 - Port mirroring (트래픽 모니터링)"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-02.md",
+          "headers": [
+            "◈ 그 림 ◈"
+          ],
+          "content_preview": "【 그림 5-1 】시스템 사용자 인증 과정 ........................................................"
+        }
+      ],
+      "notes": "다산 L2 스위치 V3024V 포트 구성"
+    },
+    {
+      "id": "KO-002",
+      "category": "ko",
+      "query": "유비쿼스 E5708R LED 상태 표시",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "E5708R",
+        "LED",
+        "상태",
+        "유비쿼스"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 1665.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "headers": [
+            "제품 사양"
+          ],
+          "content_preview": "부록 A 에서는 E5708C Switch 의 제품 사양이 정리되어 있습니다.  | 항목 | 내용 | | --- | --- | | 제품의 물리적 "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5708r.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "확립 시 점등, 트래픽 시 점멸 - **속도 표시**: 1G/100M/10M 색상 구분 (모델별 상이) 상세는 `E5708R_HW_Install"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-01.md",
+          "headers": [
+            "**E5708R Series Switch User Guide**"
+          ],
+          "content_preview": "![](/tmp/tmpwbu8nknk/E57xxRC_SW_User_Guide.pdf-0001-03.png)  **----- Start of pi"
+        }
+      ],
+      "notes": "유비쿼스 스위치 LED 상태 확인"
+    },
+    {
+      "id": "KO-003",
+      "category": "ko",
+      "query": "다산 L2 스위치 VLAN 생성 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "VLAN",
+        "다산",
+        "L2",
+        "스위치"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 648.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-09.md",
+          "headers": [
+            "참 고"
+          ],
+          "content_preview": "1-32: Bridge Group Number ![](/tmp/tmpyidffsws/다산_배터리_내장형_V3024VB_명령어메뉴얼_230413_"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-vlan.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "nk.md) — 다중 VLAN 전송, 802.1Q tagged - [VLAN Tag](../concepts/concept-vlan-tag.md)"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+          "headers": [
+            "Modifying the Operational State of VLANs"
+          ],
+          "content_preview": "The state of a VLAN—active or suspended—can be manipulated both in **vlan databa"
+        }
+      ],
+      "notes": "다산 L2 스위치 VLAN 생성 방법"
+    },
+    {
+      "id": "KO-004",
+      "category": "ko",
+      "query": "BGP Route-Reflector 설정 구성",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "Route-Reflector",
+        "BGP",
+        "Full Mesh",
+        "설정"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 403.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-035.md",
+          "headers": [
+            "【 그림 **10-4** 】 **Route-Reflector** 를 이용한 **BGP** 구성예②"
+          ],
+          "content_preview": "| 명령어 | 모 드 | 기 능 | | --- | --- | --- | | **no neighbor**{_neighbor-ip-address_ "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "headers": [
+            "구조"
+          ],
+          "content_preview": "록이다. 두 가지 핵심 역할을 한다: (1) 경로 길이로 BGP 의사결정에 사용(짧을수록 우선), (2) 자신의 AS 번호가 이미 AS_PATH"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-05.md",
+          "headers": [
+            "**ip prefix-list prefix-lose-2 seq 5 deny 22.2.2.0/24 ip prefix-list prefix-lose-2 seq 10 deny 23.3.16.0/20 ip prefix-list prefix-lose-2 seq 15 permit 0.0.0.0/0 le 32**"
+          ],
+          "content_preview": "`! The` **route map** `refers to ACL lose-2, passing routes that are permitted` "
+        }
+      ],
+      "notes": "BGP 루트 리플렉터 설정 (한국어 매뉴얼)"
+    },
+    {
+      "id": "KO-005",
+      "category": "ko",
+      "query": "IGMP QRV Querier Robustness Variable 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "IGMP",
+        "QRV",
+        "Querier",
+        "설정"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 552.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-031.md",
+          "headers": [
+            "**(2) QRV** 설정"
+          ],
+          "content_preview": "다음 명령어 를 사용하십시오.  명령어 모 드 기 능 **no ip igmp version** Interface 설정한 IGMP 버전을 해제하고"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "_*` | | Ubiquoss L2/L3/OLT | `ip igmp snooping enable`, `ip igmp querier` | `가입자"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-01.md",
+          "headers": [
+            "**Part IV: IP Multicast**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "IGMP 쿼리어 견고성 변수 설정"
+    },
+    {
+      "id": "KO-006",
+      "category": "ko",
+      "query": "다산 OLT V8500 PON 포트 구성",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "V8500",
+        "PON",
+        "OLT",
+        "다산"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 233.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-031.md",
+          "headers": [
+            "**10. EPON** 설정"
+          ],
+          "content_preview": "**V8500M**  PON(Passive Optical Network)이란 광케이블을 이용하여 중소 기업이나 일반 가정에까지 초고속 광 대역서"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v8500.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "VLAN) - `proto:dhcp` (DHCP snooping, Option 82) - `proto:igmp` (IPTV 멀티캐스트) - `p"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "headers": [
+            "**11. EPON** 설정"
+          ],
+          "content_preview": "User Manual**  **V8500**  PON(Passive Optical Network)이란 광케이블을 이용하여 중소 기업이나 일반 가"
+        }
+      ],
+      "notes": "다산 OLT V8500 PON 포트 설정"
+    },
+    {
+      "id": "KO-007",
+      "category": "ko",
+      "query": "유비쿼스 OLT U9532H 업링크 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "U9532H",
+        "OLT",
+        "업링크",
+        "유비쿼스"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 194.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "headers": [
+            "4장. 문제 해결하기"
+          ],
+          "content_preview": "이 장에서는 U9532H 를 설치하거나 사용하는 중에 발생될 수 있는 문제들을 살펴보고 문 제를 해결할 수 있는 방법을 설명합니다.  장비에 발"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-u9532h.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "y, MVR - **가입자 인증**: PPPoE intermediate agent (PPPoE+), RADIUS 연동 - **VLAN**: S-"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "headers": [
+            "수동형 광 가입자 회선 장치 구성"
+          ],
+          "content_preview": "개 사용할 수 있으며 이 때 최대지원거리는 10Km 이다.  ![](/tmp/tmpndci6b8r/U9532H_HW_Installation_Gu"
+        }
+      ],
+      "notes": "유비쿼스 OLT 업링크 포트 구성"
+    },
+    {
+      "id": "KO-008",
+      "category": "ko",
+      "query": "L2 스위치 포트 보안 MAC 주소 제한",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "포트 보안",
+        "MAC",
+        "스위치",
+        "제한"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 243.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md",
+          "headers": [
+            "**[** 설정 예제 **3 ] MAC** 필터링 정책 삭제"
+          ],
+          "content_preview": "| ACTION ===============================    1  00:01:a7:70:01:d2   PERMIT SWTICH"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-mac-learning.md",
+          "headers": [
+            "관련 이슈"
+          ],
+          "content_preview": "dynamic 엔트리는 마지막 학습 시각 timestamp 보유.  - 기본 aging time: 300초 (5분) - aging 만료 시 엔트"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+          "headers": [
+            "**ISL and 802.1Q Configuration**"
+          ],
+          "content_preview": "Cisco switches use the _Dynamic Trunk Protocol (DTP)_ to dynamically learn wheth"
+        }
+      ],
+      "notes": "L2 스위치 포트 보안 MAC 제한"
+    },
+    {
+      "id": "KO-009",
+      "category": "ko",
+      "query": "다산 L3 스위치 OSPF 라우팅 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "OSPF",
+        "다산",
+        "L3",
+        "라우팅"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 251.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-038.md",
+          "headers": [
+            "**(8) OSPF** 네트워크 유형 설정"
+          ],
+          "content_preview": "User Manual V5524XG**  이와 같이 OSPF의 Point-to-multipoint 네트워크는 Neighbor 라우터를 지정할 필"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "다산네트웍스 V6824XG는 24-포트 10GbE L3 스위치다. `XG` 접미사는 10 Gigabit Ethernet 지원을 의미한다. L3 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-041.md",
+          "headers": [
+            "**(8) OSPF** 네트워크 유형 설정"
+          ],
+          "content_preview": "스를 제공할 수 있 다는 장점도 가지고 있습니다.  일반적으로 이더넷 인터페이스를 사용하는 라우터와 L3 스위치들은 기본적으로 Broadcast"
+        }
+      ],
+      "notes": "다산 L3 스위치 OSPF 설정"
+    },
+    {
+      "id": "KO-010",
+      "category": "ko",
+      "query": "유비쿼스 L3 BGP 라우팅 프로토콜 활성화",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "BGP",
+        "유비쿼스",
+        "라우팅",
+        "L3"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 598.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제10장_라우팅 프로토콜__sec-01.md",
+          "headers": [
+            "목 차"
+          ],
+          "content_preview": "| **10**라우팅 프로토콜**(RIP&OSPF&BGP) ..............................................."
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4271.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "시스템(AS) 간 경로 정보를 교환하는 외부 게이트웨이 프로토콜(EGP)로, 인터넷 라우팅의 사실상 표준이다. 2006년 1월 발행, 이전 RF"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-01.md",
+          "headers": [
+            "Network Working Group                                    Y. Rekhter, Ed. Request for Comments: 4271                                    T. Li, Ed. Obsoletes: 1771                                            S. Hares, Ed. Category: Standards Track                                   January 2006",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2006)."
+        }
+      ],
+      "notes": "유비쿼스 L3 BGP 프로토콜 설정"
+    },
+    {
+      "id": "KO-011",
+      "category": "ko",
+      "query": "스위치 콘솔 포트 접속 시리얼 케이블",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "콘솔",
+        "포트",
+        "접속",
+        "시리얼"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 72.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "headers": [
+            "**콘솔 포트**"
+          ],
+          "content_preview": "p/tmpxydmwskw/E5708R_HW_Installation_Guide.pdf-0015-02.png)  E5708R `설치 설명서` 11 "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-console-access.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "콘솔(Console) 포트는 네트워크 장비의 시리얼 관리 인터페이스다. 네트워크 연결 없이 직접 케이블로 접속해 부팅 메시지·초기 설정·복구 작"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-002.md",
+          "headers": [
+            "**2.4.1.** `콘솔 연결`"
+          ],
+          "content_preview": "0 Series `스위치는 운영 관리를 위하여 다음과 같이 동시 접속 연결을 지원한다`  - 1 `개의 콘솔 연결` - `최대` 10 `개의` "
+        }
+      ],
+      "notes": "스위치 콘솔 포트 연결 방법"
+    },
+    {
+      "id": "KO-012",
+      "category": "ko",
+      "query": "스위치 전원 공급 장치 AC 설치",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "전원",
+        "공급",
+        "설치",
+        "AC"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 73.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "headers": [
+            "**AC 전원 공급 방식**"
+          ],
+          "content_preview": "를 이용 하여, SYSTEM 구동에 필요한 전원 공급하는 방식을 채택하였습니다. 본 제품은 그림 1 과 전면에 위치함으로써, 설치 작업을 수월하"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-power-supply.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- **PoE 예산 (Power Budget)**: 모든 PoE 포트 동시 사용 시 합계 출력이 PSU 정격 이내인지 확인 - **배터리 수명*"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "headers": [
+            "그림 7. E5708C Adaptor 및 샤시 접지 연결도"
+          ],
+          "content_preview": "End of picture text -----**<br>  ![](/tmp/tmpyskqoqkj/E5708C_HW_Installation_Gui"
+        }
+      ],
+      "notes": "스위치 전원 공급 장치 설치 절차"
+    },
+    {
+      "id": "KO-013",
+      "category": "ko",
+      "query": "Syslog 서버 로그 로컬 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "Syslog",
+        "서버",
+        "로그",
+        "설정"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 72.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-012.md",
+          "headers": [
+            "**7.5.6. Syslog** 메시지 **IP** 주소 지정"
+          ],
+          "content_preview": "User Manual**  **V5524XG**  V5524XG는 원격으로 전송되는 Syslog 메시지의 IP 주소를 지정할 수 있습니다. Sy"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "시스템 클록(시간) 설정은 네트워크 장비의 정확한 시각을 유지하는 운영 기본 작업이다. Syslog/AAA/인증서/SNMP trap timest"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-008.md",
+          "headers": [
+            "**7.2.5. Syslog** 메시지 **IP** 주소 지정"
+          ],
+          "content_preview": "| **no syslog index**{**system** | **physical-entity**ㅣ**dhcp**ㅣ<br>**filter**ㅣ*"
+        }
+      ],
+      "notes": "Syslog 서버 로그 설정 방법"
+    },
+    {
+      "id": "KO-014",
+      "category": "ko",
+      "query": "다산 스패닝트리 Root 스위치 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "스패닝트리",
+        "Root",
+        "다산",
+        "Bridge"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 486.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-024.md",
+          "headers": [
+            "◆ **Root** 스위치"
+          ],
+          "content_preview": "주고 받은 BPDU를 바탕으로 포트의 상태를 결정하고, Spanning-Tree의 기준이 되 는 Root 스위치와 Root 스위치와 통신할 때의"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- `proto:mstp` — IEEE 802.1s, 다중 인스턴스로 VLAN별 로드 밸런싱 - PVST/Rapid-PVST — Cisco 독점"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "다산 스위치 스패닝트리 루트 설정"
+    },
+    {
+      "id": "KO-015",
+      "category": "ko",
+      "query": "포트채널 링크 어그리게이션 LACP 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "포트채널",
+        "어그리게이션",
+        "LACP",
+        "링크"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 694.4,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-011.md",
+          "headers": [
+            "**Link Aggregation Control Protocol**"
+          ],
+          "content_preview": "![](/tmp/tmpwrwbv1i9/E5924LB_SW_User_Guide.pdf-0160-01.png)  **9. LACP**  _**9**"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "LACP - 보안: ACL, port-security, DHCP snooping - 멀티캐스트: IGMP/MLD snooping - 관리: SN"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+          "headers": [
+            "**UMN : CLI NOS 1.01**"
+          ],
+          "content_preview": "**UMN:CLI                                                                       "
+        }
+      ],
+      "notes": "링크 어그리게이션 포트채널 설정"
+    },
+    {
+      "id": "KO-016",
+      "category": "ko",
+      "query": "MAC 주소 테이블 조회 확인",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "MAC",
+        "주소",
+        "테이블",
+        "조회"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 70.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-09.md",
+          "headers": [
+            "**8.11 MAC** 테이블 등록"
+          ],
+          "content_preview": "[{(**dynamic** | **static**)<br> | **address**_MAC_ | MAC 테이블에 등록된 MAC 주소 개수를 확인"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "이블이 가득 차면 모든 트래픽 플러딩 → `feat:port-security`로 방어 - **Static MAC**: 변하지 않는 서버·게이트웨"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-08.md",
+          "headers": [
+            "**8.11 MAC** 테이블 등록"
+          ],
+          "content_preview": "[{(**dynamic** | **static**)<br> | **address**_MAC_ | MAC 테이블에 등록된 MAC 주소 개수를 확인"
+        }
+      ],
+      "notes": "MAC 주소 테이블 확인 명령어"
+    },
+    {
+      "id": "KO-017",
+      "category": "ko",
+      "query": "OLT 광 케이블 SFP 모듈 연결 방법",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "광 케이블",
+        "SFP",
+        "OLT",
+        "모듈"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 196.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide/part-028.md",
+          "headers": [
+            "**23.1. GE-PON** `개요`"
+          ],
+          "content_preview": "에 대해 설명합니다` . `이 장에서는 설명하는 내용은 다음과 같습니다` .  - GE-PON `개요` - OLT `관리` - ONU/ONT `"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-power-supply.md",
+          "headers": [
+            "설치 절차 (일반)"
+          ],
+          "content_preview": "+** | 802.3af/at (출력) | IP폰·AP·CCTV 급전 | | **배터리 내장** | Li-ion / 납축전지 | 정전 백업 (V"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-027.md",
+          "headers": [
+            "**23.1. 1G-EPON** `개요`"
+          ],
+          "content_preview": "대해 설명합니다` . `이 장에서는 설명하는 내용은 다음과 같습니다` .  - 1G-EPON `개요` - OLT `관리` - ONU/ONT `관"
+        }
+      ],
+      "notes": "OLT 광 케이블 및 SFP 모듈 설치"
+    },
+    {
+      "id": "KO-018",
+      "category": "ko",
+      "query": "스위치 펌웨어 소프트웨어 업그레이드 절차",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "펌웨어",
+        "업그레이드",
+        "소프트웨어",
+        "절차"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 69.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-032.md",
+          "headers": [
+            "**1** 단계 V8500M에 ONU의 펌웨어를 저장합니다."
+          ],
+          "content_preview": "ONU 펌웨어를 수동으로 업그레이드 하는 방법은 다음과 같습니다.  | 명령어 | 모드 | 기능 | | --- | --- | --- | | **"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-firmware-upgrade.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "T는 reload 필요) - **유지보수 시간대 작업**: 가입자 영향 최소화를 위해 새벽 시간에 진행 - **OLT 업그레이드 시 ONU 영향"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "headers": [
+            "**(1)** 수동 펌웨어 업그레이드"
+          ],
+          "content_preview": "500은 ONU(ONT)의 기능을 향상 시키기 위해서 펌웨어의 업그레이드를 지원합니다. 펌웨어를 업그레이드 하는 방법은 수동으로 하는 방법과 자"
+        }
+      ],
+      "notes": "스위치 소프트웨어 업그레이드 방법"
+    },
+    {
+      "id": "KO-019",
+      "category": "ko",
+      "query": "다산 배터리 내장형 V3024VB 스위치 사양",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "배터리",
+        "V3024VB",
+        "내장형",
+        "다산"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 843.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md",
+          "headers": [
+            "**1.2** 사용 기호"
+          ],
+          "content_preview": "User Manual**  **V3024VB**  ![](/tmp/tmpyidffsws/다산_배터리_내장형_V3024VB_명령어메뉴얼_23041"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024vb.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "지속 - **배터리 상태 모니터링 명령어**: 잔량·온도·충방전 상태 조회 - **하드웨어**: 배터리 수용 공간 추가로 폼팩터 차이 - 소프트"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-01.md",
+          "headers": [
+            "**Summary :**"
+          ],
+          "content_preview": "Issue 1"
+        }
+      ],
+      "notes": "다산 배터리 내장형 스위치 V3024VB"
+    },
+    {
+      "id": "KO-020",
+      "category": "ko",
+      "query": "스위치 날짜 시간 clock 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "시간",
+        "날짜",
+        "clock",
+        "설정"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 120.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-008.md",
+          "headers": [
+            "**6.1.2** 날짜 및 시간 설정"
+          ],
+          "content_preview": "로 설정되어 있습니다.  다음은 호스트 이름을 DASAN으로 변경하는 예입니다.  ``` SWITCH(config)# hostname DASAN"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- [proto:ntp](../protocols/proto-ntp.md) — Network Time Protocol, RFC 5905  - \"시"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+          "headers": [
+            "**Implementing NetFlow**"
+          ],
+          "content_preview": "NetFlow is a software feature set in Cisco IOS that is designed to provide netwo"
+        }
+      ],
+      "notes": "스위치 시스템 시간 설정"
+    },
+    {
+      "id": "KO-021",
+      "category": "ko",
+      "query": "ARP 테이블 확인 주소 명령어",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "ARP",
+        "테이블",
+        "주소",
+        "명령어"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 617.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-008.md",
+          "headers": [
+            "**5.3. ARP(Address Resolution Protocol)**"
+          ],
+          "content_preview": "ARP `테이블의 정보를 확인하려면` , privilege `모드에서 다음` < `표` 5-3> `의 명령어를 사용한다` ."
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md",
+          "headers": [
+            "정의 대상"
+          ],
+          "content_preview": "IPv4의 ARP를 대체하는 IPv6 주소 해석, 라우터 발견, 자동 주소 구성(SLAAC) 보조, 중복 주소 감지(DAD) 등을 수행한다. I"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-01.md",
+          "headers": [
+            "Network Working Group                                          T. Narten Request for Comments: 4861                                           IBM Obsoletes: 2461                                              E. Nordmark Category: Standards Track                               Sun Microsystems W. Simpson Daydreamer H. Soliman Elevate Technologies September 2007",
+            "1.. Introduction"
+          ],
+          "content_preview": "This specification defines the Neighbor Discovery (ND) protocol for Internet Pro"
+        }
+      ],
+      "notes": "ARP 테이블 조회 및 관리"
+    },
+    {
+      "id": "KO-022",
+      "category": "ko",
+      "query": "DHCP 서버 IP 주소 할당 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "DHCP",
+        "서버",
+        "IP",
+        "할당"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 449.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-033.md",
+          "headers": [
+            "**(1) DHCP** 클라이언트 활성화"
+          ],
+          "content_preview": "지정되었을 경우, L2 네트워크 환경에서의 일 반적인 스위치로서 동작하게 되고, DHCP 클라이언트 환경에서는 DHCP 서버와 DHCP Rela"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "headers": [
+            "핵심 필드 (BOOTP 호환)"
+          ],
+          "content_preview": "서버가 요청을 거부할 때:  - 클라이언트가 요청한 주소가 이미 다른 호스트에 할당됨 - 임대 풀에 없는 주소를 요청 - 클라이언트가 잘못된 s"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+          "headers": [
+            "**Address Management and Assignment**"
+          ],
+          "content_preview": "There are four ways to configure a host address in IPv6:  - **Static Configurati"
+        }
+      ],
+      "notes": "DHCP 서버 주소 풀 설정"
+    },
+    {
+      "id": "KO-023",
+      "category": "ko",
+      "query": "SNMP 커뮤니티 스트링 MIB 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "SNMP",
+        "커뮤니티",
+        "스트링",
+        "MIB"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 716.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-003.md",
+          "headers": [
+            "**SNMPv3** `설정`"
+          ],
+          "content_preview": "eged | | `snmp-server`<br>`view` | _`viewname`_ | SNMP view`를` `설정한다`. | Config "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5905.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- RFC 5906 — Autokey (보안 인증) - RFC 5907 — NTP MIB - RFC 8915 — Network Time Secu"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+          "headers": [
+            "**“Do I Know This Already?” Quiz**"
+          ],
+          "content_preview": "Table  7-1 outlines the major headings in this chapter and the corresponding “Do"
+        }
+      ],
+      "notes": "SNMP 커뮤니티 문자열 구성"
+    },
+    {
+      "id": "KO-024",
+      "category": "ko",
+      "query": "ACL 접근 제어 목록 패킷 필터링",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "ACL",
+        "접근",
+        "제어",
+        "필터링"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 1351.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md",
+          "headers": [
+            "가입자망 장비 목록 - 유비쿼스 OLT",
+            "장비 모델 목록"
+          ],
+          "content_preview": "벤더: 유비쿼스 카테고리: OLT 장비 수: 5개  - U9024A - U9024A - U9500H - U9532H - U95xxH"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "headers": [
+            "한계와 확장"
+          ],
+          "content_preview": "Standard ACL은 출발지만 보기에 목적지에서 너무 멀리 적용하면 의도치 않은 트래픽 차단 발생. 일반 규칙: **출발지 ACL은 목적지 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "headers": [
+            "**Key Topic**"
+          ],
+          "content_preview": "- **Step 1.** Determine the shortest prefix length (in other words, the largest "
+        }
+      ],
+      "notes": "ACL 접근 제어 목록 설정"
+    },
+    {
+      "id": "KO-025",
+      "category": "ko",
+      "query": "QoS 트래픽 우선순위 큐 분류",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "QoS",
+        "우선순위",
+        "큐",
+        "트래픽"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 720.8,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-013.md",
+          "headers": [
+            "**11.1.2. TX Scheduling** `설정`"
+          ],
+          "content_preview": "1, 1,0,1,0,1,0,1,1 `순서로` queue `배분이 이루어지면서` weight `에 따라 패킷양을 조절함과 동시에 트래픽의` lat"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md",
+          "headers": [
+            "관련 기능"
+          ],
+          "content_preview": "cess-list ...`, `ip access-list extended` | `ip access-list extended ...` | `가입자"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+          "headers": [
+            "**DHCP**"
+          ],
+          "content_preview": "DHCP represents the next step in the evolution of dynamic IP address assignment."
+        }
+      ],
+      "notes": "QoS 서비스 품질 트래픽 분류"
+    },
+    {
+      "id": "KO-026",
+      "category": "ko",
+      "query": "포트 미러링 스패닝 모니터링 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "미러링",
+        "모니터링",
+        "포트",
+        "스패닝"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 635.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-008.md",
+          "headers": [
+            "**5.11.1 Monitor** 포트와 **Mirrored** 포트 지정"
+          ],
+          "content_preview": "User Manual**  **V2708M**  포트 미러링 기능을 설정하려면 모니터링을 담당할 Monitor 포트와 모니터링 대상이 되는 Mi"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-port-mirroring.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "destination 포트의 대역폭(보통 1G)을 초과하면 패킷 손실 - 다수 source를 단일 destination에 미러링하면 과부하 위험"
+        },
+        {
+          "rank": 3,
+          "score": 0.0162,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+          "headers": [
+            "**UMN : CLI NOS 1.01**"
+          ],
+          "content_preview": "**UMN:CLI                                                                       "
+        }
+      ],
+      "notes": "포트 미러링을 통한 트래픽 모니터링"
+    },
+    {
+      "id": "KO-027",
+      "category": "ko",
+      "query": "RSTP 빠른 수렴 포트 전환 설정",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "RSTP",
+        "수렴",
+        "포트",
+        "전환"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 356.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-020.md",
+          "headers": [
+            "참 고"
+          ],
+          "content_preview": "id-pvst** | **rapid-pvst+** | ![](/tmp/tmpmh3u6ayu/_V8500__UMN_NOS5.21_KO_150304"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "BackboneFast**: 액세스 스위치 빠른 절체 (전통 STP용) - **Root Guard**: 특정 포트에서 우월한 BPDU 수신 시 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "RSTP 빠른 수렴 포트 상태 전환"
+    },
+    {
+      "id": "KO-028",
+      "category": "ko",
+      "query": "다산 V6824XG L3 스위치 사양 스펙",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "V6824XG",
+        "L3",
+        "스위치",
+        "다산"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 218.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md",
+          "headers": [
+            "**2.1** 주요 특징"
+          ],
+          "content_preview": "l                                                                               "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "LACP - 보안: ACL, port-security, DHCP snooping - 멀티캐스트: IGMP/MLD snooping - 관리: SN"
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md",
+          "headers": [
+            "**2** 제품 소개"
+          ],
+          "content_preview": "User Manual**  **V6824XG**  기하급수적으로 늘어가는 인터넷 인구에 대응하고 그래픽이나 음성 파일과 같은 대용량 데이터를 원"
+        }
+      ],
+      "notes": "다산 V6824XG L3 스위치 제품 사양"
+    },
+    {
+      "id": "KO-029",
+      "category": "ko",
+      "query": "유비쿼스 E5924L 배터리 내장형 스위치",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "E5924L",
+        "배터리",
+        "유비쿼스",
+        "내장형"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 378.0,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-002.md",
+          "headers": [
+            "**1.3.** `관련 문서`"
+          ],
+          "content_preview": "ip | |  | Warning |  `사람에` `대한` `상해`,`데이터` `손실`,`또는` `시스템` `손` | |  |  | `상을` `"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5924l.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "(내장 배터리) | | 배터리 상태 모니터링 | - | 잔량/온도/충방전 명령어 지원 | | 포트 수 | 24 | 24 | | SW 기능 | 동"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_HW_Installtion Guide.md",
+          "headers": [
+            "설치 매뉴얼"
+          ],
+          "content_preview": "![](/tmp/tmpfx_m4zzz/E5924L_HW_Installtion_Guide.pdf-0001-04.png)  **----- Start"
+        }
+      ],
+      "notes": "유비쿼스 배터리 내장형 E5924L"
+    },
+    {
+      "id": "KO-030",
+      "category": "ko",
+      "query": "Designated 스위치 선출 과정 STP",
+      "expected_path_contains": "가입자망장비_manual",
+      "expected_keywords": [
+        "Designated",
+        "스위치",
+        "선출",
+        "STP"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 404.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-024.md",
+          "headers": [
+            "◆ **Designated** 포트와 **Root** 포트"
+          ],
+          "content_preview": "st가 작은 쪽이 Designated 스위치로 결정됩니다. Root path-cost가 동일할 경우에 는 Bridge ID를 비교합니다.  아래"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "- `proto:mstp` — IEEE 802.1s, 다중 인스턴스로 VLAN별 로드 밸런싱 - PVST/Rapid-PVST — Cisco 독점"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "STP Designated 스위치 선출 방식"
+    },
+    {
+      "id": "EDGE-001",
+      "category": "edge",
+      "query": "VLAN trunking 802.1Q IEEE standard",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "VLAN",
+        "trunk",
+        "802.1Q"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2384.2,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md",
+          "headers": [
+            "**Numerics**"
+          ],
+          "content_preview": "zed protocol for carrying VLAN membership information in Ethernet frames to impl"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "headers": [
+            "트렁킹 프로토콜"
+          ],
+          "content_preview": "에서 통과시킬 VLAN 목록 제한:  - Cisco: `switchport trunk allowed vlan 10,20,30` - 명시하지 않으"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+          "headers": [
+            "**ISL and 802.1Q Configuration**"
+          ],
+          "content_preview": "Cisco switches use the _Dynamic Trunk Protocol (DTP)_ to dynamically learn wheth"
+        }
+      ],
+      "notes": "교차 도메인 - RFC+CCIE+한국어 모두 포함 가능"
+    },
+    {
+      "id": "EDGE-002",
+      "category": "edge",
+      "query": "spanning tree protocol loop prevention",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "spanning tree",
+        "STP",
+        "loop"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2585.3,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-06.md",
+          "headers": [
+            "**Spanning Tree Protocol**"
+          ],
+          "content_preview": "rd and BPDU Filter - UDLD - Bridge Assurance - EtherChannel - Troubleshooting Co"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "ng/Forwarding 5단계 - [BPDU](../concepts/concept-stp-bpdu.md) — Bridge Protocol Da"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+          "headers": [
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "교차 도메인 - 루프 방지 스패닝트리"
+    },
+    {
+      "id": "EDGE-003",
+      "category": "edge",
+      "query": "BGP route reflector iBGP scalability",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "BGP",
+        "route reflector",
+        "iBGP"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2738.5,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4364.md",
+          "headers": [
+            "Network Working Group                                           E. Rosen Request for Comments: 4364                           Cisco Systems, Inc. Obsoletes: 2547                                               Y. Rekhter Category: Standards Track                         Juniper Networks, Inc. February 2006",
+            "4.. VPN Route Distribution via BGP"
+          ],
+          "content_preview": "e PE ever needs to maintain all routes for all VPNs; this is an important scalab"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "-*.md` - **관련 프로토콜**: - `proto:ospf` — IGP, BGP와 redistribute 가능 - `proto:tcp` —"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "headers": [
+            "**Part I: IP BGP Routing**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "교차 도메인 - BGP 루트 리플렉터 확장성"
+    },
+    {
+      "id": "EDGE-004",
+      "category": "edge",
+      "query": "OSPF link state database flooding",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "OSPF",
+        "link state",
+        "database"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2567.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-05.md",
+          "headers": [
+            "10.. The Neighbor Data Structure",
+            "10.1.. Neighbor states"
+          ],
+          "content_preview": "number.  Neighbor conversations in this state or greater are       called adjace"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "OSPF Area는 OSPF 네트워크를 LSDB(Link-State Database) 단위로 분할하는 단위다. 모든 영역은 backbone ar"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+          "headers": [
+            "**“Do I Know This Already?” Quiz**"
+          ],
+          "content_preview": "Table  7-1 outlines the major headings in this chapter and the corresponding “Do"
+        }
+      ],
+      "notes": "교차 도메인 - OSPF 링크 상태 데이터베이스"
+    },
+    {
+      "id": "EDGE-005",
+      "category": "edge",
+      "query": "IPv6 address configuration prefix delegation",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "IPv6",
+        "address",
+        "prefix"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2607.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5571.md",
+          "headers": [
+            "Network Working Group                                          B. Storer Request for Comments: 5571                             C. Pignataro, Ed. Category: Standards Track                                  M. Dos Santos Cisco Systems B. Stevant, Ed. L. Toutain TELECOM Bretagne J. Tremblay Videotron Ltd. June 2009",
+            "6.. Considerations about the Address Provisioning Model"
+          ],
+          "content_preview": "considerations given in the previous sections.  This table describes the possibl"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "headers": [
+            "관련 RFC (IPv6 family)"
+          ],
+          "content_preview": "- **`concept:ipv6-extension-header`** — Hop-by-Hop, Routing, Fragment, AH, ESP, "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8200.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                        S. Deering Request for Comments: 8200                                       Retired STD: 86                                                        R. Hinden Obsoletes: 2460                                     Check Point Software Category: Standards Track                                      July 2017 ISSN: 2070-1721",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (c) 2017 IETF Trust and the persons identified as the document authors"
+        }
+      ],
+      "notes": "교차 도메인 - IPv6 주소 설정"
+    },
+    {
+      "id": "EDGE-006",
+      "category": "edge",
+      "query": "access control list packet filtering security",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "access-list",
+        "ACL",
+        "security"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 1159.1,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md",
+          "headers": [
+            "가입자망 장비 목록 - 유비쿼스 L2",
+            "장비 모델 목록"
+          ],
+          "content_preview": "벤더: 유비쿼스 카테고리: L2 장비 수: 18개  - E5708C - E5708R - E57xxRC - E57xxRC - E57xxRC - E"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md",
+          "headers": [
+            "벤더 구현 매핑"
+          ],
+          "content_preview": "가 묵시적으로 존재 - **순차 평가**: 규칙은 위에서 아래로 첫 매칭에서 종료 - **방향 적용**: inbound (인터페이스 진입) / "
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+          "headers": [
+            "**DHCP**"
+          ],
+          "content_preview": "DHCP represents the next step in the evolution of dynamic IP address assignment."
+        }
+      ],
+      "notes": "교차 도메인 - ACL 패킷 필터링 보안"
+    },
+    {
+      "id": "EDGE-007",
+      "category": "edge",
+      "query": "멀티캐스트 라우팅 IGMP 그룹 관리",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "멀티캐스트",
+        "IGMP",
+        "그룹"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 274.9,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-031.md",
+          "headers": [
+            "**9.1 IGMP(Internet Group Management Protocol)**"
+          ],
+          "content_preview": "User Manual**  **V6848XG**  멀티캐스트 전송 방식의 핵심은 멀티캐스트 그룹 관리에 있습니다. 이러한 그룹 멤버쉽을 통하여 "
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "_*` | | Ubiquoss L2/L3/OLT | `ip igmp snooping enable`, `ip igmp querier` | `가입자"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-01.md",
+          "headers": [
+            "**Part IV: IP Multicast**",
+            "**Blueprint topics covered in this chapter:**"
+          ],
+          "content_preview": "This chapter covers the following subtopics from the Cisco CCIE Routing and Swit"
+        }
+      ],
+      "notes": "교차 도메인 - 한국어 멀티캐스트 쿼리"
+    },
+    {
+      "id": "EDGE-008",
+      "category": "edge",
+      "query": "link aggregation port channel bonding IEEE 802.3ad",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "aggregation",
+        "channel",
+        "bonding"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2915.6,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+          "headers": [
+            "**VSS Verification Procedures**"
+          ],
+          "content_preview": "P - bundled in port-channel  38  CCIE Routing and Switching v5.0 Official Cert G"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024v.md",
+          "headers": [
+            "지원 기능"
+          ],
+          "content_preview": "섹션 분할)  - sec-01 ~ 02: 하드웨어 사양·설치 - sec-03 ~ 05: CLI 기본·시스템 관리 - sec-06 ~ 08: VL"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+          "headers": [
+            "**UMN : CLI NOS 1.01**"
+          ],
+          "content_preview": "**UMN:CLI                                                                       "
+        }
+      ],
+      "notes": "교차 도메인 - 링크 어그리게이션"
+    },
+    {
+      "id": "EDGE-009",
+      "category": "edge",
+      "query": "quality of service traffic shaping policing",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "QoS",
+        "traffic",
+        "shaping"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2755.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7640.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                    B. Constantine Request for Comments: 7640                                          JDSU Category: Informational                                      R. Krishnan ISSN: 2070-1721                                                Dell Inc. September 2015",
+            "1.. Introduction"
+          ],
+          "content_preview": "t warranty as described in the Simplified BSD License.  Traffic management (i.e."
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4271.md",
+          "headers": [
+            "검색 힌트"
+          ],
+          "content_preview": "mmary of Operation - `rfc4271__sec-04.md` — Message Formats - `rfc4271__sec-05.m"
+        },
+        {
+          "rank": 3,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-01.md",
+          "headers": [
+            "Network Working Group                                    Y. Rekhter, Ed. Request for Comments: 4271                                    T. Li, Ed. Obsoletes: 1771                                            S. Hares, Ed. Category: Standards Track                                   January 2006",
+            "Copyright Notice"
+          ],
+          "content_preview": "Copyright (C) The Internet Society (2006)."
+        }
+      ],
+      "notes": "교차 도메인 - 서비스 품질 트래픽 제어"
+    },
+    {
+      "id": "EDGE-010",
+      "category": "edge",
+      "query": "IP routing table longest prefix match forwarding",
+      "expected_path_contains": null,
+      "expected_keywords": [
+        "routing",
+        "table",
+        "forwarding"
+      ],
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2214.7,
+      "result_count": 5,
+      "top_results": [
+        {
+          "rank": 1,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3222.md",
+          "headers": [
+            "Network Working Group                                         G. Trotter Request for Comments: 3222                          Agilent Technologies Category: Informational                                    December 2001",
+            "5.. Definitions - parameters"
+          ],
+          "content_preview": "m forwarding information base size (6.1) ```  5.6 Longest Length Prefix Match Al"
+        },
+        {
+          "rank": 2,
+          "score": 0.0164,
+          "path": "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "headers": [
+            "개요"
+          ],
+          "content_preview": "MAC Address Table(또는 CAM Table, Forwarding Database)은 L2 스위치가 어느 포트에 어떤 MAC 주소의 "
+        },
+        {
+          "rank": 3,
+          "score": 0.0161,
+          "path": "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7608.md",
+          "headers": [
+            "Internet Engineering Task Force (IETF)                      M. Boucadair Request for Comments: 7608                                France Telecom BCP: 198                                                     A. Petrescu Category: Best Current Practice                                CEA, LIST ISSN: 2070-1721                                                 F. Baker Cisco Systems July 2015",
+            "1.. Introduction"
+          ],
+          "content_preview": "rfc-editor.org/rfc/rfc4291).  This document includes a recommendation in order t"
+        }
+      ],
+      "notes": "교차 도메인 - IP 라우팅 테이블 포워딩"
+    }
+  ]
+}

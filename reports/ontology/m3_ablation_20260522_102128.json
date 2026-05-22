@@ -1,0 +1,4131 @@
+{
+  "run_at": "2026-05-22T10:21:28.923495",
+  "dataset": "/home/ymlee/work/markdown_rag/scripts/validation_dataset.json",
+  "top_k": 5,
+  "alpha": 0.7,
+  "category": "all",
+  "mode_a": {
+    "mode": "A (baseline)",
+    "overall": {
+      "total": 100,
+      "passed": 42,
+      "hit_at_1": 84,
+      "hit_at_3": 87,
+      "hit_at_5": 88,
+      "keyword_match": 44,
+      "avg_mrr": 0.8577,
+      "avg_elapsed_ms": 1572.3,
+      "via_onto_count": 0
+    },
+    "by_category": {
+      "rfc": {
+        "total": 30,
+        "passed": 18,
+        "hit_at_1": 28,
+        "hit_at_3": 30,
+        "hit_at_5": 30,
+        "keyword_match": 18,
+        "avg_mrr": 0.9667,
+        "avg_elapsed_ms": 2426.5,
+        "via_onto_count": 0
+      },
+      "ccie": {
+        "total": 30,
+        "passed": 8,
+        "hit_at_1": 16,
+        "hit_at_3": 17,
+        "hit_at_5": 18,
+        "keyword_match": 10,
+        "avg_mrr": 0.5589,
+        "avg_elapsed_ms": 2030.3,
+        "via_onto_count": 0
+      },
+      "ko": {
+        "total": 30,
+        "passed": 8,
+        "hit_at_1": 30,
+        "hit_at_3": 30,
+        "hit_at_5": 30,
+        "keyword_match": 8,
+        "avg_mrr": 1.0,
+        "avg_elapsed_ms": 201.3,
+        "via_onto_count": 0
+      },
+      "edge": {
+        "total": 10,
+        "passed": 8,
+        "hit_at_1": 10,
+        "hit_at_3": 10,
+        "hit_at_5": 10,
+        "keyword_match": 8,
+        "avg_mrr": 1.0,
+        "avg_elapsed_ms": 1748.5,
+        "via_onto_count": 0
+      }
+    },
+    "per_case": [
+      {
+        "id": "RFC-001",
+        "category": "rfc",
+        "query": "TCP three-way handshake",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 12432.373046875,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc916.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc761__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7609__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1379.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/11_cd-only__sec-05.md"
+        ]
+      },
+      {
+        "id": "RFC-002",
+        "category": "rfc",
+        "query": "IP fragmentation and reassembly",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2050.9557723999023,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8900.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6274__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6274__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8507.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6274__sec-03.md"
+        ]
+      },
+      {
+        "id": "RFC-003",
+        "category": "rfc",
+        "query": "DNS resource record types A MX CNAME",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2032.2961807250977,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1274.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2181.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1274.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6672.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-04.md"
+        ]
+      },
+      {
+        "id": "RFC-004",
+        "category": "rfc",
+        "query": "HTTP persistent connections keep-alive",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2147.6752758026123,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7230__sec-04.md"
+        ]
+      },
+      {
+        "id": "RFC-005",
+        "category": "rfc",
+        "query": "BGP autonomous system path attribute",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2067.4870014190674,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5065.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1773.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4893.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4274.md"
+        ]
+      },
+      {
+        "id": "RFC-006",
+        "category": "rfc",
+        "query": "OSPF hello packet neighbor relationship",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2039.0393733978271,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1247__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5340__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1583__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-05.md"
+        ]
+      },
+      {
+        "id": "RFC-007",
+        "category": "rfc",
+        "query": "DHCP lease assignment discover offer request",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2055.952787399292,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2131.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2132.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1541.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1531.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4388.md"
+        ]
+      },
+      {
+        "id": "RFC-008",
+        "category": "rfc",
+        "query": "IPv6 addressing architecture prefix",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2063.607692718506,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8044.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4380__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6052.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2450.md"
+        ]
+      },
+      {
+        "id": "RFC-009",
+        "category": "rfc",
+        "query": "TLS handshake certificate authentication",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2094.8729515075684,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8705.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8773.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9431.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5281.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5425.md"
+        ]
+      },
+      {
+        "id": "RFC-010",
+        "category": "rfc",
+        "query": "SMTP mail transaction MAIL FROM RCPT TO",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2191.1258697509766,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3461.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc788.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc821__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2821__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-02.md"
+        ]
+      },
+      {
+        "id": "RFC-011",
+        "category": "rfc",
+        "query": "RTP real-time transport protocol payload format",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2057.422161102295,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3550__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3711.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8817.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5124.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8088__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-012",
+        "category": "rfc",
+        "query": "ICMP echo request reply ping",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2047.128677368164,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1812__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1812__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9508.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4443.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2463.md"
+        ]
+      },
+      {
+        "id": "RFC-013",
+        "category": "rfc",
+        "query": "ARP address resolution protocol hardware",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2067.6472187042236,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc985.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2835.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1009__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1620.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1201.md"
+        ]
+      },
+      {
+        "id": "RFC-014",
+        "category": "rfc",
+        "query": "NAT network address translation mapping",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2092.052936553955,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2663.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2072.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5128.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4787.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8512__sec-02.md"
+        ]
+      },
+      {
+        "id": "RFC-015",
+        "category": "rfc",
+        "query": "SNMP management information base MIB OID",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2092.503309249878,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2856.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3289__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3577.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3591__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3606__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-016",
+        "category": "rfc",
+        "query": "FTP data transfer passive mode PASV",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2099.4811058044434,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1545.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1639.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1068.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1123__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc959__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-017",
+        "category": "rfc",
+        "query": "PPP point-to-point protocol link control LCP",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2071.4221000671387,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4170.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2499.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3599.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1700__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1504__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-018",
+        "category": "rfc",
+        "query": "MPLS label distribution protocol LSP",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2060.5454444885254,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3037.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3209__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9522__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5036__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3099.md"
+        ]
+      },
+      {
+        "id": "RFC-019",
+        "category": "rfc",
+        "query": "SIP session initiation protocol INVITE",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2052.9017448425293,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6228.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5876.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6140.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2599.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5638.md"
+        ]
+      },
+      {
+        "id": "RFC-020",
+        "category": "rfc",
+        "query": "SSH transport layer protocol key exchange",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2140.48433303833,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4253.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5000__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4252.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4462.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4251.md"
+        ]
+      },
+      {
+        "id": "RFC-021",
+        "category": "rfc",
+        "query": "NTP network time protocol clock stratum",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2156.8875312805176,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc958.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1769.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1361.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2030.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1059__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-022",
+        "category": "rfc",
+        "query": "RADIUS authentication authorization accounting",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2065.9303665161133,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2975__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2924.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2059.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6614.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2866.md"
+        ]
+      },
+      {
+        "id": "RFC-023",
+        "category": "rfc",
+        "query": "VRRP virtual router redundancy protocol",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2145.2128887176514,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7910.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5798.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md"
+        ]
+      },
+      {
+        "id": "RFC-024",
+        "category": "rfc",
+        "query": "IS-IS intermediate system link state routing",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2056.688070297241,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-20.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4110__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1074.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2973.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-21.md"
+        ]
+      },
+      {
+        "id": "RFC-025",
+        "category": "rfc",
+        "query": "PIM sparse mode multicast routing protocol",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2060.8391761779785,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4602.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3973__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2117__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2362__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4601__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-026",
+        "category": "rfc",
+        "query": "GRE generic routing encapsulation tunnel",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2071.707010269165,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7059.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7588.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3077.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2890.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3147.md"
+        ]
+      },
+      {
+        "id": "RFC-027",
+        "category": "rfc",
+        "query": "IPsec security association ESP AH",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2092.3354625701904,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4305.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8221.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4835.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4891.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4110__sec-03.md"
+        ]
+      },
+      {
+        "id": "RFC-028",
+        "category": "rfc",
+        "query": "LDAP lightweight directory access protocol search",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2053.199529647827,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3383.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4513.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4520.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3674.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1823.md"
+        ]
+      },
+      {
+        "id": "RFC-029",
+        "category": "rfc",
+        "query": "X.509 certificate public key infrastructure PKI",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2054.5427799224854,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4210__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8886.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5280__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6125.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3739.md"
+        ]
+      },
+      {
+        "id": "RFC-030",
+        "category": "rfc",
+        "query": "private IP address ranges RFC1918",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2079.8189640045166,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6346.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5185.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6752.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3036__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7620.md"
+        ]
+      },
+      {
+        "id": "CCIE-001",
+        "category": "ccie",
+        "query": "STP root bridge election priority",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2080.6825160980225,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4188.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md"
+        ]
+      },
+      {
+        "id": "CCIE-002",
+        "category": "ccie",
+        "query": "VLAN 802.1Q trunk encapsulation",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2070.183277130127,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/11_cd-only__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4762.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2895.md"
+        ]
+      },
+      {
+        "id": "CCIE-003",
+        "category": "ccie",
+        "query": "RSTP rapid spanning tree port states discarding",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2081.4366340637207,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-08.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6620.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-08.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5556.md"
+        ]
+      },
+      {
+        "id": "CCIE-004",
+        "category": "ccie",
+        "query": "EtherChannel LACP active passive negotiation",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2036.0872745513916,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-12.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1134.md"
+        ]
+      },
+      {
+        "id": "CCIE-005",
+        "category": "ccie",
+        "query": "port security maximum MAC violation shutdown",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2093.1222438812256,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2960__sec-04.md"
+        ]
+      },
+      {
+        "id": "CCIE-006",
+        "category": "ccie",
+        "query": "VTP VLAN trunking protocol domain mode",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2078.9878368377686,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md"
+        ]
+      },
+      {
+        "id": "CCIE-007",
+        "category": "ccie",
+        "query": "MSTP multiple spanning tree instances region",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2086.867332458496,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7727.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-08.md"
+        ]
+      },
+      {
+        "id": "CCIE-008",
+        "category": "ccie",
+        "query": "BPDU guard portfast edge port",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2155.576705932617,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md"
+        ]
+      },
+      {
+        "id": "CCIE-009",
+        "category": "ccie",
+        "query": "IGMP snooping multicast group membership",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2112.004041671753,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4429.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7863__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5257.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5008.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5011.md"
+        ]
+      },
+      {
+        "id": "CCIE-010",
+        "category": "ccie",
+        "query": "spanning tree topology change notification TCN",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.5,
+        "elapsed_ms": 2093.756675720215,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4188.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7361.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-09.md"
+        ]
+      },
+      {
+        "id": "CCIE-011",
+        "category": "ccie",
+        "query": "EIGRP feasibility condition successor route",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2110.5902194976807,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7868__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-10.md"
+        ]
+      },
+      {
+        "id": "CCIE-012",
+        "category": "ccie",
+        "query": "OSPF stub area LSA type filtering",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2054.9533367156982,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-16.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-17.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-17.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-17.md"
+        ]
+      },
+      {
+        "id": "CCIE-013",
+        "category": "ccie",
+        "query": "BGP route reflector cluster iBGP",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": true,
+        "mrr": 0.0,
+        "elapsed_ms": 2078.3474445343018,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4456.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2796.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4456.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2796.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1966.md"
+        ]
+      },
+      {
+        "id": "CCIE-014",
+        "category": "ccie",
+        "query": "HSRP hot standby router protocol preemption",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.2,
+        "elapsed_ms": 2064.650058746338,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2281.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2299.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9568.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/11_cd-only__sec-05.md"
+        ]
+      },
+      {
+        "id": "CCIE-015",
+        "category": "ccie",
+        "query": "policy-based routing route-map match set",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2046.7650890350342,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md"
+        ]
+      },
+      {
+        "id": "CCIE-016",
+        "category": "ccie",
+        "query": "NAT overload PAT inside outside interface",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2044.1787242889404,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5135.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5135.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-01.md"
+        ]
+      },
+      {
+        "id": "CCIE-017",
+        "category": "ccie",
+        "query": "access-list wildcard mask extended permit deny",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 748.0676174163818,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/__index__.md"
+        ]
+      },
+      {
+        "id": "CCIE-018",
+        "category": "ccie",
+        "query": "ip helper-address DHCP relay broadcast",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2085.0374698638916,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4390.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1541.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1531.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2131.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5563.md"
+        ]
+      },
+      {
+        "id": "CCIE-019",
+        "category": "ccie",
+        "query": "CDP Cisco discovery protocol neighbor device",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2045.6297397613525,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5331.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6445.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6445.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5306.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6445.md"
+        ]
+      },
+      {
+        "id": "CCIE-020",
+        "category": "ccie",
+        "query": "QoS DSCP differentiated services traffic marking",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": true,
+        "mrr": 0.0,
+        "elapsed_ms": 2050.428628921509,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8229.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7325.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8837.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5594.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8964.md"
+        ]
+      },
+      {
+        "id": "CCIE-021",
+        "category": "ccie",
+        "query": "GRE tunnel interface keepalive configuration",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.06666666666666667,
+        "elapsed_ms": 2037.8384590148926,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8086.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7059.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8313.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8086.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8350.md"
+        ]
+      },
+      {
+        "id": "CCIE-022",
+        "category": "ccie",
+        "query": "Frame Relay DLCI PVC LMI",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2090.3923511505127,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1973.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4591.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md"
+        ]
+      },
+      {
+        "id": "CCIE-023",
+        "category": "ccie",
+        "query": "route redistribution between OSPF EIGRP metric",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2077.016830444336,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7868__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-25.md"
+        ]
+      },
+      {
+        "id": "CCIE-024",
+        "category": "ccie",
+        "query": "default route propagation ip route 0.0.0.0",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2057.5101375579834,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1058.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4632.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2453.md"
+        ]
+      },
+      {
+        "id": "CCIE-025",
+        "category": "ccie",
+        "query": "EIGRP metric bandwidth delay reliability",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2060.9641075134277,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7868__sec-02.md"
+        ]
+      },
+      {
+        "id": "CCIE-026",
+        "category": "ccie",
+        "query": "loopback interface routing protocol stability",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2128.6282539367676,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6606.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6606.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6775__sec-03.md"
+        ]
+      },
+      {
+        "id": "CCIE-027",
+        "category": "ccie",
+        "query": "OSPF designated router DR BDR election",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2052.396059036255,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5614__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7038.md"
+        ]
+      },
+      {
+        "id": "CCIE-028",
+        "category": "ccie",
+        "query": "BGP community attribute no-export local-AS",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2066.136121749878,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8195.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8374.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8642.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3765.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8195.md"
+        ]
+      },
+      {
+        "id": "CCIE-029",
+        "category": "ccie",
+        "query": "VRF virtual routing forwarding route leaking",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2072.97945022583,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8347.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6306__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7289.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8533.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9128__sec-01.md"
+        ]
+      },
+      {
+        "id": "CCIE-030",
+        "category": "ccie",
+        "query": "extended range VLAN 1006 4094 VTPv3",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": false,
+        "keyword_match": false,
+        "mrr": 0.0,
+        "elapsed_ms": 2046.4985370635986,
+        "hit_reason_5": "",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9263.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-03.md"
+        ]
+      },
+      {
+        "id": "KO-001",
+        "category": "ko",
+        "query": "다산 V3024V 포트 설정 방법",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2137.0980739593506,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-006.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-03.md"
+        ]
+      },
+      {
+        "id": "KO-002",
+        "category": "ko",
+        "query": "유비쿼스 E5708R LED 상태 표시",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 174.50332641601562,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_HW_Installtion Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_HW_Installtion Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md"
+        ]
+      },
+      {
+        "id": "KO-003",
+        "category": "ko",
+        "query": "다산 L2 스위치 VLAN 생성 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 201.6007900238037,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-001.md"
+        ]
+      },
+      {
+        "id": "KO-004",
+        "category": "ko",
+        "query": "BGP Route-Reflector 설정 구성",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 53.25651168823242,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-035.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-039.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-036.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-039.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-036.md"
+        ]
+      },
+      {
+        "id": "KO-005",
+        "category": "ko",
+        "query": "IGMP QRV Querier Robustness Variable 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 49.9265193939209,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-028.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-035.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-028.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-025.md"
+        ]
+      },
+      {
+        "id": "KO-006",
+        "category": "ko",
+        "query": "다산 OLT V8500 PON 포트 구성",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 199.16820526123047,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-034.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-033.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-034.md"
+        ]
+      },
+      {
+        "id": "KO-007",
+        "category": "ko",
+        "query": "유비쿼스 OLT U9532H 업링크 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 173.4316349029541,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md"
+        ]
+      },
+      {
+        "id": "KO-008",
+        "category": "ko",
+        "query": "L2 스위치 포트 보안 MAC 주소 제한",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 176.34177207946777,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-034.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-018.md"
+        ]
+      },
+      {
+        "id": "KO-009",
+        "category": "ko",
+        "query": "다산 L3 스위치 OSPF 라우팅 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 198.49085807800293,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-038.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-041.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-041.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-038.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-041.md"
+        ]
+      },
+      {
+        "id": "KO-010",
+        "category": "ko",
+        "query": "유비쿼스 L3 BGP 라우팅 프로토콜 활성화",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 175.11749267578125,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제10장_라우팅 프로토콜__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제09장_BGP.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제10장_라우팅 프로토콜__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제09장_BGP.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제09장_BGP.md"
+        ]
+      },
+      {
+        "id": "KO-011",
+        "category": "ko",
+        "query": "스위치 콘솔 포트 접속 시리얼 케이블",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 54.94070053100586,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-002.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_HW_Installtion Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_HW_Installtion Guide.md"
+        ]
+      },
+      {
+        "id": "KO-012",
+        "category": "ko",
+        "query": "스위치 전원 공급 장치 AC 설치",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 51.91373825073242,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_HW_Installtion Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md"
+        ]
+      },
+      {
+        "id": "KO-013",
+        "category": "ko",
+        "query": "Syslog 서버 로그 로컬 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 54.01611328125,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-012.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제12장_통계 모니터링 및 Qos.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-013.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-013.md"
+        ]
+      },
+      {
+        "id": "KO-014",
+        "category": "ko",
+        "query": "다산 스패닝트리 Root 스위치 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 239.03918266296387,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-024.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-025.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-025.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-025.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-022.md"
+        ]
+      },
+      {
+        "id": "KO-015",
+        "category": "ko",
+        "query": "포트채널 링크 어그리게이션 LACP 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 51.789283752441406,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-011.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-018.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제15장_LACP.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-019.md"
+        ]
+      },
+      {
+        "id": "KO-016",
+        "category": "ko",
+        "query": "MAC 주소 테이블 조회 확인",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 55.83763122558594,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-08.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-010.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-010.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-020.md"
+        ]
+      },
+      {
+        "id": "KO-017",
+        "category": "ko",
+        "query": "OLT 광 케이블 SFP 모듈 연결 방법",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 176.3145923614502,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide/part-028.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-027.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-014.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-031.md"
+        ]
+      },
+      {
+        "id": "KO-018",
+        "category": "ko",
+        "query": "스위치 펌웨어 소프트웨어 업그레이드 절차",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 54.819583892822266,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-050.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-049.md"
+        ]
+      },
+      {
+        "id": "KO-019",
+        "category": "ko",
+        "query": "다산 배터리 내장형 V3024VB 스위치 사양",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 224.41697120666504,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-03.md"
+        ]
+      },
+      {
+        "id": "KO-020",
+        "category": "ko",
+        "query": "스위치 날짜 시간 clock 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 52.53148078918457,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-007.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-007.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-007.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-007.md"
+        ]
+      },
+      {
+        "id": "KO-021",
+        "category": "ko",
+        "query": "ARP 테이블 확인 주소 명령어",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 50.49753189086914,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제05장_IP 환경 설정.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제05장_IP 환경 설정.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide/part-008.md"
+        ]
+      },
+      {
+        "id": "KO-022",
+        "category": "ko",
+        "query": "DHCP 서버 IP 주소 할당 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 54.42929267883301,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-033.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-029.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-026.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-029.md"
+        ]
+      },
+      {
+        "id": "KO-023",
+        "category": "ko",
+        "query": "SNMP 커뮤니티 스트링 MIB 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 52.083492279052734,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-003.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide/part-003.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-003.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-003.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-003.md"
+        ]
+      },
+      {
+        "id": "KO-024",
+        "category": "ko",
+        "query": "ACL 접근 제어 목록 패킷 필터링",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 745.6490993499756,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/__index__.md"
+        ]
+      },
+      {
+        "id": "KO-025",
+        "category": "ko",
+        "query": "QoS 트래픽 우선순위 큐 분류",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 53.24363708496094,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-013.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-013.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-033.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제21장_QOS 및 ACL.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-06.md"
+        ]
+      },
+      {
+        "id": "KO-026",
+        "category": "ko",
+        "query": "포트 미러링 스패닝 모니터링 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 50.43339729309082,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-006.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-006.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-010.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-006.md"
+        ]
+      },
+      {
+        "id": "KO-027",
+        "category": "ko",
+        "query": "RSTP 빠른 수렴 포트 전환 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 53.511619567871094,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-024.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제13장_STP__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-06.md"
+        ]
+      },
+      {
+        "id": "KO-028",
+        "category": "ko",
+        "query": "다산 V6824XG L3 스위치 사양 스펙",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 198.15468788146973,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md"
+        ]
+      },
+      {
+        "id": "KO-029",
+        "category": "ko",
+        "query": "유비쿼스 E5924L 배터리 내장형 스위치",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 172.93691635131836,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-002.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-002.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-001.md"
+        ]
+      },
+      {
+        "id": "KO-030",
+        "category": "ko",
+        "query": "Designated 스위치 선출 과정 STP",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 52.96468734741211,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-024.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-019.md"
+        ]
+      },
+      {
+        "id": "EDGE-001",
+        "category": "edge",
+        "query": "VLAN trunking 802.1Q IEEE standard",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2062.879800796509,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/11_cd-only__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8772__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2674__sec-01.md"
+        ]
+      },
+      {
+        "id": "EDGE-002",
+        "category": "edge",
+        "query": "spanning tree protocol loop prevention",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2039.1523838043213,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4761.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4665.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5171.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6620.md"
+        ]
+      },
+      {
+        "id": "EDGE-003",
+        "category": "edge",
+        "query": "BGP route reflector iBGP scalability",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2120.4769611358643,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4364.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2796.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3345.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4456.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4365.md"
+        ]
+      },
+      {
+        "id": "EDGE-004",
+        "category": "edge",
+        "query": "OSPF link state database flooding",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2028.8727283477783,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1765.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1765.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1583__sec-07.md"
+        ]
+      },
+      {
+        "id": "EDGE-005",
+        "category": "edge",
+        "query": "IPv6 address configuration prefix delegation",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2030.195713043213,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5571.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3769.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3633.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7844.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4241.md"
+        ]
+      },
+      {
+        "id": "EDGE-006",
+        "category": "edge",
+        "query": "access control list packet filtering security",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 748.4612464904785,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md"
+        ]
+      },
+      {
+        "id": "EDGE-007",
+        "category": "edge",
+        "query": "멀티캐스트 라우팅 IGMP 그룹 관리",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 54.92877960205078,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-034.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-030.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-035.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-028.md"
+        ]
+      },
+      {
+        "id": "EDGE-008",
+        "category": "edge",
+        "query": "link aggregation port channel bonding IEEE 802.3ad",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2133.991003036499,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9533.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9534.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6320__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7190.md"
+        ]
+      },
+      {
+        "id": "EDGE-009",
+        "category": "edge",
+        "query": "quality of service traffic shaping policing",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2127.8176307678223,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7640.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/04_part-ii-qos__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1695__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5975__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/04_part-ii-qos__sec-06.md"
+        ]
+      },
+      {
+        "id": "EDGE-010",
+        "category": "edge",
+        "query": "IP routing table longest prefix match forwarding",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2138.597011566162,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3222.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7608.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3675.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3535.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9079.md"
+        ]
+      }
+    ]
+  },
+  "mode_b": {
+    "mode": "B (baseline + ontology union)",
+    "overall": {
+      "total": 100,
+      "passed": 51,
+      "hit_at_1": 84,
+      "hit_at_3": 99,
+      "hit_at_5": 100,
+      "keyword_match": 51,
+      "avg_mrr": 0.9158,
+      "avg_elapsed_ms": 1595.0,
+      "via_onto_count": 15
+    },
+    "by_category": {
+      "rfc": {
+        "total": 30,
+        "passed": 16,
+        "hit_at_1": 28,
+        "hit_at_3": 30,
+        "hit_at_5": 30,
+        "keyword_match": 16,
+        "avg_mrr": 0.9611,
+        "avg_elapsed_ms": 2378.8,
+        "via_onto_count": 1
+      },
+      "ccie": {
+        "total": 30,
+        "passed": 13,
+        "hit_at_1": 16,
+        "hit_at_3": 29,
+        "hit_at_5": 30,
+        "keyword_match": 13,
+        "avg_mrr": 0.7583,
+        "avg_elapsed_ms": 2163.4,
+        "via_onto_count": 14
+      },
+      "ko": {
+        "total": 30,
+        "passed": 15,
+        "hit_at_1": 30,
+        "hit_at_3": 30,
+        "hit_at_5": 30,
+        "keyword_match": 15,
+        "avg_mrr": 1.0,
+        "avg_elapsed_ms": 159.0,
+        "via_onto_count": 0
+      },
+      "edge": {
+        "total": 10,
+        "passed": 7,
+        "hit_at_1": 10,
+        "hit_at_3": 10,
+        "hit_at_5": 10,
+        "keyword_match": 7,
+        "avg_mrr": 1.0,
+        "avg_elapsed_ms": 1846.3,
+        "via_onto_count": 0
+      }
+    },
+    "per_case": [
+      {
+        "id": "RFC-001",
+        "category": "rfc",
+        "query": "TCP three-way handshake",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 7180.708169937134,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc916.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc761__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-extended.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7609__sec-02.md"
+        ]
+      },
+      {
+        "id": "RFC-002",
+        "category": "rfc",
+        "query": "IP fragmentation and reassembly",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2174.5078563690186,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8900.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6274__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6274__sec-03.md"
+        ]
+      },
+      {
+        "id": "RFC-003",
+        "category": "rfc",
+        "query": "DNS resource record types A MX CNAME",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2176.218271255493,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1274.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ospf.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2181.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2131.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1274.md"
+        ]
+      },
+      {
+        "id": "RFC-004",
+        "category": "rfc",
+        "query": "HTTP persistent connections keep-alive",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2201.82466506958,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-firmware-upgrade.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9112.md"
+        ]
+      },
+      {
+        "id": "RFC-005",
+        "category": "rfc",
+        "query": "BGP autonomous system path attribute",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.3333333333333333,
+        "elapsed_ms": 2172.0640659332275,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5065.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1773.md"
+        ]
+      },
+      {
+        "id": "RFC-006",
+        "category": "rfc",
+        "query": "OSPF hello packet neighbor relationship",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2200.507879257202,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1247__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5340__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ospf.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1583__sec-05.md"
+        ]
+      },
+      {
+        "id": "RFC-007",
+        "category": "rfc",
+        "query": "DHCP lease assignment discover offer request",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2440.127372741699,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2131.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2131.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2132.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-dhcp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1541.md"
+        ]
+      },
+      {
+        "id": "RFC-008",
+        "category": "rfc",
+        "query": "IPv6 addressing architecture prefix",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2193.4328079223633,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8044.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4380__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-009",
+        "category": "rfc",
+        "query": "TLS handshake certificate authentication",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2202.4013996124268,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8705.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ntp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8773.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ntp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9431.md"
+        ]
+      },
+      {
+        "id": "RFC-010",
+        "category": "rfc",
+        "query": "SMTP mail transaction MAIL FROM RCPT TO",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2207.637310028076,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3461.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1661.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc788.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc821__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-011",
+        "category": "rfc",
+        "query": "RTP real-time transport protocol payload format",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2214.761257171631,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3550__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3711.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8817.md"
+        ]
+      },
+      {
+        "id": "RFC-012",
+        "category": "rfc",
+        "query": "ICMP echo request reply ping",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2176.862955093384,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1812__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-pppoe-discovery.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1812__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9508.md"
+        ]
+      },
+      {
+        "id": "RFC-013",
+        "category": "rfc",
+        "query": "ARP address resolution protocol hardware",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2205.223798751831,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc985.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2835.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1009__sec-02.md"
+        ]
+      },
+      {
+        "id": "RFC-014",
+        "category": "rfc",
+        "query": "NAT network address translation mapping",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2251.5664100646973,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2663.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2072.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5128.md"
+        ]
+      },
+      {
+        "id": "RFC-015",
+        "category": "rfc",
+        "query": "SNMP management information base MIB OID",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2166.957378387451,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2856.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3289__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5905.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3577.md"
+        ]
+      },
+      {
+        "id": "RFC-016",
+        "category": "rfc",
+        "query": "FTP data transfer passive mode PASV",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2162.322759628296,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1545.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1639.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-gpon-olt-onu.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1068.md"
+        ]
+      },
+      {
+        "id": "RFC-017",
+        "category": "rfc",
+        "query": "PPP point-to-point protocol link control LCP",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2259.8087787628174,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4170.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1661.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2499.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1661.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3599.md"
+        ]
+      },
+      {
+        "id": "RFC-018",
+        "category": "rfc",
+        "query": "MPLS label distribution protocol LSP",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2177.16121673584,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3037.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3209__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9522__sec-03.md"
+        ]
+      },
+      {
+        "id": "RFC-019",
+        "category": "rfc",
+        "query": "SIP session initiation protocol INVITE",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2213.334321975708,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6228.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-pppoe-discovery.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5876.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-pppoe-discovery.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6140.md"
+        ]
+      },
+      {
+        "id": "RFC-020",
+        "category": "rfc",
+        "query": "SSH transport layer protocol key exchange",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2190.2925968170166,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4253.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5000__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-cdp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4252.md"
+        ]
+      },
+      {
+        "id": "RFC-021",
+        "category": "rfc",
+        "query": "NTP network time protocol clock stratum",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2184.476613998413,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc958.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5905.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1769.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1361.md"
+        ]
+      },
+      {
+        "id": "RFC-022",
+        "category": "rfc",
+        "query": "RADIUS authentication authorization accounting",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2216.714859008789,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2975__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2516.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2924.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2516.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2059.md"
+        ]
+      },
+      {
+        "id": "RFC-023",
+        "category": "rfc",
+        "query": "VRRP virtual router redundancy protocol",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2178.701877593994,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7910.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md"
+        ]
+      },
+      {
+        "id": "RFC-024",
+        "category": "rfc",
+        "query": "IS-IS intermediate system link state routing",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2197.6590156555176,
+        "hit_reason_5": "via:rfc-2328.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-20.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4110__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1074.md"
+        ]
+      },
+      {
+        "id": "RFC-025",
+        "category": "rfc",
+        "query": "PIM sparse mode multicast routing protocol",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2244.550943374634,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4602.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3973__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2117__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-026",
+        "category": "rfc",
+        "query": "GRE generic routing encapsulation tunnel",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2304.938554763794,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7059.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2784.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7588.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3077.md"
+        ]
+      },
+      {
+        "id": "RFC-027",
+        "category": "rfc",
+        "query": "IPsec security association ESP AH",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2240.427255630493,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4305.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8221.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ipv6.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4835.md"
+        ]
+      },
+      {
+        "id": "RFC-028",
+        "category": "rfc",
+        "query": "LDAP lightweight directory access protocol search",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2184.847116470337,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3383.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-extended.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4513.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4520.md"
+        ]
+      },
+      {
+        "id": "RFC-029",
+        "category": "rfc",
+        "query": "X.509 certificate public key infrastructure PKI",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2264.7151947021484,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4210__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8886.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2784.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5280__sec-01.md"
+        ]
+      },
+      {
+        "id": "RFC-030",
+        "category": "rfc",
+        "query": "private IP address ranges RFC1918",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2178.652763366699,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6346.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5185.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-vlan.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6752.md"
+        ]
+      },
+      {
+        "id": "CCIE-001",
+        "category": "ccie",
+        "query": "STP root bridge election priority",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2174.9274730682373,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-root-bridge.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md"
+        ]
+      },
+      {
+        "id": "CCIE-002",
+        "category": "ccie",
+        "query": "VLAN 802.1Q trunk encapsulation",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2194.187879562378,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-vlan.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/11_cd-only__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4762.md"
+        ]
+      },
+      {
+        "id": "CCIE-003",
+        "category": "ccie",
+        "query": "RSTP rapid spanning tree port states discarding",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2177.833080291748,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-08.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6620.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-08.md"
+        ]
+      },
+      {
+        "id": "CCIE-004",
+        "category": "ccie",
+        "query": "EtherChannel LACP active passive negotiation",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2162.773609161377,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-gpon-olt-onu.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-12.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/standards/std-itu-t-g.984.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md"
+        ]
+      },
+      {
+        "id": "CCIE-005",
+        "category": "ccie",
+        "query": "port security maximum MAC violation shutdown",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2171.586751937866,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-mac-learning.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/07_part-v-security__sec-02.md"
+        ]
+      },
+      {
+        "id": "CCIE-006",
+        "category": "ccie",
+        "query": "VTP VLAN trunking protocol domain mode",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2187.2732639312744,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md"
+        ]
+      },
+      {
+        "id": "CCIE-007",
+        "category": "ccie",
+        "query": "MSTP multiple spanning tree instances region",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2166.3732528686523,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7727.md"
+        ]
+      },
+      {
+        "id": "CCIE-008",
+        "category": "ccie",
+        "query": "BPDU guard portfast edge port",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2237.982988357544,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-10.md"
+        ]
+      },
+      {
+        "id": "CCIE-009",
+        "category": "ccie",
+        "query": "IGMP snooping multicast group membership",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.5,
+        "elapsed_ms": 2220.031499862671,
+        "hit_reason_5": "via:proto-igmp.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4429.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7863__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-igmp-snooping.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5257.md"
+        ]
+      },
+      {
+        "id": "CCIE-010",
+        "category": "ccie",
+        "query": "spanning tree topology change notification TCN",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.5,
+        "elapsed_ms": 2220.8752632141113,
+        "hit_reason_5": "via:proto-stp.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4188.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md"
+        ]
+      },
+      {
+        "id": "CCIE-011",
+        "category": "ccie",
+        "query": "EIGRP feasibility condition successor route",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2250.014066696167,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-09.md"
+        ]
+      },
+      {
+        "id": "CCIE-012",
+        "category": "ccie",
+        "query": "OSPF stub area LSA type filtering",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2192.8300857543945,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-16.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-17.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-17.md"
+        ]
+      },
+      {
+        "id": "CCIE-013",
+        "category": "ccie",
+        "query": "BGP route reflector cluster iBGP",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.5,
+        "elapsed_ms": 2188.467025756836,
+        "hit_reason_5": "via:proto-bgp.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4456.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2796.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4456.md"
+        ]
+      },
+      {
+        "id": "CCIE-014",
+        "category": "ccie",
+        "query": "HSRP hot standby router protocol preemption",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2224.5707511901855,
+        "hit_reason_5": "via:proto-hsrp.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2281.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2299.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3768.md"
+        ]
+      },
+      {
+        "id": "CCIE-015",
+        "category": "ccie",
+        "query": "policy-based routing route-map match set",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2288.189172744751,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9067.md"
+        ]
+      },
+      {
+        "id": "CCIE-016",
+        "category": "ccie",
+        "query": "NAT overload PAT inside outside interface",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2195.1210498809814,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5135.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5135.md"
+        ]
+      },
+      {
+        "id": "CCIE-017",
+        "category": "ccie",
+        "query": "access-list wildcard mask extended permit deny",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 785.9020233154297,
+        "hit_reason_5": "via:concept-acl-standard.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md"
+        ]
+      },
+      {
+        "id": "CCIE-018",
+        "category": "ccie",
+        "query": "ip helper-address DHCP relay broadcast",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2278.8166999816895,
+        "hit_reason_5": "via:concept-dhcp-discover.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4390.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1541.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1531.md"
+        ]
+      },
+      {
+        "id": "CCIE-019",
+        "category": "ccie",
+        "query": "CDP Cisco discovery protocol neighbor device",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2223.1194972991943,
+        "hit_reason_5": "via:proto-cdp.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5331.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-cdp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6445.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-cdp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6445.md"
+        ]
+      },
+      {
+        "id": "CCIE-020",
+        "category": "ccie",
+        "query": "QoS DSCP differentiated services traffic marking",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.25,
+        "elapsed_ms": 2201.9126415252686,
+        "hit_reason_5": "via:proto-acl.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8229.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ipv6-header.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7325.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8837.md"
+        ]
+      },
+      {
+        "id": "CCIE-021",
+        "category": "ccie",
+        "query": "GRE tunnel interface keepalive configuration",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.5,
+        "elapsed_ms": 2174.091339111328,
+        "hit_reason_5": "via:proto-gre.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8086.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7059.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8313.md"
+        ]
+      },
+      {
+        "id": "CCIE-022",
+        "category": "ccie",
+        "query": "Frame Relay DLCI PVC LMI",
+        "passed": true,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 0.5,
+        "elapsed_ms": 2188.5297298431396,
+        "hit_reason_5": "via:proto-frame-relay.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1973.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2590.md"
+        ]
+      },
+      {
+        "id": "CCIE-023",
+        "category": "ccie",
+        "query": "route redistribution between OSPF EIGRP metric",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2262.885808944702,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-26.md"
+        ]
+      },
+      {
+        "id": "CCIE-024",
+        "category": "ccie",
+        "query": "default route propagation ip route 0.0.0.0",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2209.3024253845215,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4271.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1058.md"
+        ]
+      },
+      {
+        "id": "CCIE-025",
+        "category": "ccie",
+        "query": "EIGRP metric bandwidth delay reliability",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2188.8949871063232,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-gpon-olt-onu.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-07.md"
+        ]
+      },
+      {
+        "id": "CCIE-026",
+        "category": "ccie",
+        "query": "loopback interface routing protocol stability",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2226.1557579040527,
+        "hit_reason_5": "via:concept-loopback-interface.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6606.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6606.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-04.md"
+        ]
+      },
+      {
+        "id": "CCIE-027",
+        "category": "ccie",
+        "query": "OSPF designated router DR BDR election",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2202.641725540161,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ospf.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5614__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md"
+        ]
+      },
+      {
+        "id": "CCIE-028",
+        "category": "ccie",
+        "query": "BGP community attribute no-export local-AS",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2234.6646785736084,
+        "hit_reason_5": "via:concept-bgp-as-path.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8195.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8374.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8642.md"
+        ]
+      },
+      {
+        "id": "CCIE-029",
+        "category": "ccie",
+        "query": "VRF virtual routing forwarding route leaking",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2241.63818359375,
+        "hit_reason_5": "via:proto-bgp.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8347.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc6306__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7289.md"
+        ]
+      },
+      {
+        "id": "CCIE-030",
+        "category": "ccie",
+        "query": "extended range VLAN 1006 4094 VTPv3",
+        "passed": false,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 0.5,
+        "elapsed_ms": 2230.0291061401367,
+        "hit_reason_5": "via:concept-acl-extended.md",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-extended.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8299__sec-03.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9263.md"
+        ]
+      },
+      {
+        "id": "KO-001",
+        "category": "ko",
+        "query": "다산 V3024V 포트 설정 방법",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 236.89913749694824,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024v.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024vb.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-10.md"
+        ]
+      },
+      {
+        "id": "KO-002",
+        "category": "ko",
+        "query": "유비쿼스 E5708R LED 상태 표시",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 198.1644630432129,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5708r.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5708r.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_HW_Installtion Guide.md"
+        ]
+      },
+      {
+        "id": "KO-003",
+        "category": "ko",
+        "query": "다산 L2 스위치 VLAN 생성 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 222.26572036743164,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-vlan.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md"
+        ]
+      },
+      {
+        "id": "KO-004",
+        "category": "ko",
+        "query": "BGP Route-Reflector 설정 구성",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 71.78759574890137,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-035.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-039.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-036.md"
+        ]
+      },
+      {
+        "id": "KO-005",
+        "category": "ko",
+        "query": "IGMP QRV Querier Robustness Variable 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 74.74040985107422,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-igmp-snooping.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-028.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-igmp-snooping.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-035.md"
+        ]
+      },
+      {
+        "id": "KO-006",
+        "category": "ko",
+        "query": "다산 OLT V8500 PON 포트 구성",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 221.15588188171387,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v8500.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v8500.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-034.md"
+        ]
+      },
+      {
+        "id": "KO-007",
+        "category": "ko",
+        "query": "유비쿼스 OLT U9532H 업링크 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 195.20330429077148,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-u9532h.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/vendors/vendor-ubiquoss.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md"
+        ]
+      },
+      {
+        "id": "KO-008",
+        "category": "ko",
+        "query": "L2 스위치 포트 보안 MAC 주소 제한",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 195.70112228393555,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-mac-learning.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-mac-learning.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-020.md"
+        ]
+      },
+      {
+        "id": "KO-009",
+        "category": "ko",
+        "query": "다산 L3 스위치 OSPF 라우팅 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 221.11272811889648,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-038.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-041.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-041.md"
+        ]
+      },
+      {
+        "id": "KO-010",
+        "category": "ko",
+        "query": "유비쿼스 L3 BGP 라우팅 프로토콜 활성화",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 195.76311111450195,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제10장_라우팅 프로토콜__sec-01.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4271.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제09장_BGP.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제10장_라우팅 프로토콜__sec-01.md"
+        ]
+      },
+      {
+        "id": "KO-011",
+        "category": "ko",
+        "query": "스위치 콘솔 포트 접속 시리얼 케이블",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 72.08824157714844,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-console-access.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-002.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-console-access.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md"
+        ]
+      },
+      {
+        "id": "KO-012",
+        "category": "ko",
+        "query": "스위치 전원 공급 장치 AC 설치",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 74.98908042907715,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-power-supply.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708C_HW_Installation Guide.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-power-supply.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_HW_Installtion Guide.md"
+        ]
+      },
+      {
+        "id": "KO-013",
+        "category": "ko",
+        "query": "Syslog 서버 로그 로컬 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 71.84195518493652,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-012.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제12장_통계 모니터링 및 Qos.md"
+        ]
+      },
+      {
+        "id": "KO-014",
+        "category": "ko",
+        "query": "다산 스패닝트리 Root 스위치 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 237.9598617553711,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-024.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-025.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-root-bridge.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-025.md"
+        ]
+      },
+      {
+        "id": "KO-015",
+        "category": "ko",
+        "query": "포트채널 링크 어그리게이션 LACP 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 73.90809059143066,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-011.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024v.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-018.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제15장_LACP.md"
+        ]
+      },
+      {
+        "id": "KO-016",
+        "category": "ko",
+        "query": "MAC 주소 테이블 조회 확인",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 74.13959503173828,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-09.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-08.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-010.md"
+        ]
+      },
+      {
+        "id": "KO-017",
+        "category": "ko",
+        "query": "OLT 광 케이블 SFP 모듈 연결 방법",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 198.23384284973145,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide/part-028.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-power-supply.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-027.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-console-access.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-014.md"
+        ]
+      },
+      {
+        "id": "KO-018",
+        "category": "ko",
+        "query": "스위치 펌웨어 소프트웨어 업그레이드 절차",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 73.34518432617188,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-firmware-upgrade.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-032.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-firmware-upgrade.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-050.md"
+        ]
+      },
+      {
+        "id": "KO-019",
+        "category": "ko",
+        "query": "다산 배터리 내장형 V3024VB 스위치 사양",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 241.29414558410645,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024vb.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5924l.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md"
+        ]
+      },
+      {
+        "id": "KO-020",
+        "category": "ko",
+        "query": "스위치 날짜 시간 clock 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 74.57375526428223,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-007.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ntp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-007.md"
+        ]
+      },
+      {
+        "id": "KO-021",
+        "category": "ko",
+        "query": "ARP 테이블 확인 주소 명령어",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 81.42209053039551,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/P8624/LGU _Manual_P8600_Series_User Guide_제05장_IP 환경 설정.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ipv6.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-020.md"
+        ]
+      },
+      {
+        "id": "KO-022",
+        "category": "ko",
+        "query": "DHCP 서버 IP 주소 할당 설정",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 73.82726669311523,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-033.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-029.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-031.md"
+        ]
+      },
+      {
+        "id": "KO-023",
+        "category": "ko",
+        "query": "SNMP 커뮤니티 스트링 MIB 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 78.89389991760254,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-003.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide/part-003.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5905.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide/part-003.md"
+        ]
+      },
+      {
+        "id": "KO-024",
+        "category": "ko",
+        "query": "ACL 접근 제어 목록 패킷 필터링",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 788.6786460876465,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md"
+        ]
+      },
+      {
+        "id": "KO-025",
+        "category": "ko",
+        "query": "QoS 트래픽 우선순위 큐 분류",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 74.50342178344727,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-013.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-013.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/standards/std-ieee-802.1q.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1/part-033.md"
+        ]
+      },
+      {
+        "id": "KO-026",
+        "category": "ko",
+        "query": "포트 미러링 스패닝 모니터링 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 74.65624809265137,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-008.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-port-mirroring.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811/part-006.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-006.md"
+        ]
+      },
+      {
+        "id": "KO-027",
+        "category": "ko",
+        "query": "RSTP 빠른 수렴 포트 전환 설정",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 74.20468330383301,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2/part-020.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-port-states.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-024.md"
+        ]
+      },
+      {
+        "id": "KO-028",
+        "category": "ko",
+        "query": "다산 V6824XG L3 스위치 사양 스펙",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 232.34248161315918,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2/part-001.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-001.md"
+        ]
+      },
+      {
+        "id": "KO-029",
+        "category": "ko",
+        "query": "유비쿼스 E5924L 배터리 내장형 스위치",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 194.84996795654297,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide/part-002.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5924l.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide/part-002.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5924l.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-02.md"
+        ]
+      },
+      {
+        "id": "KO-030",
+        "category": "ko",
+        "query": "Designated 스위치 선출 과정 STP",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 72.79562950134277,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-024.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-019.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-root-bridge.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-019.md"
+        ]
+      },
+      {
+        "id": "EDGE-001",
+        "category": "edge",
+        "query": "VLAN trunking 802.1Q IEEE standard",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2250.5428791046143,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/11_cd-only__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md"
+        ]
+      },
+      {
+        "id": "EDGE-002",
+        "category": "edge",
+        "query": "spanning tree protocol loop prevention",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2171.6456413269043,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-06.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4761.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4665.md"
+        ]
+      },
+      {
+        "id": "EDGE-003",
+        "category": "edge",
+        "query": "BGP route reflector iBGP scalability",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2284.017562866211,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4364.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2796.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3345.md"
+        ]
+      },
+      {
+        "id": "EDGE-004",
+        "category": "edge",
+        "query": "OSPF link state database flooding",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2198.4806060791016,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2178__sec-05.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1765.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-15.md"
+        ]
+      },
+      {
+        "id": "EDGE-005",
+        "category": "edge",
+        "query": "IPv6 address configuration prefix delegation",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2204.188823699951,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5571.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3769.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3633.md"
+        ]
+      },
+      {
+        "id": "EDGE-006",
+        "category": "edge",
+        "query": "access control list packet filtering security",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 769.9410915374756,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L3/__index__.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/__index__.md"
+        ]
+      },
+      {
+        "id": "EDGE-007",
+        "category": "edge",
+        "query": "멀티캐스트 라우팅 IGMP 그룹 관리",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 72.07822799682617,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1/part-031.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-igmp-snooping.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0/part-034.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-030.md"
+        ]
+      },
+      {
+        "id": "EDGE-008",
+        "category": "edge",
+        "query": "link aggregation port channel bonding IEEE 802.3ad",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2239.650011062622,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024v.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9533.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-cdp.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc9534.md"
+        ]
+      },
+      {
+        "id": "EDGE-009",
+        "category": "edge",
+        "query": "quality of service traffic shaping policing",
+        "passed": true,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": true,
+        "mrr": 1.0,
+        "elapsed_ms": 2134.8912715911865,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7640.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4271.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/04_part-ii-qos__sec-04.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-dot1q-tunnel.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1695__sec-01.md"
+        ]
+      },
+      {
+        "id": "EDGE-010",
+        "category": "edge",
+        "query": "IP routing table longest prefix match forwarding",
+        "passed": false,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_5": true,
+        "keyword_match": false,
+        "mrr": 1.0,
+        "elapsed_ms": 2138.00311088562,
+        "hit_reason_5": "direct",
+        "top_paths": [
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3222.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc7608.md",
+          "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md",
+          "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3675.md"
+        ]
+      }
+    ]
+  }
+}

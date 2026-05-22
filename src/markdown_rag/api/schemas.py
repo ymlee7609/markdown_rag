@@ -21,6 +21,9 @@ class SearchRequest(BaseModel):
     top_k: int = 5
     doc_type: str | None = None
     language: str | None = None
+    # 검색 모드 오버라이드 (None이면 settings.search_mode 사용)
+    # "vector" | "hybrid" | "ontology"
+    mode: str | None = None
 
 
 class AskRequest(BaseModel):
@@ -32,6 +35,8 @@ class AskRequest(BaseModel):
     model: str = "gpt-4o-mini"
     doc_type: str | None = None
     language: str | None = None
+    # 검색 모드 오버라이드
+    mode: str | None = None
 
 
 class DeleteRequest(BaseModel):
@@ -50,6 +55,10 @@ class ChunkResponse(BaseModel):
     doc_path: str
     headers: list[str]
     chunk_index: int
+    # Ontology augmentation metadata (mode == "ontology" 시 채워질 수 있음)
+    via_onto_card: bool = False
+    referenced_paths: list[str] = []
+    injected_by_onto_card: str | None = None
 
 
 class SearchResultResponse(BaseModel):

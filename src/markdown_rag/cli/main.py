@@ -94,6 +94,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Filter by equipment category",
     )
+    search_parser.add_argument(
+        "--mode",
+        choices=["vector", "hybrid", "ontology"],
+        default=None,
+        help="Search backend (default: from settings.search_mode). "
+             "'ontology' activates OntologyAugmentedSearch with referenced-path "
+             "expansion from input_ontology/ side corpus.",
+    )
 
     # -- ask --
     ask_parser = subparsers.add_parser(
@@ -138,6 +146,13 @@ def build_parser() -> argparse.ArgumentParser:
         choices=["L2", "L3", "OLT"],
         default=None,
         help="Filter by equipment category",
+    )
+    ask_parser.add_argument(
+        "--mode",
+        choices=["vector", "hybrid", "ontology"],
+        default=None,
+        help="Retrieval backend (default: from settings.search_mode). "
+             "Use 'ontology' to enable ontology-augmented retrieval.",
     )
 
     # -- status --

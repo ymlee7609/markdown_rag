@@ -26,12 +26,8 @@ _PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT / "src"))
 
 from markdown_rag.config import Settings  # noqa: E402
-from markdown_rag.embedding.local import LocalEmbedding  # noqa: E402
 from markdown_rag.models import SearchResult  # noqa: E402
-from markdown_rag.retriever.bm25 import BM25Index  # noqa: E402
-from markdown_rag.retriever.hybrid import HybridSearch  # noqa: E402
-from markdown_rag.retriever.search import SemanticSearch  # noqa: E402
-from markdown_rag.store.chroma import ChromaStore  # noqa: E402
+from markdown_rag.retriever.builder import build_search_engine  # noqa: E402
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -110,7 +106,7 @@ def compute_mrr(results: list[SearchResult], expected_path_contains: str | None)
 
 
 def evaluate_single(
-    search_engine: SemanticSearch,
+    search_engine,
     test_case: dict[str, Any],
     top_k: int,
 ) -> dict[str, Any]:
@@ -291,43 +287,11 @@ def print_summary(
 # ---------------------------------------------------------------------------
 
 
-def build_search_engine(settings: Settings):
-    """검색 엔진을 초기화합니다. search_mode에 따라 Semantic/Hybrid 선택."""
-    print(f"검색 엔진 초기화 중... (mode={settings.search_mode})")
-
-    # 임베딩 백엔드
-    embedding = LocalEmbedding(model_name=settings.local_model)
-
-    # 벡터 스토어
-    store = ChromaStore(
-        persist_path=settings.chroma_path,
-        collection_name=settings.collection_name,
-    )
-
-    # 시맨틱 검색 엔진
-    semantic = SemanticSearch(
-        embedding_backend=embedding,
-        vector_store=store,
-        top_k=settings.search_top_k,
-    )
-
-    if settings.search_mode == "hybrid":
-        chunk_count = store.count()
-        print(f"인덱스 로드 완료: {chunk_count:,}개 청크")
-        print(f"BM25 인덱스 로드 중: {settings.bm25_index_path}")
-        bm25 = BM25Index.load(settings.bm25_index_path)
-        print(f"BM25 로드 완료: {bm25.size:,}개 청크 (alpha={settings.hybrid_alpha})")
-        return HybridSearch(
-            semantic_search=semantic,
-            bm25_index=bm25,
-            alpha=settings.hybrid_alpha,
-        )
-
-    engine = semantic
-
-    chunk_count = store.count()
-    print(f"인덱스 로드 완료: {chunk_count:,}개 청크")
-    return engine
+def _build_engine(settings: Settings, mode_override: str | None):
+    """공통 builder를 호출해 모드별 검색 엔진을 만든다."""
+    effective_mode = mode_override or settings.search_mode
+    print(f"검색 엔진 초기화 중... (mode={effective_mode})")
+    return build_search_engine(settings, mode_override=mode_override)
 
 
 def main() -> None:
@@ -366,6 +330,13 @@ def main() -> None:
         help="결과에 리뷰 템플릿 정보를 포함하여 저장",
     )
     parser.add_argument(
+        "--ontology-mode",
+        choices=["off", "vector", "hybrid", "ontology"],
+        default=None,
+        help="검색 모드 오버라이드. 'ontology'는 OntologyAugmentedSearch 활성화. "
+             "'off'는 settings.search_mode 사용(기본).",
+    )
+    parser.add_argument(
         "--env-file",
         type=Path,
         default=_PROJECT_ROOT / ".env",
@@ -396,7 +367,11 @@ def main() -> None:
     # 검색 엔진 초기화 (프로젝트 루트에서 실행)
     os.chdir(_PROJECT_ROOT)
     try:
-        engine = build_search_engine(settings)
+        mode_override = (
+            None if (args.ontology_mode is None or args.ontology_mode == "off")
+            else args.ontology_mode
+        )
+        engine = _build_engine(settings, mode_override=mode_override)
     finally:
         os.chdir(original_cwd)
 

@@ -16,6 +16,7 @@
 - **크로스 인코더 리랭킹**: 검색 결과 정확도 개선 (Phase 4)
 - **배치 인제스트**: 대규모 문서 처리 최적화 (Phase 5)
 - **HyDE 쿼리 처리**: 가상 문서 임베딩으로 검색 정확도 향상 (Phase 6)
+- **온톨로지 증강 검색**: 보조 코퍼스(`input_ontology/`) + referenced-path 자동 확장으로 CCIE Hit@5 60→100%, 전체 Hit@5 88→100% (Phase 7)
 
 ## 요구 사항
 
@@ -52,6 +53,9 @@ mdrag search "인증 방식" --search-mode bm25
 
 # 하이브리드 검색 (벡터 + BM25)
 mdrag search "인증 방식" --search-mode hybrid
+
+# 온톨로지 증강 검색 (보조 코퍼스 + referenced-path 자동 확장)
+mdrag search "OSPF area 설정" --mode ontology
 
 # 메타데이터 필터링
 mdrag search "인증" --doc-type rfc --language ko
@@ -108,12 +112,25 @@ mdrag serve
 
 | 변수 | 기본값 | 설명 |
 |------|--------|------|
-| `MDRAG_SEARCH_MODE` | `vector` | 검색 모드 (`vector` / `bm25` / `hybrid`) |
+| `MDRAG_SEARCH_MODE` | `vector` | 검색 모드 (`vector` / `bm25` / `hybrid` / `ontology`) |
 | `MDRAG_HYBRID_ALPHA` | `0.7` | 하이브리드 검색 벡터 가중치 (0.0-1.0) |
 | `MDRAG_BM25_INDEX_PATH` | `./data/bm25_index.pkl` | BM25 인덱스 경로 |
 | `MDRAG_RERANK_ENABLED` | `false` | 크로스 인코더 리랭킹 활성화 |
 | `MDRAG_RERANK_MODEL` | `BAAI/bge-reranker-v2-m3` | 리랭커 모델 (다국어) |
 | `MDRAG_INITIAL_TOP_K` | `20` | 리랭킹 전 검색 결과 수 |
+
+### Phase 7 온톨로지 증강 설정
+
+`MDRAG_SEARCH_MODE=ontology` 또는 `--mode ontology` 사용 시 적용됩니다.
+
+| 변수 | 기본값 | 설명 |
+|------|--------|------|
+| `MDRAG_ONTO_CHROMA_PATH` | `./data/chroma_ontology` | 보조 코퍼스 ChromaDB 경로 |
+| `MDRAG_ONTO_COLLECTION_NAME` | `markdown_docs_ontology` | 보조 코퍼스 collection 이름 |
+| `MDRAG_ONTO_BM25_PATH` | `./data/bm25_ontology` | 보조 코퍼스 BM25 인덱스 |
+| `MDRAG_ONTO_REFS_PATH` | `./data/ontology/onto_refs.json` | 카드 → referenced paths 매핑 |
+| `MDRAG_ONTO_INJECT_TOP_N_CARDS` | `3` | 보조 카드 hit 중 상위 N개에서 청크 inject |
+| `MDRAG_ONTO_INJECT_CHUNKS_PER_CARD` | `1` | 카드당 inject할 main corpus 청크 수 |
 
 ## 아키텍처
 
@@ -185,6 +202,100 @@ ruff check src/ tests/
 - Phase 4: 크로스 인코더 리랭킹 (완료) - BAAI/bge-reranker-v2-m3
 - Phase 5: 배치 인제스트 파이프라인 (완료) - 27,000+ 파일 처리
 - Phase 6: HyDE 쿼리 처리 (완료) - 가상 문서 임베딩
+- Phase 7: 온톨로지 증강 검색 (완료) - 아래 섹션 참조
+
+## 온톨로지 증강 검색 (Phase 7)
+
+12,000여 개의 마크다운 코퍼스(IETF RFC 11,449 / Cisco CCIE 103 / 다산·유비쿼스 가입자망 매뉴얼 579)에서 "표준 ↔ 이론 ↔ CLI 구현" 3계층 교차 검색 품질을 끌어올리기 위해 **온톨로지 카드 보조 코퍼스**를 도입했습니다.
+
+### 효과 (validation_dataset 100건 기준)
+
+| 지표 | baseline (hybrid) | **ontology mode** | Δ |
+|------|---|---|---|
+| Passed | 86 | **98** | **+12** |
+| Hit@5 (전체) | 88 | **100** | **+12** |
+| **Hit@5 (CCIE)** | **18/30 (60%)** | **30/30 (100%)** | **+40%p** |
+| MRR | 0.856 | 0.893 | +0.037 |
+| 평균 응답 | 1538ms | 1893ms | +355ms |
+
+### 구성 요소
+
+```
+input_ontology/                 # 보조 코퍼스 (69 카드)
+├── schema/
+│   ├── entity_types.yaml       # 8종 엔티티 (Protocol/RFC/Concept/Feature/...)
+│   ├── relation_types.yaml     # 14종 관계 (defined_by/extends/implements/...)
+│   └── alias_dictionary.yaml   # 영문/한글 별칭 사전
+├── protocols/                  # OSPF, BGP, STP, VLAN, DHCP, IGMP, ACL, GPON, ... (18)
+├── concepts/                   # ospf-area, bgp-as-path, vlan-trunk, ... (14)
+├── rfcs/                       # 2328, 4271, 8200, 5905, ... (13)
+├── standards/                  # IEEE 802.1D/Q, ITU-T G.984 (3)
+├── features/                   # mac-address-table, port-mirroring, ... (7)
+├── vendors/                    # dasan, ubiquoss (2)
+└── devices/                    # V3024V, V8500, U9532H, P8624, ... (8)
+
+data/ontology/
+├── onto_refs.json              # 카드 → referenced main corpus 경로 매핑
+├── index.json                  # 엔티티 ID → 카드 파일
+├── alias_index.json            # 별칭 → canonical ID 역인덱스
+└── chunk_enrichment.jsonl.gz   # 515K 청크의 onto 후보 (정규식 + 사전 매칭)
+```
+
+### 검색 메커니즘 (`--mode ontology`)
+
+1. **Dual collection 검색**: main corpus(`chroma_optimized`) + ontology corpus(`chroma_ontology`)에서 각각 hybrid 검색
+2. **RRF union**: 두 결과를 Reciprocal Rank Fusion으로 결합
+3. **Referenced-path injection**: 보조 카드 hit이 있으면 해당 카드의 `taught_in`/`documented_in`/`corpus_paths` frontmatter를 따라가서 main corpus의 청크를 자동 inject
+4. **결과에 origin 표시**: `[ONTO CARD]` (보조 카드 자체) / `[INJECTED via <카드명>]` (자동 inject) / 일반 (main 직접 hit)
+
+### 빌드/재인덱싱
+
+카드를 추가하거나 수정한 후:
+
+```bash
+# 1. 보조 Chroma + BM25 재빌드
+python scripts/reindex_optimized.py --input input_ontology \
+  --chroma-path data/chroma_ontology \
+  --collection markdown_docs_ontology \
+  --bm25-path data/bm25_ontology
+
+# 2. onto_refs.json 재생성
+python scripts/build_ontology_refs.py
+
+# 3. (선택) 결정론적 추출 — main 코퍼스 chunk에 onto 후보 부여
+python scripts/extract_onto_candidates.py
+#   → data/ontology/chunk_enrichment.jsonl.gz (515K records, ~2분)
+
+# 4. 검증
+python scripts/validate_rag.py --ontology-mode ontology
+```
+
+### 카드 작성 가이드
+
+각 카드는 YAML frontmatter + Markdown 본문. 필수 필드는 `input_ontology/schema/entity_types.yaml` 참조.
+
+예: `input_ontology/protocols/proto-ospf.md`
+
+```yaml
+---
+id: proto:ospf
+type: Protocol
+name_en: OSPF
+name_ko: 개방형 최단 경로 우선
+layer: L3
+defined_by: [rfc:2328]
+related: [proto:isis, concept:ospf-lsa, concept:ospf-area]
+taught_in:
+  - "Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md"
+documented_in:
+  - "가입자망장비_manual/다산_L3"
+keywords_en: [LSA, area, ABR, ASBR, hello, DR, BDR]
+keywords_ko: [영역, 인접관계, 헬로]
+source: human
+---
+```
+
+상세 사양은 `input_ontology/schema/README.md`와 `reports/ontology/m3cde_m4_final_report.md` 참조.
 
 ## 라이선스
 

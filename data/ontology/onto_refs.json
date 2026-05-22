@@ -1,0 +1,980 @@
+{
+  "version": "2.0.0",
+  "generated_at": "2026-05-22T11:22:08.997902",
+  "onto_dir": "/home/ymlee/work/markdown_rag/input_ontology",
+  "input_base": "/home/ymlee/work/markdown_rag/input_optimized",
+  "fields": [
+    "taught_in",
+    "documented_in",
+    "corpus_paths",
+    "manual_paths"
+  ],
+  "card_count": 52,
+  "total_keys": 104,
+  "refs": {
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-extended.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/concepts/concept-acl-extended.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-acl-standard.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/concepts/concept-acl-standard.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-bgp-as-path.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/concepts/concept-bgp-as-path.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-dhcp-discover.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/concepts/concept-dhcp-discover.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-loopback-interface.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-02.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/concepts/concept-loopback-interface.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-02.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-ospf-area.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/concepts/concept-ospf-area.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-stp-root-bridge.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/concepts/concept-stp-root-bridge.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/concepts/concept-vlan-trunk.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/concepts/concept-vlan-trunk.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024v.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-06.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-07.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-08.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/devices/model-dasan-v3024v.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-06.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-07.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-08.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v3024vb.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-06.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-07.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-08.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/devices/model-dasan-v3024vb.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-06.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-07.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/다산_L2/다산_배터리 내장형 V3024VB_명령어메뉴얼_230413_V1__sec-08.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v6824xg.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2"
+      ]
+    },
+    "input_ontology/devices/model-dasan-v6824xg.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-dasan-v8500.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0",
+        "가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2"
+      ]
+    },
+    "input_ontology/devices/model-dasan-v8500.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0",
+        "가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5708r.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-06.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-07.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-08.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/devices/model-ubiquoss-e5708r.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5708R_HW_Installation Guide.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-06.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-07.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E57xxRC_SW_User Guide__sec-08.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-e5924l.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_HW_Installtion Guide.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_HW_Installtion Guide.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide",
+        "가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide"
+      ]
+    },
+    "input_ontology/devices/model-ubiquoss-e5924l.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924L_HW_Installtion Guide.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_L2/E5924LB_HW_Installtion Guide.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide",
+        "가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-p8624.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/유비쿼스_L3/P8624"
+      ]
+    },
+    "input_ontology/devices/model-ubiquoss-p8624.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/유비쿼스_L3/P8624"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/devices/model-ubiquoss-u9532h.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide"
+      ]
+    },
+    "input_ontology/devices/model-ubiquoss-u9532h.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/가입자망장비_manual/유비쿼스_OLT/U9532H_HW_Installation Guide.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-clock-config.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/features/feat-clock-config.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-console-access.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/features/feat-console-access.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-dot1q-tunnel.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/유비쿼스_L2"
+      ]
+    },
+    "input_ontology/features/feat-dot1q-tunnel.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/유비쿼스_L2"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-firmware-upgrade.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/features/feat-firmware-upgrade.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-mac-address-table.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/features/feat-mac-address-table.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-port-mirroring.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/features/feat-port-mirroring.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/features/feat-power-supply.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/features/feat-power-supply.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-acl.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/protocols/proto-acl.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-bgp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-07.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-bgp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/03_part-i-ip-bgp-routing__sec-07.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-cdp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/protocols/proto-cdp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-dhcp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/protocols/proto-dhcp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-dns.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-dns.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-frame-relay.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/05_part-iii-wide-area-networks.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/protocols/proto-frame-relay.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-11.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/05_part-iii-wide-area-networks.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gpon.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/protocols/proto-gpon.md": {
+      "injectable": [],
+      "directory_hints": [
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-gre.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-22.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/protocols/proto-gre.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-12.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-22.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/08_cd-only__sec-07.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-hsrp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-02.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/protocols/proto-hsrp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-02.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-igmp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-03.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "input_ontology/protocols/proto-igmp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/06_part-iv-ip-multicast__sec-03.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3",
+        "가입자망장비_manual/유비쿼스_OLT"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ipv6.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-ipv6.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-02.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ntp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-ntp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-05.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-ospf.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-ospf.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/04_part-ii-ip-networking__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-routing__sec-04.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-pppoe.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/05_part-iii-wide-area-networks.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-pppoe.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol2/05_part-iii-wide-area-networks.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_OLT",
+        "가입자망장비_manual/유비쿼스_OLT",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-stp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-03.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/유비쿼스_L2"
+      ]
+    },
+    "input_ontology/protocols/proto-stp.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-03.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/유비쿼스_L2"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/protocols/proto-vlan.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "input_ontology/protocols/proto-vlan.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-05.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/03_part-i-lan-switching__sec-07.md"
+      ],
+      "directory_hints": [
+        "가입자망장비_manual/다산_L2",
+        "가입자망장비_manual/유비쿼스_L2",
+        "가입자망장비_manual/다산_L3",
+        "가입자망장비_manual/유비쿼스_L3"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1035.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-04.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-1035.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1035__sec-04.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-1661.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1661.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-1661.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc1661.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2131.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2131.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-2131.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2131.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2328.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-03.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-2328.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2328__sec-03.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2516.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2516.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-2516.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2516.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2616.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2616.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-2616.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2616.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-2784.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2784.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-2784.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc2784.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-3376.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3376.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-3376.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc3376.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4271.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-4271.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4271__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-4861.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-4861.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc4861__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5321.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-5321.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-01.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-02.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-03.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-04.md",
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc5321__sec-05.md"
+      ],
+      "directory_hints": []
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-5905.md": {
+      "injectable": [],
+      "directory_hints": [
+        "IETF_RFC/rfc5905"
+      ]
+    },
+    "input_ontology/rfcs/rfc-5905.md": {
+      "injectable": [],
+      "directory_hints": [
+        "IETF_RFC/rfc5905"
+      ]
+    },
+    "/home/ymlee/work/markdown_rag/input_ontology/rfcs/rfc-8200.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8200.md"
+      ],
+      "directory_hints": []
+    },
+    "input_ontology/rfcs/rfc-8200.md": {
+      "injectable": [
+        "/home/ymlee/work/markdown_rag/input_optimized/IETF_RFC/rfc8200.md"
+      ],
+      "directory_hints": []
+    }
+  }
+}

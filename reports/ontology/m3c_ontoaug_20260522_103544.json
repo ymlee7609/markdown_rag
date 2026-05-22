@@ -1,0 +1,2055 @@
+{
+  "run_at": "2026-05-22T10:35:44.380571",
+  "top_k": 5,
+  "alpha": 0.7,
+  "inject_top_n_cards": 3,
+  "inject_chunks_per_card": 1,
+  "overall": {
+    "total": 100,
+    "passed": 45,
+    "hit_at_1": 84,
+    "hit_at_3": 99,
+    "hit_at_5": 100,
+    "keyword_match": 45,
+    "avg_mrr": 0.9158,
+    "avg_elapsed_ms": 2010.9,
+    "via_onto_hits": 15,
+    "direct_hits": 85
+  },
+  "by_category": {
+    "rfc": {
+      "total": 30,
+      "hit_at_1": 28,
+      "hit_at_3": 29,
+      "hit_at_5": 30,
+      "passed": 13,
+      "keyword_match": 13
+    },
+    "ccie": {
+      "total": 30,
+      "hit_at_1": 16,
+      "hit_at_3": 30,
+      "hit_at_5": 30,
+      "passed": 11,
+      "keyword_match": 11
+    },
+    "ko": {
+      "total": 30,
+      "passed": 15,
+      "hit_at_1": 30,
+      "hit_at_3": 30,
+      "hit_at_5": 30,
+      "keyword_match": 15
+    },
+    "edge": {
+      "total": 10,
+      "passed": 6,
+      "hit_at_1": 10,
+      "hit_at_3": 10,
+      "hit_at_5": 10,
+      "keyword_match": 6
+    }
+  },
+  "per_case": [
+    {
+      "id": "RFC-001",
+      "category": "rfc",
+      "query": "TCP three-way handshake",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 18641.594171524048,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-bgp.md",
+        "proto-bgp.md",
+        "proto-bgp.md"
+      ]
+    },
+    {
+      "id": "RFC-002",
+      "category": "rfc",
+      "query": "IP fragmentation and reassembly",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2403.820037841797,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md"
+      ]
+    },
+    {
+      "id": "RFC-003",
+      "category": "rfc",
+      "query": "DNS resource record types A MX CNAME",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2429.1646480560303,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-ospf.md",
+        "proto-ospf.md",
+        "rfc-2131.md"
+      ]
+    },
+    {
+      "id": "RFC-004",
+      "category": "rfc",
+      "query": "HTTP persistent connections keep-alive",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2173.804759979248,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "RFC-005",
+      "category": "rfc",
+      "query": "BGP autonomous system path attribute",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": false,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.25,
+      "elapsed_ms": 2318.052053451538,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-bgp-as-path.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "RFC-006",
+      "category": "rfc",
+      "query": "OSPF hello packet neighbor relationship",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2486.0832691192627,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-2328.md",
+        "rfc-2328.md",
+        "rfc-2328.md"
+      ]
+    },
+    {
+      "id": "RFC-007",
+      "category": "rfc",
+      "query": "DHCP lease assignment discover offer request",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2346.6522693634033,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-dhcp.md",
+        "proto-dhcp.md",
+        "main"
+      ]
+    },
+    {
+      "id": "RFC-008",
+      "category": "rfc",
+      "query": "IPv6 addressing architecture prefix",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2365.833044052124,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-8200.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "RFC-009",
+      "category": "rfc",
+      "query": "TLS handshake certificate authentication",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2331.3324451446533,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-ntp.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "RFC-010",
+      "category": "rfc",
+      "query": "SMTP mail transaction MAIL FROM RCPT TO",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2414.1170978546143,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-1661.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "RFC-011",
+      "category": "rfc",
+      "query": "RTP real-time transport protocol payload format",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2323.3447074890137,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "proto-ipv6.md",
+        "proto-ipv6.md",
+        "rfc-1661.md"
+      ]
+    },
+    {
+      "id": "RFC-012",
+      "category": "rfc",
+      "query": "ICMP echo request reply ping",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2554.5785427093506,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "concept-dhcp-discover.md",
+        "concept-dhcp-discover.md",
+        "concept-dhcp-discover.md"
+      ]
+    },
+    {
+      "id": "RFC-013",
+      "category": "rfc",
+      "query": "ARP address resolution protocol hardware",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2767.3099040985107,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-4861.md",
+        "rfc-4861.md",
+        "rfc-4861.md"
+      ]
+    },
+    {
+      "id": "RFC-014",
+      "category": "rfc",
+      "query": "NAT network address translation mapping",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2118.1647777557373,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "RFC-015",
+      "category": "rfc",
+      "query": "SNMP management information base MIB OID",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2476.691484451294,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md"
+      ]
+    },
+    {
+      "id": "RFC-016",
+      "category": "rfc",
+      "query": "FTP data transfer passive mode PASV",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2319.9195861816406,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "RFC-017",
+      "category": "rfc",
+      "query": "PPP point-to-point protocol link control LCP",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2268.038272857666,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-1661.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "RFC-018",
+      "category": "rfc",
+      "query": "MPLS label distribution protocol LSP",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2672.203779220581,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md"
+      ]
+    },
+    {
+      "id": "RFC-019",
+      "category": "rfc",
+      "query": "SIP session initiation protocol INVITE",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2190.474510192871,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "rfc-2516.md",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "RFC-020",
+      "category": "rfc",
+      "query": "SSH transport layer protocol key exchange",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2639.930009841919,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-gre.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "RFC-021",
+      "category": "rfc",
+      "query": "NTP network time protocol clock stratum",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2206.453323364258,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "proto-ntp.md"
+      ]
+    },
+    {
+      "id": "RFC-022",
+      "category": "rfc",
+      "query": "RADIUS authentication authorization accounting",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2238.462448120117,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-2516.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "RFC-023",
+      "category": "rfc",
+      "query": "VRRP virtual router redundancy protocol",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2666.0287380218506,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-hsrp.md",
+        "proto-hsrp.md",
+        "proto-hsrp.md"
+      ]
+    },
+    {
+      "id": "RFC-024",
+      "category": "rfc",
+      "query": "IS-IS intermediate system link state routing",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2429.6538829803467,
+      "hit_reason_5": "via:rfc-2328.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-2328.md",
+        "rfc-2328.md",
+        "rfc-2328.md"
+      ]
+    },
+    {
+      "id": "RFC-025",
+      "category": "rfc",
+      "query": "PIM sparse mode multicast routing protocol",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2432.568311691284,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-igmp.md",
+        "proto-igmp.md",
+        "proto-igmp.md"
+      ]
+    },
+    {
+      "id": "RFC-026",
+      "category": "rfc",
+      "query": "GRE generic routing encapsulation tunnel",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2458.0326080322266,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-2784.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "RFC-027",
+      "category": "rfc",
+      "query": "IPsec security association ESP AH",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2364.642381668091,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-8200.md",
+        "proto-ipv6.md",
+        "proto-ipv6.md"
+      ]
+    },
+    {
+      "id": "RFC-028",
+      "category": "rfc",
+      "query": "LDAP lightweight directory access protocol search",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2461.888313293457,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-acl-extended.md",
+        "concept-acl-extended.md",
+        "concept-acl-extended.md"
+      ]
+    },
+    {
+      "id": "RFC-029",
+      "category": "rfc",
+      "query": "X.509 certificate public key infrastructure PKI",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2378.676414489746,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-gre.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "RFC-030",
+      "category": "rfc",
+      "query": "private IP address ranges RFC1918",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2858.585834503174,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md"
+      ]
+    },
+    {
+      "id": "CCIE-001",
+      "category": "ccie",
+      "query": "STP root bridge election priority",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2327.788829803467,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "CCIE-002",
+      "category": "ccie",
+      "query": "VLAN 802.1Q trunk encapsulation",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2287.036895751953,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-vlan.md",
+        "proto-vlan.md",
+        "main"
+      ]
+    },
+    {
+      "id": "CCIE-003",
+      "category": "ccie",
+      "query": "RSTP rapid spanning tree port states discarding",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2585.6528282165527,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "CCIE-004",
+      "category": "ccie",
+      "query": "EtherChannel LACP active passive negotiation",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2216.1717414855957,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "main",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "CCIE-005",
+      "category": "ccie",
+      "query": "port security maximum MAC violation shutdown",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2188.166856765747,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "CCIE-006",
+      "category": "ccie",
+      "query": "VTP VLAN trunking protocol domain mode",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2199.1403102874756,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "CCIE-007",
+      "category": "ccie",
+      "query": "MSTP multiple spanning tree instances region",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2508.0132484436035,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "CCIE-008",
+      "category": "ccie",
+      "query": "BPDU guard portfast edge port",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2437.486410140991,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "concept-stp-root-bridge.md",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "CCIE-009",
+      "category": "ccie",
+      "query": "IGMP snooping multicast group membership",
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.5,
+      "elapsed_ms": 2585.597276687622,
+      "hit_reason_5": "via:proto-igmp.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-igmp.md",
+        "proto-igmp.md",
+        "proto-igmp.md"
+      ]
+    },
+    {
+      "id": "CCIE-010",
+      "category": "ccie",
+      "query": "spanning tree topology change notification TCN",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2492.668390274048,
+      "hit_reason_5": "via:proto-stp.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "CCIE-011",
+      "category": "ccie",
+      "query": "EIGRP feasibility condition successor route",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2526.4954566955566,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-gre.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "CCIE-012",
+      "category": "ccie",
+      "query": "OSPF stub area LSA type filtering",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2478.3143997192383,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-ospf-area.md",
+        "rfc-2328.md",
+        "rfc-2328.md"
+      ]
+    },
+    {
+      "id": "CCIE-013",
+      "category": "ccie",
+      "query": "BGP route reflector cluster iBGP",
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.5,
+      "elapsed_ms": 2605.9646606445312,
+      "hit_reason_5": "via:proto-bgp.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-bgp.md",
+        "proto-bgp.md",
+        "proto-bgp.md"
+      ]
+    },
+    {
+      "id": "CCIE-014",
+      "category": "ccie",
+      "query": "HSRP hot standby router protocol preemption",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2615.434408187866,
+      "hit_reason_5": "via:proto-hsrp.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-hsrp.md",
+        "proto-hsrp.md",
+        "proto-hsrp.md"
+      ]
+    },
+    {
+      "id": "CCIE-015",
+      "category": "ccie",
+      "query": "policy-based routing route-map match set",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2334.8803520202637,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "concept-bgp-as-path.md"
+      ]
+    },
+    {
+      "id": "CCIE-016",
+      "category": "ccie",
+      "query": "NAT overload PAT inside outside interface",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2427.1743297576904,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md"
+      ]
+    },
+    {
+      "id": "CCIE-017",
+      "category": "ccie",
+      "query": "access-list wildcard mask extended permit deny",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 1317.7878856658936,
+      "hit_reason_5": "via:concept-acl-standard.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-acl-standard.md",
+        "concept-acl-standard.md",
+        "concept-acl-standard.md"
+      ]
+    },
+    {
+      "id": "CCIE-018",
+      "category": "ccie",
+      "query": "ip helper-address DHCP relay broadcast",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2756.2527656555176,
+      "hit_reason_5": "via:concept-dhcp-discover.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-dhcp-discover.md",
+        "concept-dhcp-discover.md",
+        "concept-dhcp-discover.md"
+      ]
+    },
+    {
+      "id": "CCIE-019",
+      "category": "ccie",
+      "query": "CDP Cisco discovery protocol neighbor device",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2726.761817932129,
+      "hit_reason_5": "via:proto-cdp.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-cdp.md",
+        "proto-cdp.md",
+        "proto-cdp.md"
+      ]
+    },
+    {
+      "id": "CCIE-020",
+      "category": "ccie",
+      "query": "QoS DSCP differentiated services traffic marking",
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.3333333333333333,
+      "elapsed_ms": 2465.3491973876953,
+      "hit_reason_5": "injected_via:proto-acl.md",
+      "origins": [
+        "main",
+        "main",
+        "proto-acl.md",
+        "proto-acl.md",
+        "main"
+      ]
+    },
+    {
+      "id": "CCIE-021",
+      "category": "ccie",
+      "query": "GRE tunnel interface keepalive configuration",
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.5,
+      "elapsed_ms": 2597.1875190734863,
+      "hit_reason_5": "via:proto-gre.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-gre.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "CCIE-022",
+      "category": "ccie",
+      "query": "Frame Relay DLCI PVC LMI",
+      "passed": true,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 0.5,
+      "elapsed_ms": 2890.805721282959,
+      "hit_reason_5": "via:proto-frame-relay.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md",
+        "proto-frame-relay.md"
+      ]
+    },
+    {
+      "id": "CCIE-023",
+      "category": "ccie",
+      "query": "route redistribution between OSPF EIGRP metric",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2519.0937519073486,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-gre.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "CCIE-024",
+      "category": "ccie",
+      "query": "default route propagation ip route 0.0.0.0",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2877.23445892334,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-bgp.md",
+        "proto-bgp.md",
+        "proto-bgp.md"
+      ]
+    },
+    {
+      "id": "CCIE-025",
+      "category": "ccie",
+      "query": "EIGRP metric bandwidth delay reliability",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2446.0084438323975,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "proto-gre.md",
+        "proto-gre.md",
+        "proto-gre.md"
+      ]
+    },
+    {
+      "id": "CCIE-026",
+      "category": "ccie",
+      "query": "loopback interface routing protocol stability",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2590.7139778137207,
+      "hit_reason_5": "via:concept-loopback-interface.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md"
+      ]
+    },
+    {
+      "id": "CCIE-027",
+      "category": "ccie",
+      "query": "OSPF designated router DR BDR election",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2498.227119445801,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-ospf.md",
+        "proto-ospf.md",
+        "rfc-2328.md"
+      ]
+    },
+    {
+      "id": "CCIE-028",
+      "category": "ccie",
+      "query": "BGP community attribute no-export local-AS",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2437.612771987915,
+      "hit_reason_5": "via:concept-bgp-as-path.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-bgp-as-path.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "CCIE-029",
+      "category": "ccie",
+      "query": "VRF virtual routing forwarding route leaking",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2367.629289627075,
+      "hit_reason_5": "via:proto-bgp.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-bgp.md",
+        "proto-bgp.md",
+        "proto-bgp.md"
+      ]
+    },
+    {
+      "id": "CCIE-030",
+      "category": "ccie",
+      "query": "extended range VLAN 1006 4094 VTPv3",
+      "passed": false,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 0.5,
+      "elapsed_ms": 2534.400463104248,
+      "hit_reason_5": "via:concept-acl-extended.md",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-acl-extended.md",
+        "concept-acl-extended.md",
+        "concept-acl-extended.md"
+      ]
+    },
+    {
+      "id": "KO-001",
+      "category": "ko",
+      "query": "다산 V3024V 포트 설정 방법",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 3147.355794906616,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "model-dasan-v3024v.md",
+        "model-dasan-v3024v.md",
+        "model-dasan-v3024v.md"
+      ]
+    },
+    {
+      "id": "KO-002",
+      "category": "ko",
+      "query": "유비쿼스 E5708R LED 상태 표시",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 1670.5219745635986,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "model-ubiquoss-e5708r.md",
+        "model-ubiquoss-e5708r.md",
+        "model-ubiquoss-e5708r.md"
+      ]
+    },
+    {
+      "id": "KO-003",
+      "category": "ko",
+      "query": "다산 L2 스위치 VLAN 생성 설정",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 637.9005908966064,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-vlan.md",
+        "proto-vlan.md",
+        "proto-vlan.md"
+      ]
+    },
+    {
+      "id": "KO-004",
+      "category": "ko",
+      "query": "BGP Route-Reflector 설정 구성",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 397.45306968688965,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-bgp-as-path.md",
+        "proto-bgp.md",
+        "proto-bgp.md"
+      ]
+    },
+    {
+      "id": "KO-005",
+      "category": "ko",
+      "query": "IGMP QRV Querier Robustness Variable 설정",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 424.78418350219727,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "proto-igmp.md",
+        "proto-igmp.md",
+        "proto-igmp.md"
+      ]
+    },
+    {
+      "id": "KO-006",
+      "category": "ko",
+      "query": "다산 OLT V8500 PON 포트 구성",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 224.81060028076172,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-007",
+      "category": "ko",
+      "query": "유비쿼스 OLT U9532H 업링크 설정",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 197.11613655090332,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-008",
+      "category": "ko",
+      "query": "L2 스위치 포트 보안 MAC 주소 제한",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 245.58401107788086,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "concept-vlan-trunk.md",
+        "main",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-009",
+      "category": "ko",
+      "query": "다산 L3 스위치 OSPF 라우팅 설정",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 220.7324504852295,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-010",
+      "category": "ko",
+      "query": "유비쿼스 L3 BGP 라우팅 프로토콜 활성화",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 712.1157646179199,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-4271.md",
+        "rfc-4271.md",
+        "rfc-4271.md"
+      ]
+    },
+    {
+      "id": "KO-011",
+      "category": "ko",
+      "query": "스위치 콘솔 포트 접속 시리얼 케이블",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 100.79026222229004,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-012",
+      "category": "ko",
+      "query": "스위치 전원 공급 장치 AC 설치",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 72.13568687438965,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-013",
+      "category": "ko",
+      "query": "Syslog 서버 로그 로컬 설정",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 703.477144241333,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md"
+      ]
+    },
+    {
+      "id": "KO-014",
+      "category": "ko",
+      "query": "다산 스패닝트리 Root 스위치 설정",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 463.99760246276855,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "KO-015",
+      "category": "ko",
+      "query": "포트채널 링크 어그리게이션 LACP 설정",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 559.9589347839355,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "model-dasan-v3024v.md",
+        "model-dasan-v3024v.md",
+        "model-dasan-v3024v.md"
+      ]
+    },
+    {
+      "id": "KO-016",
+      "category": "ko",
+      "query": "MAC 주소 테이블 조회 확인",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 68.22705268859863,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-017",
+      "category": "ko",
+      "query": "OLT 광 케이블 SFP 모듈 연결 방법",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 200.38270950317383,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-018",
+      "category": "ko",
+      "query": "스위치 펌웨어 소프트웨어 업그레이드 절차",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 617.6483631134033,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "model-ubiquoss-e5708r.md"
+      ]
+    },
+    {
+      "id": "KO-019",
+      "category": "ko",
+      "query": "다산 배터리 내장형 V3024VB 스위치 사양",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 838.2871150970459,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "model-dasan-v3024vb.md",
+        "model-dasan-v3024vb.md",
+        "model-dasan-v3024vb.md"
+      ]
+    },
+    {
+      "id": "KO-020",
+      "category": "ko",
+      "query": "스위치 날짜 시간 clock 설정",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 114.28523063659668,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-ntp.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "KO-021",
+      "category": "ko",
+      "query": "ARP 테이블 확인 주소 명령어",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 434.3276023864746,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-4861.md",
+        "rfc-4861.md",
+        "rfc-4861.md"
+      ]
+    },
+    {
+      "id": "KO-022",
+      "category": "ko",
+      "query": "DHCP 서버 IP 주소 할당 설정",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 492.18201637268066,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-dhcp-discover.md",
+        "concept-dhcp-discover.md",
+        "concept-dhcp-discover.md"
+      ]
+    },
+    {
+      "id": "KO-023",
+      "category": "ko",
+      "query": "SNMP 커뮤니티 스트링 MIB 설정",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 262.74824142456055,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md",
+        "concept-loopback-interface.md"
+      ]
+    },
+    {
+      "id": "KO-024",
+      "category": "ko",
+      "query": "ACL 접근 제어 목록 패킷 필터링",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 1345.4351425170898,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-acl-standard.md",
+        "concept-acl-standard.md",
+        "concept-acl-standard.md"
+      ]
+    },
+    {
+      "id": "KO-025",
+      "category": "ko",
+      "query": "QoS 트래픽 우선순위 큐 분류",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 214.68520164489746,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-acl.md",
+        "proto-acl.md",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-026",
+      "category": "ko",
+      "query": "포트 미러링 스패닝 모니터링 설정",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 655.5385589599609,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "KO-027",
+      "category": "ko",
+      "query": "RSTP 빠른 수렴 포트 전환 설정",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 375.28038024902344,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "KO-028",
+      "category": "ko",
+      "query": "다산 V6824XG L3 스위치 사양 스펙",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 223.17743301391602,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    },
+    {
+      "id": "KO-029",
+      "category": "ko",
+      "query": "유비쿼스 E5924L 배터리 내장형 스위치",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 374.6769428253174,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "model-ubiquoss-e5924l.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "KO-030",
+      "category": "ko",
+      "query": "Designated 스위치 선출 과정 STP",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 400.56395530700684,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "EDGE-001",
+      "category": "edge",
+      "query": "VLAN trunking 802.1Q IEEE standard",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2371.3271617889404,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-vlan-trunk.md",
+        "main",
+        "onto_card"
+      ]
+    },
+    {
+      "id": "EDGE-002",
+      "category": "edge",
+      "query": "spanning tree protocol loop prevention",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2516.371726989746,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-stp.md",
+        "proto-stp.md",
+        "proto-stp.md"
+      ]
+    },
+    {
+      "id": "EDGE-003",
+      "category": "edge",
+      "query": "BGP route reflector iBGP scalability",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2657.2487354278564,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-bgp.md",
+        "proto-bgp.md",
+        "proto-bgp.md"
+      ]
+    },
+    {
+      "id": "EDGE-004",
+      "category": "edge",
+      "query": "OSPF link state database flooding",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2467.0939445495605,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "concept-ospf-area.md",
+        "rfc-2328.md",
+        "rfc-2328.md"
+      ]
+    },
+    {
+      "id": "EDGE-005",
+      "category": "edge",
+      "query": "IPv6 address configuration prefix delegation",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2568.115234375,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-8200.md",
+        "rfc-4861.md",
+        "rfc-4861.md"
+      ]
+    },
+    {
+      "id": "EDGE-006",
+      "category": "edge",
+      "query": "access control list packet filtering security",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 1165.687084197998,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "proto-acl.md",
+        "proto-acl.md",
+        "concept-acl-standard.md"
+      ]
+    },
+    {
+      "id": "EDGE-007",
+      "category": "edge",
+      "query": "멀티캐스트 라우팅 IGMP 그룹 관리",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 378.162145614624,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "main",
+        "proto-igmp.md",
+        "proto-igmp.md",
+        "proto-igmp.md"
+      ]
+    },
+    {
+      "id": "EDGE-008",
+      "category": "edge",
+      "query": "link aggregation port channel bonding IEEE 802.3ad",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2967.2648906707764,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "model-dasan-v3024v.md",
+        "model-dasan-v3024v.md",
+        "model-dasan-v3024v.md"
+      ]
+    },
+    {
+      "id": "EDGE-009",
+      "category": "edge",
+      "query": "quality of service traffic shaping policing",
+      "passed": true,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": true,
+      "mrr": 1.0,
+      "elapsed_ms": 2771.463632583618,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "rfc-4271.md",
+        "rfc-4271.md",
+        "rfc-4271.md"
+      ]
+    },
+    {
+      "id": "EDGE-010",
+      "category": "edge",
+      "query": "IP routing table longest prefix match forwarding",
+      "passed": false,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "keyword_match": false,
+      "mrr": 1.0,
+      "elapsed_ms": 2257.3702335357666,
+      "hit_reason_5": "direct",
+      "origins": [
+        "main",
+        "onto_card",
+        "main",
+        "onto_card",
+        "main"
+      ]
+    }
+  ]
+}

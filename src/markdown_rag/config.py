@@ -53,11 +53,23 @@ class Settings(BaseSettings):
 
     # Search settings
     search_top_k: int = 5
-    search_mode: Literal["vector", "bm25", "hybrid"] = "vector"
+    search_mode: Literal["vector", "bm25", "hybrid", "ontology"] = "vector"
     hybrid_alpha: float = 0.7
 
     # BM25 인덱스 저장 경로
     bm25_index_path: Path = Path("./data/bm25_index.pkl")
+
+    # Ontology augmentation settings (search_mode == "ontology"에서 사용)
+    # 보조 코퍼스(input_ontology) 검색을 main 검색과 RRF union 한 뒤
+    # 보조 카드 hit 시 referenced path 청크를 main store에서 inject한다.
+    onto_chroma_path: Path = Path("./data/chroma_ontology")
+    onto_collection_name: str = "markdown_docs_ontology"
+    onto_bm25_path: Path = Path("./data/bm25_ontology")
+    onto_refs_path: Path = Path("./data/ontology/onto_refs.json")
+    # 보조 카드 hit 중 상위 N개에 대해 referenced chunk inject
+    onto_inject_top_n_cards: int = 3
+    # 카드당 inject할 main corpus 청크 수
+    onto_inject_chunks_per_card: int = 1
 
     # 리랭킹 설정
     rerank_enabled: bool = False

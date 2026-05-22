@@ -11,11 +11,8 @@ import sys
 
 from markdown_rag.cli.search_cmd import _build_where_filter
 from markdown_rag.config import get_settings
-from markdown_rag.embedding.local import LocalEmbedding
-from markdown_rag.embedding.openai import OpenAIEmbedding
+from markdown_rag.retriever.builder import build_search_engine
 from markdown_rag.retriever.rag import RAGEngine
-from markdown_rag.retriever.search import SemanticSearch
-from markdown_rag.store.chroma import ChromaStore
 
 
 def _create_llm_backend(settings, model_override: str | None = None):
@@ -73,23 +70,10 @@ def handle_ask(args: argparse.Namespace) -> None:
 
     llm_backend = _create_llm_backend(settings, model_override=args.model)
 
-    # 임베딩 백엔드 초기화
-    if settings.embedding_backend == "openai":
-        embedding = OpenAIEmbedding(model_name=settings.openai_embedding_model)
-    else:
-        embedding = LocalEmbedding(model_name=settings.local_model)
-
-    # 벡터 스토어 초기화
-    store = ChromaStore(
-        persist_path=settings.chroma_path,
-        collection_name=settings.collection_name,
-    )
-
-    # 검색 엔진 생성
-    search_engine = SemanticSearch(
-        embedding_backend=embedding,
-        vector_store=store,
-    )
+    # 검색 엔진 생성 (mode에 따라 SemanticSearch / HybridSearch /
+    # OntologyAugmentedSearch 자동 선택)
+    mode_override = getattr(args, "mode", None)
+    search_engine = build_search_engine(settings, mode_override=mode_override)
 
     # RAG 엔진 생성
     rag = RAGEngine(
