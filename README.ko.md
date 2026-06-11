@@ -15,7 +15,7 @@
 - **하이브리드 검색**: BM25 키워드 검색 + 벡터 임베딩 조합 (Phase 3)
 - **크로스 인코더 리랭킹**: 검색 결과 정확도 개선 (Phase 4)
 - **배치 인제스트**: 대규모 문서 처리 최적화 (Phase 5)
-- **HyDE 쿼리 처리**: 가상 문서 임베딩으로 검색 정확도 향상 (Phase 6)
+- **HyDE 쿼리 처리**: 가상 문서 임베딩 모듈 (Phase 6, 선택적 모듈 — 기본 검색 파이프라인에는 미연결)
 - **온톨로지 증강 검색**: 보조 코퍼스(`input_ontology/`) + referenced-path 자동 확장으로 CCIE Hit@5 60→100%, 전체 Hit@5 88→100% (Phase 7)
 
 ## 요구 사항
@@ -48,11 +48,8 @@ mdrag ingest ./docs/
 # 시맨틱 검색 (LLM 불필요)
 mdrag search "인증 방식"
 
-# BM25 키워드 검색
-mdrag search "인증 방식" --search-mode bm25
-
-# 하이브리드 검색 (벡터 + BM25)
-mdrag search "인증 방식" --search-mode hybrid
+# 하이브리드 검색 (벡터 + BM25 RRF 결합)
+mdrag search "인증 방식" --mode hybrid
 
 # 온톨로지 증강 검색 (보조 코퍼스 + referenced-path 자동 확장)
 mdrag search "OSPF area 설정" --mode ontology
@@ -112,7 +109,7 @@ mdrag serve
 
 | 변수 | 기본값 | 설명 |
 |------|--------|------|
-| `MDRAG_SEARCH_MODE` | `vector` | 검색 모드 (`vector` / `bm25` / `hybrid` / `ontology`) |
+| `MDRAG_SEARCH_MODE` | `vector` | 검색 모드 (`vector` / `hybrid` / `ontology`, `bm25` 설정 시 경고 후 vector로 폴백) |
 | `MDRAG_HYBRID_ALPHA` | `0.7` | 하이브리드 검색 벡터 가중치 (0.0-1.0) |
 | `MDRAG_BM25_INDEX_PATH` | `./data/bm25_index.pkl` | BM25 인덱스 경로 |
 | `MDRAG_RERANK_ENABLED` | `false` | 크로스 인코더 리랭킹 활성화 |
@@ -155,7 +152,7 @@ RRF (Reciprocal Rank Fusion) 결합
     ↓
 크로스 인코더 리랭킹 (선택)
     ↓
-컨텍스트 + 인접 청크 추가 (HyDE)
+컨텍스트 조립 (HyDE·인접 청크 확장은 선택적 모듈)
     ↓
 프롬프트 + LLM (OpenAI/로컬)
     ↓
@@ -173,7 +170,7 @@ RRF (Reciprocal Rank Fusion) 결합
 | markdown-it-py | >= 4.0 | Markdown AST 파싱 |
 | fastapi | >= 0.135 | REST API 프레임워크 |
 | pydantic | >= 2.12 | 데이터 유효성 검증 |
-| rank-bm25 | >= 0.2.2 | BM25 키워드 검색 |
+| bm25s | >= 0.3.5 | BM25 키워드 검색 (희소 행렬 기반, 저메모리) |
 | kiwipiepy | >= 0.18 | 한국어 형태소 분석 |
 | tqdm | >= 4.60 | 진행률 표시 |
 
@@ -201,7 +198,7 @@ ruff check src/ tests/
 - Phase 3: 하이브리드 검색 (완료) - BM25 + 벡터 RRF
 - Phase 4: 크로스 인코더 리랭킹 (완료) - BAAI/bge-reranker-v2-m3
 - Phase 5: 배치 인제스트 파이프라인 (완료) - 27,000+ 파일 처리
-- Phase 6: HyDE 쿼리 처리 (완료) - 가상 문서 임베딩
+- Phase 6: HyDE 쿼리 처리 (모듈 구현 완료) - 가상 문서 임베딩 + 인접 청크 확장, 기본 파이프라인 미연결 (선택적 사용)
 - Phase 7: 온톨로지 증강 검색 (완료) - 아래 섹션 참조
 
 ## 온톨로지 증강 검색 (Phase 7)
@@ -221,14 +218,14 @@ ruff check src/ tests/
 ### 구성 요소
 
 ```
-input_ontology/                 # 보조 코퍼스 (69 카드)
+input_ontology/                 # 보조 코퍼스 (68 카드)
 ├── schema/
 │   ├── entity_types.yaml       # 8종 엔티티 (Protocol/RFC/Concept/Feature/...)
-│   ├── relation_types.yaml     # 14종 관계 (defined_by/extends/implements/...)
+│   ├── relation_types.yaml     # 17종 관계 (defined_by/extends/implements/...)
 │   └── alias_dictionary.yaml   # 영문/한글 별칭 사전
 ├── protocols/                  # OSPF, BGP, STP, VLAN, DHCP, IGMP, ACL, GPON, ... (18)
-├── concepts/                   # ospf-area, bgp-as-path, vlan-trunk, ... (14)
-├── rfcs/                       # 2328, 4271, 8200, 5905, ... (13)
+├── concepts/                   # ospf-area, bgp-as-path, vlan-trunk, ... (15)
+├── rfcs/                       # 2328, 4271, 8200, 5905, ... (15)
 ├── standards/                  # IEEE 802.1D/Q, ITU-T G.984 (3)
 ├── features/                   # mac-address-table, port-mirroring, ... (7)
 ├── vendors/                    # dasan, ubiquoss (2)

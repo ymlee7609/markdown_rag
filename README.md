@@ -11,11 +11,11 @@ Semantic search and QA system for internal Markdown documents with multilingual 
 - **Hybrid search**: BM25 keyword + vector similarity with Reciprocal Rank Fusion (RRF)
 - **Cross-encoder reranking**: Optional reranking with multilingual `BAAI/bge-reranker-v2-m3`
 - **Batch ingestion**: Optimized for 27,000+ files with batch embedding and bulk upsert
-- **HyDE query processing**: Hypothetical Document Embeddings with adjacent chunk expansion
+- **HyDE query processing**: Hypothetical Document Embeddings with adjacent chunk expansion (optional module, not wired into the default pipeline)
 - **Ontology-augmented search**: Auxiliary corpus (`input_ontology/`) + referenced-path
   auto-expansion. Lifts CCIE Hit@5 from 60% to 100%, overall Hit@5 from 88% to 100%
   on the 100-case validation set (see Phase 7 below).
-- **Search mode** (LLM-free): Semantic/keyword/hybrid/ontology search using local embeddings
+- **Search mode** (LLM-free): Semantic/hybrid/ontology search using local embeddings
 - **Ask mode** (Full RAG): Question answering with OpenAI GPT or local SLM
 - **CLI + REST API**: Both command-line and HTTP API support
 - **Structure-aware chunking**: Document splitting based on Markdown header hierarchy
@@ -50,11 +50,8 @@ mdrag ingest ./docs/
 # Semantic search (no LLM required)
 mdrag search "authentication"
 
-# Keyword search (BM25)
-mdrag search "authentication" --search-mode bm25
-
-# Hybrid search (BM25 + vector)
-mdrag search "authentication" --search-mode hybrid
+# Hybrid search (BM25 + vector, RRF fusion)
+mdrag search "authentication" --mode hybrid
 
 # Ontology-augmented search (auxiliary corpus + referenced-path expansion)
 mdrag search "OSPF area" --mode ontology
@@ -88,7 +85,7 @@ Default port: `8900`
 | GET | `/health` | Health check |
 | GET | `/api/v1/status` | Ingestion status |
 | POST | `/api/v1/ingest` | Ingest documents |
-| POST | `/api/v1/search` | Search (vector/bm25/hybrid) |
+| POST | `/api/v1/search` | Search (vector/hybrid/ontology) |
 | POST | `/api/v1/ask` | RAG question answering |
 | DELETE | `/api/v1/documents` | Delete documents |
 
@@ -106,7 +103,7 @@ Configure via environment variables (`MDRAG_` prefix) or `.env` file.
 | `MDRAG_LOCAL_LLM_CONTEXT_SIZE` | `4096` | Local LLM context size |
 | `MDRAG_LOCAL_LLM_MAX_TOKENS` | `1024` | Local LLM max generation tokens |
 | `MDRAG_CHROMA_PATH` | `./data/chroma` | ChromaDB storage path |
-| `MDRAG_SEARCH_MODE` | `vector` | Search mode (`vector` / `bm25` / `hybrid` / `ontology`) |
+| `MDRAG_SEARCH_MODE` | `vector` | Search mode (`vector` / `hybrid` / `ontology`; `bm25` falls back to vector with a warning) |
 | `MDRAG_HYBRID_ALPHA` | `0.7` | Vector weight in hybrid search (0.0-1.0) |
 | `MDRAG_BM25_INDEX_PATH` | `./data/bm25_index.pkl` | BM25 index path |
 | `MDRAG_RERANK_ENABLED` | `false` | Enable cross-encoder reranking |
@@ -135,7 +132,8 @@ Used when `MDRAG_SEARCH_MODE=ontology` or `--mode ontology`.
 ```
 Ingestion:  Markdown files → Parser → Chunker → Embedding → ChromaDB + BM25 Index
 Search:     Query → [Vector Search + BM25] → RRF Fusion → Reranking → Results
-RAG:        Query → [HyDE] → Search → Context + Adjacent Chunks → LLM → Answer
+RAG:        Query → Search → Context Assembly → LLM → Answer
+            (HyDE / adjacent-chunk expansion available as optional modules)
 ```
 
 ### Key Dependencies
@@ -149,7 +147,7 @@ RAG:        Query → [HyDE] → Search → Context + Adjacent Chunks → LLM �
 | markdown-it-py | >= 4.0 | Markdown AST parsing |
 | fastapi | >= 0.135 | REST API framework |
 | pydantic | >= 2.12 | Data validation |
-| rank-bm25 | >= 0.2.2 | BM25 keyword search |
+| bm25s | >= 0.3.5 | BM25 keyword search (sparse-matrix, low memory) |
 | kiwipiepy | >= 0.18 | Korean morphological analysis |
 | tqdm | >= 4.60 | Progress display |
 
@@ -186,14 +184,14 @@ ontology corpus** is added on top of the main hybrid retriever to solve this.
 ### Layout
 
 ```
-input_ontology/                 # Auxiliary corpus (69 cards)
+input_ontology/                 # Auxiliary corpus (68 cards)
 ├── schema/
 │   ├── entity_types.yaml       # 8 types: Protocol / RFC / Concept / Feature / ...
-│   ├── relation_types.yaml     # 14 relations: defined_by / extends / implements / ...
+│   ├── relation_types.yaml     # 17 relations: defined_by / extends / implements / ...
 │   └── alias_dictionary.yaml   # EN + KO alias seeds
 ├── protocols/   # OSPF, BGP, STP, VLAN, DHCP, IGMP, ACL, GPON, ... (18)
-├── concepts/    # ospf-area, bgp-as-path, vlan-trunk, ... (14)
-├── rfcs/        # 2328, 4271, 8200, 5905, ... (13)
+├── concepts/    # ospf-area, bgp-as-path, vlan-trunk, ... (15)
+├── rfcs/        # 2328, 4271, 8200, 5905, ... (15)
 ├── standards/   # IEEE 802.1D/Q, ITU-T G.984 (3)
 ├── features/    # mac-address-table, port-mirroring, ... (7)
 ├── vendors/     # dasan, ubiquoss (2)
