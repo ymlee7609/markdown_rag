@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PART 2 — markdown_rag 프로젝트 완전 해부</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel2: #1c2331;
+    --border: #2d3748;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d29922;
+    --accent4: #bc8cff;
+    --accent5: #ff7b72;
+    --radius: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #05070a; font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--text); overflow: hidden; }
+
+  #stage-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1280px; height: 720px; position: relative; transform-origin: center center; }
+
+  .slide {
+    position: absolute; inset: 0; width: 1280px; height: 720px;
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 52px 64px 64px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(88,166,255,.08), transparent),
+                      radial-gradient(ellipse 700px 400px at 0% 110%, rgba(63,185,80,.05), transparent);
+  }
+  .slide.active { display: flex; }
+
+  .kicker { font-size: 14px; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-size: 54px; line-height: 1.25; font-weight: 800; }
+  h2 { font-size: 36px; font-weight: 800; margin-bottom: 6px; }
+  .sub { font-size: 17px; color: var(--muted); margin-bottom: 26px; line-height: 1.55; }
+  .body { flex: 1; min-height: 0; }
+
+  .grid { display: grid; gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .card h3 { font-size: 19px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card p, .card li { font-size: 14.5px; line-height: 1.6; color: #c4cdd6; }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 99px; margin-right: 6px; vertical-align: 2px; }
+  .tag.blue   { background: rgba(88,166,255,.15);  color: var(--accent);  border: 1px solid rgba(88,166,255,.4); }
+  .tag.green  { background: rgba(63,185,80,.15);   color: var(--accent2); border: 1px solid rgba(63,185,80,.4); }
+  .tag.gold   { background: rgba(210,153,34,.15);  color: var(--accent3); border: 1px solid rgba(210,153,34,.4); }
+  .tag.purple { background: rgba(188,140,255,.15); color: var(--accent4); border: 1px solid rgba(188,140,255,.4); }
+  .tag.red    { background: rgba(255,123,114,.15); color: var(--accent5); border: 1px solid rgba(255,123,114,.4); }
+
+  code, .mono { font-family: "JetBrains Mono", "D2Coding", Consolas, monospace; }
+  code { background: rgba(110,118,129,.18); padding: 1px 6px; border-radius: 5px; font-size: .92em; color: #9ecbff; }
+
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow .step {
+    flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 14px; text-align: center; position: relative;
+  }
+  .flow .step .ic { font-size: 30px; margin-bottom: 8px; }
+  .flow .step b { display: block; font-size: 16px; margin-bottom: 5px; }
+  .flow .step span { font-size: 12.5px; color: var(--muted); line-height: 1.5; display: block; }
+  .flow .arr { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-size: 24px; font-weight: 800; }
+
+  .foot {
+    position: absolute; bottom: 22px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; font-size: 12px; color: #4d5662;
+  }
+
+  #nav {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: center; z-index: 50;
+    background: rgba(13,17,23,.85); border: 1px solid var(--border); border-radius: 99px;
+    padding: 6px 14px; backdrop-filter: blur(6px);
+  }
+  #nav button { background: none; border: none; color: var(--text); font-size: 17px; cursor: pointer; padding: 2px 8px; }
+  #nav button:hover { color: var(--accent); }
+  #pageinfo { font-size: 13px; color: var(--muted); min-width: 64px; text-align: center; }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.tbl th, table.tbl td { padding: 9px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+  table.tbl th { color: var(--muted); font-size: 13px; font-weight: 700; background: rgba(255,255,255,.02); }
+  table.tbl td:first-child, table.tbl th:first-child { text-align: left; }
+  .up { color: var(--accent2); font-weight: 800; }
+
+  .big-num { font-size: 44px; font-weight: 800; line-height: 1.1; }
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .term { border-left: 3px solid var(--accent); padding-left: 14px; }
+  .term b { font-size: 16px; }
+  .term p { font-size: 13.5px; color: #c4cdd6; line-height: 1.55; margin-top: 3px; }
+
+  /* 코드/트리 박스 (작은 모노스페이스) */
+  .codebox {
+    background: var(--panel2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; font-family: "JetBrains Mono", "D2Coding", Consolas, monospace;
+    font-size: 12px; line-height: 1.62; color: #c4cdd6; white-space: pre; overflow: hidden;
+  }
+  .codebox .c  { color: var(--muted); }
+  .codebox .k  { color: var(--accent5); }
+  .codebox .s  { color: #9ecbff; }
+  .codebox .g  { color: var(--accent2); }
+  .codebox .y  { color: var(--accent3); }
+</style>
+</head>
+<body>
+<div id="stage-wrap"><div id="stage">
+
+<!-- ════ SLIDE 1 : 표지 ════ -->
+<section class="slide active">
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="kicker">RAG TECHNICAL DEEP DIVE · 16:9</div>
+    <h1>PART 2<br><span style="color:var(--accent)">markdown_rag</span> 프로젝트 완전 해부</h1>
+    <p style="font-size:20px; color:var(--muted); margin-top:22px; line-height:1.6;">
+      Part 1에서 배운 개념(청킹 · 임베딩 · 벡터 DB · BM25 · Top-K)이
+      <b style="color:var(--text)">실제 코드에서 어떻게 구현되는지</b> 모듈 단위로 따라갑니다 —
+      디렉토리 구조 · 3대 파이프라인 · Phase 1~7 고도화 · 검증 체계
+    </p>
+    <div class="pill-row" style="margin-top:34px;">
+      <span class="tag blue" style="font-size:13px; padding:6px 14px;">Python 모듈 9개 해부</span>
+      <span class="tag green" style="font-size:13px; padding:6px 14px;">청크 515,043개</span>
+      <span class="tag gold" style="font-size:13px; padding:6px 14px;">온톨로지 카드 68장</span>
+      <span class="tag purple" style="font-size:13px; padding:6px 14px;">테스트 443개 · 커버리지 100%</span>
+    </div>
+    <p style="margin-top:38px;"><a href="index.html" style="color:var(--accent); font-size:14px; text-decoration:none;">← 목차로</a></p>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>1 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 2 : 목차 ════ -->
+<section class="slide">
+  <div class="kicker">CONTENTS</div>
+  <h2>Part 2에서 다루는 것</h2>
+  <p class="sub">코드를 한 줄도 안 본 사람도 "이 프로젝트가 어떻게 굴러가는지" 설명할 수 있게 되는 것이 목표입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3><span class="tag blue">①</span> 프로젝트 개요 <span style="color:var(--muted); font-size:13px;">(3–5)</span></h3>
+      <p>풀려는 문제 — 코퍼스 3계층과 교차 검색 난제 · 전체 아키텍처 조감도 · 디렉토리 구조</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3><span class="tag green">②</span> 코드 구조 모듈별 해부 <span style="color:var(--muted); font-size:13px;">(6–14)</span></h3>
+      <p>config · chunker · embedding · store · ingest · retriever · llm · cli/api — 각 모듈이 "왜 존재하는가"부터</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3><span class="tag gold">③</span> 3대 파이프라인 <span style="color:var(--muted); font-size:13px;">(15–17)</span></h3>
+      <p>ingest(인덱싱) · search(검색) · ask(RAG 질의응답) — 실제 함수 호출 순서를 따라가는 시퀀스</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4);">
+      <h3><span class="tag purple">④</span> Phase 1~7 고도화 <span style="color:var(--muted); font-size:13px;">(18–29)</span></h3>
+      <p>다국어 임베딩 → 메타데이터 필터 → 하이브리드 → 리랭킹 → 배치 → HyDE → <b>온톨로지 증강(5장 집중 해부)</b></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent5); grid-column: span 2;">
+      <h3><span class="tag red">⑤</span> 검증과 운영 <span style="color:var(--muted); font-size:13px;">(30–32)</span></h3>
+      <p>validation_dataset 100건과 validate_rag.py 측정 체계 · 테스트/커버리지/린트 품질 운영 · "한 질문의 여정" 종합 복습</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>2 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 3 : 풀려는 문제 ════ -->
+<section class="slide">
+  <div class="kicker">① 프로젝트 개요</div>
+  <h2>이 프로젝트가 풀려는 문제 — 3계층 지식의 교차 검색</h2>
+  <p class="sub">같은 "OSPF"라는 주제가 표준·이론·실무 문서에 전혀 다른 언어와 표현으로 흩어져 있습니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:18px;">
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">📜</div><b>표준 — IETF RFC</b>
+        <span><b style="color:var(--accent)">11,449건</b> · 영어<br>"The Hello protocol is responsible for establishing..."<br>프로토콜의 공식 정의</span>
+      </div>
+      <div class="arr">↔</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">📘</div><b>이론 — Cisco CCIE 교재</b>
+        <span><b style="color:var(--accent2)">103건</b> · 영어<br>"OSPF areas reduce SPF calculation overhead..."<br>설계 원리와 시험 지식</span>
+      </div>
+      <div class="arr">↔</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">🔧</div><b>실무 — 다산·유비쿼스 매뉴얼</b>
+        <span><b style="color:var(--accent3)">579건</b> · 한국어<br>"<span class="mono">router ospf</span> 명령으로 OSPF를 활성화합니다"<br>장비별 CLI 설정법</span>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🧩 난제 1 — 표현의 단절</h3>
+        <p>"OSPF area 설정 방법"이라는 한 질문의 정답이 <b>세 계층에 모두</b> 있지만,
+        RFC의 학술 영어, CCIE의 설명체, 매뉴얼의 한국어 CLI 문장은 <b>벡터 공간에서 서로 멀리</b> 떨어져 있습니다.
+        단순 유사도 검색으로는 한 계층만 걸립니다.</p>
+      </div>
+      <div class="card">
+        <h3>🌐 난제 2 — 한/영 혼용</h3>
+        <p>질문은 주로 한국어("인증은 어떻게 동작하나요?"), 문서의 95%는 영어(RFC+CCIE).
+        한국어 질문으로 영어 문서를 찾는 <b>언어 교차(cross-lingual) 검색</b>이 기본 요구사항입니다.
+        총 문서 <b>12,131건 → 청크 51만+</b> 규모.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>3 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 4 : 아키텍처 조감도 ════ -->
+<section class="slide">
+  <div class="kicker">① 프로젝트 개요</div>
+  <h2>전체 아키텍처 조감도 — 계층으로 보는 시스템</h2>
+  <p class="sub">위에서 아래로: 사용자 접점 → 검색 엔진 → 저장소/모델. 모든 계층이 교체 가능한 추상화로 분리되어 있습니다.</p>
+  <div class="body">
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div class="card" style="padding:14px 22px; border-left:4px solid var(--accent);">
+        <h3 style="font-size:16px;">🖥️ 진입 계층 — <code>cli/</code> (mdrag 명령) &amp; <code>api/</code> (FastAPI · 포트 8900)</h3>
+        <p style="font-size:13.5px;">ingest / search / ask / status / serve 명령과 REST 엔드포인트. 같은 내부 엔진을 공유합니다.</p>
+      </div>
+      <div style="text-align:center; color:var(--accent); font-weight:800;">↓ build_search_engine(settings, mode) — 모드에 따라 엔진 조립</div>
+      <div class="card" style="padding:14px 22px; border-left:4px solid var(--accent2);">
+        <h3 style="font-size:16px;">🔍 검색 계층 — <code>retriever/</code></h3>
+        <p style="font-size:13.5px;"><b>SemanticSearch</b>(벡터) · <b>BM25Index</b>(키워드) · <b>HybridSearch</b>(RRF 결합) ·
+        <b>OntologyAugmentedSearch</b>(온톨로지 증강) · <b>CrossEncoderReranker</b> · <b>RAGEngine</b>(프롬프트+LLM)</p>
+      </div>
+      <div style="text-align:center; color:var(--accent); font-weight:800;">↓ 임베딩 요청 / 벡터 질의 / 답변 생성</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+        <div class="card" style="padding:14px 18px; border-left:4px solid var(--accent3);">
+          <h3 style="font-size:15px;">🔢 <code>embedding/</code></h3>
+          <p style="font-size:13px;">local(e5-small, 384차원)<br>openai(text-embedding-3-small)</p>
+        </div>
+        <div class="card" style="padding:14px 18px; border-left:4px solid var(--accent3);">
+          <h3 style="font-size:15px;">🗄️ <code>store/</code></h3>
+          <p style="font-size:13px;">ChromaStore (벡터 DB)<br>+ BM25 인덱스 파일</p>
+        </div>
+        <div class="card" style="padding:14px 18px; border-left:4px solid var(--accent3);">
+          <h3 style="font-size:15px;">🧠 <code>llm/</code></h3>
+          <p style="font-size:13px;">openai(gpt-4o-mini)<br>local(EXAONE 4.0 GGUF)</p>
+        </div>
+      </div>
+      <div class="card" style="padding:12px 22px; border-left:4px solid var(--accent4);">
+        <p style="font-size:13.5px;"><b style="color:var(--accent4)">사전 작업 계층</b> — <code>ingest/</code>(스캔·배치 인덱싱)와 <code>chunker/</code>(AST 파싱·구조 인식 분할)는
+        문서가 추가될 때만 동작하고, 그 산출물(ChromaDB + BM25 인덱스)을 검색 계층이 소비합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>4 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 5 : 디렉토리 구조 ════ -->
+<section class="slide">
+  <div class="kicker">① 프로젝트 개요</div>
+  <h2>디렉토리 구조 — src/markdown_rag/ 한눈에</h2>
+  <p class="sub">기능별 패키지로 명확히 분리된 src 레이아웃. 각 디렉토리는 단 하나의 책임만 가집니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.05fr 1fr; gap:18px; align-content:start;">
+    <div class="codebox" style="font-size:12.5px;">src/markdown_rag/
+├── <span class="g">config.py</span>      <span class="c"># Pydantic Settings (MDRAG_ 환경변수)</span>
+├── <span class="g">models.py</span>      <span class="c"># Document/Chunk/SearchResult/RAGResponse</span>
+├── <span class="y">chunker/</span>       <span class="c"># Markdown → 청크</span>
+│   ├── parser.py    <span class="c"># markdown-it-py AST 파싱</span>
+│   ├── splitter.py  <span class="c"># 구조 인식 분할 + 중첩</span>
+│   └── metadata.py  <span class="c"># YAML frontmatter 추출</span>
+├── <span class="y">embedding/</span>     <span class="c"># base / local / openai</span>
+├── <span class="y">store/</span>         <span class="c"># base / chroma (벡터 DB 래퍼)</span>
+├── <span class="y">ingest/</span>        <span class="c"># scanner / pipeline / directory_index</span>
+├── <span class="y">retriever/</span>     <span class="c"># 검색의 심장부 (9개 파일)</span>
+│   ├── bm25.py  hybrid.py  search.py
+│   ├── reranker.py  query.py  query_filter.py
+│   ├── ontology_aug.py  rag.py  builder.py
+├── <span class="y">llm/</span>           <span class="c"># base / openai / local(GGUF)</span>
+├── <span class="y">cli/</span>           <span class="c"># mdrag 명령 (main + 서브커맨드 4개)</span>
+└── <span class="y">api/</span>           <span class="c"># FastAPI app + routes 4개</span></div>
+    <div style="display:flex; flex-direction:column; gap:11px;">
+      <div class="term"><b>config.py / models.py</b>
+        <p>전 모듈이 공유하는 설정과 데이터 구조. "설정은 한 곳, 모델은 한 곳" 원칙으로 순환 의존을 차단합니다.</p></div>
+      <div class="term"><b>chunker → ingest → store</b>
+        <p>인덱싱 경로. chunker가 자르고, ingest가 배치로 흘려보내고, store가 저장합니다.</p></div>
+      <div class="term"><b>retriever</b>
+        <p>검색 경로. 벡터·BM25·하이브리드·온톨로지 4가지 모드를 builder.py 팩토리가 조립합니다. 파일 수가 가장 많은 = 가장 많이 진화한 모듈.</p></div>
+      <div class="term"><b>embedding / llm</b>
+        <p>외부 모델 의존성을 base 추상 클래스 뒤로 격리. 백엔드 교체(클라우드 ↔ 폐쇄망 로컬)가 설정 한 줄로 가능합니다.</p></div>
+      <div class="term"><b>cli / api</b>
+        <p>같은 엔진을 두 가지 인터페이스로 노출. 로직은 전혀 없고 인자 파싱과 출력만 담당하는 얇은 껍데기입니다.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>5 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 6 : config.py ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — 설정</div>
+  <h2>config.py — 모든 동작을 결정하는 단일 설정 지점</h2>
+  <p class="sub"><code>pydantic-settings</code>의 <code>BaseSettings</code> 상속. <code>MDRAG_</code> 접두사 환경변수 또는 <code>.env</code> 파일에서 자동 로드되며 타입 검증까지 수행합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.15fr 1fr; gap:18px; align-content:start;">
+    <div class="card" style="padding:14px 18px;">
+      <table class="tbl" style="font-size:13px;">
+        <tr><th>설정 (코드 기본값)</th><th>값</th><th>의미</th></tr>
+        <tr><td><code>embedding_backend</code></td><td>local</td><td>local / openai</td></tr>
+        <tr><td><code>local_model</code></td><td class="mono" style="font-size:11.5px;">intfloat/multilingual-e5-small</td><td>384차원 다국어</td></tr>
+        <tr><td><code>llm_backend</code></td><td>openai</td><td>gpt-4o-mini 기본</td></tr>
+        <tr><td><code>chunk_max_size / overlap</code></td><td>1000 / 100</td><td>청킹 한도(문자)</td></tr>
+        <tr><td><code>search_top_k</code></td><td>5</td><td>반환 결과 수</td></tr>
+        <tr><td><code>search_mode</code></td><td>vector</td><td>vector/bm25/hybrid/ontology</td></tr>
+        <tr><td><code>hybrid_alpha</code></td><td>0.7</td><td>벡터 가중치</td></tr>
+        <tr><td><code>rerank_enabled / initial_top_k</code></td><td>false / 20</td><td>리랭킹 (Phase 4)</td></tr>
+        <tr><td><code>local_llm_temperature</code></td><td>0.1</td><td>한국어 코드 스위칭 방지</td></tr>
+        <tr><td><code>api_port</code></td><td>8900</td><td>REST 서버 포트</td></tr>
+      </table>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>💡 왜 pydantic-settings인가</h3>
+        <p><code>MDRAG_CHUNK_MAX_SIZE=2000</code>처럼 환경변수만 바꾸면 코드 수정 없이 동작이 바뀝니다.
+        잘못된 타입(<code>alpha=2.0</code> 등)은 <b>기동 시점에 검증 오류</b>로 잡혀 런타임 사고를 예방합니다.
+        <code>get_settings(**overrides)</code> 팩토리로 테스트에서 설정 주입도 쉽습니다.</p>
+      </div>
+      <div class="card">
+        <h3>🃏 Phase 7 전용 설정 그룹</h3>
+        <ul style="font-size:13.5px;">
+          <li><code>onto_chroma_path</code> — 보조 코퍼스 DB 경로</li>
+          <li><code>onto_refs_path</code> — 카드→참조경로 매핑 JSON</li>
+          <li><code>onto_inject_top_n_cards</code> = 3 — 확장할 카드 수</li>
+          <li><code>onto_inject_chunks_per_card</code> = 1 — 카드당 주입 청크</li>
+        </ul>
+        <p style="margin-top:6px; color:var(--muted);">새 기능이 늘 때마다 설정 그룹이 함께 자라는 구조 — Phase 진화의 흔적이 설정에 남아 있습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>6 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 7 : chunker parser ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — chunker ①</div>
+  <h2>chunker/parser.py — 문서를 "구조"로 이해하기</h2>
+  <p class="sub">왜 존재하는가: 글자 수로만 자르면 코드 블록이 반토막 나고 섹션 맥락이 사라집니다. 그래서 자르기 전에 먼저 <b>문서의 뼈대(AST)를 파악</b>합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1.05fr; gap:18px; align-content:start;">
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>🌲 핵심 함수 3개</h3>
+        <ul>
+          <li><code>parse_markdown()</code> — <code>MarkdownIt("commonmark").enable("table")</code>로 토큰 스트림(AST) 생성</li>
+          <li><code>extract_header_tree()</code> — 스택 알고리즘으로 H1→H2→H3 계층 트리(<code>HeaderNode</code>) 구축</li>
+          <li><code>find_sections()</code> — 헤더 경계로 <code>Section</code> 목록 생성. 각 섹션은 <b>전체 헤더 경로</b>를 보유</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧱 원자 블록 보존</h3>
+        <p><code>_render_tokens_to_text()</code>가 토큰을 텍스트로 되돌릴 때
+        <b>펜스 코드 블록(```), 표, 리스트는 통째로 재구성</b>합니다.
+        CLI 명령어 예제나 설정 표가 중간에 잘리면 검색 결과로서 가치가 없기 때문입니다.</p>
+      </div>
+    </div>
+    <div class="codebox"><span class="c"># Section: 헤더 계층이 함께 따라다닌다</span>
+<span class="k">@dataclass</span>
+<span class="k">class</span> <span class="g">Section</span>:
+    headers: list[str]  <span class="c"># 예: ["OSPF", "Areas", "Stub Area"]</span>
+    content: str        <span class="c"># 섹션 본문 (헤더 제외)</span>
+    level: int          <span class="c"># 이 섹션을 정의한 헤더 레벨</span>
+
+<span class="c"># extract_header_tree: 스택으로 계층 추적</span>
+<span class="k">while</span> stack <span class="k">and</span> stack[-1].level >= level:
+    stack.pop()           <span class="c"># 같은/더 깊은 레벨 제거</span>
+<span class="k">if</span> stack:
+    stack[-1].children.append(node)  <span class="c"># 부모에 연결</span>
+
+<span class="c"># 결과: "이 청크가 어느 장·절에 속하는지"가</span>
+<span class="c"># 모든 청크에 headers 경로로 보존된다.</span>
+<span class="c"># → 검색 결과 표시·LLM 컨텍스트에 그대로 활용</span></div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>7 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 8 : chunker splitter ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — chunker ②</div>
+  <h2>splitter.py — 구조 인식 분할 알고리즘 &amp; metadata.py</h2>
+  <p class="sub"><code>split_markdown()</code>이 7단계로 자릅니다: 큰 단위(헤더)부터 시도하고, 넘칠 때만 점점 작은 단위로 내려갑니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step"><div class="ic">🏷️</div><b>1. frontmatter 제거</b><span><code>extract_frontmatter()</code><br>(python-frontmatter)<br>YAML → 메타데이터로</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">✂️</div><b>2. 헤더 단위 분할</b><span>parser의 Section 단위<br>1,000자 이하면<br>그대로 청크 확정</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">📄</div><b>3. 문단 단위 분할</b><span>넘치는 섹션만<br>빈 줄 기준 문단으로<br>1,000자까지 묶음</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">✍️</div><b>4. 문장/단어 분할</b><span>한 문단이 1,000자 초과 시<br><code>". "</code> 우선, 없으면<br>공백 경계에서 분할</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🔗</div><b>5. 중첩 적용</b><span>이전 청크 꼬리 100자를<br>다음 청크 앞에 붙여<br>경계 맥락 보존</span></div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🧱 예외 규칙 — 원자 블록은 절대 안 자름</h3>
+        <p><code>_is_atomic_block()</code>: ```코드 블록, <code>|</code>로 시작하는 표, <code>-</code>/<code>1.</code> 리스트는
+        <b>1,000자를 넘어도 통째로 유지</b>됩니다. 또한 중첩(overlap)은 추가 후에도 1,000자를 넘지 않을 때만 적용되어
+        <code>max_chunk_size</code> 계약이 항상 지켜집니다.</p>
+      </div>
+      <div class="card">
+        <h3>🏷️ doc_type / language는 어디서? — ingest 쪽에서</h3>
+        <p>흔한 오해와 달리 metadata.py는 frontmatter 추출만 담당합니다.
+        문서 유형 추론은 <code>ingest/pipeline.py</code>의 <code>detect_doc_metadata()</code>가 <b>경로 패턴</b>으로 수행:
+        <code>IETF_RFC→rfc/en</code>, <code>Cisco_CCIE→ccie/en</code>, <code>가입자망장비_manual→telecom_manual/ko</code>
+        (+정규식으로 vendor/category/model_name까지 추출).</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>8 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 9 : embedding ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — embedding</div>
+  <h2>embedding/ — 텍스트를 벡터로, 백엔드는 교체 가능하게</h2>
+  <p class="sub">왜 존재하는가: 임베딩 모델은 언젠가 반드시 바뀝니다. <code>base.py</code> 추상화 뒤에 숨겨 두면 나머지 코드는 전혀 몰라도 됩니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1.05fr; gap:18px; align-content:start;">
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>🔌 인터페이스 2개면 충분</h3>
+        <p><code>embed_texts(texts)</code> — 문서 인덱싱용 배치 임베딩<br>
+        <code>embed_query(query)</code> — 검색 질의용 단건 임베딩<br>
+        구현체: <b>LocalEmbedding</b>(sentence-transformers) / <b>OpenAIEmbedding</b>(text-embedding-3-small).
+        모델은 <b>최초 사용 시 지연 로드</b>되어 CLI 기동이 빠릅니다.</p>
+      </div>
+      <div class="card">
+        <h3>⚖️ multilingual-e5-small · 384차원</h3>
+        <p>한국어+영어를 같은 벡터 공간에 매핑하는 다국어 모델.
+        384차원은 대형 모델(1024차원+) 대비 정확도를 약간 양보하는 대신
+        <b>51만 청크 인덱싱 시간·저장 공간·검색 속도</b>에서 큰 이득 — CPU만으로 운영 가능한 균형점입니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🎯 디테일: <code>query:</code> / <code>passage:</code> 접두사 자동 처리</h3>
+      <div class="codebox" style="margin:10px 0;"><span class="c"># local.py — E5 계열 모델 자동 감지</span>
+_E5_MODEL_PREFIXES = (<span class="s">"e5-"</span>, <span class="s">"multilingual-e5-"</span>, ...)
+
+<span class="k">def</span> <span class="g">embed_texts</span>(self, texts):
+    <span class="k">if</span> self._is_e5:
+        texts = [<span class="s">f"passage: {t}"</span> <span class="k">for</span> t <span class="k">in</span> texts]  <span class="c"># 문서</span>
+
+<span class="k">def</span> <span class="g">embed_query</span>(self, query):
+    effective = <span class="s">f"query: {query}"</span>  <span class="c"># 질의</span></div>
+      <p>E5 모델은 학습 때부터 질의·문서에 서로 다른 접두사를 붙여 <b>비대칭 검색</b>(짧은 질문 ↔ 긴 문서)을 익혔습니다.
+      접두사를 빼먹으면 검색 품질이 눈에 띄게 떨어지는데, 이 코드는 모델명을 보고 <b>자동으로</b> 붙여 사용자 실수를 차단합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>9 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 10 : store ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — store</div>
+  <h2>store/chroma.py — 벡터 DB를 감싸는 ChromaStore</h2>
+  <p class="sub">왜 존재하는가: ChromaDB API를 직접 쓰면 전 코드가 DB에 종속됩니다. 래퍼 한 장으로 "우리 도메인 언어(Chunk, SearchResult)"로 변환합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:16px; align-content:start;">
+    <div class="card">
+      <h3>🗄️ 핵심 동작</h3>
+      <ul>
+        <li><code>PersistentClient</code> + <code>get_or_create_collection(metadata={"hnsw:space": "cosine"})</code> — 파일 기반 영속화, 코사인 거리</li>
+        <li><code>add_chunks()</code> — <b>upsert</b> 사용: 같은 chunk_id 재수집 시 덮어쓰기 (멱등성)</li>
+        <li><code>search()</code> — 거리→유사도 변환: <code>score = 1 − distance/2</code></li>
+        <li><code>delete_by_document()</code> — 증분 인덱싱의 핵심: 재수집 전 기존 청크 제거</li>
+        <li><code>get_adjacent_chunks()</code> — 같은 문서의 앞뒤 청크 조회 (맥락 확장용)</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>🏷️ 메타데이터 저장 규칙</h3>
+        <div class="codebox" style="margin-top:8px;">meta = {
+  <span class="s">"doc_path"</span>: str(chunk.doc_path),
+  <span class="s">"headers"</span>: <span class="s">"|||"</span>.join(chunk.headers), <span class="c"># 구분자 직렬화</span>
+  <span class="s">"chunk_index"</span>: chunk.chunk_index,
+  <span class="c"># + doc_type, language, vendor, category, model_name</span>
+}</div>
+        <p style="margin-top:8px;">ChromaDB 메타데이터는 평탄한 키-값만 허용 → 헤더 리스트를 <code>|||</code>로 합쳐 저장하고 읽을 때 다시 분리합니다.</p>
+      </div>
+      <div class="card">
+        <h3>🔍 where 필터 = Phase 2의 기반</h3>
+        <p><code>{"doc_type": "rfc"}</code> 또는 <code>{"$and": [{"vendor": "다산"}, {"category": "L3"}]}</code> 같은
+        ChromaDB where 절을 그대로 통과시켜 <b>메타데이터 필터링 검색</b>을 지원합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>10 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 11 : ingest ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — ingest</div>
+  <h2>ingest/ — 문서 발견부터 인덱스 완성까지의 컨베이어 벨트</h2>
+  <p class="sub">왜 존재하는가: 27,000+ 파일을 "한 개씩" 처리하면 며칠이 걸립니다. 스캔·청킹·임베딩·저장을 분리하고 배치화한 모듈입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>📂 scanner.py</h3>
+      <p><code>MarkdownScanner.scan()</code>이 파일/디렉토리를 받아 <code>rglob("*.md")</code>로 재귀 탐색.</p>
+      <ul style="margin-top:6px;">
+        <li><code>.</code>으로 시작하는 숨김 파일·디렉토리 제외</li>
+        <li>경로 기준 정렬 → <b>결정론적 처리 순서</b> (재현 가능한 인덱스)</li>
+        <li>UTF-8로 읽어 <code>Document</code> 객체 생성</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>⚙️ pipeline.py</h3>
+      <p><code>IngestPipeline.ingest()</code>가 전체 흐름을 지휘:</p>
+      <ul style="margin-top:6px;">
+        <li>문서별: 기존 청크 삭제 → frontmatter → <code>detect_doc_metadata()</code> → 청킹</li>
+        <li>전체 청크 모아서 <b>배치 임베딩 128개씩</b>, <b>저장 500개씩</b></li>
+        <li>임베딩 성공 시에만 BM25 인덱스 빌드+저장 (일관성 보장)</li>
+        <li>파일 하나가 실패해도 전체는 계속 — 오류는 <code>IngestResult.errors</code>에 수집</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3>🗂️ directory_index.py</h3>
+      <p>"다산 L2 장비 <b>목록</b> 알려줘" 같은 구조적 질문은 어떤 문서에도 답이 없습니다.
+      그래서 <code>다산_L2</code>, <code>유비쿼스_OLT</code> 등 디렉토리 구조를 분석해
+      <b>합성 인덱스 문서(__index__.md)를 생성</b>하여 함께 인덱싱합니다.</p>
+      <p style="margin-top:6px; color:var(--muted);">doc_type=<code>directory_index</code>로 태깅 → 쿼리에 "목록/종류/장비" 키워드가 있으면 이 문서들이 우선 검색됩니다 (Phase 2 연계).</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>11 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 12 : retriever 지도 ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — retriever</div>
+  <h2>retriever/ 모듈 지도 — 검색의 심장부 9개 파일</h2>
+  <p class="sub">Phase가 거듭될수록 파일이 하나씩 늘어난, 이 프로젝트에서 가장 많이 진화한 모듈입니다.</p>
+  <div class="body">
+    <div class="card" style="padding:12px 18px;">
+      <table class="tbl" style="font-size:13.5px;">
+        <tr><th>파일</th><th>핵심 클래스/함수</th><th>역할</th><th>Phase</th></tr>
+        <tr><td><code>search.py</code></td><td>SemanticSearch</td><td>벡터 검색 + 자동 필터 + (옵션) 리랭킹</td><td>기본</td></tr>
+        <tr><td><code>bm25.py</code></td><td>BM25Index</td><td>키워드 검색 · kiwipiepy 형태소 · bm25s 백엔드</td><td>3</td></tr>
+        <tr><td><code>hybrid.py</code></td><td>HybridSearch</td><td>벡터+BM25를 RRF로 결합 (alpha 가중)</td><td>3</td></tr>
+        <tr><td><code>query_filter.py</code></td><td>QueryAnalyzer</td><td>쿼리에서 벤더/카테고리/언어 감지 → 자동 where 필터</td><td>2</td></tr>
+        <tr><td><code>reranker.py</code></td><td>CrossEncoderReranker</td><td>크로스 인코더 정밀 재채점 (20→5)</td><td>4</td></tr>
+        <tr><td><code>query.py</code></td><td>HyDEProcessor</td><td>LLM 가상 문서 생성 → 그 임베딩으로 검색</td><td>6</td></tr>
+        <tr><td><code>ontology_aug.py</code></td><td>OntologyAugmentedSearch</td><td>이중 코퍼스 RRF union + 참조 경로 청크 주입</td><td>7</td></tr>
+        <tr><td><code>rag.py</code></td><td>RAGEngine</td><td>검색 결과 → 컨텍스트 조립 → 프롬프트 → LLM</td><td>기본</td></tr>
+        <tr><td><code>builder.py</code></td><td>build_search_engine()</td><td>mode에 따라 위 엔진들을 조립하는 팩토리</td><td>공통</td></tr>
+      </table>
+    </div>
+    <div class="card" style="margin-top:14px; border-color: rgba(88,166,255,.4);">
+      <p style="font-size:14.5px;"><b style="color:var(--accent)">설계 포인트:</b> builder.py의 <code>SearchEngine</code>은 <code>@runtime_checkable</code> Protocol —
+      모든 엔진이 동일한 <code>search(query, top_k, where)</code> 시그니처를 갖기 때문에
+      CLI·API·RAGEngine은 <b>지금 어떤 모드가 켜져 있는지 몰라도</b> 됩니다. 새 검색 전략을 추가해도 호출부는 무변경.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>12 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 13 : llm ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — llm</div>
+  <h2>llm/ — 클라우드와 폐쇄망을 모두 지원하는 생성 계층</h2>
+  <p class="sub">인터페이스는 단 하나: <code>generate(messages) → str</code>. 그 뒤에 두 세계가 숨어 있습니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1.15fr; gap:16px; align-content:start;">
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3>☁️ OpenAILLM — 43줄의 단순함</h3>
+        <p>ChatCompletion API 호출이 전부. 기본 모델 <code>gpt-4o-mini</code>(빠르고 저렴).
+        API 키는 환경변수에서 로드하며 코드에 절대 박지 않습니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent4);">
+        <h3>🔒 왜 로컬 SLM인가</h3>
+        <p>통신사 장비 매뉴얼은 <b>외부 API로 보낼 수 없는 폐쇄망 환경</b>이 전제.
+        llama-cpp-python으로 GGUF 양자화 모델(<b>EXAONE 4.0 1.2B</b>)을 <b>CPU만으로</b> 구동합니다.
+        한국어 네이티브 SLM이라 한국어 답변 품질이 동급 영어권 모델보다 우수합니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ LocalLLM — 202줄에 담긴 실전 노하우</h3>
+      <ul style="line-height:1.7;">
+        <li><b>외부 Jinja chat template 주입</b> — EXAONE 공식 템플릿은 <code>{% continue %}</code>를 사용하는데
+        llama-cpp 내장 Jinja가 미지원 → <code>loopcontrols</code> 확장을 켠 자체 환경에서 직접 렌더링 후 <code>create_completion()</code> 호출</li>
+        <li><b>샌드박스 몽키패치</b> — GGUF 내장 템플릿 경로도 동작하도록 <code>ImmutableSandboxedEnvironment.__init__</code>을 임시 패치했다가 원복</li>
+        <li><b>정지 토큰</b> — EXAONE의 턴 종료 토큰 <code>[|endofturn|]</code> 기본 등록</li>
+        <li><b>temperature 0.1</b> — 한국어 답변 중 영어가 섞여 나오는 <b>코드 스위칭 방지</b>용 기본값</li>
+        <li><b>첫 글자 누락 버그 우회</b> — ask_cmd에서 질문 앞에 더미 공백 1칸 추가</li>
+        <li>모델 지연 로드 + llama.cpp C 레벨 stderr 경고 억제</li>
+      </ul>
+      <p style="margin-top:8px; color:var(--muted);">"로컬 LLM 연동"은 한 줄짜리 일이 아니라는 것을 보여주는 모듈 — 템플릿·토큰·인코딩의 함정들이 모두 코드로 문서화되어 있습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>13 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 14 : cli & api ════ -->
+<section class="slide">
+  <div class="kicker">② 코드 구조 — 진입점</div>
+  <h2>cli/ &amp; api/ — 같은 엔진, 두 개의 문</h2>
+  <p class="sub">argparse 기반 <code>mdrag</code> 명령과 FastAPI 서버(포트 8900)가 동일한 builder/엔진을 공유합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.2fr 1fr; gap:16px; align-content:start;">
+    <div class="card" style="padding:12px 18px;">
+      <h3 style="margin-bottom:6px;">⌨️ mdrag CLI 명령 전체</h3>
+      <table class="tbl" style="font-size:12.5px;">
+        <tr><th>명령</th><th>주요 옵션</th><th>동작</th></tr>
+        <tr><td><code>ingest &lt;path&gt;</code></td><td>-v</td><td>문서 수집·인덱싱</td></tr>
+        <tr><td><code>search &lt;query&gt;</code></td><td class="mono" style="font-size:11px;">-k · --mode vector|hybrid|ontology · --doc-type · --language · --vendor · --category · --backend</td><td>LLM 없는 검색</td></tr>
+        <tr><td><code>ask &lt;question&gt;</code></td><td class="mono" style="font-size:11px;">-k · -s(소스 표시) · --llm-backend local|openai · --model · --mode · 필터 4종</td><td>RAG 질의응답</td></tr>
+        <tr><td><code>status</code></td><td>—</td><td>인덱스 상태/설정 확인</td></tr>
+        <tr><td><code>serve</code></td><td>--host · --port(8900)</td><td>REST API 서버 기동</td></tr>
+        <tr><td colspan="2"><code>-d/--debug · --log-level · --log-file</code></td><td>전역 디버그/로깅</td></tr>
+      </table>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="padding:12px 18px;">
+        <h3 style="margin-bottom:6px;">🌐 REST API (FastAPI)</h3>
+        <table class="tbl" style="font-size:12.5px;">
+          <tr><th>메서드</th><th>경로</th></tr>
+          <tr><td>GET</td><td><code>/health</code></td></tr>
+          <tr><td>GET</td><td><code>/api/v1/status</code></td></tr>
+          <tr><td>POST</td><td><code>/api/v1/ingest</code></td></tr>
+          <tr><td>POST</td><td><code>/api/v1/search</code> <span style="color:var(--muted)">(body.mode 지원)</span></td></tr>
+          <tr><td>POST</td><td><code>/api/v1/ask</code> <span style="color:var(--muted)">(body.mode/model 지원)</span></td></tr>
+          <tr><td>DELETE</td><td><code>/api/v1/documents</code></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>🧩 공통 패턴</h3>
+        <p>CLI와 API 모두 ① 설정 로드 → ② <code>build_search_engine(settings, mode_override)</code> →
+        ③ where 필터 조립 → ④ 엔진 호출만 합니다. <b>비즈니스 로직 0줄</b> — 로직은 전부 retriever에 있어 두 인터페이스가 절대 어긋나지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>14 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 15 : 파이프라인 ingest ════ -->
+<section class="slide">
+  <div class="kicker">③ 3대 파이프라인 — ①</div>
+  <h2>ingest 시퀀스 — <code>mdrag ingest ./docs/</code> 한 줄의 내부</h2>
+  <p class="sub">실제 함수 호출 순서 그대로. 사전 작업이므로 느려도 되지만, 27,000+ 파일 규모에서는 배치화가 필수였습니다 (Phase 5).</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step"><div class="ic">📂</div><b>scan</b><span><code>MarkdownScanner.scan()</code><br>.md 재귀 발견<br>+ <code>generate_directory_index()</code><br>합성 문서 추가</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🧹</div><b>증분 정리</b><span><code>delete_by_document()</code><br>재수집 문서의<br>기존 청크 제거</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">✂️</div><b>청킹</b><span><code>detect_doc_metadata()</code><br>경로→doc_type/언어<br><code>split_markdown()</code><br>1,000자/중첩 100자</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🔢</div><b>배치 임베딩</b><span><code>embed_texts()</code><br><b>128개씩</b> 배치<br>passage: 접두사 자동</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🗄️</div><b>이중 저장</b><span>Chroma <code>upsert</code> <b>500개씩</b><br>→ 성공 시에만<br><code>BM25Index.add_chunks()</code><br>+ <code>save()</code></span></div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🛡️ 실패 격리 설계</h3>
+        <p>문서 1개가 파싱에 실패해도 루프는 계속되고, 오류 메시지만 <code>IngestResult.errors</code> 리스트에 쌓입니다.
+        대량 인제스트에서 "1번 파일 깨졌다고 26,999개를 버리는" 사태를 방지합니다.</p>
+      </div>
+      <div class="card">
+        <h3>🔗 벡터·BM25 일관성</h3>
+        <p>BM25 인덱스는 <b>임베딩+저장이 성공한 경우에만</b> 빌드됩니다.
+        두 인덱스가 서로 다른 청크 집합을 갖게 되면 하이브리드 검색(RRF)이 왜곡되기 때문입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>15 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 16 : 파이프라인 search ════ -->
+<section class="slide">
+  <div class="kicker">③ 3대 파이프라인 — ②</div>
+  <h2>search 시퀀스 — 질의 한 건이 결과가 되기까지</h2>
+  <p class="sub"><code>mdrag search "..." --mode hybrid</code> 실행 시. mode에 따라 builder가 다른 엔진을 조립하는 것이 분기점입니다.</p>
+  <div class="body">
+    <div class="codebox" style="margin-bottom:14px; font-size:12.5px;">handle_search(args)
+ └─ build_search_engine(settings, mode_override=args.mode)   <span class="c"># 팩토리 분기</span>
+     ├─ <span class="y">mode=vector</span>   → SemanticSearch                       <span class="c"># 임베딩 → Chroma 질의</span>
+     ├─ <span class="y">mode=hybrid</span>   → HybridSearch(Semantic + BM25Index.load())
+     └─ <span class="y">mode=ontology</span> → OntologyAugmentedSearch(main hybrid + onto hybrid + onto_refs.json)
+ └─ engine.search(query, top_k=5, where=CLI필터)
+     ① QueryAnalyzer.analyze(query)   <span class="c"># 벤더/카테고리/언어 자동 감지 → 자동 필터 병합</span>
+     ② embed_query("query: " + 질의)  <span class="c"># 벡터 검색, fetch_k = top_k × 3</span>
+     ③ BM25Index.search(tokenize(질의)) <span class="c"># 한국어면 kiwipiepy 형태소 분석</span>
+     ④ _fuse_results(...)             <span class="c"># RRF 결합 → 최종 top_k</span></div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🔍 자동 필터 + 폴백 재검색</h3>
+        <p>영어 질의면 자동으로 <code>doc_type ∈ {ccie, rfc}</code>를 1차 필터로 적용하고,
+        결과가 부족하면 <code>language=en</code> 폴백 필터로 <b>한 번 더 검색해 부족분을 채웁니다</b>
+        (SemanticSearch 내부 로직). 사용자는 필터 존재를 몰라도 됩니다.</p>
+      </div>
+      <div class="card">
+        <h3>🏷️ 출력의 origin 태그</h3>
+        <p>ontology 모드에서는 결과마다 출처가 표시됩니다:
+        <code>[ONTO CARD]</code>(카드 직접 hit) / <code>[INJECTED via 카드명]</code>(참조 주입) / 무표시(main 직접 hit).
+        "왜 이 결과가 나왔는가"를 추적 가능하게 만든 디버깅 장치입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>16 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 17 : 파이프라인 ask ════ -->
+<section class="slide">
+  <div class="kicker">③ 3대 파이프라인 — ③</div>
+  <h2>ask(RAG) 시퀀스 — rag.py의 실제 프롬프트 구조</h2>
+  <p class="sub">검색 결과를 "참고 자료"로 조립해 LLM에 전달하는 마지막 구간. <code>RAGEngine.ask()</code> 96줄이 전부입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.1fr 1fr; gap:16px; align-content:start;">
+    <div class="codebox" style="font-size:12px;"><span class="c"># ① 시스템 프롬프트 (rag.py 원문)</span>
+<span class="s">"You are a helpful assistant that answers questions
+ based on the provided context only. If the context
+ does not contain enough information ... say
+ 'I don't know based on the provided context.'
+ When answering, cite the source documents."</span>
+
+<span class="c"># ② 컨텍스트 조립 — _build_context()</span>
+## Source: {doc_path} &gt; {헤더1 &gt; 헤더2 &gt; ...}
+{청크 본문}
+                  <span class="c">(top_k=5개 청크를 빈 줄로 연결)</span>
+
+<span class="c"># ③ 사용자 메시지</span>
+<span class="s">"Context:\n{컨텍스트}\n\nQuestion: {질문}"</span>
+
+<span class="c"># ④ llm_backend.generate(messages) → RAGResponse</span>
+<span class="c">#    answer + sources + model + query 반환</span></div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>🛡️ 환각 억제 장치 2개</h3>
+        <p>① "provided context only" — 컨텍스트 밖 지식 사용 금지 지시<br>
+        ② "I don't know..." — 모르면 모른다고 답하라는 탈출구 제공.
+        탈출구가 없으면 LLM은 억지로라도 답을 지어냅니다.</p>
+      </div>
+      <div class="card">
+        <h3>📍 헤더 경로가 컨텍스트에 들어가는 이유</h3>
+        <p>청크 본문만 주면 LLM이 "이 내용이 어느 문서 어느 절인지" 모릅니다.
+        <code>## Source: 경로 &gt; 헤더 계층</code> 한 줄이 chunker가 보존한 구조 정보를 LLM까지 전달해
+        <b>출처 인용(citation)이 가능</b>해집니다.</p>
+      </div>
+      <div class="card">
+        <h3>🔄 검색 엔진은 갈아끼우기</h3>
+        <p>RAGEngine은 <code>search()</code> 시그니처만 알면 되므로
+        <code>--mode ontology</code>로 바꿔도 RAG 코드는 1줄도 변경 없이 온톨로지 증강 컨텍스트를 받습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>17 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 18 : Phase 1 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 1 — 다국어 임베딩 <span class="tag blue" style="font-size:14px; vertical-align:8px;">multilingual-e5-small</span></h2>
+  <p class="sub">"한국어 질문으로 영어 RFC를 찾는다" — 이 프로젝트의 출발점이자 모든 후속 Phase의 토대입니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px; border-color: rgba(88,166,255,.4);">
+      <h3>🌐 언어 교차 검색의 원리</h3>
+      <div class="flow" style="margin-top:10px;">
+        <div class="step"><div class="ic">🇰🇷</div><b>"OSPF 영역 설정"</b><span>한국어 질의<br>→ query: 접두사 + 임베딩</span></div>
+        <div class="arr">→</div>
+        <div class="step"><div class="ic">🧭</div><b>공유 벡터 공간</b><span>다국어 모델이 한/영을<br><b>같은 의미 좌표</b>에 매핑</span></div>
+        <div class="arr">→</div>
+        <div class="step"><div class="ic">🇺🇸</div><b>"OSPF area configuration..."</b><span>영어 RFC 2328 청크가<br>가까운 이웃으로 검색됨</span></div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>⚖️ 384차원의 트레이드오프</h3>
+        <ul>
+          <li><b>장점</b>: 51만 청크 × 384 × 4byte ≈ 0.8GB — 임베딩 저장이 가볍고, CPU 인덱싱·검색 모두 빠름</li>
+          <li><b>비용</b>: 1024차원급 대형 모델 대비 미세한 의미 구분력 손해</li>
+          <li><b>판단</b>: 그 손해는 Phase 3(BM25 보완)·Phase 4(리랭킹)로 만회 — "작은 임베딩 + 똑똑한 파이프라인" 전략</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔁 백엔드 교체 가능 구조</h3>
+        <p><code>MDRAG_EMBEDDING_BACKEND=openai</code> 한 줄로 text-embedding-3-small로 전환됩니다.
+        단, <b>임베딩 모델을 바꾸면 벡터 공간이 달라지므로 전체 재인덱싱 필수</b> —
+        이런 운영 비용 때문에 임베딩 모델 선택은 초기에 신중히 결정해야 하는 항목입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>18 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 19 : Phase 2 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 2 — 메타데이터 필터링 <span class="tag blue" style="font-size:14px; vertical-align:8px;">query_filter.py</span></h2>
+  <p class="sub">51만 청크 전체에서 찾으면 잡음이 섞입니다. "어느 서랍에서 찾을지"를 먼저 좁히는 단계입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:16px; align-content:start;">
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>👤 명시적 필터 (사용자 지정)</h3>
+        <p><code>mdrag search "인증" --doc-type rfc --language ko</code><br>
+        CLI/API 옵션이 ChromaDB where 절로 변환:
+        <code>{"$and": [{"doc_type": "rfc"}, {"language": "ko"}]}</code><br>
+        벤더(<code>다산/유비쿼스</code>)·카테고리(<code>L2/L3/OLT</code>) 필터도 동일 방식.</p>
+      </div>
+      <div class="card">
+        <h3>📉 효과 — 잡음 감소</h3>
+        <p>RFC 질문에 장비 매뉴얼 청크가 끼어드는 오염을 차단합니다.
+        검색 모집단이 작아지니 정확도와 속도가 동시에 개선 —
+        대규모 이종(異種) 코퍼스에서 필터링은 선택이 아니라 필수입니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🤖 자동 필터 — QueryAnalyzer의 숨은 동작</h3>
+      <p style="margin-bottom:8px;">사용자가 필터를 안 줘도 쿼리를 분석해 자동 추가합니다:</p>
+      <div class="codebox" style="font-size:12px;"><span class="c"># 쿼리에서 감지 → 자동 where 필터</span>
+<span class="s">"다산"/"dasan"</span>      → {vendor: <span class="s">"다산"</span>}
+<span class="s">"L2"/"L3"/"OLT"</span>    → {category: ...}
+<span class="s">"목록"/"종류"/"장비"</span> → {doc_type: <span class="s">"directory_index"</span>}
+한글 없는 영어 쿼리  → 1차 {doc_type: [ccie, rfc]}
+                      2차 폴백 {language: <span class="s">"en"</span>}</div>
+      <p style="margin-top:8px;">자동 필터와 사용자 필터는 <code>merge_filters()</code>가 <code>$and</code>로 병합.
+      1차 필터 결과가 top_k에 못 미치면 <b>폴백 필터로 재검색</b>해 부족분을 채우는 2단계 안전망까지 구현되어 있습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>19 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 20 : Phase 3-1 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 3 ① — BM25와 한국어 형태소 분석 <span class="tag blue" style="font-size:14px; vertical-align:8px;">bm25.py</span></h2>
+  <p class="sub">벡터 검색은 "RFC 2328", "show ip ospf" 같은 정확 매칭에 약합니다. BM25가 그 빈틈을 메우는데 — 한국어에는 함정이 하나 있습니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:16px; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3>🇰🇷 왜 형태소 분석이 필수인가</h3>
+      <p style="margin-bottom:8px;">BM25는 토큰이 <b>정확히 일치</b>해야 점수를 줍니다. 한국어는 조사가 붙어 같은 단어가 매번 다른 토큰이 됩니다:</p>
+      <div class="codebox" style="font-size:12.5px;"><span class="c"># 공백 분리만 하면 — 매칭 실패</span>
+질의: <span class="s">"인증은"</span>  문서: <span class="s">"인증을"</span> <span class="s">"인증이"</span>  → 0점!
+
+<span class="c"># kiwipiepy 형태소 분석 — 매칭 성공</span>
+tokenize(<span class="s">"인증은 어떻게"</span>)
+→ [<span class="g">"인증"</span>, <span class="g">"어떻게"</span>]   <span class="c"># 조사 분리, 1글자 토큰 제외</span></div>
+      <p style="margin-top:8px;"><code>_has_korean()</code> 정규식(<code>[가-힣]</code>)으로 한국어 포함 여부를 판별해
+      한국어는 형태소 분석, 영어는 소문자 공백 분리로 자동 분기합니다.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>⚡ 성능 교훈이 주석으로 남아 있다</h3>
+        <p>Kiwi 인스턴스 초기화는 수백 ms — 코드 주석에 따르면 <b>"515K 청크 인덱싱 시 매 호출마다 Kiwi()를 만들면
+        10시간 이상 소요되는 것이 확인되었다"</b>. 그래서 모듈 레벨 싱글톤(<code>_get_kiwi()</code>)으로 1회만 생성해 재사용합니다.</p>
+      </div>
+      <div class="card">
+        <h3>💾 bm25s 백엔드 + 인덱스 영속화</h3>
+        <p>구현은 <code>bm25s</code> 라이브러리(numpy 희소 행렬) 기반 — 515K 청크에서
+        <b>피크 메모리 4–5GB → 1–2GB</b>로 감소했다고 코드에 기록되어 있습니다.
+        인덱스는 디렉토리에 저장(<code>save/load</code>)되어 검색 때마다 재토큰화하지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>20 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 21 : Phase 3-2 RRF ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 3 ② — RRF 결합: 숫자로 직접 계산해 보기 <span class="tag blue" style="font-size:14px; vertical-align:8px;">hybrid.py</span></h2>
+  <p class="sub">벡터 점수(0~1 유사도)와 BM25 점수(무한대 스케일)는 단위가 달라 더할 수 없습니다. 그래서 <b>점수를 버리고 순위만</b> 사용합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1.05fr; gap:16px; align-content:start;">
+    <div class="card">
+      <h3>📐 실제 구현 수식 (k=60, alpha=0.7)</h3>
+      <div class="codebox" style="font-size:12.5px; margin:8px 0;"><span class="c"># hybrid.py _fuse_results()</span>
+벡터 결과:  score = <span class="y">0.7</span> / (60 + rank)
+BM25 결과:  score = <span class="y">0.3</span> / (60 + rank)
+양쪽 등장:  두 점수를 <b>합산</b></div>
+      <p>k=60은 RRF 원 논문 권장값. 1위와 2위의 점수 차를 완만하게 만들어
+      한쪽 검색기의 순위 노이즈가 결과를 흔들지 못하게 합니다.
+      <code>alpha=0.7</code>은 의미 검색을 우대하되 키워드 매칭도 충분히 반영하는 균형점으로,
+      <b>검증 데이터셋에서 0.3~0.7을 스윕해 선택</b>된 값입니다 (scripts/에 비교 결과 파일이 남아 있음).</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🧮 예시 계산 — 왜 "양쪽 상위권"이 이기는가</h3>
+      <table class="tbl" style="font-size:13px; margin-top:6px;">
+        <tr><th>문서</th><th>벡터 순위</th><th>BM25 순위</th><th>RRF 점수</th></tr>
+        <tr><td>A (양쪽 상위)</td><td>1위</td><td>3위</td>
+          <td class="mono" style="font-size:12px;">0.7/61 + 0.3/63 = <b class="up">0.01624</b></td></tr>
+        <tr><td>B (벡터만)</td><td>2위</td><td>—</td>
+          <td class="mono" style="font-size:12px;">0.7/62 = 0.01129</td></tr>
+        <tr><td>C (BM25만)</td><td>—</td><td>1위</td>
+          <td class="mono" style="font-size:12px;">0.3/61 = 0.00492</td></tr>
+      </table>
+      <p style="margin-top:10px;">벡터 1위(B보다 위)였던 문서라도, <b>양쪽에서 모두 발견된 A가 최종 1위</b>.
+      두 독립적 증거가 일치하는 문서를 신뢰하는 구조입니다.
+      검색 풀은 <code>fetch_k = top_k × 3</code>으로 넓게 가져와 결합 후 잘라냅니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>21 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 22 : Phase 4 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 4 — 크로스 인코더 리랭킹 <span class="tag gold" style="font-size:14px; vertical-align:8px;">reranker.py</span></h2>
+  <p class="sub">"서류 전형으로 20명을 추리고, 면접으로 5명을 뽑는다" — 빠른 검색기와 정밀한 채점기의 2단계 깔때기입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3>🧭 바이 인코더 (1차 검색)</h3>
+        <p>질문과 문서를 <b>각각 따로</b> 벡터화한 뒤 거리 비교.
+        문서 벡터는 미리 계산해 두므로 51만 청크도 즉시 검색 —
+        대신 "따로 읽기" 때문에 둘 사이의 미묘한 상호작용을 놓칩니다.</p>
+        <div class="codebox" style="margin-top:8px; font-size:12px;">질문 → [벡터]  ↘
+                  거리 비교 (빠름, 대략적)
+문서 → [벡터]  ↗   <span class="c"># 사전 계산 가능</span></div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>🔬 크로스 인코더 (2차 채점)</h3>
+        <p>질문+문서를 <b>한 쌍으로 함께</b> 모델에 넣어 관련도를 직접 채점.
+        토큰 단위 상호작용까지 보므로 훨씬 정밀하지만, 쌍마다 추론이 필요해 느림 —
+        그래서 <b>이미 추려진 20개에만</b> 적용합니다.</p>
+        <div class="codebox" style="margin-top:8px; font-size:12px;">[질문 ⊕ 문서] → 모델 → 관련도 점수
+<span class="c"># model.predict(pairs) — 사전 계산 불가, 정밀</span></div>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(210,153,34,.45);">
+      <h3 style="color:var(--accent3)">⚙️ 실제 설정</h3>
+      <p>모델 <code>BAAI/bge-reranker-v2-m3</code>(다국어 지원, 한/영 쌍 채점 가능) ·
+      <code>initial_top_k=20</code> → 리랭킹 → 최종 <code>top_k=5</code> ·
+      기본값은 <code>rerank_enabled=false</code> — 속도가 중요한 경로에서는 끄고, 정확도가 중요할 때 켜는 <b>옵션형 설계</b>입니다.
+      SemanticSearch가 리랭커 유무에 따라 fetch 폭을 자동 조절합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>22 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 23 : Phase 5 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 5 — 배치 인제스트: 27,000+ 파일을 현실적인 시간에</h2>
+  <p class="sub">기능 추가가 아니라 "같은 일을 수십 배 빠르게"가 목표였던 단계. 최적화 포인트가 코드 곳곳에 박혀 있습니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card">
+      <h3><span class="tag green">1</span> 임베딩 배치화 (128개씩)</h3>
+      <p>청크를 1개씩 임베딩하면 모델 호출 오버헤드가 지배합니다.
+      <code>_EMBED_BATCH_SIZE=128</code>로 묶어 sentence-transformers의 배치 추론 성능을 끌어내고,
+      전 문서의 청크를 먼저 모은 뒤(<code>all_chunks</code>) 한꺼번에 처리합니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag green">2</span> 저장 배치화 + upsert (500개씩)</h3>
+      <p><code>_STORE_BATCH_SIZE=500</code> 단위로 ChromaDB에 벌크 <code>upsert</code>.
+      upsert라서 중단 후 재실행해도 중복이 생기지 않는 <b>멱등성</b>까지 확보 —
+      대량 작업은 언제든 끊길 수 있다는 전제의 설계입니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag green">3</span> Kiwi 싱글톤 / bm25s 전환</h3>
+      <p>형태소 분석기 1회 생성 재사용(앞서 본 "10시간 → 정상화" 교훈),
+      BM25 백엔드를 pickle 전체 직렬화에서 bm25s 네이티브 포맷으로 바꿔
+      피크 메모리 4–5GB → 1–2GB. <b>병목은 측정해 보기 전엔 모른다</b>는 사례들.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag green">4</span> 증분 인덱싱</h3>
+      <p>문서 재수집 시 <code>delete_by_document()</code>로 해당 문서 청크만 교체.
+      전체 재인덱싱 없이 일부 문서 갱신이 가능합니다.
+      대규모 재구축용으로는 별도 스크립트(<code>scripts/reindex_optimized.py</code>, tqdm 진행률 표시)를 운영합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>23 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 24 : Phase 6 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 1~7 고도화</div>
+  <h2>Phase 6 — HyDE: 질문을 "가상의 정답"으로 바꿔 검색 <span class="tag purple" style="font-size:14px; vertical-align:8px;">query.py</span></h2>
+  <p class="sub">"OSPF가 뭐야?"(질문체)와 "OSPF는 링크 상태 프로토콜로..."(문서체)는 벡터 공간에서 멀리 있습니다. 그 간극을 LLM으로 메웁니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step"><div class="ic">❓</div><b>1. 질문 수신</b><span>"인증은 어떻게<br>동작하나요?"</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🤖</div><b>2. 가상 문서 생성</b><span>LLM에게 실제 프롬프트:<br>"Write a short paragraph ...<br>as if it were a passage from<br>a technical document"</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🔢</div><b>3. 가상 문서를 임베딩</b><span>원본 질문 대신<br><code>embed_query(가상문서)</code><br>→ 문서체 벡터 획득</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🎯</div><b>4. 문서↔문서 매칭</b><span>같은 "문서체"끼리 비교되어<br>유사도 정확도 향상</span></div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🧩 구현 형태 — 조립형 모듈</h3>
+        <p><code>HyDEProcessor</code>는 LLM 백엔드 + 임베딩 백엔드를 주입받는 독립 컴포넌트로,
+        <code>generate_hyde_embedding(query)</code> 하나만 노출합니다.
+        <b>기본 검색 모드(builder.py)에 상시 결합되어 있지는 않고</b>, 필요 시 검색 경로에 끼워 넣는 선택적 부품입니다 —
+        LLM 호출 1회가 추가되는 비용 때문입니다.</p>
+      </div>
+      <div class="card">
+        <h3>📑 인접 청크 확장 (맥락 복원)</h3>
+        <p>같은 맥락의 보완 장치로 <code>ChromaStore.get_adjacent_chunks(doc_path, chunk_index, window)</code>가 구현되어 있습니다.
+        검색된 청크의 <b>같은 문서 앞뒤 청크</b>를 가져와 잘린 맥락을 복원하는 용도 —
+        청킹의 숙명적 단점(경계 절단)을 검색 시점에 보정하는 아이디어입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>24 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 25 : Phase 7-1 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 7 — 온톨로지 증강 (1/5)</div>
+  <h2>왜 필요했나 — CCIE Hit@5 60% 정체의 원인 분석</h2>
+  <p class="sub">Phase 1~6을 다 적용해도 CCIE 카테고리만 60%에서 멈췄습니다. 더 좋은 검색기가 아니라 <b>다른 종류의 지식</b>이 필요했습니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px; border-color: rgba(255,123,114,.45);">
+      <h3 style="color:var(--accent5)">🔍 실패 패턴: 벡터 유사도가 못 잇는 다리</h3>
+      <p style="font-size:15px;">질문 "OSPF 이론과 다산 장비 설정을 함께 알려줘"의 정답은 CCIE 교재(영어 이론)와 다산 매뉴얼(한국어 CLI)에 나뉘어 있습니다.
+      그런데 이 두 문서는 <b>단어도, 언어도, 문체도 공유하지 않습니다</b> — 임베딩이 아무리 좋아도
+      "Dijkstra SPF calculation"과 "<span class="mono">router ospf</span> 명령 입력"이 가까울 이유가 없습니다.
+      <b>유사도(similarity)가 아니라 관계(relation)의 문제</b>입니다.</p>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>📉 baseline 하이브리드의 한계 수치</h3>
+        <ul>
+          <li>전체 Hit@5: 88% — 나쁘지 않아 보이지만</li>
+          <li><b>CCIE 카테고리: 18/30 = 60%</b> — 3계층 교차가 필요한 질문에서 집중 실패</li>
+          <li>RFC 단독·매뉴얼 단독 질문은 이미 잘 됨 → 남은 실패는 전부 "계층을 건너야 하는" 질문</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>💡 해법의 방향 — 사람이 만든 다리</h3>
+        <p>완전한 지식 그래프(GraphRAG)는 구축 비용이 큽니다. 대신
+        <b>핵심 개념마다 1장의 "지식 카드"</b>를 만들고, 카드의 frontmatter에
+        "이 개념은 RFC 2328이 정의하고(defined_by), CCIE 4장에서 가르치고(taught_in),
+        다산 L3 매뉴얼에 문서화된다(documented_in)"는 <b>검증된 관계</b>를 기록 —
+        검색이 카드를 찾으면 관계를 따라 세 계층을 한 번에 끌어옵니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>25 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 26 : Phase 7-2 스키마 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 7 — 온톨로지 증강 (2/5)</div>
+  <h2>카드 스키마 — 엔티티 8종 · 관계 타입 사전</h2>
+  <p class="sub"><code>input_ontology/schema/</code>의 YAML 두 장이 전체 온톨로지의 문법을 정의합니다. 카드는 이 스키마를 따라야만 인덱스에 들어갑니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1.05fr; gap:16px; align-content:start;">
+    <div class="card" style="padding:12px 18px;">
+      <h3 style="margin-bottom:6px;">🏷️ entity_types.yaml — 8종</h3>
+      <table class="tbl" style="font-size:12.5px;">
+        <tr><th>타입 (id 접두사)</th><th>예시</th></tr>
+        <tr><td>Protocol <code>proto:</code></td><td>proto:ospf, proto:bgp</td></tr>
+        <tr><td>RFC <code>rfc:</code></td><td>rfc:2328 (코퍼스와 1:1)</td></tr>
+        <tr><td>Concept <code>concept:</code></td><td>concept:ospf-area (parent_protocol 필수)</td></tr>
+        <tr><td>Feature <code>feat:</code></td><td>feat:dot1q-tunnel</td></tr>
+        <tr><td>Command <code>cmd:</code></td><td>2차 확장 예정 (현재 미생성)</td></tr>
+        <tr><td>Vendor <code>vendor:</code></td><td>vendor:dasan, vendor:ubiquoss</td></tr>
+        <tr><td>DeviceModel <code>model:</code></td><td>model:dasan-v3024v</td></tr>
+        <tr><td>Standard <code>std:</code></td><td>std:ieee-802.1q, ITU-T G.984</td></tr>
+      </table>
+      <p style="font-size:12.5px; margin-top:8px; color:var(--muted);">우선순위 계층: tier1(Protocol/RFC/Concept) → tier2(Feature/Vendor/Model) → tier3(Command/Standard)</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card">
+        <h3>🔗 relation_types.yaml — 관계 사전</h3>
+        <p style="font-size:13.5px;"><code>defined_by/defines</code> · <code>obsoletes/updates</code>(RFC 체인) ·
+        <code>extends</code> · <code>part_of</code> · <code>implements</code> · <code>configures</code> ·
+        <code>references</code> · <b><code>taught_in</code> · <code>documented_in</code></b>(→ 실제 문서 경로!) ·
+        <code>related_to</code> · <code>depends_on</code> · <code>alias_of</code> 등.
+        각 관계에 domain/range 제약과 검증 규칙(obsoletes는 비순환 DAG 등)이 명시되어 있습니다.</p>
+      </div>
+      <div class="card">
+        <h3>📖 alias_dictionary.yaml — 별칭 사전</h3>
+        <p>"스패닝트리" = "STP" = "Spanning Tree Protocol"을 하나의 canonical ID로 통합.
+        한/영 혼용 질의가 어떤 표기를 쓰든 같은 카드에 도달하게 하는 장치입니다.</p>
+      </div>
+      <div class="card">
+        <h3>🤝 출처 추적</h3>
+        <p>모든 카드·관계에 <code>source: human | llm | llm-reviewed</code>와 <code>confidence</code>가 기록됩니다.
+        핵심 관계(defined_by 등)는 <b>인간 검수 필수</b>로 지정 — 환각이 지식 그래프에 스며드는 것을 막는 정책입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>26 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 27 : Phase 7-3 카드 실물 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 7 — 온톨로지 증강 (3/5)</div>
+  <h2>카드 실물 — proto-ospf.md frontmatter 해부</h2>
+  <p class="sub">카드 68장 중 한 장. YAML frontmatter가 "관계 데이터", Markdown 본문이 "검색되는 텍스트" 역할을 동시에 합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.1fr 1fr; gap:16px; align-content:start;">
+    <div class="codebox" style="font-size:11.5px; line-height:1.55;">---
+<span class="k">id:</span> proto:ospf                <span class="c"># canonical ID</span>
+<span class="k">type:</span> Protocol                <span class="c"># 8종 중 하나</span>
+<span class="k">name_en:</span> OSPF
+<span class="k">name_ko:</span> 개방형 최단 경로 우선 (OSPFv2)
+<span class="k">aliases:</span> [OSPFv2, Open Shortest Path First]
+<span class="k">layer:</span> L3   <span class="k">family:</span> IGP   <span class="k">status:</span> active
+<span class="k">defined_by:</span> [rfc:2328]        <span class="c"># → 표준 계층</span>
+<span class="k">related:</span> [proto:ospfv3, proto:isis,
+  concept:ospf-lsa, concept:ospf-area, ...]
+<span class="k">references:</span> [rfc:1583, rfc:2178, rfc:3101]
+<span class="k">taught_in:</span>                    <span class="c"># → 이론 계층</span>
+  - <span class="s">"Cisco_CCIE/CCIE_Vol1/04_part-ii-...__sec-03.md"</span>
+  - <span class="s">"Cisco_CCIE/CCIE_Vol1/05_part-iii-...__sec-04.md"</span>
+<span class="k">documented_in:</span>                <span class="c"># → 실무 계층</span>
+  - <span class="s">"가입자망장비_manual/다산_L3"</span>
+  - <span class="s">"가입자망장비_manual/유비쿼스_L3"</span>
+<span class="k">vendors_supporting:</span> [vendor:cisco, vendor:dasan, ...]
+<span class="k">keywords_en:</span> [LSA, area, ABR, ASBR, hello, DR, BDR, SPF, ...]
+<span class="k">keywords_ko:</span> [영역, 인접관계, 헬로, 링크 상태, ...]
+<span class="k">confidence:</span> 1.0   <span class="k">source:</span> human
+---</div>
+    <div style="display:flex; flex-direction:column; gap:11px;">
+      <div class="term"><b>defined_by / taught_in / documented_in</b>
+        <p>3계층을 잇는 핵심 트리오. taught_in은 <b>파일 단위 경로</b>(주입 가능), documented_in은 <b>디렉토리 힌트</b>(방향 안내)로 구분 활용됩니다.</p></div>
+      <div class="term"><b>keywords_en / keywords_ko</b>
+        <p>카드 자체가 검색 잘 되게 하는 미끼. "헬로", "ABR" 같은 단어로 질의해도 BM25가 카드를 낚아 올립니다.</p></div>
+      <div class="term"><b>본문 (frontmatter 아래)</b>
+        <p>개요 · RFC 폐기 체인(1247→1583→2178→<b>2328</b>) · 벤더별 명령어 매핑 표 · "검색 힌트(RAG용)" 섹션까지 — 본문도 임베딩되어 시맨틱 검색의 대상이 됩니다.</p></div>
+      <div class="term"><b>구성 (저장소 실측)</b>
+        <p>protocols 18 · concepts 15 · rfcs 15 · standards 3 · features 7 · vendors 2 · devices 8 = 총 68장의 보조 코퍼스.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>27 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 28 : Phase 7-4 메커니즘 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 7 — 온톨로지 증강 (4/5)</div>
+  <h2>검색 메커니즘 4단계 — ontology_aug.py의 실제 로직</h2>
+  <p class="sub"><code>mdrag search "OSPF area 설정" --mode ontology</code> 실행 시 <code>OntologyAugmentedSearch.search()</code> 내부:</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🔍🔍</div><b>1. Dual 검색</b>
+        <span>main 코퍼스(51만 청크)와<br>onto 코퍼스(카드 68장)를<br>각각 하이브리드 검색<br>(각 fetch_k = top_k×3)</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">🔀</div><b>2. RRF union</b>
+        <span><code>_rrf_union()</code>:<br>양쪽을 1/(60+rank)로<br>합산해 단일 순위 통합</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">🧭</div><b>3. 참조 경로 주입</b>
+        <span>카드 hit 상위 <b>3장</b>의<br>onto_refs.json 매핑을 따라<br>main store에서 경로당<br><b>1청크</b>씩 조회·주입</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent4);">
+        <div class="ic">🏷️</div><b>4. origin 태깅</b>
+        <span><code>[ONTO CARD]</code> 카드 자체<br><code>[INJECTED via 카드]</code> 주입<br>무표시 = main 직접 hit<br>(<code>explain()</code>으로 추적 가능)</span>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>⚖️ 주입 청크의 점수 설계</h3>
+        <p>주입 청크는 <code>inject_score_boost = 1/(60+1)</code> — RRF 1위 점수와 같은 자릿수의 작은 값을 받아
+        <b>top_k 안에는 들어오되 직접 hit을 절대 추월하지 않습니다</b>.
+        상위 카드일수록 미세하게 높게(−1%씩), 중복 청크·이미 등장한 문서는 주입 제외.</p>
+      </div>
+      <div class="card">
+        <h3>💡 "지식 그래프 라이트"인 이유</h3>
+        <p>그래프 DB도, 그래프 탐색 엔진도 없습니다. <b>카드 68장 + JSON 매핑 1개 + 주입 로직 300줄</b>이 전부 —
+        그런데 GraphRAG의 핵심 효용(관계 기반 확장)을 얻어 CCIE Hit@5를 60→100%로 끌어올렸습니다.
+        실패 케이스에 정확히 조준된 최소 구현의 힘입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>28 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 29 : Phase 7-5 빌드 ════ -->
+<section class="slide">
+  <div class="kicker">④ Phase 7 — 온톨로지 증강 (5/5)</div>
+  <h2>빌드 파이프라인 — 카드에서 검색 가능한 산출물까지</h2>
+  <p class="sub">카드를 추가/수정하면 4단계 스크립트로 재빌드합니다. 산출물은 모두 <code>data/ontology/</code>에 누적됩니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.05fr 1fr; gap:16px; align-content:start;">
+    <div class="codebox" style="font-size:12px;"><span class="c"># ① 보조 코퍼스 인덱싱 (Chroma + BM25)</span>
+python scripts/<span class="g">reindex_optimized.py</span> --input input_ontology
+  --chroma-path data/chroma_ontology
+  --collection markdown_docs_ontology
+  --bm25-path data/bm25_ontology
+
+<span class="c"># ② frontmatter → 참조 매핑 재생성</span>
+python scripts/<span class="g">build_ontology_refs.py</span>
+  → data/ontology/onto_refs.json  <span class="y">(매핑 104건)</span>
+
+<span class="c"># ③ (선택) 결정론적 후보 추출 — 정규식+별칭사전</span>
+python scripts/<span class="g">extract_onto_candidates.py</span>
+  → chunk_enrichment.jsonl.gz
+    <span class="y">515,043 청크 전수 스캔 (약 2분)</span>
+    <span class="y">332,362 청크에 onto 후보 부여 (64.5%)</span>
+
+<span class="c"># ④ 회귀 검증</span>
+python scripts/<span class="g">validate_rag.py</span> --ontology-mode ontology</div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="padding:14px 18px;">
+        <h3 style="margin-bottom:6px;">📦 data/ontology/ 산출물</h3>
+        <table class="tbl" style="font-size:12.5px;">
+          <tr><th>파일</th><th>내용</th></tr>
+          <tr><td><code>onto_refs.json</code></td><td>카드 → 주입 가능 경로/디렉토리 힌트 (검색 시 로드)</td></tr>
+          <tr><td><code>index.json</code></td><td>엔티티 ID → 카드 파일 역인덱스</td></tr>
+          <tr><td><code>alias_index.json</code></td><td>별칭 → canonical ID 역인덱스</td></tr>
+          <tr><td><code>chunk_enrichment.jsonl.gz</code></td><td>515K 청크의 onto 후보 태깅 (계층: standard 48.5만 / implementation 2.4만 / theory 5천)</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>🔄 운영 사이클</h3>
+        <p>검증에서 실패한 질문 유형 발견 → 해당 개념의 카드 작성/보강 → ①②로 재빌드 → ④로 효과 측정.
+        <b>코드 수정 없이 카드(데이터)만으로 검색 품질을 개선</b>할 수 있는 운영 루프가 핵심 —
+        지식 관리가 곧 성능 튜닝이 됩니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>29 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 30 : 성능 검증 ════ -->
+<section class="slide">
+  <div class="kicker">⑤ 검증과 운영</div>
+  <h2>성능 검증 체계 — validate_rag.py가 측정하는 것</h2>
+  <p class="sub">모든 Phase는 동일한 100건 데이터셋으로 회귀 측정되었습니다. "느낌상 좋아졌다"는 이 프로젝트에 존재하지 않습니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1.2fr; align-content:start;">
+      <div class="card">
+        <h3>🧪 데이터셋 &amp; 지표</h3>
+        <p style="margin-bottom:8px;"><code>scripts/validation_dataset.json</code> — 테스트 케이스 100건. 각 케이스:</p>
+        <div class="codebox" style="font-size:12px;">{ <span class="s">"query"</span>: <span class="s">"OSPF area 설정 방법"</span>,
+  <span class="s">"expected_path_contains"</span>: <span class="s">"..."</span>,  <span class="c"># 정답 문서</span>
+  <span class="s">"expected_keywords"</span>: [...],
+  <span class="s">"category"</span>: <span class="s">"ccie"</span> }</div>
+        <p style="margin-top:8px;">측정: <b>Hit@1/3/5</b>(정답 경로 포함 여부) · <b>Keyword Match</b>(상위 3개에 기대 키워드) ·
+        <b>MRR</b>(정답의 역순위 평균) · 응답 시간(ms).
+        <b>Passed = Hit@5 ∧ Keyword Match</b> — 카테고리별 집계까지 자동 산출.</p>
+      </div>
+      <div class="card" style="padding:14px 18px;">
+        <h3 style="margin-bottom:6px;">📊 baseline(hybrid) vs ontology 모드</h3>
+        <table class="tbl" style="font-size:13.5px;">
+          <tr><th>지표</th><th>baseline</th><th>ontology</th><th>Δ</th></tr>
+          <tr><td>Passed (100건)</td><td>86</td><td><b>98</b></td><td class="up">+12</td></tr>
+          <tr><td>Hit@5 — 전체</td><td>88%</td><td><b>100%</b></td><td class="up">+12%p</td></tr>
+          <tr><td><b>Hit@5 — CCIE</b></td><td>18/30 (60%)</td><td><b>30/30 (100%)</b></td><td class="up">+40%p</td></tr>
+          <tr><td>MRR</td><td>0.856</td><td><b>0.893</b></td><td class="up">+0.037</td></tr>
+          <tr><td>평균 응답</td><td>1,538ms</td><td>1,893ms</td><td style="color:var(--accent3)">+355ms</td></tr>
+        </table>
+        <p style="font-size:13px; margin-top:8px; color:var(--muted);">+355ms는 이중 코퍼스 검색+주입의 비용 — 정확도 +12%p와의 명시적 트레이드오프로 채택.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px; border-color: rgba(88,166,255,.4);">
+      <p style="font-size:14.5px;"><b style="color:var(--accent)">운영 흔적:</b> scripts/에는 alpha 0.3~0.7 스윕, bm25s 전환 전후, ablation(<code>validate_rag_ablation.py</code>) 등
+      <b>수십 개의 validation_results_*.json이 날짜와 함께 보존</b>되어 있습니다 — 모든 의사결정의 측정 근거가 파일로 남아 있는 셈입니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>30 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 31 : 품질 운영 ════ -->
+<section class="slide">
+  <div class="kicker">⑤ 검증과 운영</div>
+  <h2>품질 운영 — 검색 품질만큼 코드 품질도 측정한다</h2>
+  <p class="sub">RAG 시스템은 실험 코드로 시작해 스파게티가 되기 쉽습니다. 이 프로젝트가 그 함정을 피한 장치들입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>✅ 테스트 443개 · 커버리지 100%</h3>
+      <p>chunker의 경계 케이스(원자 블록, 중첩), RRF 결합 수식, 쿼리 필터 분기, LLM 백엔드 폴백까지
+      <b>모듈별 테스트 디렉토리</b>가 src 구조를 미러링합니다.
+      커버리지 100%는 "모든 줄이 최소 한 번은 실행돼 봤다"는 회귀 안전망입니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>🧹 ruff + 타입 힌트</h3>
+      <p><code>ruff check src/ tests/</code>로 린트 일관성 유지.
+      전 함수에 타입 힌트와 docstring(Args/Returns) — 코드 자체가 문서 역할을 하며,
+      <code>@runtime_checkable Protocol</code>로 인터페이스 계약도 타입 수준에서 강제합니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3>🔁 회귀 테스트 문화</h3>
+      <p>① 기능 변경 → pytest 443개 통과 ② 검색 로직 변경 → validate_rag.py 100건 재측정
+      ③ 결과 JSON을 타임스탬프와 함께 보존.
+      "LLM 백엔드 EXAONE 전환" 같은 큰 변경도 <b>사전 회귀 테스트 12건 수정</b>과 함께 커밋된 이력이 남아 있습니다.</p>
+    </div>
+    <div class="card" style="grid-column: span 3; border-color: rgba(63,185,80,.4);">
+      <h3 style="color:var(--accent2)">🎓 초심자를 위한 교훈</h3>
+      <p style="font-size:15px;">RAG 프로젝트의 품질은 두 축으로 측정됩니다 — <b>검색 품질</b>(Hit@K/MRR, validation dataset)과 <b>코드 품질</b>(테스트/커버리지/린트).
+      한쪽만 있으면 "정확하지만 고칠 수 없는 시스템" 또는 "깨끗하지만 못 찾는 시스템"이 됩니다. 이 프로젝트는 둘 다 숫자로 관리합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>31 / 32</span></div>
+</section>
+
+<!-- ════ SLIDE 32 : 마무리 ════ -->
+<section class="slide">
+  <div class="kicker">SUMMARY</div>
+  <h2>종합 복습 — "한 질문의 여정" 전체 경로</h2>
+  <p class="sub"><code>mdrag ask "OSPF area 설정 방법" --mode ontology --llm-backend local</code> 한 줄이 통과하는 모든 모듈:</p>
+  <div class="body">
+    <div class="codebox" style="font-size:12px; margin-bottom:14px;">cli/ask_cmd ─→ builder.build_search_engine(<span class="y">"ontology"</span>) ─→ RAGEngine.ask()
+  │
+  ├─ <span class="g">검색</span>: QueryAnalyzer 자동필터 → LocalEmbedding(<span class="s">"query: ..."</span>) ─┬→ main ChromaStore + BM25(kiwi 형태소)
+  │                                                              └→ onto ChromaStore + onto BM25
+  │        → HybridSearch RRF(α=0.7) ×2 → _rrf_union → 카드 hit 3장 → onto_refs.json 따라 청크 주입
+  │
+  ├─ <span class="g">조립</span>: _build_context() — "## Source: 경로 &gt; 헤더계층" + 청크 5개 + origin 태그
+  │
+  └─ <span class="g">생성</span>: LocalLLM(EXAONE 4.0 GGUF, Jinja 템플릿, temp 0.1) → 근거 인용 답변 + Sources</div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="card" style="border-top:3px solid var(--accent2);">
+        <h3 style="color:var(--accent2)">🧱 구조의 교훈</h3>
+        <p>추상화(base/Protocol) + 팩토리(builder) 덕분에 검색 전략 4종과 백엔드 2×2 조합이
+        <b>호출부 수정 없이</b> 공존합니다. 좋은 구조가 Phase 7번의 진화를 가능하게 했습니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3 style="color:var(--accent)">🔬 측정의 교훈</h3>
+        <p>100건 데이터셋 + Hit@K/MRR이 없었다면 "CCIE 60% 정체"라는 문제 정의 자체가 불가능했습니다.
+        측정이 문제를 보이게 하고, 문제가 해법(온톨로지)을 부릅니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent4);">
+        <h3 style="color:var(--accent4)">🔜 Part 3 예고</h3>
+        <p>이 구조 위에 올릴 다음 기술들 — GraphRAG 확장, Contextual Retrieval, Self-RAG/Agentic RAG,
+        RAGAS 답변 품질 평가를 다룹니다.</p>
+        <p style="margin-top:8px;"><a href="index.html" style="color:var(--accent); text-decoration:none;">← 목차(index.html)로 돌아가기</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 완전 해부</span><span>32 / 32</span></div>
+</section>
+
+</div></div>
+
+<div id="nav">
+  <button id="prev" title="이전 (←)">◀</button>
+  <span id="pageinfo">1 / 32</span>
+  <button id="next" title="다음 (→ 또는 Space)">▶</button>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  const info = document.getElementById('pageinfo');
+  function show(i){
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    info.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  document.getElementById('prev').onclick = () => show(idx - 1);
+  document.getElementById('next').onclick = () => show(idx + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(idx + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(idx - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  // click right/left half to navigate
+  document.getElementById('stage').addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;
+    const r = document.getElementById('stage').getBoundingClientRect();
+    (e.clientX - r.left) > r.width / 2 ? show(idx + 1) : show(idx - 1);
+  });
+  // scale 1280x720 stage to fit viewport (16:9 preserved)
+  function fit(){
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.97;
+    document.getElementById('stage').style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+  show(0);
+})();
+</script>
+</body>
+</html>

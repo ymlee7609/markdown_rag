@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PART 1 — RAG 기초 완전 정복</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel2: #1c2331;
+    --border: #2d3748;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d29922;
+    --accent4: #bc8cff;
+    --accent5: #ff7b72;
+    --radius: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #05070a; font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--text); overflow: hidden; }
+
+  #stage-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1280px; height: 720px; position: relative; transform-origin: center center; }
+
+  .slide {
+    position: absolute; inset: 0; width: 1280px; height: 720px;
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 52px 64px 64px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(88,166,255,.08), transparent),
+                      radial-gradient(ellipse 700px 400px at 0% 110%, rgba(63,185,80,.05), transparent);
+  }
+  .slide.active { display: flex; }
+
+  /* slide header */
+  .kicker { font-size: 14px; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-size: 54px; line-height: 1.25; font-weight: 800; }
+  h2 { font-size: 36px; font-weight: 800; margin-bottom: 6px; }
+  .sub { font-size: 17px; color: var(--muted); margin-bottom: 26px; line-height: 1.55; }
+  .body { flex: 1; min-height: 0; }
+
+  /* generic cards */
+  .grid { display: grid; gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .card h3 { font-size: 19px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card p, .card li { font-size: 14.5px; line-height: 1.6; color: #c4cdd6; }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 99px; margin-right: 6px; vertical-align: 2px; }
+  .tag.blue   { background: rgba(88,166,255,.15);  color: var(--accent);  border: 1px solid rgba(88,166,255,.4); }
+  .tag.green  { background: rgba(63,185,80,.15);   color: var(--accent2); border: 1px solid rgba(63,185,80,.4); }
+  .tag.gold   { background: rgba(210,153,34,.15);  color: var(--accent3); border: 1px solid rgba(210,153,34,.4); }
+  .tag.purple { background: rgba(188,140,255,.15); color: var(--accent4); border: 1px solid rgba(188,140,255,.4); }
+  .tag.red    { background: rgba(255,123,114,.15); color: var(--accent5); border: 1px solid rgba(255,123,114,.4); }
+
+  code, .mono { font-family: "JetBrains Mono", "D2Coding", Consolas, monospace; }
+  code { background: rgba(110,118,129,.18); padding: 1px 6px; border-radius: 5px; font-size: .92em; color: #9ecbff; }
+
+  /* flow diagram */
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow .step {
+    flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 14px; text-align: center; position: relative;
+  }
+  .flow .step .ic { font-size: 30px; margin-bottom: 8px; }
+  .flow .step b { display: block; font-size: 16px; margin-bottom: 5px; }
+  .flow .step span { font-size: 12.5px; color: var(--muted); line-height: 1.5; display: block; }
+  .flow .arr { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-size: 24px; font-weight: 800; }
+
+  /* footer */
+  .foot {
+    position: absolute; bottom: 22px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; font-size: 12px; color: #4d5662;
+  }
+
+  /* nav UI */
+  #nav {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: center; z-index: 50;
+    background: rgba(13,17,23,.85); border: 1px solid var(--border); border-radius: 99px;
+    padding: 6px 14px; backdrop-filter: blur(6px);
+  }
+  #nav button { background: none; border: none; color: var(--text); font-size: 17px; cursor: pointer; padding: 2px 8px; }
+  #nav button:hover { color: var(--accent); }
+  #pageinfo { font-size: 13px; color: var(--muted); min-width: 64px; text-align: center; }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.tbl th, table.tbl td { padding: 9px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+  table.tbl th { color: var(--muted); font-size: 13px; font-weight: 700; background: rgba(255,255,255,.02); }
+  table.tbl td:first-child, table.tbl th:first-child { text-align: left; }
+  .up { color: var(--accent2); font-weight: 800; }
+
+  .big-num { font-size: 44px; font-weight: 800; line-height: 1.1; }
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .term { border-left: 3px solid var(--accent); padding-left: 14px; }
+  .term b { font-size: 16px; }
+  .term p { font-size: 13.5px; color: #c4cdd6; line-height: 1.55; margin-top: 3px; }
+
+  /* project foreshadowing box */
+  .proj {
+    border: 1px solid rgba(63,185,80,.45); border-radius: 10px;
+    background: linear-gradient(180deg, rgba(63,185,80,.07), rgba(63,185,80,.02));
+    padding: 10px 16px; font-size: 13.5px; line-height: 1.6; color: #c4cdd6;
+  }
+  .proj b.lbl { color: var(--accent2); font-size: 12.5px; letter-spacing: 1px; }
+
+  .home-link {
+    position: absolute; top: 26px; right: 36px; font-size: 13px; color: var(--muted);
+    text-decoration: none; border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px;
+    background: rgba(22,27,34,.7);
+  }
+  .home-link:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage-wrap"><div id="stage">
+
+<!-- ════════ SLIDE 1 : 표지 ════════ -->
+<section class="slide active">
+  <a class="home-link" href="index.html">← 목차로</a>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="kicker">RAG DEEP-DIVE SERIES · PART 1 / 16:9</div>
+    <h1>PART 1: RAG 기초 완전 정복<br><span style="color:var(--accent)">LLM의 원리부터 검색 증강 생성까지</span></h1>
+    <p style="font-size:20px; color:var(--muted); margin-top:22px; line-height:1.6;">
+      비전공자도 끝까지 따라올 수 있는 상세 입문편 —
+      <b style="color:var(--text)">LLM은 왜 거짓말을 하는가</b>에서 출발해,
+      인덱싱·임베딩·벡터 DB·하이브리드 검색·평가 지표까지 모든 개념을 비유와 함께 설명합니다.
+    </p>
+    <div class="pill-row" style="margin-top:34px;">
+      <span class="tag blue" style="font-size:13px; padding:6px 14px;">① LLM의 이해</span>
+      <span class="tag green" style="font-size:13px; padding:6px 14px;">② RAG의 탄생</span>
+      <span class="tag gold" style="font-size:13px; padding:6px 14px;">③ 인덱싱 깊이 보기</span>
+      <span class="tag purple" style="font-size:13px; padding:6px 14px;">④ 검색과 생성 깊이 보기</span>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>1 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 2 : 목차 ════════ -->
+<section class="slide">
+  <div class="kicker">CONTENTS</div>
+  <h2>이 파트에서 배우는 것 — 4개의 챕터</h2>
+  <p class="sub">"왜 RAG가 필요한가"를 이해하려면 먼저 LLM의 작동 원리를 알아야 합니다. 원인(챕터 1) → 해법(챕터 2) → 해법의 내부(챕터 3·4) 순서로 진행합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3><span class="tag blue">챕터 1</span> LLM의 이해</h3>
+      <p>LLM은 "다음 단어 예측 기계"라는 본질, 토큰이라는 글 읽기 단위,
+      확률로 단어를 고르는 과정, 그리고 그 구조에서 필연적으로 생기는
+      <b>환각(거짓말)</b>과 <b>지식의 한계</b>를 살펴봅니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3><span class="tag green">챕터 2</span> RAG의 탄생</h3>
+      <p>LLM의 한계를 푸는 세 가지 후보(문서 전부 넣기 / 파인튜닝 / RAG)를 비교하고,
+      RAG가 왜 표준 해법이 되었는지 — <b>"오픈북 시험"</b> 비유로
+      RAG의 정의와 전체 구조(3단계 파이프라인)를 익힙니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3><span class="tag gold">챕터 3</span> 인덱싱 깊이 보기</h3>
+      <p>문서를 "검색 가능한 도서관"으로 만드는 사전 작업 —
+      파싱, <b>청킹</b>(문서 자르기)의 전략들, <b>임베딩</b>(의미를 숫자로),
+      코사인 유사도, 그리고 <b>벡터 DB</b>가 빠른 이유(ANN·HNSW)까지 파헤칩니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4);">
+      <h3><span class="tag purple">챕터 4</span> 검색과 생성 깊이 보기</h3>
+      <p>질문이 들어온 순간부터 답이 나오기까지 — Top-K 검색, <b>BM25 키워드 검색</b>,
+      하이브리드 결합(RRF), 프롬프트 조립, 컨텍스트 윈도우와 비용,
+      RAG의 4대 실패 모드, 그리고 <b>Hit@K·MRR</b>로 품질을 측정하는 법을 배웁니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>2 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 3 : LLM이란 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 1 — LLM의 이해</div>
+  <h2>LLM이란 무엇인가 — "다음 단어 예측 기계"</h2>
+  <p class="sub">ChatGPT 같은 LLM(Large Language Model, 대규모 언어 모델)의 본질은 의외로 단순합니다. <b>"지금까지의 글 다음에 올 단어를 맞히는 기계"</b>입니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px;">
+      <h3>🔮 핸드폰 자동완성의 초거대 버전</h3>
+      <p style="font-size:15px;">문자를 칠 때 "오늘 저녁에" 까지 입력하면 키보드가 "뭐 먹을까", "만나자"를 추천하죠.
+      LLM은 이 자동완성을 <b>인터넷 전체 분량의 글로 훈련시켜 극단적으로 키운 것</b>입니다.
+      "대한민국의 수도는" 다음에 "서울"이 올 확률이 압도적으로 높다는 것을 통계적으로 학습했기 때문에,
+      마치 지식을 "아는 것처럼" 보이는 답을 만들어냅니다.</p>
+    </div>
+    <div class="card">
+      <h3>🔁 자기회귀(Autoregressive) 생성 — 한 단어씩 이어 붙이기</h3>
+      <p style="margin-bottom:10px;">긴 답변도 한 번에 만들어지지 않습니다. <b>방금 자기가 만든 단어를 다시 입력에 붙여서, 그다음 단어를 또 예측</b>하는 일을 수백 번 반복합니다. 이를 자기회귀 생성이라고 부릅니다.</p>
+      <div class="flow">
+        <div class="step"><div class="ic">💬</div><b>입력</b><span>"OSPF는"</span></div>
+        <div class="arr">→</div>
+        <div class="step"><div class="ic">🎯</div><b>예측 1</b><span>"링크" 선택<br>→ "OSPF는 링크"</span></div>
+        <div class="arr">→</div>
+        <div class="step"><div class="ic">🎯</div><b>예측 2</b><span>"상태" 선택<br>→ "OSPF는 링크 상태"</span></div>
+        <div class="arr">→</div>
+        <div class="step"><div class="ic">🎯</div><b>예측 3</b><span>"라우팅" 선택<br>→ "...링크 상태 라우팅"</span></div>
+        <div class="arr">→</div>
+        <div class="step"><div class="ic">🏁</div><b>반복</b><span>종료 신호가 나올 때까지<br>같은 과정을 계속</span></div>
+      </div>
+      <p style="margin-top:10px; color:var(--muted);">즉 LLM은 글의 "의미를 이해해서 답하는 기계"가 아니라, <b>"다음에 올 말로 가장 그럴듯한 것을 계속 고르는 기계"</b>입니다. 이 사실이 뒤에서 다룰 환각 문제의 출발점입니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>3 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 4 : 토큰 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 1 — LLM의 이해</div>
+  <h2>토큰(Token) — LLM이 글을 읽고 쓰는 최소 단위</h2>
+  <p class="sub">LLM은 글자나 단어가 아니라 <b>"토큰"</b>이라는 조각 단위로 글을 처리합니다. 레고 블록처럼, 모든 문장은 토큰 블록의 조합입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.1fr 1fr; margin-bottom:16px;">
+      <div class="card">
+        <h3>🧱 "안녕하세요"는 몇 토큰일까?</h3>
+        <p style="margin-bottom:10px;">토큰은 자주 함께 등장하는 글자 묶음입니다. 모델마다 다르지만 예를 들면 이렇게 쪼개집니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:14px 16px; font-size:15px; line-height:2;" class="mono">
+          "안녕하세요" → <span class="tag blue">안녕</span><span class="tag green">하세</span><span class="tag gold">요</span> <span style="color:var(--muted)">(3토큰)</span><br>
+          "Hello" → <span class="tag blue">Hello</span> <span style="color:var(--muted)">(1토큰)</span>
+        </div>
+        <p style="margin-top:10px; color:var(--muted);">영어는 학습 데이터가 많아 긴 단어도 1토큰으로 묶이는 반면, 한국어는 같은 의미라도 <b>더 많은 토큰</b>으로 쪼개지는 경향이 있습니다. 같은 내용이면 한국어가 비용(토큰 수)이 더 드는 이유입니다.</p>
+      </div>
+      <div class="card">
+        <h3>💡 왜 토큰이 중요한가</h3>
+        <ul style="line-height:1.8;">
+          <li><b>비용 단위</b> — LLM API 요금은 토큰 수로 계산됩니다.</li>
+          <li><b>길이 제한 단위</b> — 한 번에 읽을 수 있는 분량(컨텍스트 윈도우)도 토큰으로 잽니다.</li>
+          <li><b>예측 단위</b> — 앞 슬라이드의 "다음 단어 예측"도 정확히는 <b>"다음 토큰 예측"</b>입니다.</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">대략 한국어 1글자 ≈ 1~2토큰, 영어 1단어 ≈ 1~2토큰으로 감을 잡으면 됩니다.</p>
+      </div>
+    </div>
+    <div class="proj"><b class="lbl">▶ markdown_rag 미리보기</b> — 이 프로젝트의 로컬 LLM(EXAONE 4.0 1.2B)은 컨텍스트 4,096토큰, 답변 최대 1,024토큰으로 설정되어 있습니다. "검색된 문서를 몇 개나 넣을 수 있는가"가 모두 이 토큰 예산 안에서 결정됩니다.</div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>4 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 5 : 확률 분포와 temperature ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 1 — LLM의 이해</div>
+  <h2>LLM이 답을 만드는 과정 — 확률에서 단어를 고른다</h2>
+  <p class="sub">매 순간 LLM은 "다음 토큰 후보 전체"에 확률 점수를 매긴 뒤, 그중 하나를 <b>뽑습니다</b>. 항상 1등만 뽑는 게 아니라는 점이 핵심입니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px;">
+      <h3>🎰 "대한민국의 수도는 ___" 의 확률 분포</h3>
+      <div style="display:flex; gap:24px; align-items:center; margin-top:8px;">
+        <div style="flex:1.2;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:7px;"><span class="mono" style="width:70px; font-size:14px;">서울</span><div style="height:18px; width:78%; background:linear-gradient(90deg, var(--accent2), rgba(63,185,80,.4)); border-radius:5px;"></div><span style="font-size:13px; color:var(--accent2); font-weight:700;">92%</span></div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:7px;"><span class="mono" style="width:70px; font-size:14px;">어디</span><div style="height:18px; width:5%; background:rgba(139,148,158,.5); border-radius:5px;"></div><span style="font-size:13px; color:var(--muted);">4%</span></div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:7px;"><span class="mono" style="width:70px; font-size:14px;">한강</span><div style="height:18px; width:3%; background:rgba(139,148,158,.5); border-radius:5px;"></div><span style="font-size:13px; color:var(--muted);">2%</span></div>
+          <div style="display:flex; align-items:center; gap:10px;"><span class="mono" style="width:70px; font-size:14px;">부산</span><div style="height:18px; width:2%; background:rgba(255,123,114,.5); border-radius:5px;"></div><span style="font-size:13px; color:var(--accent5);">1%</span></div>
+        </div>
+        <div style="flex:1; font-size:14px; line-height:1.65; color:#c4cdd6;">
+          모델은 이런 확률표를 만든 뒤 <b>주사위를 굴려</b> 하나를 고릅니다.
+          확률이 높을수록 뽑힐 가능성이 크지만, 낮은 확률의 단어도 가끔 뽑힙니다 —
+          같은 질문에 매번 조금씩 다른 답이 나오는 이유입니다.
+        </div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3>🧊 Temperature 낮음 (0에 가까움)</h3>
+        <p>"가장 확률 높은 것만 골라" — 답이 일관되고 보수적입니다.
+        사실 확인, 기술 문서 Q&amp;A처럼 <b>정확성이 중요한 작업</b>에 적합합니다. RAG에서도 보통 낮게 둡니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent5);">
+        <h3>🔥 Temperature 높음 (1 이상)</h3>
+        <p>"낮은 확률 후보에게도 기회를 줘" — 답이 다양하고 창의적이지만 <b>엉뚱한 방향으로 샐 위험</b>도 커집니다.
+        브레인스토밍, 창작에 적합합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>5 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 6 : 환각 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 1 — LLM의 이해</div>
+  <h2>환각(Hallucination) — LLM은 왜 거짓말을 하는가</h2>
+  <p class="sub">환각은 버그가 아니라 <b>구조의 필연</b>입니다. LLM은 "데이터베이스 조회"를 하는 게 아니라 "그럴듯한 문장 생성"을 하기 때문입니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px; border-color: rgba(255,123,114,.45);">
+      <h3 style="color:var(--accent5)">⚠️ 실제 실패 사례 — 존재하지 않는 RFC 조항</h3>
+      <div style="display:flex; gap:18px; margin-top:6px;">
+        <div style="flex:1; background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.65;">
+          <b style="color:var(--accent)">질문:</b> "RFC 2328의 7.3절에서 정의한 Hello 패킷 재전송 간격은?"<br>
+          <b style="color:var(--accent5)">LLM 답변:</b> "RFC 2328 7.3절에 따르면 재전송 간격은 기본 5초이며..." <span style="color:var(--muted)">(자신만만한 어조)</span>
+        </div>
+        <div style="flex:1; font-size:14px; line-height:1.65; color:#c4cdd6;">
+          그런데 실제 RFC 2328의 7.3절은 <b>전혀 다른 내용</b>이고, 그런 규정 자체가 없습니다.
+          모델은 "RFC + 절 번호 + 네트워크 용어"가 함께 나올 때의 <b>전형적인 문장 패턴</b>을 학습했기에,
+          내용을 모르더라도 형식만은 완벽한 답을 "작문"해 냅니다.
+        </div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🗄️ 데이터베이스 조회가 아니다</h3>
+        <p>DB는 데이터가 없으면 "결과 없음"을 돌려주지만, LLM에는 <b>"모름"이라는 상태가 따로 없습니다.</b>
+        어떤 입력이 와도 다음 토큰의 확률 분포는 항상 만들어지고, 무언가는 반드시 출력됩니다.
+        지식이 없는 영역일수록 그 출력은 "통계적으로 그럴듯한 작문"이 됩니다.</p>
+      </div>
+      <div class="card">
+        <h3>🎭 더 위험한 이유 — 자신감 있는 말투</h3>
+        <p>환각 답변은 정답과 <b>문체가 똑같습니다.</b> 망설임도 없고 출처 형식도 그럴듯해서,
+        해당 분야를 모르는 사람은 구별할 수 없습니다.
+        그래서 "근거 문서를 직접 보여주는" 장치, 즉 RAG가 필요해집니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>6 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 7 : 지식 컷오프 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 1 — LLM의 이해</div>
+  <h2>지식 컷오프와 비공개 문서 — LLM이 "알 수 없는" 두 영역</h2>
+  <p class="sub">환각 외에도 LLM에는 구조적으로 답할 수 없는 정보가 두 종류 있습니다. 둘 다 "학습 데이터에 없었다"는 같은 뿌리에서 나옵니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>📅 지식 컷오프 (Knowledge Cutoff)</h3>
+        <p style="margin-bottom:8px;">LLM은 <b>특정 시점까지 수집된 데이터로 한 번 학습되고 끝</b>납니다. 그 마감 시점을 "지식 컷오프"라고 부릅니다.
+        졸업 후 더 이상 공부하지 않은 학생과 같아서, 컷오프 이후의 일은 전혀 모릅니다.</p>
+        <ul>
+          <li>어제 개정된 사내 보안 정책 → 모름</li>
+          <li>지난달 출시된 장비의 신규 펌웨어 명령어 → 모름</li>
+          <li>최신 표준 문서 개정판 → 모름</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">더 나쁜 건, 모른다고 하지 않고 <b>옛날 정보로 자신 있게 답한다</b>는 점입니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent5);">
+        <h3>🔒 비공개 문서 (학습된 적이 없는 지식)</h3>
+        <p style="margin-bottom:8px;">LLM은 인터넷에 <b>공개된</b> 글로 학습됩니다. 회사 내부망에만 있는 문서는 애초에 학습 대상이 아니었습니다.</p>
+        <ul>
+          <li>사내 위키, 운영 절차서, 장애 보고서</li>
+          <li>특정 벤더 장비의 내부 설정 매뉴얼</li>
+          <li>계약서, 제품 설계 문서 등 기밀 자료</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">"우리 회사 VPN 장비 설정법"을 물으면, 모델은 <b>일반론 + 작문</b>으로 빈칸을 메울 뿐입니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <p style="font-size:15px;"><b style="color:var(--accent)">정리:</b> LLM의 3대 한계 = <b>① 환각</b>(그럴듯한 작문) <b>② 지식 컷오프</b>(최신 정보 부재) <b>③ 비공개 문서 미학습</b>.
+      셋 다 "모델 안의 지식"에 의존하기 때문에 생기는 문제입니다. 그렇다면 <b>지식을 모델 밖에서 공급</b>하면 되지 않을까요? — 다음 챕터의 주제입니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>7 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 8 : 해결책 3가지 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 2 — RAG의 탄생</div>
+  <h2>해결책 후보 3가지 — 무엇이 가장 현실적인가</h2>
+  <p class="sub">"내 문서를 아는 LLM"을 만드는 방법은 크게 세 가지입니다. 각각의 비용과 한계를 비교해 봅시다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:14px;">
+      <table class="tbl">
+        <tr><th>방법</th><th>아이디어</th><th>장점</th><th>치명적 한계</th></tr>
+        <tr>
+          <td><b>① 문서 전부 넣기</b></td>
+          <td>질문할 때마다 프롬프트에<br>문서 전체를 첨부</td>
+          <td>구현이 가장 단순</td>
+          <td style="color:var(--accent5)">컨텍스트 한도 초과(수만 페이지는 불가능),<br>매 질문마다 막대한 토큰 비용·지연</td>
+        </tr>
+        <tr>
+          <td><b>② 파인튜닝</b></td>
+          <td>내 문서로 모델을<br>추가 학습시킴</td>
+          <td>말투·형식·도메인 어휘<br>학습에는 효과적</td>
+          <td style="color:var(--accent5)">GPU 비용 큼, 문서 갱신 때마다 재학습,<br><b>새 지식 주입에는 의외로 부적합</b>(여전히 환각)</td>
+        </tr>
+        <tr>
+          <td><b>③ RAG</b></td>
+          <td>질문과 관련된 부분만<br>검색해서 함께 전달</td>
+          <td class="up">저비용 · 즉시 갱신 ·<br>출처 제시 가능</td>
+          <td>검색 품질이 좋아야 함<br>(그래서 이 자료가 깁니다)</td>
+        </tr>
+      </table>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🤔 파인튜닝이 지식 주입에 약한 이유</h3>
+        <p>파인튜닝은 모델의 <b>"말하는 방식"</b>을 바꾸는 데 강하고, 개별 사실을 정확히 외우게 하는 데는 약합니다.
+        수천 개 문서의 세부 수치를 가중치에 새겨 넣어도 회상이 불완전하고, 문서가 바뀔 때마다 다시 학습해야 합니다.</p>
+      </div>
+      <div class="card">
+        <h3>✅ RAG가 표준이 된 이유</h3>
+        <p>지식을 모델 밖 <b>"검색 가능한 저장소"</b>에 두면 — 문서 갱신은 저장소만 갱신하면 끝이고,
+        답변마다 근거 문서를 보여줄 수 있으며, 모델 교체와 지식 관리가 분리됩니다.
+        "두뇌(모델)와 도서관(지식)의 분리"가 핵심 설계 사상입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>8 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 9 : RAG 정의 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 2 — RAG의 탄생</div>
+  <h2>RAG = Retrieval-Augmented Generation, 검색 증강 생성</h2>
+  <p class="sub">용어를 한 단어씩 풀면 의미가 그대로 보입니다: <b>검색(Retrieval)으로 보강(Augmented)된 생성(Generation)</b>.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:18px;">
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🔍</div><b>Retrieval (검색)</b>
+        <span>질문과 관련된 문서 조각을<br>내 문서 저장소에서 찾아온다</span>
+      </div>
+      <div class="arr">+</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">📎</div><b>Augmented (증강)</b>
+        <span>찾아온 조각을 질문과 함께<br>프롬프트에 "근거 자료"로 첨부한다</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">✍️</div><b>Generation (생성)</b>
+        <span>LLM이 첨부된 자료를 근거로<br>답변을 작성한다</span>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <h3 style="color:var(--accent)">📖 "오픈북 시험" 비유 — RAG를 한 문장으로</h3>
+      <p style="font-size:15px; margin-bottom:8px;">
+        <b>암기 시험(LLM 단독)</b>: 학생이 외운 것만으로 답합니다. 기억이 안 나면 그럴듯하게 지어 씁니다(환각). 교과서가 개정돼도 머릿속은 옛날 그대로입니다(컷오프).</p>
+      <p style="font-size:15px; margin-bottom:8px;">
+        <b>오픈북 시험(RAG)</b>: 책을 펴 놓고 시험을 칩니다. 단, 시험 시간 안에 답하려면 <b>책 전체를 읽을 수 없으니, 색인을 보고 필요한 페이지만 빨리 펴는 능력</b>이 성적을 좌우합니다.</p>
+      <p style="font-size:15px; color:var(--muted);">이 비유에서 — 책을 만들고 색인을 다는 일 = <b>인덱싱</b>, 필요한 페이지를 찾는 일 = <b>검색</b>, 그 페이지를 보고 답안을 쓰는 일 = <b>생성</b>입니다. RAG의 성패는 "학생의 지능"만큼이나 <b>"색인의 품질과 페이지 찾기 실력"</b>에 달려 있습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>9 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 10 : RAG 전체 그림 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 2 — RAG의 탄생</div>
+  <h2>RAG 전체 그림 — 사전 작업과 실시간 작업</h2>
+  <p class="sub">모든 RAG 시스템은 「인덱싱 → 검색 → 생성」 3단계입니다. 단, 인덱싱은 <b>미리 한 번</b>, 검색·생성은 <b>질문마다 매번</b> 실행됩니다.</p>
+  <div class="body">
+    <div style="display:flex; gap:14px; margin-bottom:16px;">
+      <div style="flex:1; border:1px dashed rgba(63,185,80,.5); border-radius:var(--radius); padding:12px;">
+        <div style="font-size:12px; color:var(--accent2); font-weight:700; letter-spacing:2px; margin-bottom:8px;">⏰ 사전 작업 (문서 추가·변경 시 1회)</div>
+        <div class="flow">
+          <div class="step"><div class="ic">📚</div><b>인덱싱</b><span>문서를 청크로 나누고<br>임베딩하여 벡터 DB에 저장<br><b style="color:var(--accent2)">"도서관 만들기"</b></span></div>
+        </div>
+      </div>
+      <div style="flex:2.2; border:1px dashed rgba(88,166,255,.5); border-radius:var(--radius); padding:12px;">
+        <div style="font-size:12px; color:var(--accent); font-weight:700; letter-spacing:2px; margin-bottom:8px;">⚡ 실시간 작업 (질문마다 매번)</div>
+        <div class="flow">
+          <div class="step"><div class="ic">❓</div><b>질문</b><span>"인증은 어떻게<br>동작하나요?"</span></div>
+          <div class="arr">→</div>
+          <div class="step"><div class="ic">🔍</div><b>검색</b><span>관련 청크 Top-K개를<br>벡터 DB에서 찾기<br><b style="color:var(--accent)">"페이지 찾기"</b></span></div>
+          <div class="arr">→</div>
+          <div class="step"><div class="ic">✍️</div><b>생성</b><span>청크를 근거로 LLM이<br>답변 작성<br><b style="color:var(--accent3)">"답안 쓰기"</b></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🏗️ 인덱싱 품질이 절반을 결정한다</h3>
+        <p>실시간 단계에서 아무리 애써도, 도서관(인덱스)이 엉망이면 좋은 페이지를 찾을 수 없습니다.
+        청크를 어디서 자르는지, 어떤 임베딩 모델을 쓰는지 같은 <b>사전 작업의 설계</b>가 전체 품질의 상한선을 정합니다. 챕터 3에서 깊이 다룹니다.</p>
+      </div>
+      <div class="card">
+        <h3>⚡ 실시간 단계는 속도와의 싸움</h3>
+        <p>검색 + 생성은 사용자가 기다리는 시간입니다. 수십만 청크에서 0.1초 안에 관련 조각을 찾고,
+        제한된 토큰 예산 안에 "무엇을 넣을지" 골라야 합니다. 챕터 4에서 깊이 다룹니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>10 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 11 : 인덱싱① 수집과 파싱 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>인덱싱 ① — 문서 수집과 파싱: 구조를 읽어내기</h2>
+  <p class="sub">첫 단계는 문서를 모아서 "기계가 다룰 수 있는 구조"로 해석하는 것입니다. 파싱(Parsing)이란 글의 짜임새를 분석하는 일입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card">
+        <h3>📄 문서는 "납작한 글자 덩어리"가 아니다</h3>
+        <p>마크다운·PDF·워드 문서에는 제목 계층(장–절–항), 표, 코드 블록, 목록 같은 <b>구조</b>가 있습니다.
+        이 구조를 무시하고 글자만 추출하면 — 표의 행과 열이 뒤섞이고, 코드와 본문이 붙어버리고,
+        "이 문단이 어느 절에 속하는지"라는 소중한 맥락 정보가 사라집니다.</p>
+      </div>
+      <div class="card">
+        <h3>🌲 구조 분석이 곧 검색 품질의 기초</h3>
+        <p>제목 계층을 알고 있으면 ① 의미 단위(절)대로 자를 수 있고 ② 각 조각에 "RFC 2328 &gt; 7장 &gt; Hello 프로토콜"처럼
+        <b>소속 경로를 붙여줄 수 있습니다.</b> 나중에 검색됐을 때 이 경로가 그대로 "출처 표시"가 됩니다.
+        파싱을 잘하면 인덱싱의 나머지 단계가 전부 쉬워집니다.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🔬 예 — 마크다운 한 조각의 구조 해석</h3>
+      <div style="display:flex; gap:18px; margin-top:6px; align-items:stretch;">
+        <div style="flex:1; background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.8;" class="mono">
+          <span style="color:var(--accent5)"># OSPF 설정 가이드</span><br>
+          <span style="color:var(--accent3)">## 1. 영역(Area) 구성</span><br>
+          영역은 라우터를 논리적으로 묶는...<br>
+          <span style="color:var(--accent)">``` router ospf 1 ```</span>
+        </div>
+        <div style="display:flex; align-items:center; color:var(--accent); font-size:24px; font-weight:800;">→</div>
+        <div style="flex:1.3; font-size:14px; line-height:1.7; color:#c4cdd6;">
+          파서는 이를 <b>"문서 제목 → 1절 → 본문 → 코드 블록"</b>이라는 트리(나무 구조)로 해석합니다.
+          덕분에 "이 본문은 영역 구성 절에 속한 설명이고, 코드는 설정 예시"라는 사실이 보존됩니다.
+        </div>
+      </div>
+      <div class="proj" style="margin-top:12px;"><b class="lbl">▶ markdown_rag 미리보기</b> — 이 프로젝트는 markdown-it-py로 문서를 AST(구문 트리)로 파싱하고, 헤더 계층을 따라 자르는 "구조 인식 청킹"을 사용합니다. RFC 11,449건 + CCIE 교재 + 장비 매뉴얼 총 12,131건을 이렇게 처리했습니다.</div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>11 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 12 : 인덱싱② 청킹 왜 필요 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>인덱싱 ② — 청킹(Chunking): 왜 문서를 잘라야 하는가</h2>
+  <p class="sub">청킹은 긴 문서를 검색의 기본 단위인 "조각(청크)"으로 나누는 일입니다. 자르는 이유는 크게 세 가지입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom:16px;">
+      <div class="card">
+        <h3>📏 ① 임베딩 모델의 입력 한계</h3>
+        <p>다음 슬라이드에서 다룰 임베딩 모델은 <b>한 번에 읽을 수 있는 길이가 짧습니다</b>(보통 수백 토큰).
+        책 한 권을 통째로 넣을 수 없으니, 물리적으로라도 잘라야 합니다.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 ② 검색 정밀도</h3>
+        <p>문서 전체를 하나의 벡터로 뭉개면 <b>여러 주제의 평균</b>이 되어 어떤 질문과도 어중간하게만 비슷해집니다.
+        주제 하나씩 담긴 작은 조각이어야 "딱 맞는 조각"을 집어낼 수 있습니다.</p>
+      </div>
+      <div class="card">
+        <h3>💰 ③ LLM 토큰 예산</h3>
+        <p>검색된 내용은 프롬프트에 들어갑니다. 문서 전체가 아니라 <b>필요한 부분만</b> 전달해야
+        컨텍스트 한도 안에 들어가고 비용도 절약됩니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <h3 style="color:var(--accent)">📚 비유 — "책 전체가 아니라 페이지 단위로 찾는다"</h3>
+      <p style="font-size:15px;">도서관에서 "OSPF 헬로 간격"을 알고 싶을 때, 사서가 <b>900쪽짜리 책 한 권을 통째로</b> 건네주면 곤란합니다.
+      원하는 것은 <b>"그 내용이 적힌 바로 그 페이지"</b>입니다. 청킹은 책을 페이지(주제 단위)로 미리 분철해 두는 작업이고,
+      그래야 검색이 "책 찾기"가 아닌 "페이지 찾기"가 됩니다.
+      단, 너무 잘게 자르면 문장이 맥락을 잃고(반 페이지짜리 설명이 두 동강), 너무 크게 자르면 잡음이 섞입니다 — 다음 슬라이드에서 자르는 전략을 비교합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>12 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 13 : 청킹 전략 비교 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>청킹 전략 4가지 비교 — 어디서 자를 것인가</h2>
+  <p class="sub">자르는 기준에 따라 네 가지 대표 전략이 있습니다. 정답은 없고, 문서의 성격에 맞게 고릅니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:14px;">
+      <table class="tbl">
+        <tr><th>전략</th><th>자르는 기준</th><th>장점</th><th>단점</th></tr>
+        <tr>
+          <td><b>고정 크기</b></td><td>글자/토큰 수<br>(예: 500자마다)</td>
+          <td>구현이 가장 단순, 크기 균일</td>
+          <td style="color:var(--accent5)">문장·단락 한가운데가 잘림</td>
+        </tr>
+        <tr>
+          <td><b>문장 단위</b></td><td>마침표 등 문장 경계</td>
+          <td>문장은 안 잘림</td>
+          <td style="color:var(--accent5)">문장끼리 묶인 "주제"는 무시</td>
+        </tr>
+        <tr>
+          <td><b>구조(헤더) 기반</b></td><td>제목 계층(장·절)</td>
+          <td class="up">의미 단위 보존, 출처 경로 유지</td>
+          <td>구조가 있는 문서에만 적용 가능</td>
+        </tr>
+        <tr>
+          <td><b>시맨틱 청킹</b></td><td>문장 임베딩의 의미 변화 지점</td>
+          <td>주제 전환을 자동 감지</td>
+          <td style="color:var(--accent5)">계산 비용 큼, 결과 예측 어려움</td>
+        </tr>
+      </table>
+    </div>
+    <div class="proj"><b class="lbl">▶ markdown_rag 미리보기</b> — 이 프로젝트는 마크다운 헤더 계층을 따르는 <b>구조 기반 청킹</b>에 "최대 1,000자" 안전 한도를 결합했습니다. 절 하나가 1,000자를 넘으면 그 안에서 다시 나누되, 인접 청크와 100자를 겹치게 합니다(중첩 — 다음 슬라이드).</div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>13 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 14 : 중첩 overlap ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>중첩(Overlap) — 잘린 경계를 보호하는 안전장치</h2>
+  <p class="sub">어디서 자르든, 경계 근처의 내용은 두 동강 날 위험이 있습니다. 중첩은 <b>이웃 청크끼리 일부를 겹쳐 저장</b>해 이 위험을 줄입니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px;">
+      <h3>✂️ 중첩이 없을 때 vs 있을 때</h3>
+      <div style="display:flex; gap:28px; margin-top:10px;">
+        <div style="flex:1;">
+          <div style="font-size:13px; color:var(--accent5); font-weight:700; margin-bottom:8px;">중첩 없음 — 정보가 두 동강</div>
+          <div style="display:flex; gap:6px;">
+            <div style="flex:1; background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:10px; font-size:12.5px; line-height:1.6;">...Hello 간격은 10초로 설정하며, 이 값이 양쪽에서 다르면</div>
+            <div style="flex:1; background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:10px; font-size:12.5px; line-height:1.6;">인접 관계가 형성되지 않는다. 따라서 반드시...</div>
+          </div>
+          <p style="font-size:12.5px; color:var(--muted); margin-top:7px;">"간격이 다르면 어떻게 되나?"의 답이 두 청크에 반쪽씩 — 어느 쪽이 검색돼도 불완전</p>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:13px; color:var(--accent2); font-weight:700; margin-bottom:8px;">중첩 있음 — 경계 문장이 양쪽에 모두 존재</div>
+          <div style="display:flex; gap:6px;">
+            <div style="flex:1.1; background:var(--panel2); border:1px solid rgba(63,185,80,.45); border-radius:8px; padding:10px; font-size:12.5px; line-height:1.6;">...10초로 설정하며, <b style="color:var(--accent2)">이 값이 다르면 인접 관계가 형성되지 않는다.</b></div>
+            <div style="flex:1.1; background:var(--panel2); border:1px solid rgba(63,185,80,.45); border-radius:8px; padding:10px; font-size:12.5px; line-height:1.6;"><b style="color:var(--accent2)">이 값이 다르면 인접 관계가 형성되지 않는다.</b> 따라서 반드시...</div>
+          </div>
+          <p style="font-size:12.5px; color:var(--muted); margin-top:7px;">핵심 문장이 양쪽 청크에 모두 들어가 어느 쪽이 검색돼도 완결된 정보 제공</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>⚖️ 중첩의 트레이드오프</h3>
+        <p>중첩이 클수록 경계 안전성은 올라가지만, <b>저장 용량과 인덱싱 시간이 늘고 거의 같은 청크가 중복 검색</b>될 수 있습니다.
+        보통 청크 크기의 10~20% 수준이 무난한 출발점입니다.</p>
+      </div>
+      <div class="card">
+        <h3>📐 이 프로젝트의 선택</h3>
+        <p>markdown_rag는 <b>청크 1,000자 + 중첩 100자(10%)</b>를 기본값으로 둡니다.
+        구조 기반 청킹이 1차 방어선(의미 경계에서 자름)이고, 중첩은 그래도 잘리는 경우의 2차 안전망입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>14 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 15 : 임베딩① 의미를 숫자로 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>임베딩 ① — 의미를 숫자로: "지도 위의 좌표"</h2>
+  <p class="sub">임베딩(Embedding)은 텍스트를 <b>의미를 담은 숫자 배열(벡터)</b>로 바꾸는 기술입니다. RAG에서 "의미로 검색하기"가 가능한 이유의 전부입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1.1fr;">
+      <div class="card">
+        <h3>🗺️ 핵심 아이디어 — 비슷한 의미 = 가까운 좌표</h3>
+        <p style="margin-bottom:8px;">지도에서 가까운 두 점이 "가까운 동네"이듯, 임베딩은 모든 문장을 <b>"의미 지도" 위의 한 점</b>으로 찍습니다.
+        의미가 비슷한 문장일수록 좌표가 가깝게 찍히도록 학습된 모델이 이 변환을 담당합니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.9;" class="mono">
+          "강아지" → (0.81, 0.62)<br>
+          "개" &nbsp;&nbsp;&nbsp;&nbsp;→ (0.79, 0.65) <span style="color:var(--accent2)">← 매우 가까움</span><br>
+          "고양이" → (0.70, 0.55) <span style="color:var(--accent3)">← 좀 가까움</span><br>
+          "자동차" → (0.12, 0.20) <span style="color:var(--accent5)">← 멀다</span>
+        </div>
+        <p style="margin-top:10px; color:var(--muted);">"강아지"와 "개"는 글자가 전혀 다르지만 좌표가 거의 같습니다 — <b>철자가 아니라 의미가 좌표를 정한다</b>는 것이 임베딩의 마법입니다.</p>
+      </div>
+      <div class="card">
+        <h3>📍 2차원으로 그려 본 의미 지도</h3>
+        <svg viewBox="0 0 460 260" style="width:100%; height:auto; margin-top:6px;">
+          <line x1="40" y1="230" x2="440" y2="230" stroke="#2d3748" stroke-width="1.5"/>
+          <line x1="40" y1="230" x2="40" y2="15" stroke="#2d3748" stroke-width="1.5"/>
+          <ellipse cx="330" cy="80" rx="95" ry="58" fill="rgba(63,185,80,.08)" stroke="rgba(63,185,80,.4)" stroke-dasharray="4 4"/>
+          <text x="330" y="22" fill="#3fb950" font-size="12" text-anchor="middle">동물 의미 영역</text>
+          <circle cx="355" cy="70" r="6" fill="#58a6ff"/><text x="368" y="74" fill="#e6edf3" font-size="13">강아지</text>
+          <circle cx="338" cy="86" r="6" fill="#58a6ff"/><text x="305" y="100" fill="#e6edf3" font-size="13">개</text>
+          <circle cx="285" cy="105" r="6" fill="#d29922"/><text x="248" y="98" fill="#e6edf3" font-size="13">고양이</text>
+          <circle cx="105" cy="195" r="6" fill="#ff7b72"/><text x="118" y="199" fill="#e6edf3" font-size="13">자동차</text>
+          <text x="240" y="252" fill="#8b949e" font-size="11" text-anchor="middle">실제 임베딩은 2차원이 아니라 수백 차원 공간입니다 (그림은 직관용)</text>
+        </svg>
+        <p style="color:var(--muted); font-size:13.5px;">검색이란 곧 <b>"질문의 좌표에서 가장 가까운 청크 좌표 찾기"</b>가 됩니다. 거리를 재는 방법이 다음 슬라이드의 주제입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>15 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 16 : 임베딩② 코사인 유사도 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>임베딩 ② — 코사인 유사도: 각도로 닮음을 잰다</h2>
+  <p class="sub">두 벡터가 얼마나 닮았는지 재는 표준 방법이 코사인 유사도(Cosine Similarity)입니다. 수식 없이 <b>"방향이 얼마나 같은가"</b>로 이해하면 됩니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.1fr 1fr;">
+      <div class="card">
+        <h3>🧭 손전등 두 개의 방향 비유</h3>
+        <p style="margin-bottom:8px;">원점에서 출발하는 화살표(벡터) 두 개를 상상하세요. 두 화살표 <b>사이의 각도</b>가 작을수록 의미가 비슷한 것입니다.</p>
+        <svg viewBox="0 0 460 200" style="width:100%; height:auto;">
+          <circle cx="60" cy="160" r="4" fill="#8b949e"/>
+          <line x1="60" y1="160" x2="320" y2="60" stroke="#58a6ff" stroke-width="3"/>
+          <polygon points="320,60 305,62 311,74" fill="#58a6ff"/>
+          <text x="330" y="58" fill="#58a6ff" font-size="13">질문: "인증 방식은?"</text>
+          <line x1="60" y1="160" x2="330" y2="85" stroke="#3fb950" stroke-width="3"/>
+          <polygon points="330,85 315,84 318,97" fill="#3fb950"/>
+          <text x="340" y="92" fill="#3fb950" font-size="13">청크 A: 인증 절차 설명 (각도 작음 ≈ 0.95)</text>
+          <line x1="60" y1="160" x2="290" y2="185" stroke="#ff7b72" stroke-width="3"/>
+          <polygon points="290,185 276,177 274,190" fill="#ff7b72"/>
+          <text x="300" y="192" fill="#ff7b72" font-size="13">청크 B: 라이선스 약관 (각도 큼 ≈ 0.30)</text>
+          <path d="M 140 129 A 85 85 0 0 1 145 138" stroke="#d29922" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="card">
+          <h3>📏 점수 읽는 법</h3>
+          <ul style="line-height:1.85;">
+            <li><b>1.0</b> — 완전히 같은 방향 (의미상 사실상 동일)</li>
+            <li><b>0.7~0.9</b> — 매우 비슷한 주제</li>
+            <li><b>0.5 부근</b> — 관련이 약함</li>
+            <li><b>0 이하</b> — 무관하거나 반대 방향</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>💡 왜 "거리"가 아니라 "각도"인가</h3>
+          <p>같은 주제라도 긴 문서는 벡터가 길어질 수 있습니다. 각도만 보면 <b>글의 길이에 휘둘리지 않고
+          "방향(주제)"만 비교</b>할 수 있어서, 텍스트 의미 비교의 표준이 되었습니다.
+          벡터 DB가 내부에서 수십만 번 계산하는 것이 바로 이 값입니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>16 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 17 : 임베딩③ 모델과 차원 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>임베딩 ③ — 임베딩 모델: 차원 수와 다국어의 비밀</h2>
+  <p class="sub">좌표를 찍어 주는 것이 "임베딩 모델"입니다. 모델마다 좌표의 <b>차원 수</b>와 <b>언어 능력</b>이 다릅니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card">
+        <h3>🔢 차원 수(384, 768, 1536...)의 의미</h3>
+        <p style="margin-bottom:8px;">2차원 지도는 위치를 (가로, 세로) 2개의 숫자로 표현하지만, 임베딩은 의미를 <b>수백 개의 숫자</b>로 표현합니다.
+        각 숫자(차원)는 의미의 미묘한 측면 하나씩을 담는 "성분"이라고 생각하면 됩니다.</p>
+        <ul style="line-height:1.8;">
+          <li><b>차원이 많을수록</b> — 더 섬세한 의미 구분 가능, 대신 저장 용량과 계산량 증가</li>
+          <li><b>차원이 적을수록</b> — 빠르고 가벼움, 대신 표현력 한계</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">예: OpenAI text-embedding-3-small은 1536차원, 경량 오픈소스 모델은 384차원이 흔합니다. 차원이 많다고 항상 검색이 잘 되는 것은 아닙니다 — 모델의 학습 품질이 더 중요합니다.</p>
+      </div>
+      <div class="card">
+        <h3>🌐 다국어 임베딩 — 한국어 질문으로 영어 문서를 찾는 원리</h3>
+        <p style="margin-bottom:8px;">다국어 임베딩 모델은 여러 언어의 번역 쌍으로 학습되어, <b>언어가 달라도 의미가 같으면 같은 좌표 근처</b>에 찍습니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.9;" class="mono">
+          "인증 방식" (한국어) &nbsp;→ ● (0.62, 0.81, ...)<br>
+          "Authentication method" → ● (0.61, 0.83, ...)<br>
+          <span style="color:var(--accent2)">→ 거의 같은 위치 = 교차 언어 검색 성립!</span>
+        </div>
+        <p style="margin-top:8px; color:var(--muted);">"의미 공간은 하나, 언어는 그 공간으로 들어오는 입구가 여러 개"인 셈입니다.</p>
+      </div>
+    </div>
+    <div class="proj"><b class="lbl">▶ markdown_rag 미리보기</b> — 이 프로젝트는 <b>intfloat/multilingual-e5-small (384차원)</b> 다국어 모델을 사용합니다. 그래서 "OSPF 영역 설정"이라는 한국어 질문으로 영어 RFC 문서를 찾아낼 수 있습니다. 384차원을 택한 이유는 51만 개 청크를 로컬 PC에서 감당할 속도·용량 균형 때문입니다.</div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>17 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 18 : 벡터 DB ① ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>벡터 DB ① — 왜 일반 데이터베이스로는 안 되는가</h2>
+  <p class="sub">청크와 벡터를 저장하고 "가장 가까운 것"을 찾아주는 전용 저장소가 벡터 DB입니다. 익숙한 SQL DB로는 왜 안 될까요?</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--accent5);">
+        <h3>🗄️ 일반 DB(SQL)의 검색 방식 — "정확 일치"</h3>
+        <p style="margin-bottom:8px;">SQL DB는 <code>WHERE name = 'OSPF'</code>처럼 <b>값이 정확히 일치하는 행</b>을 찾도록 설계되었고,
+        그 일치 검색을 빠르게 하는 색인(B-tree 등)을 씁니다.</p>
+        <p>그런데 벡터 검색의 질문은 "일치하는 것"이 아니라 <b>"384개 숫자가 종합적으로 가장 비슷한 것"</b>입니다.
+        모든 차원을 동시에 고려한 거리 계산은 기존 색인으로 가속할 수 없어서,
+        결국 <b>전체 행을 일일이 비교(완전 탐색)</b>해야 합니다 — 수십만 건이면 질문 하나에 수 초씩 걸립니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent2);">
+        <h3>⚡ 벡터 DB의 검색 방식 — "근사 최근접 탐색"</h3>
+        <p style="margin-bottom:8px;">벡터 DB는 처음부터 <b>"가까운 이웃 찾기(Nearest Neighbor)"</b>를 위해 만들어졌습니다.
+        핵심 무기는 <b>ANN(Approximate Nearest Neighbor, 근사 최근접 탐색)</b> — "100% 정확한 1등 대신,
+        거의 확실한 상위권을 수천 배 빠르게" 찾는 전략입니다.</p>
+        <p>실용적으로는 정확도 손실이 거의 없으면서 수십만~수억 벡터에서도 <b>밀리초 단위 응답</b>이 가능해집니다.
+        "완벽한 정답 1개"보다 "충분히 좋은 Top-5를 즉시"가 RAG에 필요한 것이기 때문입니다.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📦 벡터 DB가 함께 저장하는 것들</h3>
+      <p>벡터만이 아니라 <b>청크 원문 + 메타데이터(문서 경로, 문서 타입, 언어...)</b>를 한 묶음으로 저장합니다.
+      덕분에 "벡터로 찾고 → 원문과 출처를 즉시 돌려주는" 검색이 한 번에 끝나고, "RFC 문서에서만 찾아줘" 같은 <b>필터 조건</b>도 걸 수 있습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>18 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 19 : 벡터 DB ② HNSW ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 3 — 인덱싱 깊이 보기</div>
+  <h2>벡터 DB ② — HNSW의 직관과 대표 제품들</h2>
+  <p class="sub">ANN의 대표 알고리즘이 HNSW(계층적 탐색 가능 작은 세상 그래프)입니다. 이름은 어렵지만 직관은 단순합니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px;">
+      <h3>🕸️ "모든 책을 다 뒤지지 않고, 색인 그물망을 타고 내려간다"</h3>
+      <div style="display:flex; gap:20px; margin-top:6px;">
+        <div style="flex:1.2; font-size:14.5px; line-height:1.7; color:#c4cdd6;">
+          HNSW는 모든 벡터를 <b>"가까운 것끼리 연결한 그물망(그래프)"</b>으로 미리 엮어 두고, 그 위에
+          <b>고속도로 층 → 국도 층 → 골목길 층</b>의 다층 구조를 얹습니다. 검색할 때는
+          ① 가장 성긴 고속도로 층에서 대략적인 방향을 잡고 ② 한 층씩 내려가며 점점 정밀하게 접근해
+          ③ 마지막 층에서 진짜 이웃들을 확정합니다. 매 단계 "지금 위치보다 질문에 더 가까운 이웃으로만 이동"하므로,
+          51만 개 벡터도 <b>수백 번의 비교만으로</b> 도달합니다 (완전 탐색이라면 51만 번).
+        </div>
+        <div style="flex:1; background:var(--panel2); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:12.5px; line-height:2.1;" class="mono">
+            <span style="color:var(--accent4)">층 2 (고속도로)</span> ●───────●─────→ <span style="color:var(--muted)">방향 잡기</span><br>
+            <span style="color:var(--accent)">층 1 (국도)</span> &nbsp;&nbsp;&nbsp;●──●──●──●─→ <span style="color:var(--muted)">범위 좁히기</span><br>
+            <span style="color:var(--accent2)">층 0 (골목길)</span> ●●●●●●●●●●●<span style="color:var(--accent2)">★</span> <span style="color:var(--muted)">이웃 확정</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--muted); margin-top:8px;">★ = 질문 벡터와 가장 가까운 청크. 모든 점을 검사하지 않고 그물을 타고 도달한다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🏪 대표 벡터 DB 제품들</h3>
+      <div class="pill-row" style="margin:8px 0 10px;">
+        <span class="tag green">Chroma — 로컬 파일 기반, 파이썬 친화, 입문·중소 규모 최적</span>
+        <span class="tag blue">FAISS — 메타(페이스북)의 고성능 라이브러리</span>
+        <span class="tag purple">Pinecone — 완전 관리형 클라우드 서비스</span>
+        <span class="tag gold">pgvector — PostgreSQL 확장(기존 DB에 벡터 추가)</span>
+        <span class="tag red">Qdrant / Milvus / Weaviate — 오픈소스 전용 서버</span>
+      </div>
+      <p style="color:var(--muted);">markdown_rag는 <b>ChromaDB</b>를 사용합니다 — 별도 서버 없이 로컬 디렉토리(<code>./data/chroma</code>)에 저장되어 폐쇄망에서도 동작하고, 51만 청크 규모에 충분하기 때문입니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>19 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 20 : 검색① 질문 임베딩 & Top-K ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>검색 단계 ① — 질문도 임베딩한다, 그리고 Top-K</h2>
+  <p class="sub">이제 실시간 단계입니다. 사용자의 질문이 들어오면 가장 먼저 하는 일은 — <b>질문 자체를 청크와 같은 방법으로 벡터로 바꾸는 것</b>입니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step"><div class="ic">❓</div><b>질문 입력</b><span>"인증은 어떻게<br>동작하나요?"</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🔢</div><b>질문 임베딩</b><span>인덱싱 때와 <b>같은 모델</b>로<br>질문을 벡터로 변환<br><span style="color:var(--accent3)">(다른 모델을 쓰면 좌표계가 어긋남!)</span></span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">📐</div><b>유사도 계산</b><span>질문 벡터 vs 모든 청크 벡터의<br>코사인 유사도를 벡터 DB가<br>HNSW로 고속 계산</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🏆</div><b>Top-K 선택</b><span>유사도 상위 K개의 청크만<br>다음 단계(생성)로 전달</span></div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🎚️ K는 몇으로 둘 것인가 — 트레이드오프</h3>
+        <ul style="line-height:1.8;">
+          <li><b>K가 작으면 (예: 3)</b> — 프롬프트가 짧아 비용·지연이 적고 잡음도 적지만, 정답 청크가 4등이었다면 <b>놓칩니다.</b></li>
+          <li><b>K가 크면 (예: 20)</b> — 정답이 포함될 확률은 높아지지만, 무관한 청크(잡음)가 LLM을 혼란시키고 토큰 비용이 커집니다.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📐 실무 감각</h3>
+        <p>보통 <b>K=3~10</b>에서 시작해 평가 지표(뒤에서 배울 Hit@K)를 보며 조정합니다.
+        markdown_rag의 기본값은 <b>K=5</b>이고, 리랭킹(Part 2에서 소개)을 켜면 "일단 20개를 가져온 뒤 정밀 채점으로 5개를 추리는" 2단계 전략을 씁니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>20 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 21 : 검색② BM25 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>검색 단계 ② — 키워드 검색 BM25: 오래됐지만 강력하다</h2>
+  <p class="sub">벡터 검색 이전부터 검색엔진을 지탱해 온 방식이 키워드 검색입니다. 그 대표 주자 BM25는 지금도 RAG의 필수 부품입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card">
+        <h3>📊 TF-IDF의 직관 — "드문 단어일수록 중요하다"</h3>
+        <p style="margin-bottom:8px;">키워드 검색의 출발점은 두 가지 직관의 조합입니다.</p>
+        <ul style="line-height:1.8;">
+          <li><b>TF (단어 빈도)</b> — 어떤 단어가 문서 안에 자주 나오면, 그 문서는 그 단어와 관련이 깊다.</li>
+          <li><b>IDF (역문서 빈도)</b> — "그리고", "the"처럼 <b>모든 문서에 나오는 단어는 정보가 없고</b>, "OSPF"처럼 소수 문서에만 나오는 <b>드문 단어가 검색의 결정타</b>다.</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">BM25는 이 TF-IDF를 개선한 채점식입니다 — 같은 단어가 100번 나와도 점수가 무한정 오르지 않게 누르고, 문서 길이 차이를 보정합니다.</p>
+      </div>
+      <div class="card">
+        <h3>🔧 기술 문서에서 BM25가 특히 강한 이유</h3>
+        <p style="margin-bottom:8px;">기술 문서의 질문에는 <b>"정확히 그 글자"</b>를 찾아야 하는 토큰이 많습니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.9;" class="mono">
+          "RFC 2328" &nbsp;← 번호가 한 글자라도 다르면 다른 문서<br>
+          "show ip ospf neighbor" ← 명령어는 정확 일치가 생명<br>
+          "V8500" ← 장비 모델명
+        </div>
+        <p style="margin-top:8px; color:var(--muted);">이런 토큰은 의미가 아니라 <b>식별자</b>라서, "대충 비슷한 의미"를 찾는 벡터 검색이 자주 놓칩니다. BM25는 정확 매칭이므로 절대 놓치지 않습니다.</p>
+      </div>
+    </div>
+    <div class="proj"><b class="lbl">▶ markdown_rag 미리보기</b> — 이 프로젝트는 rank-bm25에 한국어 형태소 분석기 <b>kiwipiepy</b>를 결합했습니다. 한국어는 "인증은", "인증을"처럼 조사가 붙어 같은 단어가 다르게 보이므로, 형태소 분석으로 "인증"이라는 알맹이를 분리해야 BM25가 제대로 작동합니다.</div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>21 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 22 : 벡터 vs 키워드 + 하이브리드 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>벡터 vs 키워드 정면 비교 — 그리고 하이브리드 검색</h2>
+  <p class="sub">두 방식은 서로의 약점을 정확히 보완합니다. 그래서 현대 RAG의 표준은 "둘 다 쓰고 결과를 합치는" 하이브리드 검색입니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:14px;">
+      <table class="tbl">
+        <tr><th></th><th>🧭 벡터 검색 (의미 기반)</th><th>🔑 BM25 키워드 검색 (단어 기반)</th></tr>
+        <tr><td><b>찾는 기준</b></td><td>의미가 비슷한가 (좌표 거리)</td><td>같은 단어가 들어 있는가</td></tr>
+        <tr><td><b>강점</b></td><td class="up">동의어·번역·표현 차이에 강함<br>"인증 방식" ↔ "Authentication mechanism"</td><td class="up">고유명사·명령어·번호 정확 매칭<br>"RFC 2328", <code>show ip ospf</code></td></tr>
+        <tr><td><b>약점</b></td><td style="color:var(--accent5)">식별자(모델명·번호)를 자주 놓침</td><td style="color:var(--accent5)">표현이 다르면 의미가 같아도 못 찾음</td></tr>
+        <tr><td><b>한 줄 비유</b></td><td>"뜻이 통하는 사서"</td><td>"글자 그대로 찾는 Ctrl+F"</td></tr>
+      </table>
+    </div>
+    <div class="card" style="border-color: rgba(63,185,80,.5);">
+      <h3 style="color:var(--accent2)">🔀 RRF (Reciprocal Rank Fusion) — "점수가 아니라 등수로 합산"</h3>
+      <p style="font-size:14.5px;">문제: 벡터 점수(0~1의 유사도)와 BM25 점수(상한 없는 가중치 합)는 <b>단위가 달라 직접 더할 수 없습니다.</b>
+      해결: 점수를 버리고 <b>등수만 사용</b>합니다 — 각 검색 결과에서 1등은 큰 점수, 2등은 그보다 작은 점수... 식으로(<code>1/(k+등수)</code>) 환산해 양쪽을 더하면,
+      <b>두 방식 모두에서 상위권인 청크가 자연스럽게 종합 1등</b>이 됩니다. 심사위원 두 명의 채점 기준이 달라도 "등수 합산"이면 공정한 것과 같은 원리입니다.
+      <span style="color:var(--muted)">markdown_rag는 하이브리드 모드에서 RRF로 결합하고 벡터 쪽에 가중치 0.7을 줍니다.</span></p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>22 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 23 : 생성① 프롬프트 조립 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>생성 단계 ① — 프롬프트 조립: 검색 결과가 답이 되기까지</h2>
+  <p class="sub">검색된 청크는 LLM에게 그냥 던져지지 않습니다. <b>역할 지시 + 근거 자료 + 질문</b>을 하나의 프롬프트로 조립합니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.15fr 1fr;">
+      <div class="card">
+        <h3>🧩 실제 프롬프트 템플릿 예시</h3>
+        <div style="background:var(--panel2); border-radius:10px; padding:14px 16px; font-size:12.5px; line-height:1.8;" class="mono">
+          <span style="color:var(--accent4)">[시스템 프롬프트 — 행동 규칙]</span><br>
+          당신은 기술 문서 Q&amp;A 도우미입니다.<br>
+          <b style="color:var(--accent2)">아래 '참고 자료'에 근거해서만</b> 답하세요.<br>
+          자료에 없는 내용은 "문서에서 찾을 수 없습니다"<br>라고 답하세요. 답변에 출처를 표기하세요.<br><br>
+          <span style="color:var(--accent)">[참고 자료 — 검색된 청크 Top-K]</span><br>
+          (1) [rfc2328.md] OSPF의 Hello 간격은...<br>
+          (2) [다산_L3_manual.md] router ospf 설정은...<br>
+          (3) [ccie_vol1.md] 인접 관계 형성 조건은...<br><br>
+          <span style="color:var(--accent3)">[사용자 질문]</span><br>
+          OSPF 인접 관계가 안 맺어지는 이유는?
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="card">
+          <h3>🛡️ 시스템 프롬프트가 환각을 누르는 방법</h3>
+          <p>"자료에 근거해서만 답하라", "없으면 모른다고 하라"는 지시가 <b>모델의 작문 본능에 제동</b>을 겁니다.
+          완벽하지는 않지만(실패 모드 슬라이드 참고), 근거 자료와 결합되면 환각이 크게 줄어듭니다.</p>
+        </div>
+        <div class="card">
+          <h3>📚 청크에 출처를 함께 넣는 이유</h3>
+          <p>각 청크 앞에 파일명·섹션 경로를 붙여 두면, LLM이 답변에 <b>"~는 RFC 2328에 따르면..."</b>처럼 출처를 인용할 수 있습니다.
+          사용자는 원문을 열어 검증할 수 있게 되고 — 이것이 RAG의 가장 큰 실용적 장점인 <b>"근거 추적 가능성"</b>입니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>23 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 24 : 생성② 컨텍스트 윈도우 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>생성 단계 ② — 컨텍스트 윈도우와 비용: "무엇을 넣을지"의 경제학</h2>
+  <p class="sub">컨텍스트 윈도우는 LLM이 한 번에 읽고 쓸 수 있는 토큰 총량입니다. 책상의 크기와 같아서, 자료를 무한정 펼칠 수 없습니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:16px;">
+      <h3>📏 토큰 예산은 이렇게 나눠 쓴다 (예: 4,096토큰 모델)</h3>
+      <div style="display:flex; height:46px; border-radius:10px; overflow:hidden; margin:10px 0 6px; font-size:12.5px; font-weight:700; text-align:center;">
+        <div style="flex:0 0 12%; background:rgba(188,140,255,.3); display:flex; align-items:center; justify-content:center;">시스템 지시<br>~400</div>
+        <div style="flex:0 0 55%; background:rgba(88,166,255,.3); display:flex; align-items:center; justify-content:center;">검색된 청크 (참고 자료) ~2,300</div>
+        <div style="flex:0 0 8%; background:rgba(210,153,34,.3); display:flex; align-items:center; justify-content:center;">질문<br>~300</div>
+        <div style="flex:1; background:rgba(63,185,80,.3); display:flex; align-items:center; justify-content:center;">답변 생성 여유분 ~1,000</div>
+      </div>
+      <p style="color:var(--muted); font-size:13.5px;">청크가 예산의 절반 이상을 차지합니다. K를 늘리거나 청크가 크면 답변 생성 여유분이 줄어들어 <b>답이 중간에 잘리는</b> 사고가 납니다.</p>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>💸 길수록 비싸고 느리다</h3>
+        <p>API 요금은 입력+출력 토큰 수에 비례하고, 처리 시간도 길어집니다.
+        또한 컨텍스트가 길수록 모델이 <b>한가운데 있는 정보를 놓치는 경향</b>(lost in the middle)도 보고되어 있습니다.
+        "많이 넣을수록 좋다"는 틀린 직관입니다.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 그래서 RAG의 본질은 "선별"이다</h3>
+        <p>좋은 RAG란 <b>제한된 책상 위에 가장 가치 있는 자료만 올리는 시스템</b>입니다.
+        청킹(좋은 조각 만들기) → 검색(좋은 조각 찾기) → Top-K(몇 개 올릴지)의 모든 설계가
+        결국 이 선별 문제로 수렴합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>24 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 25 : 실패 모드 4가지 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>RAG의 실패 모드 4가지 — 기본 RAG가 부딪히는 벽</h2>
+  <p class="sub">기본 구조만으로는 부족한 순간들이 있습니다. 각 실패 모드와 그것을 해결하는 고급 기법(Part 2의 주제)을 짝지어 봅니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent5);">
+      <h3>🔍 ① 검색 실패 — 관련 문서를 못 찾음</h3>
+      <p>질문은 "OSPF가 뭐야?"(질문체)인데 문서는 "OSPF는 링크 상태..."(설명체)라 벡터 거리가 멀거나,
+      질문 표현이 문서 용어와 어긋나는 경우. 정답이 코퍼스에 있어도 Top-K에 못 듭니다.</p>
+      <p style="margin-top:6px;"><span class="tag blue">Part 2 예고</span> 하이브리드 검색 · HyDE(가상 문서 임베딩) · 리랭킹이 해결</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3>✂️ ② 잘린 맥락 — 청크 경계 문제</h3>
+      <p>정답의 앞부분 청크만 검색되어 "그 값이 다르면..."의 <b>'그 값'이 무엇인지</b> 알 수 없는 경우.
+      중첩으로 일부 완화되지만 근본적으로는 청크가 문서 맥락에서 떨어져 나온 탓입니다.</p>
+      <p style="margin-top:6px;"><span class="tag blue">Part 2 예고</span> 인접 청크 확장 · 구조 인식 청킹 · 맥락 보강(Contextual Retrieval)이 해결</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4);">
+      <h3>📢 ③ 잡음 — 무관한 청크 혼입</h3>
+      <p>Top-K 안에 비슷해 보이지만 실제로는 무관한 청크가 끼어들면, LLM이 그 잡음을 근거로 <b>그럴듯한 오답</b>을 만들 수 있습니다.
+      K를 키울수록 심해지는 부작용입니다.</p>
+      <p style="margin-top:6px;"><span class="tag blue">Part 2 예고</span> 크로스 인코더 리랭킹 · 메타데이터 필터링이 해결</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>🌫️ ④ 잔존 환각 — 문서를 무시하고 답함</h3>
+      <p>근거 자료를 줬는데도 모델이 자료와 다른 내용을 답하거나, 자료에 없는 세부 사항을 덧붙이는 경우.
+      특히 작은 모델이나 긴 컨텍스트에서 발생합니다.</p>
+      <p style="margin-top:6px;"><span class="tag blue">Part 2 예고</span> 프롬프트 강화 · 답변 검증(Self-RAG 계열) · 생성 품질 평가가 해결</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>25 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 26 : 평가① 왜 측정 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>평가 ① — 왜 측정해야 하는가: "감으로는 개선할 수 없다"</h2>
+  <p class="sub">청크 크기를 바꾸고, K를 조정하고, 하이브리드를 켜고... 그게 정말 나아진 걸까요? 측정 없이는 알 수 없습니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--accent5);">
+        <h3>❌ 감에 의존하는 개선의 함정</h3>
+        <p>"몇 개 물어봤더니 좋아진 것 같다"는 평가는 — 시도한 질문이 우연히 쉬웠을 수도,
+        <b>한쪽이 좋아지고 다른 쪽이 나빠졌는데 못 봤을 수도</b> 있습니다.
+        설정 하나를 바꾸면 수백 가지 질문에 대한 결과가 동시에 바뀌는데, 사람의 인상으로는 그 전체를 추적할 수 없습니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent2);">
+        <h3>✅ 검증 데이터셋 — 질문과 정답의 쌍</h3>
+        <p>해법은 시험지를 미리 만들어 두는 것입니다. <b>"이 질문의 정답은 이 문서에 있다"</b>는 쌍(질문–정답 문서)을
+        수십~수백 개 모아 두고, 설정을 바꿀 때마다 <b>같은 시험지로 다시 채점</b>합니다.
+        이렇게 하면 어떤 변경이 몇 점을 올렸는지(혹은 내렸는지) 숫자로 확인됩니다 — 이를 회귀 측정이라고 합니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <h3 style="color:var(--accent)">📋 검증 데이터셋 항목의 생김새</h3>
+      <div style="display:flex; gap:18px; align-items:center;">
+        <div style="flex:1; background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.8;" class="mono">
+          질문: "OSPF 헬로 간격 기본값은?"<br>
+          정답 문서: rfc2328 관련 청크<br>
+          → 검색 결과 몇 등에 등장했는가를 기록
+        </div>
+        <div style="flex:1.1; font-size:14px; line-height:1.65; color:#c4cdd6;">
+          markdown_rag는 이런 쌍 <b>100건의 검증 데이터셋</b>으로 모든 개선(Phase 1~7)을 회귀 측정했습니다.
+          그 채점에 쓰는 표준 지표 두 가지(Hit@K, MRR)를 다음 슬라이드에서 직접 계산해 봅니다.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>26 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 27 : 평가② Hit@K, MRR ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>평가 ② — Hit@K와 MRR: 직접 계산해 보기</h2>
+  <p class="sub">5개의 질문으로 검색기를 시험했더니, 정답 문서가 각각 <b>1등, 3등, 2등, 순위권 밖(미발견), 1등</b>으로 검색되었다고 합시다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:14px;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3>🎯 Hit@K — "상위 K개 안에 정답이 있었나" (있다/없다)</h3>
+        <p style="margin-bottom:8px;"><b>Hit@5</b>는 정답이 5등 안에 들었으면 성공(1), 아니면 실패(0)로 치고 평균을 냅니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.9;" class="mono">
+          질문1: 1등 → ✅ &nbsp; 질문2: 3등 → ✅<br>
+          질문3: 2등 → ✅ &nbsp; 질문4: 미발견 → ❌<br>
+          질문5: 1등 → ✅<br>
+          <b style="color:var(--accent)">Hit@5 = 4/5 = 80%</b>
+        </div>
+        <p style="margin-top:8px; color:var(--muted);">"검색이 일단 정답을 가져오긴 하는가"를 재는, 가장 기본적인 지표입니다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent2);">
+        <h3>🥇 MRR — "정답이 몇 등이었나" (등수의 품질)</h3>
+        <p style="margin-bottom:8px;"><b>MRR(Mean Reciprocal Rank)</b>은 정답 등수의 역수(1등=1, 2등=1/2, 3등=1/3, 미발견=0)를 평균 냅니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.9;" class="mono">
+          1등→1.0 &nbsp; 3등→0.33 &nbsp; 2등→0.5<br>
+          미발견→0 &nbsp; 1등→1.0<br>
+          <b style="color:var(--accent2)">MRR = (1+0.33+0.5+0+1) / 5 = 0.57</b>
+        </div>
+        <p style="margin-top:8px; color:var(--muted);">같은 Hit@5라도 정답이 늘 1등인 시스템(MRR↑)이 늘 5등인 시스템보다 좋습니다 — 상위 청크일수록 LLM이 더 잘 활용하기 때문입니다.</p>
+      </div>
+    </div>
+    <div class="proj"><b class="lbl">▶ markdown_rag 실측값</b> — 검증 100건 기준 hybrid 모드 Hit@5 88% · MRR 0.856 → 온톨로지 증강 모드에서 <b>Hit@5 100% · MRR 0.893</b>으로 개선되었습니다. 이 숫자가 어떻게 달성됐는지가 Part 2의 이야기입니다.</div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>27 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 28 : 최종 비교 ════════ -->
+<section class="slide">
+  <div class="kicker">챕터 4 — 검색과 생성 깊이 보기</div>
+  <h2>최종 정리 — RAG vs 파인튜닝 vs 롱컨텍스트, 언제 무엇을 쓰나</h2>
+  <p class="sub">최근에는 컨텍스트 윈도우가 매우 큰 모델(롱컨텍스트)도 등장했습니다. 세 접근을 상황별로 정리합니다.</p>
+  <div class="body">
+    <div class="card" style="margin-bottom:14px;">
+      <table class="tbl">
+        <tr><th>상황 / 기준</th><th>RAG</th><th>파인튜닝</th><th>롱컨텍스트 (문서 직접 첨부)</th></tr>
+        <tr><td><b>문서가 자주 바뀐다</b></td><td class="up">◎ 인덱스만 갱신</td><td style="color:var(--accent5)">✕ 매번 재학습</td><td>○ 가능하나 매번 전체 전송</td></tr>
+        <tr><td><b>문서량이 매우 많다 (수만 건)</b></td><td class="up">◎ 검색으로 선별</td><td>△ 지식 회상 불완전</td><td style="color:var(--accent5)">✕ 한도 초과·비용 폭증</td></tr>
+        <tr><td><b>출처 제시가 필요하다</b></td><td class="up">◎ 근거 청크 표시</td><td style="color:var(--accent5)">✕ 출처 불명</td><td>○ 인용 가능</td></tr>
+        <tr><td><b>말투·형식·도메인 문체 학습</b></td><td>△ 프롬프트로 일부</td><td class="up">◎ 본질적 강점</td><td>△ 예시 제공으로 일부</td></tr>
+        <tr><td><b>문서가 적고 (수십 쪽) 일회성 분석</b></td><td>○ 과한 구축 비용</td><td style="color:var(--accent5)">✕ 부적합</td><td class="up">◎ 가장 간단</td></tr>
+      </table>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <p style="font-size:15px;"><b style="color:var(--accent)">결정 가이드:</b>
+      문서가 <b>많고 자주 바뀌며 출처가 중요하면 → RAG</b>.
+      모델의 <b>말투·형식을 바꾸고 싶으면 → 파인튜닝</b>.
+      문서가 <b>적고 일회성이면 → 롱컨텍스트에 직접 첨부</b>.
+      서로 배타적이지 않아서, "RAG + 가벼운 파인튜닝" 같은 조합도 실무에서 흔합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>28 / 29</span></div>
+</section>
+
+<!-- ════════ SLIDE 29 : 마무리 ════════ -->
+<section class="slide">
+  <div class="kicker">WRAP-UP</div>
+  <h2>Part 1 마무리 — 이제 RAG의 뼈대를 모두 알았습니다</h2>
+  <p class="sub">LLM의 본질에서 출발해 인덱싱·검색·생성·평가까지 — RAG라는 건물의 설계도를 한 바퀴 돌았습니다.</p>
+  <div class="body">
+    <div style="display:flex; gap:12px; margin-bottom:18px;">
+      <div class="card" style="flex:1; border-top:3px solid var(--accent);">
+        <h3 style="color:var(--accent)">① LLM의 이해</h3>
+        <ul>
+          <li>LLM = 다음 토큰 예측 기계</li>
+          <li>환각은 버그가 아닌 구조의 필연</li>
+          <li>지식 컷오프 + 비공개 문서 한계</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent2);">
+        <h3 style="color:var(--accent2)">② RAG의 탄생</h3>
+        <ul>
+          <li>RAG = 오픈북 시험</li>
+          <li>인덱싱(사전) → 검색·생성(실시간)</li>
+          <li>두뇌(모델)와 도서관(지식)의 분리</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent3);">
+        <h3 style="color:var(--accent3)">③ 인덱싱</h3>
+        <ul>
+          <li>파싱 → 청킹(+중첩) → 임베딩</li>
+          <li>의미 = 좌표, 유사도 = 각도</li>
+          <li>벡터 DB와 ANN/HNSW의 속도 비결</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent4);">
+        <h3 style="color:var(--accent4)">④ 검색과 생성</h3>
+        <ul>
+          <li>Top-K · BM25 · 하이브리드(RRF)</li>
+          <li>프롬프트 조립과 토큰 예산</li>
+          <li>실패 모드 4가지와 Hit@K·MRR</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(63,185,80,.5); background: linear-gradient(180deg, rgba(63,185,80,.07), var(--panel));">
+      <h3 style="color:var(--accent2)">🚀 다음 편 예고 — Part 2: markdown_rag 구현 깊이 보기</h3>
+      <p style="font-size:15px;">Part 2에서는 오늘 배운 개념들이 <b>markdown_rag 프로젝트에서 실제로 어떻게 구현됐는지</b>를 봅니다 —
+      구조 인식 청킹, 다국어 임베딩(e5-small), ChromaDB + BM25 이중 인덱스, 하이브리드 검색과 리랭킹, HyDE,
+      그리고 CCIE Hit@5를 60%에서 100%로 끌어올린 <b>온톨로지 증강 검색</b>까지. 오늘의 "실패 모드 4가지"가 하나씩 격파되는 과정입니다.</p>
+      <p style="margin-top:10px;">
+        <a href="index.html" style="color:var(--accent); font-weight:700; text-decoration:none;">↩ 목차(index.html)로 돌아가기</a>
+        <span style="color:var(--muted); margin:0 10px;">|</span>
+        <a href="part2_project_architecture.html" style="color:var(--accent2); font-weight:700; text-decoration:none;">▶ Part 2 — 프로젝트 구현 깊이 보기</a>
+      </p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기초 완전 정복</span><span>29 / 29</span></div>
+</section>
+
+</div></div>
+
+<div id="nav">
+  <button id="prev" title="이전 (←)">◀</button>
+  <span id="pageinfo">1 / 29</span>
+  <button id="next" title="다음 (→ 또는 Space)">▶</button>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  const info = document.getElementById('pageinfo');
+  function show(i){
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    info.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  document.getElementById('prev').onclick = () => show(idx - 1);
+  document.getElementById('next').onclick = () => show(idx + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(idx + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(idx - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  // click right/left half to navigate
+  document.getElementById('stage').addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;
+    const r = document.getElementById('stage').getBoundingClientRect();
+    (e.clientX - r.left) > r.width / 2 ? show(idx + 1) : show(idx - 1);
+  });
+  // scale 1280x720 stage to fit viewport (16:9 preserved)
+  function fit(){
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.97;
+    document.getElementById('stage').style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+  show(0);
+})();
+</script>
+</body>
+</html>

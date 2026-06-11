@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PART 3 — 차세대 RAG 기술 심층 가이드</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel2: #1c2331;
+    --border: #2d3748;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d29922;
+    --accent4: #bc8cff;
+    --accent5: #ff7b72;
+    --radius: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #05070a; font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--text); overflow: hidden; }
+
+  #stage-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1280px; height: 720px; position: relative; transform-origin: center center; }
+
+  .slide {
+    position: absolute; inset: 0; width: 1280px; height: 720px;
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 52px 64px 64px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(88,166,255,.08), transparent),
+                      radial-gradient(ellipse 700px 400px at 0% 110%, rgba(63,185,80,.05), transparent);
+  }
+  .slide.active { display: flex; }
+
+  /* slide header */
+  .kicker { font-size: 14px; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-size: 54px; line-height: 1.25; font-weight: 800; }
+  h2 { font-size: 36px; font-weight: 800; margin-bottom: 6px; }
+  .sub { font-size: 17px; color: var(--muted); margin-bottom: 26px; line-height: 1.55; }
+  .body { flex: 1; min-height: 0; }
+
+  /* generic cards */
+  .grid { display: grid; gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .card h3 { font-size: 19px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card p, .card li { font-size: 14.5px; line-height: 1.6; color: #c4cdd6; }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 99px; margin-right: 6px; vertical-align: 2px; }
+  .tag.blue   { background: rgba(88,166,255,.15);  color: var(--accent);  border: 1px solid rgba(88,166,255,.4); }
+  .tag.green  { background: rgba(63,185,80,.15);   color: var(--accent2); border: 1px solid rgba(63,185,80,.4); }
+  .tag.gold   { background: rgba(210,153,34,.15);  color: var(--accent3); border: 1px solid rgba(210,153,34,.4); }
+  .tag.purple { background: rgba(188,140,255,.15); color: var(--accent4); border: 1px solid rgba(188,140,255,.4); }
+  .tag.red    { background: rgba(255,123,114,.15); color: var(--accent5); border: 1px solid rgba(255,123,114,.4); }
+
+  code, .mono { font-family: "JetBrains Mono", "D2Coding", Consolas, monospace; }
+  code { background: rgba(110,118,129,.18); padding: 1px 6px; border-radius: 5px; font-size: .92em; color: #9ecbff; }
+
+  /* flow diagram */
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow .step {
+    flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 14px; text-align: center; position: relative;
+  }
+  .flow .step .ic { font-size: 30px; margin-bottom: 8px; }
+  .flow .step b { display: block; font-size: 16px; margin-bottom: 5px; }
+  .flow .step span { font-size: 12.5px; color: var(--muted); line-height: 1.5; display: block; }
+  .flow .arr { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-size: 24px; font-weight: 800; }
+
+  /* compact flow inside cards */
+  .miniflow { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+  .miniflow .mstep { background: var(--panel2); border: 1px solid var(--border); border-radius: 9px; padding: 7px 12px; font-size: 13px; line-height: 1.5; color: #c4cdd6; }
+  .miniflow .mstep b { color: var(--text); }
+
+  /* footer */
+  .foot {
+    position: absolute; bottom: 22px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; font-size: 12px; color: #4d5662;
+  }
+
+  /* nav UI */
+  #nav {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: center; z-index: 50;
+    background: rgba(13,17,23,.85); border: 1px solid var(--border); border-radius: 99px;
+    padding: 6px 14px; backdrop-filter: blur(6px);
+  }
+  #nav button { background: none; border: none; color: var(--text); font-size: 17px; cursor: pointer; padding: 2px 8px; }
+  #nav button:hover { color: var(--accent); }
+  #pageinfo { font-size: 13px; color: var(--muted); min-width: 64px; text-align: center; }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.tbl th, table.tbl td { padding: 9px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+  table.tbl th { color: var(--muted); font-size: 13px; font-weight: 700; background: rgba(255,255,255,.02); }
+  table.tbl td:first-child, table.tbl th:first-child { text-align: left; }
+  .up { color: var(--accent2); font-weight: 800; }
+
+  .big-num { font-size: 44px; font-weight: 800; line-height: 1.1; }
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .term { border-left: 3px solid var(--accent); padding-left: 14px; }
+  .term b { font-size: 16px; }
+  .term p { font-size: 13.5px; color: #c4cdd6; line-height: 1.55; margin-top: 3px; }
+
+  a.backlink { color: var(--muted); font-size: 14px; text-decoration: none; border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; }
+  a.backlink:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage-wrap"><div id="stage">
+
+<!-- ════════════════ SLIDE 1 : 표지 ════════════════ -->
+<section class="slide active">
+  <div style="position:absolute; top:30px; left:64px;"><a class="backlink" href="index.html">← 목차로</a></div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="kicker">MARKDOWN_RAG DEEP DIVE SERIES · 16:9</div>
+    <h1>PART 3<br><span style="color:var(--accent)">차세대 RAG 기술</span> 심층 가이드</h1>
+    <p style="font-size:20px; color:var(--muted); margin-top:22px; line-height:1.6;">
+      Hit@5 100%를 달성한 <b style="color:var(--text)">markdown_rag</b>, 그 다음은? —
+      검색 고도화 · 자기 검증 · 에이전트화 · 평가/운영, 13가지 기술의 원리와 적용 설계도
+    </p>
+    <div class="pill-row" style="margin-top:34px;">
+      <span class="tag blue" style="font-size:13px; padding:6px 14px;">Contextual Retrieval</span>
+      <span class="tag green" style="font-size:13px; padding:6px 14px;">GraphRAG</span>
+      <span class="tag purple" style="font-size:13px; padding:6px 14px;">Self-RAG / CRAG</span>
+      <span class="tag red" style="font-size:13px; padding:6px 14px;">Agentic RAG</span>
+      <span class="tag gold" style="font-size:13px; padding:6px 14px;">RAGAS 평가</span>
+    </div>
+    <p style="font-size:14px; color:var(--muted); margin-top:26px;">
+      대상 독자: Part 1(개념)과 Part 2(프로젝트 구조)를 마친 입문자 · 모든 기술에 난이도/기대효과 뱃지 표기
+    </p>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>1 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 2 : 목차 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — 목차</div>
+  <h2>이번 파트에서 다루는 내용</h2>
+  <p class="sub">"무엇이 부족한가"의 진단에서 출발해, 기술별 원리 → 우리 프로젝트 적용 설계 → 우선순위 로드맵 순서로 진행합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent5);">
+      <h3>① 현재의 한계 진단</h3>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:6px;">슬라이드 3–4</p>
+      <ul><li>Hit@5 100% 다음에 남은 6가지 숙제</li><li>한계 → 해결 기술 매핑 / 기술 지도</li></ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>② 검색 고도화</h3>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:6px;">슬라이드 5–13</p>
+      <ul><li>Contextual Retrieval · GraphRAG</li><li>Multi-Query · 질문 분해</li><li>임베딩 파인튜닝 · ColBERT · 계층 검색</li></ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4);">
+      <h3>③ 자기 검증 · 교정</h3>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:6px;">슬라이드 14–16</p>
+      <ul><li>Self-RAG (스스로 판단하는 RAG)</li><li>CRAG (틀리면 고쳐서 다시 검색)</li></ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>④ 에이전트화</h3>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:6px;">슬라이드 17–18</p>
+      <ul><li>Agentic RAG — 도구를 골라 쓰는 검색</li><li>ReAct 패턴과 라우터 에이전트 설계</li></ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3>⑤ 평가 · 운영</h3>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:6px;">슬라이드 19–21</p>
+      <ul><li>RAGAS · LLM-as-Judge 생성 품질 평가</li><li>시맨틱 캐싱 · 멀티모달 RAG</li></ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--text);">
+      <h3>⑥ 로드맵</h3>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:6px;">슬라이드 22–23</p>
+      <ul><li>난이도 × 기대효과 매트릭스</li><li>4단계 권장 적용 순서 · 시리즈 마무리</li></ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>2 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 3 : 한계 진단 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ① 현재의 한계 진단</div>
+  <h2>Hit@5 100%인데, 무엇이 더 필요한가?</h2>
+  <p class="sub">"정답 문서를 5위 안에 100% 찾는다"는 검색 단계의 성공일 뿐입니다. 시스템 전체를 보면 6가지 숙제가 남아 있습니다.</p>
+  <div class="body">
+    <div class="card">
+      <table class="tbl">
+        <tr><th style="width:30%">한계</th><th>무엇이 문제인가</th><th style="width:26%">해결 기술</th></tr>
+        <tr><td><b>1. 생성 품질 미측정</b></td><td style="text-align:left;">Hit@5는 "문서를 찾았다"만 측정 — LLM 답변이 정확한지·근거에 충실한지는 아무도 모름</td><td><span class="tag gold">RAGAS</span></td></tr>
+        <tr><td><b>2. 다중 홉·비교 질문 약함</b></td><td style="text-align:left;">"RFC 2328 구현 장비 중 GPON 지원은?"처럼 여러 문서를 거쳐야 하는 질문은 단발 검색으로 불가</td><td><span class="tag green">GraphRAG</span><span class="tag blue">질문 분해</span></td></tr>
+        <tr><td><b>3. 온톨로지 카드 수동 관리</b></td><td style="text-align:left;">69장 모두 사람이 작성 — 문서가 늘어나면 카드 작성이 병목이 됨</td><td><span class="tag green">GraphRAG 자동 추출</span></td></tr>
+        <tr><td><b>4. 응답 시간 1.9초</b></td><td style="text-align:left;">온톨로지 모드는 이중 검색 비용으로 +355ms — 대화형 UX엔 부담</td><td><span class="tag gold">시맨틱 캐싱</span></td></tr>
+        <tr><td><b>5. 그림·표 미인덱싱</b></td><td style="text-align:left;">장비 매뉴얼의 토폴로지 그림·설정 표는 텍스트 추출에서 누락되거나 깨짐</td><td><span class="tag red">멀티모달 RAG</span></td></tr>
+        <tr><td><b>6. 잘린 청크의 맥락 소실</b></td><td style="text-align:left;">1,000자 단위로 잘린 청크는 "어느 장비, 어느 절차의 일부인지" 정보를 잃음</td><td><span class="tag blue">Contextual Retrieval</span><span class="tag purple">계층 검색</span></td></tr>
+      </table>
+    </div>
+    <p style="font-size:14px; color:var(--muted); margin-top:14px;">💡 핵심 관점: <b style="color:var(--text)">검색 지표가 만점이어도 "답변 품질"과 "질문의 복잡도"라는 두 축은 별개의 싸움</b>입니다. 이번 파트의 기술들은 모두 이 표의 어딘가를 겨냥합니다.</p>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>3 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 4 : 기술 지도 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ① 현재의 한계 진단</div>
+  <h2>기술 지도 한눈에 — 5개 카테고리 × 13개 기술</h2>
+  <p class="sub">앞으로 만날 기술들의 전체 지도입니다. 뱃지는 <b>난이도(하/중/상)</b>와 <b>기대효과(★~★★★)</b> — 각 슬라이드에서 동일하게 표기됩니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:12px; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>🔍 검색 고도화 <span style="font-size:12px; color:var(--muted); font-weight:400;">— "더 잘 찾기"</span></h3>
+      <ul style="line-height:1.8;">
+        <li><b>Contextual Retrieval</b> <span class="tag green">하~중</span><span class="tag gold">★★★</span> 청크에 맥락 요약을 미리 붙임</li>
+        <li><b>GraphRAG</b> <span class="tag red">상</span><span class="tag gold">★★★</span> 지식 그래프로 다중 홉 해결</li>
+        <li><b>Multi-Query / RAG-Fusion</b> <span class="tag green">하</span><span class="tag gold">★★</span> 질문을 여러 관점으로</li>
+        <li><b>질문 분해</b> <span class="tag blue">중</span><span class="tag gold">★★</span> 복합 질문 → 하위 질문</li>
+        <li><b>임베딩 파인튜닝</b> <span class="tag red">상</span><span class="tag gold">★★</span> 도메인 특화 임베딩</li>
+        <li><b>ColBERT</b> <span class="tag red">상</span><span class="tag gold">★★</span> 토큰 단위 정밀 매칭</li>
+        <li><b>Parent-Document 검색</b> <span class="tag green">하</span><span class="tag gold">★★</span> 작게 찾고 크게 읽기</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="border-top:3px solid var(--accent4);">
+        <h3>🪞 자기 검증 · 교정 <span style="font-size:12px; color:var(--muted); font-weight:400;">— "틀리면 스스로 고치기"</span></h3>
+        <ul style="line-height:1.8;">
+          <li><b>Self-RAG</b> <span class="tag blue">중~상</span><span class="tag gold">★★★</span> 검색 필요·관련성·근거성 자가 판정</li>
+          <li><b>CRAG</b> <span class="tag blue">중</span><span class="tag gold">★★</span> 검색 결과 채점 후 재검색/교정</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent2);">
+        <h3>🤖 에이전트화 <span style="font-size:12px; color:var(--muted); font-weight:400;">— "도구를 골라 쓰는 검색"</span></h3>
+        <ul style="line-height:1.8;">
+          <li><b>Agentic RAG</b> <span class="tag red">상</span><span class="tag gold">★★★</span> LLM이 검색 전략을 동적으로 선택·반복</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>📏 평가 · 운영 <span style="font-size:12px; color:var(--muted); font-weight:400;">— "측정하고 빠르게"</span></h3>
+        <ul style="line-height:1.8;">
+          <li><b>RAGAS / LLM-as-Judge</b> <span class="tag green">하~중</span><span class="tag gold">★★★</span> 생성 품질 자동 채점</li>
+          <li><b>시맨틱 캐싱</b> <span class="tag green">하</span><span class="tag gold">★★</span> 1.9초 → 수십 ms</li>
+          <li><b>멀티모달 RAG</b> <span class="tag red">상</span><span class="tag gold">★★</span> 그림·표 인덱싱</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>4 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 5 : Contextual Retrieval 원리 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>Contextual Retrieval ⑴ 동작 원리 <span class="tag green" style="font-size:13px; vertical-align:8px;">난이도 하~중</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★★</span></h2>
+  <p class="sub">Anthropic이 2024년 발표한 기법. <b>"청크를 자르기 전에, 잘려나갈 맥락을 미리 적어서 붙여 둔다"</b>는 발상입니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step" style="border-top:3px solid var(--accent5);">
+        <div class="ic">✂️</div><b>문제: 고아 청크</b>
+        <span>"포트 25에 설정한다"라는 청크만 보면<br><b>어느 장비·어느 기능</b>인지 알 수 없음<br>→ 검색에서 놓침</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🤖</div><b>1. LLM에 문서+청크 제시</b>
+        <span>인덱싱 시점에 문서 전체와<br>청크를 함께 보여주고<br>"이 청크의 맥락을 1~2문장으로" 요청</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">📎</div><b>2. 맥락을 prepend</b>
+        <span>"이것은 다산 V8500 매뉴얼의<br>포트 미러링 설정 절차 중 일부" 를<br>청크 <b>앞에 붙여서</b> 저장</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">🔢</div><b>3. 이중 인덱싱</b>
+        <span>맥락이 붙은 텍스트로<br><b>임베딩 + BM25 둘 다</b> 재인덱싱<br>(Contextual Embeddings + Contextual BM25)</span>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>📖 비유: 책에서 찢어낸 페이지에 포스트잇 붙이기</h3>
+        <p>책에서 한 페이지만 찢어 서랍에 넣으면 나중에 어느 책의 페이지인지 모릅니다.
+        찢기 전에 <b>"OO책 3장, 라우팅 설정 부분"이라는 포스트잇을 붙여 두면</b>
+        서랍(인덱스)에서 찾을 때도, 꺼내 읽을 때도 맥락이 살아 있습니다.</p>
+      </div>
+      <div class="card">
+        <h3>📉 알려진 효과</h3>
+        <p>Anthropic 발표 기준, 상위 20개 검색 실패율이 <b>약 49% 감소</b>,
+        리랭킹과 결합 시 <b>약 67% 감소</b>했다고 보고되었습니다.
+        구조 변경 없이 <b>인덱싱 단계에만 손대는 기법</b>이라 기존 검색 파이프라인과 100% 호환됩니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>5 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 6 : Contextual Retrieval 적용 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>Contextual Retrieval ⑵ 이 프로젝트에 적용하면</h2>
+  <p class="sub">515K 청크 전부에 LLM을 돌리는 건 부담 — <b>"어디부터, 무엇으로 돌릴지"</b>가 설계의 전부입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.05fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 구현 위치와 절차</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>① ingest/pipeline.py에 enrichment 단계 추가</b> — 청킹 직후, 임베딩 직전에 "맥락 생성" 훅 삽입. 파일 경로·헤더 계층(이미 메타데이터로 보유)을 프롬프트에 함께 전달</div>
+        <div class="mstep"><b>② llm/ 모듈 재사용</b> — 맥락 생성은 짧은 요약 작업이라 <b>EXAONE 4.0 1.2B 로컬 SLM으로 충분</b>. 외부 API 비용 0원</div>
+        <div class="mstep"><b>③ 결과를 chunk_enrichment.jsonl.gz 형식으로 저장</b> — Phase 7에서 만든 515K 레코드 enrichment 인프라(파일 포맷·재인덱싱 스크립트)를 그대로 확장</div>
+        <div class="mstep"><b>④ reindex_optimized.py로 ChromaDB + BM25 재빌드</b> 후 validate_rag.py 100건 회귀 검증</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>💰 비용 어림 계산</h3>
+        <p><b>전체 515K 청크</b>: 청크당 입력 수백~1천 토큰 가정 시 수억 토큰 규모 —
+        gpt-4o-mini급 API로도 수십 달러 수준이지만, 호출 수 자체가 부담.</p>
+        <p style="margin-top:6px;"><b>현실적 전략</b>: CCIE(103건) + 장비 매뉴얼(579건) 문서의 청크부터 적용.
+        RFC 11,449건은 문서 구조가 정형적이라 우선순위가 낮고,
+        <b>잘린 맥락 문제가 실제로 아픈 곳은 매뉴얼·교재</b>입니다.</p>
+      </div>
+      <div class="card">
+        <h3>📈 기대 효과 / 리스크</h3>
+        <ul>
+          <li><b>효과</b>: 한계 #6(잘린 청크) 직접 해결, 검색·리랭킹 양쪽 정확도 동반 상승</li>
+          <li><b>리스크</b>: 로컬 SLM 배치 처리 시간(수만 청크 × 수 초) — 야간 배치/증분 처리로 흡수</li>
+          <li><b>판정</b>: 파이프라인 변경 최소 + 효과 검증 용이 → <b>1순위 후보</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>6 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 7 : GraphRAG 원리 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>GraphRAG ⑴ 동작 원리 <span class="tag red" style="font-size:13px; vertical-align:8px;">난이도 상</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★★</span></h2>
+  <p class="sub">벡터 검색은 "비슷한 문장"을 찾을 뿐, <b>"A와 B가 어떤 관계인지"</b>는 모릅니다. 그래프는 관계 그 자체를 저장합니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🏷️</div><b>1. 엔티티·관계 추출</b>
+        <span>LLM이 모든 문서를 읽고<br>"OSPF —defined_by→ RFC 2328"<br>같은 (주어, 관계, 목적어)를 추출</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">🕸️</div><b>2. 그래프 구축</b>
+        <span>엔티티 = 점(노드)<br>관계 = 선(엣지)으로<br>거대한 지식 그래프 생성</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">🏘️</div><b>3. 커뮤니티 요약</b>
+        <span>밀접하게 연결된 노드 묶음<br>(예: "OSPF 패밀리")을 찾아<br>묶음별 요약문을 미리 생성</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent4);">
+        <div class="ic">🧭</div><b>4. 그래프 탐색 응답</b>
+        <span>질문이 오면 관련 노드에서 출발해<br><b>선을 따라 여러 단계</b> 이동하며<br>근거를 모아 답변</span>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🗺️ 비유: 지하철 노선도</h3>
+        <p>벡터 검색이 "강남역과 분위기가 비슷한 동네 찾기"라면,
+        그래프 탐색은 <b>"강남역에서 2호선 → 환승 → 공항철도로 갈 수 있는 곳 찾기"</b>입니다.
+        "RFC 2328을 구현한 장비 중 GPON 지원 장비"는 노선도(관계)를 따라가야만 답이 나오는 질문입니다.</p>
+      </div>
+      <div class="card">
+        <h3>🏢 Microsoft GraphRAG 개요</h3>
+        <p>Microsoft가 2024년 공개한 대표 구현체. LLM 자동 추출로 그래프를 만들고,
+        커뮤니티 단위 요약으로 <b>"이 코퍼스 전체의 주제는?"</b> 같은 글로벌 질문(Global Search)과
+        특정 엔티티 중심의 <b>로컬 질문(Local Search)</b>을 모두 지원하는 것이 특징입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>7 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 8 : GraphRAG 적용 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>GraphRAG ⑵ 이 프로젝트에 적용하면 — 이미 절반은 와 있다</h2>
+  <p class="sub">Phase 7 온톨로지 카드는 사실상 <b>"수동으로 만든 미니 지식 그래프"</b> — 시드(씨앗)는 이미 심어져 있습니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.05fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 진화 경로 — 카드 69장 → 그래프 수백 노드</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>① 스키마는 그대로</b> — entity 8종(<code>entity_types.yaml</code>) / relation 14종(<code>relation_types.yaml</code>)이 이미 그래프 스키마. 새로 설계할 필요 없음</div>
+        <div class="mstep"><b>② LLM 자동 추출로 카드 확장</b> — <code>extract_onto_candidates.py</code>(현재 정규식+사전 매칭)를 LLM 추출로 업그레이드 → 후보 카드 자동 생성, 사람은 검수만</div>
+        <div class="mstep"><b>③ ontology_aug.py를 그래프 탐색기로</b> — 현재 1-hop(카드 → referenced path 주입)을 <b>다중 hop 탐색</b>(카드 → related → defined_by → ...)으로 확장</div>
+        <div class="mstep"><b>④ onto_refs.json → 그래프 저장소</b> — 초기엔 JSON/networkx로 충분, 커지면 그래프 DB 검토</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="border-top:3px solid var(--accent4);">
+        <h3>🎬 시나리오: "RFC 2328을 구현한 장비 중 GPON 지원 장비는?"</h3>
+        <div class="miniflow">
+          <div class="mstep">rfc:2328 ←<b>defined_by</b>— proto:ospf 노드 도달</div>
+          <div class="mstep">proto:ospf —<b>documented_in</b>→ 다산 L3 장비군 추출</div>
+          <div class="mstep">각 장비 노드의 —<b>supports</b>→ proto:gpon 여부 교차 확인</div>
+          <div class="mstep">교집합 장비 + 근거 청크를 함께 제시 ✅</div>
+        </div>
+        <p style="color:var(--muted); font-size:13px;">벡터 검색만으로는 세 문서를 한 번에 잇지 못하는 전형적 다중 홉 질문</p>
+      </div>
+      <div class="card">
+        <h3>📈 기대 효과 / 비용</h3>
+        <ul>
+          <li><b>효과</b>: 한계 #2(다중 홉)와 #3(수동 카드 병목) 동시 해결</li>
+          <li><b>비용</b>: LLM 추출 품질 관리·검수 체계 필요 — 단계적 확장 권장</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>8 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 9 : Multi-Query & RAG-Fusion ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>Multi-Query &amp; RAG-Fusion <span class="tag green" style="font-size:13px; vertical-align:8px;">난이도 하</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">사용자의 질문 한 줄은 "의도의 한 단면"일 뿐 — <b>여러 관점으로 다시 묻고, 결과를 합치면</b> 빠뜨림이 줄어듭니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>① 재작성</b> — LLM이 "VLAN 트렁크 설정법"을 3~5개 변형으로: "트렁크 포트 구성 명령어", "802.1Q tagged port 설정", "switchport mode trunk 사용법"...</div>
+        <div class="mstep"><b>② 병렬 검색</b> — 변형 쿼리 각각으로 동시에 검색 (서로 다른 문서 집합이 걸려 올라옴)</div>
+        <div class="mstep"><b>③ RRF 결합</b> — 여러 결과 목록을 Reciprocal Rank Fusion으로 합산 → 여러 관점에서 공통으로 상위인 문서가 1등 (= RAG-Fusion)</div>
+      </div>
+      <p style="margin-top:8px;"><b>HyDE와의 차이</b>: HyDE는 <b>"가짜 정답 문서" 1개</b>를 만들어 그것으로 검색,
+      Multi-Query는 <b>"질문 자체"를 여러 개</b>로 늘립니다. 서로 배타적이지 않아 함께 쓸 수 있습니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>위치</b>: <code>retriever/query.py</code> — HyDE가 이미 있는 쿼리 변환 모듈에 <code>multi_query()</code> 함수 추가</li>
+        <li><b>재사용</b>: 결합 단계는 <code>retriever/hybrid.py</code>의 <b>기존 RRF 코드를 그대로 호출</b> — 새 알고리즘 구현 불필요</li>
+        <li><b>재작성 LLM</b>: 짧은 작업이라 EXAONE 1.2B 로컬로 충분</li>
+        <li><b>기대 효과</b>: 표현이 다양한 한국어 질문의 recall 향상, 특히 동의어가 많은 장비 명령어 질문에 유리</li>
+        <li><b>비용</b>: 검색 횟수 ×N → 응답 시간 증가. 변형 3개 + 병렬 실행으로 억제</li>
+      </ul>
+      <p style="margin-top:8px; color:var(--muted); font-size:13.5px;">💡 기존 인프라(쿼리 변환 + RRF)를 조립만 하면 되는, 가장 "가성비 좋은" 기법 중 하나</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>9 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 10 : 질문 분해 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>질문 분해 (Query Decomposition) <span class="tag blue" style="font-size:13px; vertical-align:8px;">난이도 중</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">Multi-Query가 "같은 질문을 여러 말투로"라면, 분해는 <b>"한 질문을 여러 개의 작은 질문으로 쪼개는 것"</b>입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — 비교 질문 시연</h3>
+      <p style="margin-bottom:8px;">질문: <b>"다산과 유비쿼스 장비의 VLAN 설정 방법 차이는?"</b></p>
+      <div class="miniflow">
+        <div class="mstep"><b>① 분해</b> — LLM이 하위 질문 2개 생성:<br>Q1 "다산 장비의 VLAN 설정 방법은?"<br>Q2 "유비쿼스 장비의 VLAN 설정 방법은?"</div>
+        <div class="mstep"><b>② 개별 검색</b> — Q1은 다산 매뉴얼 청크, Q2는 유비쿼스 매뉴얼 청크가 각각 정확히 hit</div>
+        <div class="mstep"><b>③ 종합</b> — 두 검색 결과를 함께 LLM에 주고 "차이를 비교 정리"하도록 최종 답변 생성</div>
+      </div>
+      <p style="margin-top:8px;">통째로 검색하면 두 벤더 문서가 섞인 어중간한 결과가 나오지만,
+      쪼개면 <b>각 하위 질문이 단순 검색으로 풀리는 수준</b>까지 내려갑니다. 시험에서 큰 문제를 소문항으로 나눠 푸는 것과 같습니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>위치</b>: <code>retriever/query.py</code>에 <code>decompose()</code> 추가 + <code>retriever/rag.py</code>에 "하위 질문별 검색 → 컨텍스트 병합" 루프</li>
+        <li><b>분기 조건</b>: 모든 질문을 분해하면 낭비 — "vs", "차이", "비교", 복수 엔티티 감지 시에만 작동(추후 Agentic 라우터로 일반화)</li>
+        <li><b>메타데이터 시너지</b>: Q1엔 <code>doc_type=manual</code> + 다산 필터, Q2엔 유비쿼스 필터를 자동 적용 가능 — Phase 2 필터 인프라 재활용</li>
+        <li><b>기대 효과</b>: 한계 #2의 비교형 질문 직접 해결</li>
+        <li><b>비용</b>: LLM 호출 +1, 검색 ×하위 질문 수</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>10 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 11 : 임베딩 파인튜닝 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>임베딩 파인튜닝 <span class="tag red" style="font-size:13px; vertical-align:8px;">난이도 상</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">범용 임베딩 모델은 "OSPF"와 "BGP"를 그냥 '네트워크 용어'로 뭉뚱그릴 수 있습니다. <b>우리 도메인의 미세한 구분을 가르치는 작업</b>입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — Contrastive 학습</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>학습 데이터</b> = (질문, 정답 문서, 오답 문서) 삼중쌍(triplet)</div>
+        <div class="mstep"><b>학습 목표</b> = 질문 벡터를 정답 문서 벡터에는 <b>가깝게 당기고</b>, 오답 문서 벡터에서는 <b>멀게 밀어내기</b></div>
+        <div class="mstep"><b>하드 네거티브</b> = "그럴듯하지만 틀린" 오답(예: OSPF 질문에 IS-IS 문서)을 일부러 골라 학습 — 쉬운 오답만 쓰면 효과가 적음</div>
+      </div>
+      <p style="margin-top:8px;">비유: 신입 사서에게 "이 질문엔 이 책이 정답, 비슷해 보이는 저 책은 오답"을 반복 훈련시켜
+      <b>우리 도서관 전용 감각</b>을 만드는 것. 모델 구조는 그대로, 벡터 공간의 배치만 도메인에 맞게 미세 조정됩니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>학습 데이터의 씨앗</b>: validation_dataset 100건(질문-정답 쌍)이 이미 존재. 하드 네거티브는 <b>"hybrid 검색 상위권이지만 정답이 아닌 청크"를 자동 수집</b>(하드 네거티브 마이닝)</li>
+        <li><b>확장</b>: LLM으로 청크당 합성 질문을 생성하면 수천 쌍으로 증식 가능</li>
+        <li><b>절차</b>: sentence-transformers의 학습 API로 e5-small을 수 epoch 파인튜닝 → <b>전체 재임베딩 + 재인덱싱 필수</b>(벡터 공간이 바뀌므로)</li>
+        <li><b>주의</b>: 평가용 100건을 학습에 쓰면 시험문제 유출 — <b>학습/평가 데이터 분리</b> 필수</li>
+        <li><b>판정</b>: 효과는 확실하나 데이터 구축·재인덱싱 부담 → 후순위</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>11 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 12 : ColBERT ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>ColBERT / Late Interaction <span class="tag red" style="font-size:13px; vertical-align:8px;">난이도 상</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">바이 인코더(빠름·대략적)와 크로스 인코더(느림·정밀)의 <b>딱 중간 지점</b>을 차지하는 제3의 방식입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — 토큰 단위 매칭 (MaxSim)</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>저장</b>: 청크를 벡터 1개로 뭉치지 않고, <b>토큰마다 작은 벡터를 전부 보관</b> ("문서 전체 요약" 대신 "단어별 지문" 보관)</div>
+        <div class="mstep"><b>검색</b>: 질문의 각 토큰이 문서 토큰들 중 <b>가장 비슷한 것과의 유사도(MaxSim)</b>를 찾고, 이를 모두 합산해 점수화</div>
+        <div class="mstep"><b>Late Interaction</b>: 인코딩은 미리(빠름), 토큰끼리의 상호작용 계산만 검색 시점에(정밀) — 그래서 "늦은 상호작용"</div>
+      </div>
+      <p style="margin-top:8px;">비유: 바이 인코더가 "두 사람의 첫인상 비교"라면, ColBERT는
+      <b>"이력서를 항목별로 맞대 보는 것"</b> — 단어 하나하나가 매칭되어 <code>show ip ospf</code> 같은 정확한 표현에 강합니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>옵션 A — 리랭커 대체</b>: bge-reranker(크로스 인코더, 청크당 추론 필요)를 ColBERT로 바꾸면 <b>리랭킹 단계가 수 배 빨라질</b> 수 있음</li>
+        <li><b>옵션 B — 1차 검색 보완</b>: hybrid 검색의 제3 축으로 추가 후 RRF 결합</li>
+        <li><b>위치</b>: <code>retriever/reranker.py</code>에 백엔드 추가, 인덱스는 별도 저장소 필요</li>
+        <li><b>최대 트레이드오프 = 저장 용량</b>: 청크당 벡터 1개(384차원) → <b>토큰 수십~수백 개 × 벡터</b>. 515K 청크면 인덱스가 수십 배 커질 수 있어 압축(양자화) 필수</li>
+        <li><b>판정</b>: 현 리랭커 성능이 이미 좋아 긴급도 낮음 — 속도 병목이 확인될 때 검토</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>12 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 13 : Parent-Document ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ② 검색 고도화</div>
+  <h2>Parent-Document / 계층 검색 <span class="tag green" style="font-size:13px; vertical-align:8px;">난이도 하</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">청킹의 딜레마 — <b>검색은 작은 청크가 유리하고, 답변 생성은 큰 맥락이 유리합니다.</b> 둘을 분리하면 양쪽을 다 가질 수 있습니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — "작게 찾고, 크게 읽기"</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>① 인덱싱</b>: 작은 자식 청크로 임베딩하되, 각 청크에 <b>부모(상위 섹션/문서) ID를 기록</b></div>
+        <div class="mstep"><b>② 검색</b>: 작은 청크로 정밀하게 매칭 (작을수록 주제가 단일해서 벡터가 또렷함)</div>
+        <div class="mstep"><b>③ 컨텍스트 제공</b>: LLM에게는 hit한 청크가 아니라 <b>그 부모 섹션 전체</b>를 전달 — 절차의 앞뒤 단계가 함께 보임</div>
+      </div>
+      <p style="margin-top:8px;">비유: 색인(인덱스)으로는 <b>한 줄짜리 키워드</b>로 페이지를 찾고,
+      실제로 읽을 때는 <b>그 장(章) 전체</b>를 펼치는 것. "설정 절차 3단계만 잘려 오는" 문제가 사라집니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면 — 거의 공짜</h3>
+      <ul style="line-height:1.75;">
+        <li><b>이미 있는 것</b>: 구조 인식 청킹이 <b>헤더 계층(#/##/###) 메타데이터</b>를 청크마다 보존 중 — "부모 섹션"이 이미 식별 가능</li>
+        <li><b>구현</b>: <code>retriever/rag.py</code>의 컨텍스트 조립 단계에서, hit 청크의 (파일, 상위 헤더)로 같은 섹션 청크들을 <code>store/</code>에서 모아 병합</li>
+        <li><b>일반화 관점</b>: Phase 6의 "HyDE 인접 청크 확장"이 <b>±1개 이웃</b>이라면, 이 기법은 <b>"섹션 단위 이웃"으로 일반화</b>한 것</li>
+        <li><b>주의</b>: 부모가 너무 크면 컨텍스트 윈도우(로컬 LLM 4096 토큰) 초과 — 섹션 길이 상한 필요</li>
+        <li><b>판정</b>: 재인덱싱 불필요, 검색 단계 무변경 → <b>저비용 고효율</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>13 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 14 : Self-RAG 원리 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ③ 자기 검증 · 교정</div>
+  <h2>Self-RAG ⑴ 동작 원리 <span class="tag blue" style="font-size:13px; vertical-align:8px;">난이도 중~상</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★★</span></h2>
+  <p class="sub">기존 RAG는 "무조건 검색 → 무조건 그 문서로 답변"하는 고정 라인 — Self-RAG는 <b>매 단계마다 모델이 스스로 판단</b>합니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🤔</div><b>1. 검색이 필요한가?</b>
+        <span><b>[Retrieve]</b> 토큰<br>"안녕하세요"엔 검색 불필요,<br>"RFC 2328 내용"엔 검색 필요 판단</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">🔎</div><b>2. 이 문서, 관련 있나?</b>
+        <span><b>[ISREL]</b> 토큰<br>검색된 청크 각각에 대해<br>관련/무관 판정 → 무관은 버림</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">📌</div><b>3. 답이 근거에 충실한가?</b>
+        <span><b>[ISSUP]</b> 토큰<br>생성한 문장이 문서에 의해<br>뒷받침되는지(supported) 자가 검증</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent4);">
+        <div class="ic">🏆</div><b>4. 어느 답이 유용한가?</b>
+        <span><b>[ISUSE]</b> 토큰<br>후보 답변들을 점수화해<br>가장 근거 충실한 답을 선택</span>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>🪞 비유: 답안을 내기 전에 스스로 채점하는 학생</h3>
+        <p>보통 학생(기존 RAG)은 자료를 받으면 그대로 베껴 씁니다. Self-RAG는
+        <b>"이 자료가 문제랑 맞나?" → "내 답이 자료에 실제로 있나?"를 혼잣말로 확인</b>한 뒤 제출합니다.
+        reflection(성찰) 토큰이 바로 그 혼잣말입니다.</p>
+      </div>
+      <div class="card">
+        <h3>📄 원 논문의 방식 vs 실전 경량화</h3>
+        <p>원 논문(2023)은 reflection 토큰을 <b>출력하도록 전용 학습한 모델</b>을 사용합니다.
+        실무에서는 학습 없이 <b>일반 LLM에게 "관련 있나? 근거 있나?"를 프롬프트로 묻는 경량 버전</b>이 널리 쓰입니다 — 다음 슬라이드에서 이 방식으로 적용합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>14 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 15 : Self-RAG 적용 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ③ 자기 검증 · 교정</div>
+  <h2>Self-RAG ⑵ 이 프로젝트에 적용하면 — 경량 게이트 2개</h2>
+  <p class="sub">전용 모델 학습 없이, <code>rag.py</code> 파이프라인에 <b>"판정 게이트"를 끼워 넣는 방식</b>으로 핵심 효과를 가져옵니다.</p>
+  <div class="body grid" style="grid-template-columns: 1.05fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ retriever/rag.py 개조 설계</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>게이트 ① 관련성 판정 (ISREL 경량판)</b> — 검색 직후, 각 청크에 대해 LLM에 "이 청크가 질문과 관련 있는가? YES/NO" 1회 호출. NO 청크는 컨텍스트에서 제외</div>
+        <div class="mstep"><b>게이트 ② 근거성 판정 (ISSUP 경량판)</b> — 답변 생성 직후, "이 답변의 각 주장에 컨텍스트 근거가 있는가?" 검사. 근거 없으면 답변에 ⚠️ 경고 표기 또는 재생성</div>
+        <div class="mstep"><b>실패 경로</b> — 관련 청크가 0개로 판정되면 "문서에서 찾지 못했습니다"를 정직하게 반환 (환각보다 무응답이 낫다)</div>
+      </div>
+      <p style="margin-top:8px; color:var(--muted); font-size:13.5px;">판정은 YES/NO 단답이라 EXAONE 1.2B로도 시도 가능 — 단, 소형 모델의 판정 정확도는 반드시 검증 데이터로 측정 후 채택</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>📈 기대 효과</h3>
+        <ul>
+          <li>관련 없는 청크가 답변을 오염시키는 <b>RAG 최대 리스크를 구조적으로 차단</b></li>
+          <li>한계 #1(생성 품질)을 <b>런타임에서</b> 방어 — RAGAS(오프라인 평가)와 상호 보완</li>
+          <li>"근거 없음" 표시로 사용자 신뢰도 향상</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚖️ 비용 / 주의</h3>
+        <ul>
+          <li>청크 5개 판정 + 근거 검사 = <b>LLM 호출 약 +6회</b> → 응답 시간 증가. ask 모드에만 적용하고 search 모드는 그대로 두는 분리 운영 권장</li>
+          <li>판정 자체의 오류 가능성 — 게이트의 정확도도 측정 대상</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>15 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 16 : CRAG ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ③ 자기 검증 · 교정</div>
+  <h2>CRAG (Corrective RAG) <span class="tag blue" style="font-size:13px; vertical-align:8px;">난이도 중</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">Self-RAG가 "버릴 것을 거른다"면, CRAG는 한 걸음 더 — <b>검색이 실패했다고 판단되면 행동을 바꿔 다시 시도</b>합니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — 평가기의 3분류</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>평가기(Retrieval Evaluator)</b>가 검색 결과 묶음을 채점해 3등급으로 분류</div>
+        <div class="mstep"><span class="tag green">Correct</span> 충분히 정확 → 청크에서 핵심만 추려(refinement) 답변 생성</div>
+        <div class="mstep"><span class="tag red">Incorrect</span> 부정확 → <b>쿼리를 재작성해 재검색</b>하거나 외부 검색(웹 등)으로 폴백</div>
+        <div class="mstep"><span class="tag gold">Ambiguous</span> 애매 → 두 전략을 모두 수행해 결과 결합</div>
+      </div>
+      <table class="tbl" style="margin-top:10px; font-size:13px;">
+        <tr><th></th><th>Self-RAG</th><th>CRAG</th></tr>
+        <tr><td>판정 단위</td><td>청크·문장 개별</td><td>검색 결과 <b>묶음</b></td></tr>
+        <tr><td>실패 시 행동</td><td>버리고 표시</td><td><b>재검색·폴백</b></td></tr>
+        <tr><td>구현 형태</td><td>전용 학습(원본)</td><td>경량 평가기로 가능</td></tr>
+      </table>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>위치</b>: <code>retriever/rag.py</code>에 평가→분기 루프 추가 (Self-RAG 게이트 ①을 묶음 단위로 확장하면 평가기가 됨)</li>
+        <li><b>재검색 전략이 풍부한 게 강점</b>: Incorrect 판정 시 ① 쿼리 재작성(HyDE/Multi-Query 재사용) ② <b>검색 모드 전환</b>(hybrid → ontology) ③ 메타필터 완화 — 폐쇄망이라 웹 폴백 대신 <b>모드 전환이 우리식 폴백</b></li>
+        <li><b>루프 상한</b>: 무한 재검색 방지 — 최대 2회 재시도 후 "찾지 못함" 반환</li>
+        <li><b>기대 효과</b>: 첫 검색이 빗나가는 드문 케이스(현재 MRR 0.893의 나머지)를 자동 회복</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>16 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 17 : Agentic RAG 원리 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ④ 에이전트화</div>
+  <h2>Agentic RAG ⑴ 동작 원리 <span class="tag red" style="font-size:13px; vertical-align:8px;">난이도 상</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★★</span></h2>
+  <p class="sub">지금까지의 기법이 "파이프라인 개량"이라면, Agentic RAG는 <b>파이프라인 자체를 LLM이 상황에 맞게 조립</b>하는 패러다임 전환입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.05fr 1fr; align-content:start;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3>⚙️ 핵심 구조 — 도구를 든 사서</h3>
+        <p style="margin-bottom:8px;">LLM 에이전트에게 <b>검색 방법들을 "도구(tool)"로 등록</b>해 주면,
+        에이전트가 질문을 읽고 <b>어떤 도구를 어떤 순서로 쓸지 스스로 결정</b>합니다. 필요하면 여러 번 검색하고, 중간 결과를 보고 다음 행동을 바꿉니다.</p>
+        <div class="miniflow">
+          <div class="mstep">🧰 도구 예시: 벡터 검색 / 하이브리드 검색 / 온톨로지 검색 / 메타데이터 필터 검색 / 질문 분해기</div>
+          <div class="mstep">단순 질문 → 벡터 검색 1회로 끝</div>
+          <div class="mstep">비교 질문 → 분해 후 필터 검색 2회 → 종합</div>
+          <div class="mstep">개념-실무 연결 질문 → 온톨로지 검색 → 부족하면 hybrid 추가 검색</div>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent4);">
+        <h3>🔁 ReAct 패턴 — 에이전트의 사고 루프</h3>
+        <p style="margin-bottom:8px;"><b>Re</b>asoning(추론) + <b>Act</b>ion(행동)의 반복:</p>
+        <div class="miniflow">
+          <div class="mstep"><b>Thought</b> "이건 두 벤더 비교 질문이군. 나눠서 검색하자"</div>
+          <div class="mstep"><b>Action</b> search(query="다산 VLAN", filter=manual)</div>
+          <div class="mstep"><b>Observation</b> 다산 결과 확보. 유비쿼스가 아직 없다</div>
+          <div class="mstep"><b>Thought → Action → ...</b> 충분해질 때까지 반복 후 최종 답변</div>
+        </div>
+        <p style="margin-top:8px; color:var(--muted); font-size:13.5px;">비유: 사서가 "이 질문은 백과사전부터, 저 질문은 카탈로그부터" 하고
+        <b>찾는 전략 자체를 머릿속으로 말하면서</b> 움직이는 모습</p>
+      </div>
+    </div>
+    <p style="font-size:14px; color:var(--muted); margin-top:14px;">⚠️ 강력하지만 비용도 큼 — 매 루프가 LLM 호출이라 <b>지연·비용·예측 불가능성</b>이 함께 옵니다. 그래서 로드맵의 후반부에 배치합니다.</p>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>17 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 18 : Agentic RAG 적용 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ④ 에이전트화</div>
+  <h2>Agentic RAG ⑵ 이 프로젝트에 적용하면 — 도구는 이미 4개 있다</h2>
+  <p class="sub">vector / bm25 / hybrid / ontology — <b>기존 4개 검색 모드가 그대로 에이전트의 도구 세트</b>입니다. 만들 것은 "고르는 두뇌"뿐.</p>
+  <div class="body grid" style="grid-template-columns: 1.05fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 라우터 에이전트 설계안</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>1단계 — 정적 라우터(쉬움)</b>: LLM 1회 호출로 질문을 분류(단순/비교/개념연결/명령어)하고 <b>모드·필터를 선택만</b> 하는 라우터. 루프 없음 → 비용 +1회로 제한적 효과 확보</div>
+        <div class="mstep"><b>2단계 — ReAct 루프(어려움)</b>: <code>retriever/</code>의 각 모드를 함수 도구로 등록, 관찰-재검색 루프 허용(상한 3회). CRAG의 재검색 분기를 일반화한 형태</div>
+        <div class="mstep"><b>CLI 인터페이스</b>: <code>mdrag ask "..." --agentic</code> 플래그 신설 — 기존 ask 경로는 그대로 보존해 회귀 안전성 확보</div>
+        <div class="mstep"><b>API</b>: <code>POST /api/v1/ask</code>에 <code>agentic: true</code> 옵션 추가</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>🎬 시나리오: <code>mdrag ask --agentic</code></h3>
+        <p style="font-size:13.5px;">"유비쿼스 장비에서 OSPF 영역을 나누는 표준 근거와 설정 명령을 알려줘"</p>
+        <div class="miniflow">
+          <div class="mstep">분류: 개념(표준)+실무(명령) 복합 → <b>ontology 모드</b> 선택</div>
+          <div class="mstep">검색: rfc:2328 카드 hit + 유비쿼스 매뉴얼 청크 주입</div>
+          <div class="mstep">관찰: 명령 예시 부족 → <b>hybrid + manual 필터로 추가 검색</b></div>
+          <div class="mstep">종합: 표준 근거(RFC) + CLI 명령을 묶어 답변</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>⚖️ 효과 / 주의</h3>
+        <ul>
+          <li><b>효과</b>: 사용자가 모드를 몰라도 최적 검색 — UX 단순화 + 복합 질문 해결</li>
+          <li><b>주의</b>: 1.2B 로컬 모델로는 라우팅 판단이 불안정할 수 있어 <b>1단계는 로컬, 2단계는 클라우드 LLM 권장</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>18 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 19 : RAGAS ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ⑤ 평가 · 운영</div>
+  <h2>RAGAS &amp; LLM-as-Judge 평가 <span class="tag green" style="font-size:13px; vertical-align:8px;">난이도 하~중</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★★</span></h2>
+  <p class="sub">"측정이 곧 개선" — 검색은 Hit@5/MRR로 측정해 왔지만, <b>생성(답변)은 아직 시험을 본 적이 없습니다.</b></p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — 4대 지표</h3>
+      <p style="margin-bottom:8px;">RAGAS는 (질문, 검색 컨텍스트, 답변)을 <b>LLM 심판(LLM-as-Judge)에게 채점</b>시키는 프레임워크입니다:</p>
+      <ul style="line-height:1.75;">
+        <li><b>Faithfulness (충실성)</b> — 답변의 각 주장이 컨텍스트에 근거하는가? <span style="color:var(--muted)">낮으면 = 환각</span></li>
+        <li><b>Answer Relevancy (답변 관련성)</b> — 답변이 질문에 실제로 대답하는가? <span style="color:var(--muted)">동문서답 감지</span></li>
+        <li><b>Context Precision (정밀도)</b> — 가져온 컨텍스트 중 쓸모 있는 비율은? <span style="color:var(--muted)">잡음 측정</span></li>
+        <li><b>Context Recall (재현율)</b> — 정답에 필요한 정보를 빠짐없이 가져왔는가?</li>
+      </ul>
+      <p style="margin-top:8px;">비유: 검색 지표가 "자료를 잘 찾아왔나"의 채점이라면, RAGAS는 <b>"그 자료로 쓴 답안"까지 채점하는 논술 시험관</b>입니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>위치</b>: <code>scripts/validate_rag.py</code>를 확장 — 현재 100건 검증을 "검색 채점"에서 <b>"검색 + 생성 채점" 2부 구성</b>으로</li>
+        <li><b>데이터 보강</b>: 100건에 <b>모범 답안(ground truth answer)</b> 필드 추가 필요 (recall 계산용)</li>
+        <li><b>심판 모델</b>: 채점 일관성이 중요하므로 1.2B 로컬보다 <b>클라우드 LLM 권장</b> — 100건 × 4지표는 소액</li>
+        <li><b>회귀 테스트 통합</b>: "변경 후 faithfulness가 떨어지면 머지 금지" 같은 <b>품질 게이트를 CI에 연결</b></li>
+        <li><b>판정</b>: 다른 모든 기술의 효과를 측정할 <b>"저울"이므로 최우선 도입</b> — 저울 없이 개선 없음</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>19 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 20 : 시맨틱 캐싱 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ⑤ 평가 · 운영</div>
+  <h2>시맨틱 캐싱 &amp; 성능 최적화 <span class="tag green" style="font-size:13px; vertical-align:8px;">난이도 하</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">같은 질문이 매번 1.9초의 전체 파이프라인을 다시 탈 이유가 없습니다 — <b>"의미가 같은 질문"까지 캐시로 잡는 것</b>이 핵심입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>① 저장</b>: (질문 임베딩, 검색 결과, 최종 답변)을 캐시에 보관</div>
+        <div class="mstep"><b>② 판정</b>: 새 질문이 오면 임베딩을 만들어 <b>캐시 속 질문 벡터들과 유사도 비교</b> — 문자열이 달라도 의미가 같으면 hit ("OSPF 영역이란?" ≈ "OSPF area가 뭐야?")</div>
+        <div class="mstep"><b>③ 반환</b>: 임계값(예: 유사도 0.95↑) 이상이면 저장된 답을 즉시 반환 — 검색·리랭킹·LLM 전부 생략 → <b>수십 ms</b></div>
+      </div>
+      <p style="margin-top:8px;">비유: 자주 묻는 질문(FAQ) 게시판을 <b>"표현이 달라도 알아보는" 똑똑한 FAQ</b>로 만든 것.
+      임베딩 계산(이미 로컬, 빠름)만으로 판정하므로 miss여도 손해가 거의 없습니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>위치</b>: <code>api/</code> ask 엔드포인트 앞단 + <code>retriever/rag.py</code> 입구에 캐시 레이어. 저장소는 초기엔 로컬 파일/SQLite로 충분</li>
+        <li><b>무효화 규칙</b>: <code>ingest</code>로 문서가 갱신되면 캐시 비우기 — 오래된 답 방지</li>
+        <li><b>주의</b>: 임계값이 낮으면 <b>"비슷하지만 다른 질문"에 엉뚱한 답</b>을 재사용하는 사고 — 보수적(높게) 시작</li>
+        <li><b>함께 갈 최적화</b>: 임베딩 모델 <b>ONNX 변환/양자화</b>로 추론 가속, 리랭커 배치 크기 튜닝, BM25 인덱스 메모리 상주 확인</li>
+        <li><b>기대 효과</b>: 반복 질문 비중이 높은 사내 환경일수록 체감 큼 — 한계 #4 직격</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>20 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 21 : 멀티모달 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ⑤ 평가 · 운영</div>
+  <h2>멀티모달 RAG <span class="tag red" style="font-size:13px; vertical-align:8px;">난이도 상</span><span class="tag gold" style="font-size:13px; vertical-align:8px;">기대효과 ★★</span></h2>
+  <p class="sub">장비 매뉴얼의 절반은 <b>토폴로지 그림과 설정 표</b>입니다 — 텍스트만 인덱싱하면 그 절반이 검색 사각지대가 됩니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>⚙️ 동작 원리 — 두 가지 접근</h3>
+      <div class="miniflow">
+        <div class="mstep"><b>접근 A — 캡셔닝(현실적)</b>: 비전 LLM이 그림을 보고 <b>텍스트 설명을 생성</b>("V8500 2대를 링으로 연결한 GPON 구성도...") → 그 텍스트를 일반 청크처럼 인덱싱. 기존 파이프라인 무변경</div>
+        <div class="mstep"><b>접근 B — 멀티모달 임베딩(정통)</b>: CLIP 계열 모델로 <b>이미지와 텍스트를 같은 벡터 공간</b>에 임베딩 → 텍스트 질문으로 이미지를 직접 검색</div>
+      </div>
+      <p style="margin-top:8px;">비유: A는 그림마다 <b>"그림 설명 카드"를 써서 색인에 끼워 넣기</b>,
+      B는 색인 자체가 그림과 글을 같은 언어로 이해하게 만들기. A가 훨씬 싸고, 표(테이블)는 Markdown 변환으로 함께 해결 가능합니다.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <h3>🛠️ 이 프로젝트에 적용하면</h3>
+      <ul style="line-height:1.75;">
+        <li><b>대상 선별</b>: 다산·유비쿼스 매뉴얼 579건의 원본에서 이미지 추출 — RFC는 텍스트 위주라 제외</li>
+        <li><b>접근 A 권장</b>: <code>ingest/</code>에 이미지 → 캡션 단계 추가, 캡션 청크에 <code>content_type=image_caption</code> + 원본 이미지 경로 메타데이터 부여 → 답변 시 "그림 N 참조" 링크 제공</li>
+        <li><b>제약</b>: 캡셔닝엔 비전 모델 필요 — 폐쇄망이면 로컬 비전 모델(수 GB) 도입 검토 과제</li>
+        <li><b>기대 효과</b>: "이 구성도처럼 연결하려면?" 류 질문 대응 — 한계 #5 해소</li>
+        <li><b>판정</b>: 가치는 분명하나 신규 모델 도입 부담 → 로드맵 최후반</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>21 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 22 : 로드맵 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — ⑥ 로드맵</div>
+  <h2>우선순위 로드맵 — 난이도 × 기대효과로 줄 세우기</h2>
+  <p class="sub">원칙: <b>저울(평가)부터, 그다음 싸고 효과 큰 것, 패러다임 전환은 마지막에.</b></p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.15fr 1fr; align-content:start;">
+      <div class="card">
+        <h3>📐 난이도 × 기대효과 매트릭스</h3>
+        <table class="tbl" style="font-size:13px;">
+          <tr><th></th><th>효과 ★★</th><th>효과 ★★★</th></tr>
+          <tr><td><b>난이도 하</b></td><td>Multi-Query · 캐싱 · Parent-Doc</td><td style="color:var(--accent2); font-weight:700;">Contextual Retrieval · RAGAS ← 최우선</td></tr>
+          <tr><td><b>난이도 중</b></td><td>질문 분해 · CRAG</td><td>Self-RAG(경량판)</td></tr>
+          <tr><td><b>난이도 상</b></td><td>파인튜닝 · ColBERT · 멀티모달</td><td>GraphRAG · Agentic RAG</td></tr>
+        </table>
+        <div style="margin-top:12px;">
+          <div class="miniflow">
+            <div class="mstep"><span class="tag green">1단계</span> <b>Contextual Retrieval + RAGAS</b> — 인덱스 품질과 측정 체계가 모든 후속 작업의 토대. 둘 다 기존 구조 무변경</div>
+            <div class="mstep"><span class="tag blue">2단계</span> <b>Multi-Query · 시맨틱 캐싱 · GraphRAG 확장(카드 자동화)</b> — 기존 RRF/온톨로지 인프라 재사용으로 비용 대비 효과 극대화</div>
+            <div class="mstep"><span class="tag purple">3단계</span> <b>Self-RAG/CRAG → Agentic RAG</b> — 게이트(검증)를 먼저 깔고, 그 위에 라우터(에이전트)를 올리는 순서가 안전</div>
+            <div class="mstep"><span class="tag red">4단계</span> <b>임베딩 파인튜닝 · 멀티모달</b> — 데이터 축적과 신규 모델 도입이 전제 조건</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>🧭 단계 선정 이유</h3>
+        <ul style="line-height:1.8;">
+          <li><b>1단계가 먼저인 이유</b>: RAGAS 없이는 2~4단계의 효과를 증명할 수 없고, Contextual Retrieval은 모든 검색 기법의 기반인 <b>인덱스 자체</b>를 좋게 만듭니다.</li>
+          <li><b>2단계가 다음인 이유</b>: 셋 다 <b>이미 가진 코드(RRF·임베딩·온톨로지 스키마)의 재조립</b> — 새 위험 없이 체감 개선.</li>
+          <li><b>3단계를 미루는 이유</b>: 검증·에이전트는 LLM 호출이 늘어 <b>비용과 지연을 동반</b> — 측정 체계(1단계)가 있어야 트레이드오프를 관리할 수 있습니다.</li>
+          <li><b>4단계가 마지막인 이유</b>: 재인덱싱 전면 재작업(파인튜닝)과 신규 모델 도입(비전)은 <b>되돌리기 가장 비싼 결정</b>입니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>22 / 23</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 23 : 마무리 ════════════════ -->
+<section class="slide">
+  <div class="kicker">SERIES FINALE</div>
+  <h2>시리즈 마무리 — Part 1 · 2 · 3 핵심 요약</h2>
+  <p class="sub">세 파트를 관통하는 결론은 하나입니다 — RAG는 단일 기술이 아니라, <b>측정 위에서 조합하는 시스템</b>입니다.</p>
+  <div class="body">
+    <div style="display:flex; gap:12px; margin-bottom:18px;">
+      <div class="card" style="flex:1; border-top:3px solid var(--accent2);">
+        <h3 style="color:var(--accent2)">PART 1 — 개념</h3>
+        <p><b>RAG = 오픈북 시험.</b> LLM의 환각·시점 한계·사내 문서 부재를
+        "검색해서 근거를 쥐여 주는" 구조로 해결한다. 책(인덱스)의 품질이 답의 품질을 결정한다.</p>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent);">
+        <h3 style="color:var(--accent)">PART 2 — 구조</h3>
+        <p><b>약점은 조합으로 보완한다.</b> 벡터+BM25 하이브리드, 리랭킹, HyDE,
+        온톨로지 카드 69장의 조합이 12,131건 코퍼스에서 Hit@5 60%→100%를 만들었다.</p>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent4);">
+        <h3 style="color:var(--accent4)">PART 3 — 진화</h3>
+        <p><b>다음 전선은 생성 품질과 복합 질문.</b> 측정(RAGAS)과 인덱스 보강(Contextual)을 깔고,
+        그래프·자기 검증·에이전트로 단계적으로 확장한다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <h3 style="color:var(--accent)">🎯 마지막 한 문장</h3>
+      <p style="font-size:16px;">유행하는 기법을 좇는 것이 아니라, <b>우리 시스템의 한계를 진단하고 → 그 한계를 겨냥한 기술을 고르고 → 같은 저울(검증 데이터셋)로 전후를 측정하는 것</b> —
+      이 루프를 돌릴 수 있는 팀만이 RAG를 "계속 좋아지는 시스템"으로 운영할 수 있습니다.</p>
+    </div>
+    <p style="margin-top:18px; font-size:15px;"><a class="backlink" href="index.html">← 목차(index.html)로 돌아가기</a></p>
+  </div>
+  <div class="foot"><span>PART 3 · 차세대 RAG 기술</span><span>23 / 23</span></div>
+</section>
+
+</div></div>
+
+<div id="nav">
+  <button id="prev" title="이전 (←)">◀</button>
+  <span id="pageinfo">1 / 23</span>
+  <button id="next" title="다음 (→ 또는 Space)">▶</button>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  const info = document.getElementById('pageinfo');
+  function show(i){
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    info.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  document.getElementById('prev').onclick = () => show(idx - 1);
+  document.getElementById('next').onclick = () => show(idx + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(idx + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(idx - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  // click right/left half to navigate
+  document.getElementById('stage').addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;
+    const r = document.getElementById('stage').getBoundingClientRect();
+    (e.clientX - r.left) > r.width / 2 ? show(idx + 1) : show(idx - 1);
+  });
+  // scale 1280x720 stage to fit viewport (16:9 preserved)
+  function fit(){
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.97;
+    document.getElementById('stage').style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+  show(0);
+})();
+</script>
+</body>
+</html>

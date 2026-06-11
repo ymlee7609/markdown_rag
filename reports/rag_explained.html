@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG 이해하기 — markdown_rag 프로젝트로 배우는 검색 증강 생성</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel2: #1c2331;
+    --border: #2d3748;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d29922;
+    --accent4: #bc8cff;
+    --accent5: #ff7b72;
+    --radius: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #05070a; font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--text); overflow: hidden; }
+
+  #stage-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1280px; height: 720px; position: relative; transform-origin: center center; }
+
+  .slide {
+    position: absolute; inset: 0; width: 1280px; height: 720px;
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 52px 64px 64px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(88,166,255,.08), transparent),
+                      radial-gradient(ellipse 700px 400px at 0% 110%, rgba(63,185,80,.05), transparent);
+  }
+  .slide.active { display: flex; }
+
+  /* slide header */
+  .kicker { font-size: 14px; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-size: 54px; line-height: 1.25; font-weight: 800; }
+  h2 { font-size: 36px; font-weight: 800; margin-bottom: 6px; }
+  .sub { font-size: 17px; color: var(--muted); margin-bottom: 26px; line-height: 1.55; }
+  .body { flex: 1; min-height: 0; }
+
+  /* generic cards */
+  .grid { display: grid; gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .card h3 { font-size: 19px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card p, .card li { font-size: 14.5px; line-height: 1.6; color: #c4cdd6; }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 99px; margin-right: 6px; vertical-align: 2px; }
+  .tag.blue   { background: rgba(88,166,255,.15);  color: var(--accent);  border: 1px solid rgba(88,166,255,.4); }
+  .tag.green  { background: rgba(63,185,80,.15);   color: var(--accent2); border: 1px solid rgba(63,185,80,.4); }
+  .tag.gold   { background: rgba(210,153,34,.15);  color: var(--accent3); border: 1px solid rgba(210,153,34,.4); }
+  .tag.purple { background: rgba(188,140,255,.15); color: var(--accent4); border: 1px solid rgba(188,140,255,.4); }
+  .tag.red    { background: rgba(255,123,114,.15); color: var(--accent5); border: 1px solid rgba(255,123,114,.4); }
+
+  code, .mono { font-family: "JetBrains Mono", "D2Coding", Consolas, monospace; }
+  code { background: rgba(110,118,129,.18); padding: 1px 6px; border-radius: 5px; font-size: .92em; color: #9ecbff; }
+
+  /* flow diagram */
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow .step {
+    flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 14px; text-align: center; position: relative;
+  }
+  .flow .step .ic { font-size: 30px; margin-bottom: 8px; }
+  .flow .step b { display: block; font-size: 16px; margin-bottom: 5px; }
+  .flow .step span { font-size: 12.5px; color: var(--muted); line-height: 1.5; display: block; }
+  .flow .arr { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-size: 24px; font-weight: 800; }
+
+  /* footer */
+  .foot {
+    position: absolute; bottom: 22px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; font-size: 12px; color: #4d5662;
+  }
+
+  /* nav UI */
+  #nav {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: center; z-index: 50;
+    background: rgba(13,17,23,.85); border: 1px solid var(--border); border-radius: 99px;
+    padding: 6px 14px; backdrop-filter: blur(6px);
+  }
+  #nav button { background: none; border: none; color: var(--text); font-size: 17px; cursor: pointer; padding: 2px 8px; }
+  #nav button:hover { color: var(--accent); }
+  #pageinfo { font-size: 13px; color: var(--muted); min-width: 64px; text-align: center; }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.tbl th, table.tbl td { padding: 9px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+  table.tbl th { color: var(--muted); font-size: 13px; font-weight: 700; background: rgba(255,255,255,.02); }
+  table.tbl td:first-child, table.tbl th:first-child { text-align: left; }
+  .up { color: var(--accent2); font-weight: 800; }
+
+  .big-num { font-size: 44px; font-weight: 800; line-height: 1.1; }
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .term { border-left: 3px solid var(--accent); padding-left: 14px; }
+  .term b { font-size: 16px; }
+  .term p { font-size: 13.5px; color: #c4cdd6; line-height: 1.55; margin-top: 3px; }
+</style>
+</head>
+<body>
+<div id="stage-wrap"><div id="stage">
+
+<!-- ════════════════ SLIDE 1 : 표지 ════════════════ -->
+<section class="slide active">
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="kicker">RAG TECHNICAL REPORT · 16:9</div>
+    <h1>RAG 이해하기<br><span style="color:var(--accent)">검색 증강 생성</span>의 기본부터 실전까지</h1>
+    <p style="font-size:20px; color:var(--muted); margin-top:22px; line-height:1.6;">
+      <b style="color:var(--text)">markdown_rag</b> 프로젝트로 배우는 RAG —
+      기본 개념 · 적용된 7단계 고도화 기술 · 향후 확장 로드맵
+    </p>
+    <div class="pill-row" style="margin-top:34px;">
+      <span class="tag blue" style="font-size:13px; padding:6px 14px;">문서 12,131건</span>
+      <span class="tag green" style="font-size:13px; padding:6px 14px;">청크 51만+</span>
+      <span class="tag gold" style="font-size:13px; padding:6px 14px;">Hit@5 100%</span>
+      <span class="tag purple" style="font-size:13px; padding:6px 14px;">테스트 443개 · 커버리지 100%</span>
+    </div>
+  </div>
+  <div class="foot"><span>markdown_rag — 다국어 시맨틱 검색 &amp; 하이브리드 RAG 시스템</span><span>2026.06</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 2 : 왜 RAG인가 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 1 — 기본 개념</div>
+  <h2>왜 RAG가 필요한가?</h2>
+  <p class="sub">LLM(대규모 언어 모델)은 똑똑하지만, 혼자서는 해결하지 못하는 3가지 근본적 한계가 있습니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom:18px;">
+      <div class="card">
+        <h3>🌫️ 환각 (Hallucination)</h3>
+        <p>모르는 내용도 그럴듯하게 지어냅니다. "RFC 2328의 3.2절 내용은?" 같은 질문에 존재하지 않는 내용을 자신 있게 답할 수 있습니다.</p>
+      </div>
+      <div class="card">
+        <h3>📅 지식의 시점 한계</h3>
+        <p>학습 데이터 마감 시점 이후의 정보를 모릅니다. 어제 업데이트된 장비 매뉴얼이나 신규 정책은 답할 수 없습니다.</p>
+      </div>
+      <div class="card">
+        <h3>🔒 사내 문서 접근 불가</h3>
+        <p>회사 내부 매뉴얼, 기술 문서, 위키는 학습된 적이 없습니다. CCIE 교재나 다산/유비쿼스 장비 설정법은 모델 안에 없습니다.</p>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <h3 style="color:var(--accent)">💡 해결책: RAG (Retrieval-Augmented Generation, 검색 증강 생성)</h3>
+      <p style="font-size:16px;">질문이 들어오면 <b>① 내 문서 저장소에서 관련 내용을 먼저 검색(Retrieval)</b>하고,
+      찾아낸 근거 문서를 <b>② LLM에게 함께 전달하여 답변을 생성(Generation)</b>하게 하는 방식입니다.
+      즉, <b style="color:var(--text)">"오픈북 시험"</b>을 치르게 하는 것 — 모델이 외운 지식이 아니라 <b>실제 문서를 근거로</b> 답하므로 환각이 줄고, 최신·사내 문서도 활용할 수 있습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기본 개념</span><span>2 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 3 : RAG 3단계 구조 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 1 — 기본 개념</div>
+  <h2>RAG의 기본 구조 — 3단계 파이프라인</h2>
+  <p class="sub">모든 RAG 시스템은 본질적으로 「인덱싱 → 검색 → 생성」 세 단계로 구성됩니다.</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:20px;">
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">📚</div><b>1. 인덱싱 (Indexing)</b>
+        <span>문서를 작은 조각(청크)으로 나누고, 각 조각을 숫자 벡터(임베딩)로 변환해 벡터 DB에 저장.
+        <br><b style="color:var(--accent2)">"검색 가능한 도서관 만들기"</b></span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🔍</div><b>2. 검색 (Retrieval)</b>
+        <span>사용자 질문도 벡터로 변환한 뒤, 의미가 가장 가까운 청크 Top-K개를 찾아냄.
+        <br><b style="color:var(--accent)">"질문과 관련된 페이지 찾기"</b></span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">✍️</div><b>3. 생성 (Generation)</b>
+        <span>검색된 청크들을 "참고 자료"로 프롬프트에 넣고, LLM이 근거 기반 답변을 작성.
+        <br><b style="color:var(--accent3)">"자료 보고 답안 쓰기"</b></span>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>⏱️ 사전 작업 vs 실시간</h3>
+        <p><b>인덱싱</b>은 문서가 추가/변경될 때 한 번만 수행하는 <b>사전 작업</b>이고,
+        <b>검색 + 생성</b>은 질문이 들어올 때마다 실행되는 <b>실시간 작업</b>입니다.
+        그래서 인덱싱 품질(청킹 전략)이 전체 시스템 품질의 절반을 결정합니다.</p>
+      </div>
+      <div class="card">
+        <h3>🆚 파인튜닝과의 차이</h3>
+        <p>파인튜닝은 모델 자체를 재학습시키는 방식(비싸고 느림, 갱신 어려움),
+        RAG는 모델은 그대로 두고 <b>지식만 외부 DB로 분리</b>하는 방식입니다.
+        문서가 자주 바뀌는 환경에선 RAG가 압도적으로 유리합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기본 개념</span><span>3 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 4 : 핵심 용어 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 1 — 기본 개념</div>
+  <h2>핵심 용어 사전 — 이것만 알면 RAG 대화 가능</h2>
+  <p class="sub">RAG 문서나 코드를 읽을 때 반복 등장하는 7가지 필수 개념입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap: 14px 36px; align-content:start;">
+    <div class="term"><b>청킹 (Chunking)</b>
+      <p>긴 문서를 검색 가능한 작은 조각으로 나누는 것. 너무 크면 잡음이 섞이고, 너무 작으면 맥락이 끊깁니다. (본 프로젝트: 최대 1,000자 + 중첩 100자)</p></div>
+    <div class="term"><b>임베딩 (Embedding)</b>
+      <p>텍스트를 의미를 담은 숫자 배열(벡터)로 변환. "인증 방식"과 "Authentication"처럼 표현이 달라도 의미가 비슷하면 벡터도 가까워집니다.</p></div>
+    <div class="term"><b>벡터 DB (Vector Database)</b>
+      <p>수십만 개 벡터 중에서 질문 벡터와 가장 가까운 것을 빠르게 찾아주는 전용 데이터베이스. (본 프로젝트: ChromaDB)</p></div>
+    <div class="term"><b>유사도 검색 (Similarity Search)</b>
+      <p>벡터 간 거리(코사인 유사도 등)를 계산해 "의미가 가까운" 문서를 찾는 것. 키워드가 일치하지 않아도 의미로 검색됩니다.</p></div>
+    <div class="term"><b>Top-K</b>
+      <p>검색 결과 중 상위 K개만 LLM에게 전달. K가 크면 정보가 풍부하지만 잡음과 비용이 늘어납니다. (본 프로젝트: 기본 5)</p></div>
+    <div class="term"><b>키워드 검색 (BM25)</b>
+      <p>전통적 검색엔진 방식. 정확한 용어 매칭(예: "RFC 2328", 명령어 이름)에 강해서 벡터 검색의 약점을 보완합니다.</p></div>
+    <div class="term"><b>컨텍스트 윈도우 (Context Window)</b>
+      <p>LLM이 한 번에 읽을 수 있는 텍스트 분량 제한. 검색된 청크 + 질문 + 답변이 이 안에 들어가야 하므로 "무엇을 넣을지" 선별이 중요합니다.</p></div>
+    <div class="term"><b>Hit@K / MRR (평가 지표)</b>
+      <p>Hit@K: 정답 문서가 상위 K개 안에 있는 비율. MRR: 정답이 몇 등으로 검색됐는지의 평균(1등이면 1.0). 검색 품질을 숫자로 측정하는 표준 지표입니다.</p></div>
+  </div>
+  <div class="foot"><span>PART 1 · RAG 기본 개념</span><span>4 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 5 : 프로젝트 소개 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용</div>
+  <h2>markdown_rag 프로젝트 한눈에 보기</h2>
+  <p class="sub">네트워크 기술 문서(RFC·CCIE·장비 매뉴얼) 12,131건을 대상으로 한 한국어/영어 하이브리드 RAG 시스템입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.2fr 1fr 1fr; margin-bottom:16px;">
+      <div class="card">
+        <h3>📦 코퍼스 (검색 대상 문서)</h3>
+        <ul>
+          <li><b>IETF RFC</b> — 11,449건 (인터넷 표준)</li>
+          <li><b>Cisco CCIE 교재</b> — 103건 (네트워크 이론)</li>
+          <li><b>다산·유비쿼스 장비 매뉴얼</b> — 579건 (CLI 실무)</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">"표준 ↔ 이론 ↔ CLI 구현" 3계층 지식을 교차 검색하는 것이 핵심 과제</p>
+      </div>
+      <div class="card">
+        <h3>🛠️ 두 가지 사용 모드</h3>
+        <ul>
+          <li><b>Search 모드</b> — LLM 없이 시맨틱 검색만 (빠름, 무료)</li>
+          <li><b>Ask 모드</b> — 검색 + LLM 답변 생성 (Full RAG)</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">CLI(<code>mdrag</code>)와 REST API(포트 8900) 동시 제공</p>
+      </div>
+      <div class="card">
+        <h3>🧠 LLM 백엔드 (교체 가능)</h3>
+        <ul>
+          <li><b>OpenAI</b> — gpt-4o-mini (클라우드)</li>
+          <li><b>로컬 SLM</b> — EXAONE 4.0 1.2B (GGUF, CPU 구동)</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">폐쇄망에서도 외부 API 없이 완전 로컬 구동 가능</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>⚙️ 기술 스택</h3>
+      <div class="pill-row" style="margin-top:6px;">
+        <span class="tag blue">Python 3.11+</span>
+        <span class="tag blue">ChromaDB (벡터 DB)</span>
+        <span class="tag green">multilingual-e5-small (임베딩 · 384차원)</span>
+        <span class="tag green">rank-bm25 + kiwipiepy (한국어 형태소)</span>
+        <span class="tag gold">bge-reranker-v2-m3 (리랭킹)</span>
+        <span class="tag purple">llama-cpp-python (로컬 LLM)</span>
+        <span class="tag purple">FastAPI + Pydantic</span>
+        <span class="tag red">markdown-it-py (AST 파싱)</span>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>5 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 6 : 인덱싱 파이프라인 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용</div>
+  <h2>① 인덱싱 파이프라인 — 문서를 검색 가능하게 만들기</h2>
+  <p class="sub">Markdown 파일이 검색 가능한 벡터가 되기까지의 과정. 27,000+ 파일을 배치로 처리합니다 (Phase 5).</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:20px;">
+      <div class="step"><div class="ic">📄</div><b>Markdown 수집</b><span>디렉토리 스캔<br>변경 감지</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🌲</div><b>AST 파싱</b><span>markdown-it-py로<br>문서 구조 분석</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">✂️</div><b>구조 인식 청킹</b><span>헤더 계층 기준 분할<br>최대 1,000자 + 중첩 100자</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🏷️</div><b>메타데이터 추출</b><span>doc_type (rfc/ccie/manual)<br>language (ko/en)</span></div>
+      <div class="arr">→</div>
+      <div class="step"><div class="ic">🔢</div><b>이중 인덱스</b><span>임베딩 → ChromaDB<br>토큰화 → BM25 인덱스</span></div>
+    </div>
+    <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="card">
+        <h3><span class="tag green">핵심</span> 구조 인식 청킹</h3>
+        <p>글자 수로 기계적으로 자르지 않고 <b>Markdown 헤더 계층(#, ##, ###)을 따라</b> 의미 단위로 분할합니다.
+        섹션 제목이 청크에 함께 보존되어 "이 청크가 어느 주제에 속하는지" 맥락이 유지됩니다.</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag blue">Phase 1</span> 다국어 임베딩</h3>
+        <p><code>intfloat/multilingual-e5-small</code>(384차원)로 한국어 질문 ↔ 영어 문서 간
+        <b>언어 교차 검색</b>이 가능합니다. "OSPF 영역 설정"으로 영어 RFC를 찾을 수 있는 이유입니다.</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag blue">Phase 2</span> 메타데이터 필터링</h3>
+        <p>청크마다 문서 타입과 언어를 태깅해 <code>--doc-type rfc --language ko</code>처럼
+        <b>검색 범위를 좁힐 수 있습니다</b>. 잡음 감소 + 속도 향상 효과.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>6 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 7 : 하이브리드 검색 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용</div>
+  <h2>② 하이브리드 검색 — 벡터 + 키워드의 결합 <span class="tag blue" style="font-size:14px; vertical-align:8px;">Phase 3</span></h2>
+  <p class="sub">벡터 검색과 BM25는 서로의 약점을 정확히 보완합니다. 둘을 합치는 것이 현대 RAG의 표준입니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <h3>🧭 벡터 검색 (의미 기반)</h3>
+        <ul>
+          <li><b>강점</b>: 표현이 달라도 의미가 같으면 찾음 — "인증 방식" ↔ "Authentication mechanism"</li>
+          <li><b>약점</b>: 고유명사·정확한 코드에 약함 — "RFC 2328", <code>show ip ospf</code> 같은 정확 매칭을 놓침</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent3);">
+        <h3>🔑 BM25 키워드 검색 (단어 기반)</h3>
+        <ul>
+          <li><b>강점</b>: 정확한 용어·명령어·번호 매칭에 강함 — 기술 문서 검색의 필수 요소</li>
+          <li><b>약점</b>: 동의어·번역 표현을 못 찾음. 한국어는 조사 분리가 필요 → <b>kiwipiepy 형태소 분석</b>으로 해결</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(63,185,80,.5);">
+      <h3 style="color:var(--accent2)">🔀 RRF (Reciprocal Rank Fusion) — 두 결과를 합치는 방법</h3>
+      <p style="font-size:15px;">두 검색의 점수 체계가 달라 단순 합산이 불가능하므로, <b>순위(rank)만 사용해 결합</b>합니다:
+      각 결과의 점수를 <code>1 / (k + 순위)</code>로 환산해 더하면, 양쪽 모두에서 상위권인 문서가 자연스럽게 1등이 됩니다.
+      벡터 가중치 <code>alpha=0.7</code>로 의미 검색을 약간 우대 — <code>mdrag search "인증 방식" --search-mode hybrid</code></p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>7 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 8 : 리랭킹 & HyDE ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용</div>
+  <h2>③ 검색 정확도 끌어올리기 — 리랭킹 &amp; HyDE</h2>
+  <p class="sub">1차 검색 결과를 한 번 더 다듬는 두 가지 고급 기법이 적용되어 있습니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; align-content:start;">
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <h3><span class="tag gold">Phase 4</span> 크로스 인코더 리랭킹</h3>
+      <p style="margin-bottom:10px;"><b>2단계 검색 전략</b> — 빠른 검색기로 후보 20개를 넓게 가져온 뒤(<code>initial_top_k=20</code>),
+      더 정밀하지만 느린 모델로 재채점하여 최종 Top 5를 선별합니다.</p>
+      <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.7;">
+        <b>임베딩(바이 인코더)</b>: 질문과 문서를 <b>따로</b> 벡터화 → 빠르지만 대략적<br>
+        <b>크로스 인코더</b>: 질문+문서를 <b>한 쌍으로 함께</b> 읽고 관련도 채점 → 느리지만 정밀<br>
+        <span style="color:var(--muted)">모델: BAAI/bge-reranker-v2-m3 (다국어 지원)</span>
+      </div>
+      <p style="margin-top:10px; color:var(--muted);">"서류 전형(임베딩)으로 20명 추리고, 면접(리랭커)으로 5명 선발"하는 구조</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4);">
+      <h3><span class="tag purple">Phase 6</span> HyDE (가상 문서 임베딩)</h3>
+      <p style="margin-bottom:10px;"><b>질문과 문서는 생김새가 다르다</b>는 문제를 해결합니다.
+      "OSPF가 뭐야?"(질문체)와 "OSPF는 링크 상태 라우팅 프로토콜로..."(설명체)는 벡터 공간에서 거리가 있습니다.</p>
+      <div style="background:var(--panel2); border-radius:10px; padding:12px 14px; font-size:13.5px; line-height:1.7;">
+        ① 질문을 받으면 LLM이 <b>가상의 정답 문서</b>를 먼저 작성<br>
+        ② 질문 대신 <b>그 가상 문서를 임베딩</b>하여 검색<br>
+        ③ "문서 ↔ 문서" 비교가 되어 유사도 매칭 정확도 향상
+      </div>
+      <p style="margin-top:10px; color:var(--muted);">+ 검색된 청크의 <b>인접 청크를 함께 컨텍스트에 추가</b>해 잘린 맥락을 복원</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>8 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 9 : 온톨로지 개요 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용 · 핵심 차별점</div>
+  <h2>④ 온톨로지 증강 검색 — 이 프로젝트의 시그니처 <span class="tag red" style="font-size:14px; vertical-align:8px;">Phase 7</span></h2>
+  <p class="sub">"OSPF area 설정"이라는 질문 하나가 표준(RFC) · 이론(CCIE) · 실무(장비 매뉴얼)에 흩어져 있다면? — 지식 카드로 연결합니다.</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.1fr 1fr; align-content:start;">
+      <div class="card">
+        <h3>🃏 온톨로지 카드 = 사람이 만든 지식 지도 (69장)</h3>
+        <p style="margin-bottom:10px;">프로토콜·개념·RFC·장비별로 <b>핵심 엔티티를 정의한 카드</b>를 보조 코퍼스(<code>input_ontology/</code>)로 운영합니다.
+        각 카드는 YAML frontmatter로 <b>실제 문서와의 연결 고리</b>를 가집니다.</p>
+        <div style="background:var(--panel2); border-radius:10px; padding:12px 16px; font-size:12.5px; line-height:1.75;" class="mono">
+<span style="color:var(--accent5)">id:</span> proto:ospf  <span style="color:var(--muted)"># 엔티티 8종 / 관계 14종</span><br>
+<span style="color:var(--accent5)">name_ko:</span> 개방형 최단 경로 우선<br>
+<span style="color:var(--accent5)">defined_by:</span> [rfc:2328]          <span style="color:var(--muted)"># → 표준</span><br>
+<span style="color:var(--accent5)">taught_in:</span> [CCIE_Vol1/04_...md] <span style="color:var(--muted)"># → 이론</span><br>
+<span style="color:var(--accent5)">documented_in:</span> [다산_L3]          <span style="color:var(--muted)"># → 실무 CLI</span><br>
+<span style="color:var(--accent5)">keywords_ko:</span> [영역, 인접관계, 헬로]
+        </div>
+      </div>
+      <div class="card">
+        <h3>📂 카드 구성 (총 69장)</h3>
+        <ul style="line-height:1.85;">
+          <li><b>protocols</b> (18) — OSPF, BGP, STP, VLAN, DHCP, GPON ...</li>
+          <li><b>concepts</b> (14) — ospf-area, bgp-as-path, vlan-trunk ...</li>
+          <li><b>rfcs</b> (13) — 2328, 4271, 8200, 5905 ...</li>
+          <li><b>standards</b> (3) — IEEE 802.1D/Q, ITU-T G.984</li>
+          <li><b>features</b> (7) — mac-address-table, port-mirroring ...</li>
+          <li><b>vendors</b> (2) + <b>devices</b> (8) — 다산, 유비쿼스 장비</li>
+        </ul>
+        <p style="margin-top:8px; color:var(--muted);">+ 영문/한글 <b>별칭 사전</b>(alias dictionary)으로 "스패닝트리"="STP"="Spanning Tree" 통합</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>9 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 10 : 온톨로지 메커니즘 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용 · 핵심 차별점</div>
+  <h2>온톨로지 검색 메커니즘 — 4단계 동작 원리</h2>
+  <p class="sub"><code>mdrag search "OSPF area 설정" --mode ontology</code> 실행 시 내부에서 일어나는 일</p>
+  <div class="body">
+    <div class="flow" style="margin-bottom:18px;">
+      <div class="step" style="border-top:3px solid var(--accent);">
+        <div class="ic">🔍🔍</div><b>1. 이중 검색</b>
+        <span>main 코퍼스(51만 청크)와<br>온톨로지 코퍼스(69 카드)를<br><b>동시에</b> 하이브리드 검색</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent2);">
+        <div class="ic">🔀</div><b>2. RRF 결합</b>
+        <span>두 결과를 Reciprocal<br>Rank Fusion으로<br>하나의 순위로 통합</span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent3);">
+        <div class="ic">🧭</div><b>3. 참조 경로 주입</b>
+        <span>카드가 검색되면 frontmatter의<br><code>taught_in</code>/<code>documented_in</code>을 따라<br>main 코퍼스 청크를 <b>자동 주입</b></span>
+      </div>
+      <div class="arr">→</div>
+      <div class="step" style="border-top:3px solid var(--accent4);">
+        <div class="ic">🏷️</div><b>4. 출처 표시</b>
+        <span><code>[ONTO CARD]</code> 카드 자체<br><code>[INJECTED via 카드명]</code> 주입<br>일반 = main 직접 hit</span>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(255,123,114,.45); background: linear-gradient(180deg, rgba(255,123,114,.05), var(--panel));">
+      <h3 style="color:var(--accent5)">💡 왜 효과적인가 — "지식 그래프 라이트(Knowledge Graph Lite)"</h3>
+      <p style="font-size:15px;">벡터 유사도만으로는 "OSPF 질문 → 다산 장비 CLI 매뉴얼"처럼 <b>표현이 전혀 다른 문서를 연결할 수 없습니다.</b>
+      온톨로지 카드는 사람이 검증한 관계(defined_by, taught_in, documented_in)를 통해 이 간극을 다리처럼 이어줍니다.
+      GraphRAG의 핵심 아이디어를 <b>69장의 카드와 JSON 매핑만으로 경량 구현</b>한 사례 — CCIE Hit@5가 60% → 100%로 급등한 직접적 원인입니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>10 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 11 : 성능 결과 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 2 — 프로젝트 적용 · 검증</div>
+  <h2>성능 검증 — 숫자로 보는 개선 효과</h2>
+  <p class="sub">검증 데이터셋 100건(질문-정답 문서 쌍) 기준, baseline(hybrid) 대비 ontology 모드 비교</p>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: 1.3fr 1fr; align-content:start;">
+      <div class="card">
+        <table class="tbl">
+          <tr><th>지표</th><th>baseline (hybrid)</th><th>ontology 모드</th><th>변화</th></tr>
+          <tr><td>Passed (100건 중)</td><td>86</td><td><b>98</b></td><td class="up">+12</td></tr>
+          <tr><td>Hit@5 — 전체</td><td>88%</td><td><b>100%</b></td><td class="up">+12%p</td></tr>
+          <tr><td><b>Hit@5 — CCIE</b></td><td>18/30 (60%)</td><td><b>30/30 (100%)</b></td><td class="up">+40%p</td></tr>
+          <tr><td>MRR (정답 순위 품질)</td><td>0.856</td><td><b>0.893</b></td><td class="up">+0.037</td></tr>
+          <tr><td>평균 응답 시간</td><td>1,538ms</td><td>1,893ms</td><td style="color:var(--accent3)">+355ms</td></tr>
+        </table>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="card" style="text-align:center;">
+          <div class="big-num" style="color:var(--accent2)">60% → 100%</div>
+          <p style="margin-top:6px;">CCIE 문서 Hit@5 — 온톨로지 카드가 가장 약했던 영역을 완전히 해결</p>
+        </div>
+        <div class="card">
+          <h3>🧪 품질 운영 원칙</h3>
+          <ul>
+            <li>질문 100건의 <b>검증 데이터셋</b>으로 모든 변경을 회귀 측정</li>
+            <li>테스트 <b>443개, 커버리지 100%</b> 유지</li>
+            <li>속도 비용(+355ms)을 정확도(+12%p)와 명시적으로 트레이드오프</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px; border-color: rgba(88,166,255,.4);">
+      <p style="font-size:15px;"><b style="color:var(--accent)">교훈:</b> RAG 개선은 "감"이 아니라 <b>측정 가능한 평가 체계</b> 위에서 이뤄져야 합니다.
+      Phase 1~7의 모든 단계가 동일한 100건 데이터셋으로 검증되었기에, 각 기법의 기여도를 정확히 알 수 있었습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 2 · 프로젝트 적용 기술</span><span>11 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 12 : 향후 기술 1 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — 향후 확장 기술</div>
+  <h2>앞으로 적용할 수 있는 기술 ① — 검색 품질 고도화</h2>
+  <p class="sub">현재 구조에서 자연스럽게 이어지는 다음 단계의 검색 기법들입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card">
+      <h3><span class="tag green">우선순위 높음</span> GraphRAG (지식 그래프 RAG)</h3>
+      <p>현재의 온톨로지 카드(69장, 수동)를 <b>완전한 지식 그래프로 확장</b>.
+      LLM이 문서에서 엔티티·관계를 자동 추출해 그래프를 구축하고, 다중 홉 질문
+      ("RFC 2328을 구현한 장비 중 GPON을 지원하는 것은?")에 그래프 탐색으로 답합니다.
+      이미 entity/relation 스키마가 있어 전환 비용이 낮습니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag green">우선순위 높음</span> Contextual Retrieval (맥락 보강 청킹)</h3>
+      <p>인덱싱 시 각 청크 앞에 <b>"이 청크는 어떤 문서의 어떤 맥락인지" 설명을 LLM으로 생성해 붙인 뒤</b> 임베딩하는 기법(Anthropic 발표).
+      잘린 청크의 맥락 소실 문제를 근본적으로 해결하며, 검색 실패율을 크게 줄이는 것으로 알려져 있습니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag blue">중기</span> 쿼리 변환 — Multi-Query &amp; 분해</h3>
+      <p>HyDE에서 한 걸음 더: 하나의 질문을 <b>여러 관점의 쿼리로 재작성</b>(Multi-Query)하거나
+      복합 질문을 <b>하위 질문으로 분해</b>(Decomposition)해 각각 검색 후 결합(RAG-Fusion).
+      "다산과 유비쿼스의 VLAN 설정 차이"같은 비교 질문에 효과적입니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag blue">중기</span> 임베딩 파인튜닝 &amp; ColBERT</h3>
+      <p>네트워크 도메인 질문-문서 쌍으로 <b>임베딩 모델을 파인튜닝</b>하면 전문 용어 검색력이 향상됩니다.
+      또한 토큰 단위로 정밀 매칭하는 <b>ColBERT(late interaction)</b>는 바이 인코더의 속도와 크로스 인코더의 정밀도 사이의 균형점을 제공합니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 향후 확장 기술</span><span>12 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 13 : 향후 기술 2 ════════════════ -->
+<section class="slide">
+  <div class="kicker">PART 3 — 향후 확장 기술</div>
+  <h2>앞으로 적용할 수 있는 기술 ② — 자기 검증 &amp; 에이전트화</h2>
+  <p class="sub">검색을 넘어, 시스템이 스스로 판단하고 행동하는 차세대 RAG 패러다임입니다.</p>
+  <div class="body grid" style="grid-template-columns: 1fr 1fr; gap:14px; align-content:start;">
+    <div class="card">
+      <h3><span class="tag purple">패러다임</span> Self-RAG / CRAG (자기 교정 RAG)</h3>
+      <p>검색 결과를 LLM이 <b>스스로 평가</b>: "이 문서가 질문과 관련 있나? 답변이 문서에 근거하나?"
+      관련성이 낮으면 <b>재검색하거나 쿼리를 수정</b>(Corrective RAG)합니다.
+      잘못된 문서로 잘못된 답을 만드는 RAG 최대의 리스크를 구조적으로 차단합니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag purple">패러다임</span> Agentic RAG (에이전트형 RAG)</h3>
+      <p>고정 파이프라인 대신 <b>LLM 에이전트가 검색 전략을 동적으로 선택</b>:
+      단순 질문은 벡터 검색만, 비교 질문은 분해 후 다중 검색, 설정 질문은 온톨로지 모드 —
+      질문 유형에 따라 도구를 골라 쓰고, 필요시 여러 번 검색을 반복합니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag gold">운영</span> RAGAS 기반 자동 평가 + 답변 품질 측정</h3>
+      <p>현재는 검색 품질(Hit@5, MRR)만 측정 — 다음 단계는 <b>생성 품질 평가</b>입니다.
+      RAGAS 같은 프레임워크로 <b>충실성(faithfulness)·답변 관련성·컨텍스트 정밀도</b>를 자동 채점하고,
+      LLM-as-Judge로 회귀 테스트를 답변 차원까지 확장합니다.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag gold">운영</span> 시맨틱 캐싱 &amp; 멀티모달 확장</h3>
+      <p>유사 질문의 답변을 캐싱해 응답 시간(현재 ~1.9초)을 단축하고,
+      장비 매뉴얼의 <b>네트워크 토폴로지 그림·표를 멀티모달 임베딩</b>으로 인덱싱하면
+      "이 그림의 구성에서..." 같은 질문도 처리할 수 있습니다.</p>
+    </div>
+  </div>
+  <div class="foot"><span>PART 3 · 향후 확장 기술</span><span>13 / 14</span></div>
+</section>
+
+<!-- ════════════════ SLIDE 14 : 정리 ════════════════ -->
+<section class="slide">
+  <div class="kicker">SUMMARY</div>
+  <h2>정리 — markdown_rag의 RAG 진화 로드맵</h2>
+  <p class="sub">기본 RAG에서 출발해 7단계 고도화를 거쳐, 지식 그래프와 에이전트형 RAG로 향합니다.</p>
+  <div class="body">
+    <div style="display:flex; gap:12px; margin-bottom:20px;">
+      <div class="card" style="flex:1; border-top:3px solid var(--accent2);">
+        <h3 style="color:var(--accent2)">✅ 완료 (Phase 1–7)</h3>
+        <ul>
+          <li>다국어 임베딩 + 메타데이터 필터</li>
+          <li>하이브리드 검색 (BM25+벡터+RRF)</li>
+          <li>크로스 인코더 리랭킹 · HyDE</li>
+          <li>온톨로지 증강 검색 (Hit@5 100%)</li>
+          <li>로컬 SLM (EXAONE 4.0) 폐쇄망 지원</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent);">
+        <h3 style="color:var(--accent)">🔜 다음 단계</h3>
+        <ul>
+          <li>Contextual Retrieval (맥락 보강 청킹)</li>
+          <li>온톨로지 카드 → GraphRAG 확장</li>
+          <li>Multi-Query / 질문 분해</li>
+          <li>RAGAS 답변 품질 자동 평가</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1; border-top:3px solid var(--accent4);">
+        <h3 style="color:var(--accent4)">🔭 장기 비전</h3>
+        <ul>
+          <li>Self-RAG / CRAG 자기 교정</li>
+          <li>Agentic RAG (동적 검색 전략)</li>
+          <li>임베딩 도메인 파인튜닝</li>
+          <li>멀티모달 (그림·표) 인덱싱</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="border-color: rgba(88,166,255,.5); background: linear-gradient(180deg, rgba(88,166,255,.07), var(--panel));">
+      <h3 style="color:var(--accent)">🎯 핵심 메시지 3가지</h3>
+      <ul style="font-size:15px;">
+        <li><b>RAG = 검색 + 생성.</b> LLM에게 "오픈북"을 주는 것이며, 책(인덱스)의 품질이 답의 품질을 결정한다.</li>
+        <li><b>단일 기법은 없다.</b> 벡터+키워드+리랭킹+온톨로지처럼 약점을 보완하는 조합이 정답이다 — CCIE 60%→100%가 그 증거.</li>
+        <li><b>측정이 곧 개선이다.</b> 검증 데이터셋과 Hit@K/MRR 없이는 어떤 고도화도 검증할 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>markdown_rag — RAG 기술 리포트</span><span>14 / 14</span></div>
+</section>
+
+</div></div>
+
+<div id="nav">
+  <button id="prev" title="이전 (←)">◀</button>
+  <span id="pageinfo">1 / 14</span>
+  <button id="next" title="다음 (→ 또는 Space)">▶</button>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  const info = document.getElementById('pageinfo');
+  function show(i){
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    info.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  document.getElementById('prev').onclick = () => show(idx - 1);
+  document.getElementById('next').onclick = () => show(idx + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(idx + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(idx - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  // click right/left half to navigate
+  document.getElementById('stage').addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;
+    const r = document.getElementById('stage').getBoundingClientRect();
+    (e.clientX - r.left) > r.width / 2 ? show(idx + 1) : show(idx - 1);
+  });
+  // scale 1280x720 stage to fit viewport (16:9 preserved)
+  function fit(){
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.97;
+    document.getElementById('stage').style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+  show(0);
+})();
+</script>
+</body>
+</html>
