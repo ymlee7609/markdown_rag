@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유선NW RAG 시범 — 상세 추진계획 기반 투자 심의(3.5개월)</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root{
+  --magenta:#E6007E;
+  --magenta-deep:#B30062;
+  --magenta-soft:#FCE7F2;
+  --magenta-line:#F6C7DE;
+  --ink:#17151B;
+  --ink-2:#46414D;
+  --muted:#8C8792;
+  --line:#E8E4EC;
+  --surface:#FFFFFF;
+  --surface-2:#F7F5F9;
+  --surface-3:#F0EDF3;
+  --paper:#EDEAF0;
+  --good:#E6007E;
+  --ok:#B6A8C0;
+  --weak:#CFCAD6;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{height:100%;}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"tnum" 1,"case" 1;
+}
+
+/* ---------- deck / scroll ---------- */
+.deck{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+}
+.snap{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  scroll-snap-align:center;
+  padding:0;
+}
+.slide{
+  position:relative;
+  width:min(100vw, calc(100vh * 16 / 9));
+  height:min(100vh, calc(100vw * 9 / 16));
+  background:var(--surface);
+  overflow:hidden;
+  container-type:size;
+  box-shadow:0 .6vh 4vh rgba(23,21,27,.14);
+}
+.pad{
+  position:absolute;
+  inset:0;
+  padding:3.1em 3.6em 2.4em;
+  font-size:1.12cqw;
+  line-height:1.5;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-size:.78em;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  display:flex;
+  align-items:center;
+  gap:.7em;
+}
+.eyebrow::before{
+  content:"";
+  width:1.7em;height:.2em;background:var(--magenta);border-radius:1em;
+}
+.title{
+  font-size:2.05em;
+  font-weight:800;
+  line-height:1.12;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-top:.5em;
+}
+.subtitle{
+  font-size:.96em;
+  color:var(--ink-2);
+  margin-top:.55em;
+  font-weight:500;
+  max-width:46em;
+}
+.headrule{
+  height:1px;background:var(--line);margin:.95em 0 1.1em;
+}
+
+/* ---------- footer chrome inside slide ---------- */
+.foot{
+  position:absolute;left:3.6em;right:3.6em;bottom:1.25em;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.66em;color:var(--muted);letter-spacing:.04em;
+}
+.foot .brand{font-weight:700;color:var(--ink-2);}
+.foot .brand b{color:var(--magenta);}
+.pageno{font-variant-numeric:tabular-nums;font-weight:600;}
+
+/* ---------- COVER ---------- */
+.cover{background:var(--ink);}
+.cover .pad{justify-content:center;}
+.cover-grid{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(120% 120% at 88% 12%, rgba(230,0,126,.30) 0%, rgba(230,0,126,0) 46%),
+    radial-gradient(90% 90% at 6% 96%, rgba(230,0,126,.12) 0%, rgba(230,0,126,0) 50%);
+}
+.cover-lines{
+  position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:100% 2.4em;
+  mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);
+}
+.cover .eyebrow{color:#FF66B8;}
+.cover .eyebrow::before{background:#FF66B8;}
+.cover-tag{
+  font-size:.72em;font-weight:600;letter-spacing:.04em;color:#C9C4D0;
+  border:1px solid rgba(255,255,255,.22);border-radius:2em;
+  padding:.42em 1em;display:inline-flex;gap:.6em;align-items:center;
+}
+.cover-tag b{color:#fff;}
+.cover h1{
+  color:#fff;font-weight:800;font-size:3.55em;line-height:1.08;letter-spacing:-.025em;
+  margin-top:.55em;
+}
+.cover h1 .hl{color:#FF4FAE;}
+.cover .lede{
+  color:#D7D2DD;font-size:1.05em;font-weight:500;margin-top:.95em;max-width:30em;line-height:1.55;
+}
+.cover .thesis{
+  margin-top:1.5em;font-size:1.18em;font-weight:700;color:#fff;letter-spacing:-.01em;
+  border-left:.28em solid var(--magenta);padding-left:.8em;
+}
+.cover-meta{
+  position:absolute;left:3.6em;right:3.6em;bottom:2.4em;
+  display:flex;gap:2.6em;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.16);padding-top:1.15em;
+}
+.cover-meta .m{display:flex;flex-direction:column;gap:.25em;}
+.cover-meta .mk{font-size:.66em;letter-spacing:.14em;text-transform:uppercase;color:#9B96A2;font-weight:700;}
+.cover-meta .mv{font-size:.92em;color:#EDEAF0;font-weight:600;}
+
+/* ---------- generic body areas ---------- */
+.body{flex:1;min-height:0;display:flex;flex-direction:column;}
+.lead{font-size:1.02em;color:var(--ink-2);font-weight:500;max-width:54em;}
+.lead b{color:var(--ink);font-weight:700;}
+
+/* cards grid */
+.cards{display:grid;gap:.85em;margin-top:1.05em;}
+.c2{grid-template-columns:repeat(2,1fr);}
+.c3{grid-template-columns:repeat(3,1fr);}
+.c4{grid-template-columns:repeat(4,1fr);}
+.c5{grid-template-columns:repeat(5,1fr);}
+.card{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;
+  padding:1.05em 1.1em;display:flex;flex-direction:column;gap:.45em;min-height:0;
+}
+.card .num{
+  font-size:.72em;font-weight:800;color:var(--magenta);letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;
+}
+.card h3{font-size:1.0em;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.25;}
+.card p{font-size:.83em;color:var(--ink-2);line-height:1.5;}
+.card.accent{background:var(--magenta-soft);border-color:var(--magenta-line);}
+.card.dark{background:var(--ink);border-color:var(--ink);}
+.card.dark h3{color:#fff;}
+.card.dark p{color:#CFCAD6;}
+.card.dark .num{color:#FF66B8;}
+
+/* key callout box */
+.callout{
+  margin-top:1.0em;background:var(--ink);border-radius:.7em;color:#fff;
+  padding:1.05em 1.3em;display:flex;align-items:center;gap:1em;
+}
+.callout .k{font-size:.72em;font-weight:800;letter-spacing:.12em;color:#FF66B8;text-transform:uppercase;white-space:nowrap;}
+.callout p{font-size:1.0em;font-weight:600;line-height:1.45;}
+.callout p b{color:#FF8FC6;}
+
+/* tables */
+.tbl-wrap{margin-top:1.0em;overflow:auto;}
+table{width:100%;border-collapse:collapse;font-size:.85em;}
+th,td{text-align:left;padding:.72em .9em;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4;}
+thead th{
+  background:var(--ink);color:#fff;font-weight:700;font-size:.92em;letter-spacing:.01em;
+  border-bottom:none;
+}
+thead th:first-child{border-top-left-radius:.5em;}
+thead th:last-child{border-top-right-radius:.5em;}
+tbody tr:nth-child(even){background:var(--surface-2);}
+td.lab{font-weight:700;color:var(--ink);white-space:nowrap;}
+td.num,th.num{font-variant-numeric:tabular-nums;}
+.mk-good{color:var(--magenta);font-weight:800;}
+.mk-ok{color:var(--ink-2);font-weight:700;}
+.mk-weak{color:var(--weak);font-weight:700;}
+.hl-row{background:var(--magenta-soft)!important;}
+.hl-row td{border-bottom-color:var(--magenta-line);}
+.note{font-size:.7em;color:var(--muted);margin-top:.7em;line-height:1.5;}
+.note b{color:var(--ink-2);}
+
+/* two-col split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1.4em;margin-top:1.0em;flex:1;min-height:0;}
+.panel{background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;padding:1.1em 1.2em;display:flex;flex-direction:column;}
+.panel h4{font-size:.74em;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);font-weight:800;margin-bottom:.7em;}
+.tline{display:flex;gap:.7em;padding:.5em 0;border-bottom:1px dashed var(--line);font-size:.86em;}
+.tline:last-child{border-bottom:none;}
+.tline .b{color:var(--magenta);font-weight:800;}
+.tline span{color:var(--ink-2);line-height:1.45;}
+.tline span b{color:var(--ink);}
+
+/* problem list */
+.plist{display:flex;flex-direction:column;gap:.62em;margin-top:1.0em;}
+.pitem{display:flex;gap:.9em;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);border-left:.28em solid var(--magenta);border-radius:.5em;padding:.8em 1em;}
+.pitem .ph{font-size:.92em;font-weight:700;color:var(--ink);white-space:nowrap;min-width:7.5em;}
+.pitem .pd{font-size:.84em;color:var(--ink-2);line-height:1.45;}
+
+/* ---------- architecture diagram ---------- */
+.arch-frame{
+  flex:1;min-height:0;margin-top:1.0em;
+  border:.16em dashed var(--magenta-line);border-radius:.8em;
+  background:linear-gradient(180deg,var(--magenta-soft) 0%, #FFF6FB 100%);
+  padding:1.1em 1.2em;position:relative;display:flex;flex-direction:column;
+}
+.arch-badge{
+  position:absolute;top:-.95em;left:1.4em;background:var(--magenta);color:#fff;
+  font-size:.72em;font-weight:800;letter-spacing:.06em;padding:.34em 1em;border-radius:2em;
+  display:flex;align-items:center;gap:.5em;
+}
+.egress{
+  position:absolute;top:-.95em;right:1.4em;background:var(--ink);color:#fff;
+  font-size:.72em;font-weight:800;letter-spacing:.04em;padding:.34em 1em;border-radius:2em;
+  display:flex;align-items:center;gap:.5em;
+}
+.egress .x{color:#FF66B8;font-weight:900;}
+.pipe{display:flex;align-items:stretch;gap:.35em;flex:1;min-height:0;margin-top:.4em;}
+.stage{
+  flex:1;background:#fff;border:1px solid var(--magenta-line);border-radius:.6em;
+  padding:.85em .7em;display:flex;flex-direction:column;gap:.4em;justify-content:center;position:relative;
+}
+.stage .st{font-size:.74em;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-.01em;}
+.stage .sd{font-size:.66em;color:var(--ink-2);line-height:1.35;}
+.stage.gpu{border:1.5px solid var(--magenta);background:#fff;}
+.gpu-tag{
+  position:absolute;top:-.7em;right:.5em;background:var(--magenta);color:#fff;
+  font-size:.58em;font-weight:800;letter-spacing:.05em;padding:.2em .55em;border-radius:1em;
+}
+.arrow{display:flex;align-items:center;color:var(--magenta);font-size:1.1em;font-weight:900;}
+.src-list{display:flex;flex-wrap:wrap;gap:.3em;margin-top:.15em;}
+.chip{font-size:.6em;font-weight:600;color:var(--magenta-deep);background:var(--magenta-soft);border:1px solid var(--magenta-line);border-radius:1em;padding:.18em .5em;}
+.arch-foot{
+  margin-top:.85em;display:flex;justify-content:space-between;align-items:center;gap:1em;
+  font-size:.68em;color:var(--ink-2);
+}
+.arch-foot .stack{display:flex;gap:.4em;flex-wrap:wrap;}
+.tech{font-size:.64em;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.24em .6em;}
+
+/* roadmap */
+.road{display:grid;grid-template-columns:repeat(4,1fr);gap:.6em;margin-top:1.0em;flex:1;min-height:0;}
+.phase{display:flex;flex-direction:column;background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;overflow:hidden;}
+.phase .ph-top{padding:.7em .9em;background:var(--ink);color:#fff;display:flex;flex-direction:column;gap:.15em;}
+.phase.rec .ph-top{background:var(--magenta);}
+.phase .pp{font-size:.66em;font-weight:800;letter-spacing:.1em;color:#FF99CC;text-transform:uppercase;}
+.phase.rec .pp{color:#FFD6EC;}
+.phase .pt{font-size:.96em;font-weight:800;letter-spacing:-.01em;}
+.phase .pdur{font-size:.66em;color:#C9C4D0;font-weight:600;}
+.phase.rec .pdur{color:#FFE4F2;}
+.phase .ph-body{padding:.8em .9em;display:flex;flex-direction:column;gap:.4em;flex:1;}
+.phase .ph-body li{font-size:.76em;color:var(--ink-2);line-height:1.4;list-style:none;padding-left:.9em;position:relative;}
+.phase .ph-body li::before{content:"";position:absolute;left:0;top:.55em;width:.32em;height:.32em;border-radius:50%;background:var(--magenta);}
+.gate{font-size:.66em;font-weight:800;color:var(--magenta-deep);background:var(--magenta-soft);border:1px dashed var(--magenta-line);border-radius:.4em;padding:.4em .55em;margin-top:auto;line-height:1.35;}
+
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:.85em;margin-top:1.0em;}
+.metric{background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;padding:1.0em 1.1em;display:flex;flex-direction:column;gap:.3em;}
+.metric .mv{font-size:1.7em;font-weight:800;color:var(--magenta);letter-spacing:-.02em;line-height:1;}
+.metric .ml{font-size:.78em;color:var(--ink-2);font-weight:600;line-height:1.35;}
+.metric .ms{font-size:.66em;color:var(--muted);}
+
+/* ask / conclusion */
+.asklist{display:flex;flex-direction:column;gap:.7em;margin-top:.4em;}
+.ask{display:flex;gap:1em;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;padding:1.0em 1.2em;}
+.ask .an{font-size:1.3em;font-weight:800;color:#fff;background:var(--magenta);width:1.7em;height:1.7em;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ask .at{font-size:.95em;font-weight:700;color:var(--ink);}
+.ask .at span{display:block;font-size:.82em;font-weight:500;color:var(--ink-2);margin-top:.2em;line-height:1.4;}
+.next{margin-top:1.0em;display:flex;align-items:center;gap:.7em;flex-wrap:wrap;font-size:.8em;color:var(--ink-2);}
+.next b{color:var(--magenta);font-weight:800;}
+.nstep{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.4em .8em;font-weight:600;color:var(--ink);}
+.nsep{color:var(--magenta);font-weight:900;}
+
+/* ---------- fixed chrome ---------- */
+.progress{position:fixed;top:0;left:0;height:.34vh;background:var(--magenta);width:0;z-index:50;transition:width .25s;}
+.dots{position:fixed;right:1.3vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.85vh;z-index:50;}
+.dot{width:.78vh;height:.78vh;border-radius:50%;background:rgba(23,21,27,.22);border:none;cursor:pointer;padding:0;transition:all .2s;}
+.dot.active{background:var(--magenta);transform:scale(1.45);}
+
+@media (prefers-reduced-motion:reduce){
+  .deck{scroll-behavior:auto;}
+  *{transition:none!important;}
+}
+
+/* ---------- mobile fallback ---------- */
+@media (max-width:760px){
+  .deck{scroll-snap-type:none;height:auto;overflow:visible;}
+  .snap{height:auto;min-height:auto;padding:0;}
+  .slide{width:100vw;height:auto;min-height:auto;aspect-ratio:auto;container-type:normal;box-shadow:none;border-bottom:.5vh solid var(--paper);}
+  .pad{position:relative;inset:auto;font-size:15px;padding:26px 18px 46px;min-height:auto;}
+  .cover{min-height:90vh;}
+  .cover .pad{min-height:90vh;}
+  .cover-meta,.foot{position:relative;left:auto;right:auto;bottom:auto;}
+  .cover-meta{margin-top:26px;}
+  .foot{margin-top:24px;}
+  .c2,.c3,.c4,.c5,.metrics,.road,.split,.arch .pipe{grid-template-columns:1fr;}
+  .pipe{flex-direction:column;}
+  .arrow{transform:rotate(90deg);justify-content:center;padding:.2em 0;}
+  .split{display:flex;flex-direction:column;}
+  .dots{display:none;}
+  .progress{display:none;}
+  .cover h1{font-size:2em;}
+  .cover .thesis{font-size:1.1em;}
+  .title{font-size:1.6em;}
+  .metric .mv{font-size:1.5em;}
+  .tbl-wrap{-webkit-overflow-scrolling:touch;}
+}
+
+@media print{
+  body{background:#fff;}
+  .deck{height:auto;overflow:visible;display:block;}
+  .snap{height:auto;page-break-after:always;display:block;}
+  .slide{width:100%;height:auto;aspect-ratio:16/9;box-shadow:none;page-break-inside:avoid;}
+  .dots,.progress{display:none;}
+  @page{size:landscape;margin:0;}
+}
+
+/* ---------- gantt (detailed schedule) ---------- */
+.gantt{display:flex;flex-direction:column;margin-top:.7em;flex:1;min-height:0;}
+.gm-row,.wk-row,.grow{display:grid;grid-template-columns:11.8em repeat(14,1fr);align-items:center;}
+.gm{font-size:.6em;font-weight:800;letter-spacing:.03em;color:var(--magenta-deep);text-align:center;border-bottom:2px solid var(--magenta-line);padding:.12em 0 .22em;margin:0 .12em;}
+.wk-row{margin-top:.28em;}
+.wk{font-size:.54em;color:var(--muted);font-weight:700;text-align:center;}
+.gantt-body{position:relative;display:flex;flex-direction:column;gap:.26em;margin-top:.4em;flex:1;min-height:0;}
+.grow{height:1.5em;}
+.grow .gl{font-size:.64em;color:var(--ink-2);font-weight:600;line-height:1.12;padding:0 .5em 0 .55em;border-left:.26em solid var(--line);}
+.t-hw .gl{border-left-color:var(--ink);}
+.t-data .gl{border-left-color:var(--magenta);}
+.t-sw .gl{border-left-color:var(--magenta-deep);}
+.t-eval .gl{border-left-color:#E371AE;}
+.gtrack{grid-column:2/16;display:grid;grid-template-columns:repeat(14,1fr);height:100%;align-items:center;background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(100%/14 - 1px),var(--line) calc(100%/14 - 1px),var(--line) calc(100%/14));}
+.bar{height:1.0em;border-radius:.35em;display:flex;align-items:center;justify-content:center;font-size:.53em;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;letter-spacing:.02em;margin:0 1px;}
+.bar.hw{background:var(--ink);}
+.bar.data{background:var(--magenta);}
+.bar.sw{background:var(--magenta-deep);}
+.bar.eval{background:#F7D3E6;color:var(--magenta-deep);border:1px solid var(--magenta-line);}
+.gdiv{position:absolute;top:-.25em;bottom:1.2em;left:calc(11.8em + (100% - 11.8em) * 8 / 14);border-left:2px dashed var(--magenta);pointer-events:none;}
+.gdiv span{position:absolute;top:-.1em;left:.4em;font-size:.52em;font-weight:800;color:var(--magenta);white-space:nowrap;}
+.glegend{display:flex;gap:1.1em;flex-wrap:wrap;margin-top:.55em;font-size:.62em;color:var(--ink-2);align-items:center;}
+.glegend .lg{display:inline-flex;align-items:center;gap:.42em;font-weight:600;}
+.glegend .swatch{width:1.1em;height:.72em;border-radius:.22em;display:inline-block;}
+
+/* ---------- step explainer (RAG) ---------- */
+.steps{display:flex;align-items:stretch;gap:.45em;margin-top:1.0em;flex:1;min-height:0;}
+.step{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:.75em;padding:1.2em 1.2em;display:flex;flex-direction:column;gap:.5em;justify-content:center;position:relative;}
+.step.accent{background:var(--magenta-soft);border-color:var(--magenta-line);}
+.step .sn{width:1.9em;height:1.9em;border-radius:50%;background:var(--magenta);color:#fff;font-weight:800;font-size:.95em;display:flex;align-items:center;justify-content:center;}
+.step h3{font-size:1.05em;font-weight:800;color:var(--ink);letter-spacing:-.01em;line-height:1.2;}
+.step p{font-size:.84em;color:var(--ink-2);line-height:1.5;}
+.step-arrow{display:flex;align-items:center;color:var(--magenta);font-size:1.4em;font-weight:900;}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="dots" id="dots"></div>
+
+
+<div class="deck" id="deck">
+
+  <!-- 01 COVER -->
+  <section class="snap">
+    <div class="slide cover">
+      <div class="cover-grid"></div>
+      <div class="cover-lines"></div>
+      <div class="pad">
+        <div style="display:flex;gap:.7em;align-items:center;">
+          <span class="cover-tag"><b>U+</b> CQO · AI Study WG</span>
+          <span class="cover-tag">상세 추진계획 · 3.5개월</span>
+        </div>
+        <h1>유선NW 운영지원<br><span class="hl">사내 지식 AI</span> 시범 구축 계획</h1>
+        <p class="lede">현장(개발·검증·불만콜·장애처리)이 사내 문서에서 답을 즉시 찾도록 돕는 AI를 만드는 일과, 이를 위한 약 3.5개월 추진계획·투자(안). 방식은 RAG(검색 증강 생성)입니다.</p>
+        <p class="thesis">정답은 이미 사내 문서에 있습니다. 망분리 안에서, 근거와 함께, 즉시 찾도록 만듭니다.</p>
+      </div>
+      <div class="cover-meta">
+        <div class="m"><span class="mk">작성</span><span class="mv">AI Study WG (5인) / CQO</span></div>
+        <div class="m"><span class="mk">대상 분야</span><span class="mv">유선 네트워크 운영</span></div>
+        <div class="m"><span class="mk">기간</span><span class="mv">약 3.5개월 · 게이트형</span></div>
+        <div class="m"><span class="mk">보안등급</span><span class="mv">사내한</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 EXEC SUMMARY -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">한 장 요약 · Executive Summary</div>
+        <h2 class="title">무엇을 · 왜 RAG로 · 어떻게 · 무엇을 요청하나</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="cards c4">
+            <div class="card"><div class="num">무엇을</div><h3>사내 문서 기반 AI 도우미</h3><p>현장이 매뉴얼·규격·과거 사례에서 답을 즉시 찾도록 지원 (단일 업무부터 시작)</p></div>
+            <div class="card"><div class="num">왜 RAG</div><h3>지어내지 않고 근거로 답</h3><p>사내 문서를 검색해 출처와 함께 답변. 데이터는 망분리 내부에만 보관</p></div>
+            <div class="card"><div class="num">어떻게</div><h3>약 3.5개월 · 단일 노드</h3><p>HW 구축 2개월 동안 데이터·SW 준비를 병행 → GPU 도착 즉시 PoC 착수</p></div>
+            <div class="card accent"><div class="num">요청</div><h3>1억 미만 시범 투자</h3><p>약 5,000만~8,000만 원(견적 후 확정). 게이트 통과 시 본투자 별도 상정</p></div>
+          </div>
+          <div class="callout">
+            <span class="k">핵심 메시지</span>
+            <p>큰 투자 전에 <b>일정·비용·범위를 모두 통제한 작은 시범</b>으로 효과를 확인합니다. 정답은 사내 문서에 있고, RAG는 그 문서를 근거로 찾아 답하는 방식입니다.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">02</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 GOAL -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">목표 · 무엇을 하려는가</div>
+        <h2 class="title">현장이 답을 더 빠르고 정확하게 찾도록 돕는다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="split">
+            <div class="panel">
+              <h4>지금의 문제</h4>
+              <div class="tline"><span class="b">·</span><span><b>지식의 분산</b> — 매뉴얼·규격·보고서에 정보가 흩어져 탐색에 시간 소요</span></div>
+              <div class="tline"><span class="b">·</span><span><b>베테랑 의존</b> — 진단·원인분석이 숙련자 경험에 의존</span></div>
+              <div class="tline"><span class="b">·</span><span><b>반복 수작업</b> — 불만콜·장애처리 시 유사 사례를 매번 재검색</span></div>
+              <div class="tline"><span class="b">·</span><span><b>품질 편차</b> — 담당자·시간대별 대응 편차, 긴 온보딩</span></div>
+            </div>
+            <div class="panel">
+              <h4>만들려는 것</h4>
+              <div class="tline"><span class="b">→</span><span>질문하면 <b>사내 문서에서 근거를 찾아 출처와 함께 답하는 도우미</b></span></div>
+              <div class="tline"><span class="b">대상</span><span>개발 · 검증 · 불만콜 · 장애처리 현장</span></div>
+              <div class="tline"><span class="b">시작</span><span>효과가 가장 분명한 <b>장애처리 로그 해석 + 유사사례 검색</b> 1개부터</span></div>
+              <div class="tline"><span class="b">확장</span><span>게이트 통과 후 다른 업무로 단계 확대</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">03</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 WHAT IS RAG -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">개념 쉽게 · RAG란 무엇인가</div>
+        <h2 class="title">RAG = 먼저 찾아보고, 근거로 답하는 AI</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><h3>질문</h3><p>현장 담당자가 평소 말로 질문 (예: 이 장애 로그의 원인과 조치는?)</p></div>
+            <div class="step-arrow">&#8594;</div>
+            <div class="step"><div class="sn">2</div><h3>사내 문서에서 근거 검색</h3><p>매뉴얼·로그규격·과거 장애보고서·검증이력에서 관련 내용을 자동으로 찾음</p></div>
+            <div class="step-arrow">&#8594;</div>
+            <div class="step accent"><div class="sn">3</div><h3>근거 기반 답변 + 출처</h3><p>찾은 내용을 바탕으로 답을 작성하고, 어느 문서에서 나왔는지 출처를 함께 제시</p></div>
+          </div>
+          <div class="callout">
+            <span class="k">비유</span>
+            <p>무작정 답하는 신입이 아니라, <b>매뉴얼과 과거 사례를 “찾아보고” 근거와 함께 답하는 베테랑</b>처럼 동작합니다. 정식 명칭은 검색 증강 생성(Retrieval-Augmented Generation)입니다.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">04</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 WHY RAG -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">필요성 · 왜 RAG인가</div>
+        <h2 class="title">왜 일반 AI가 아니라 RAG인가</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="cards c3">
+            <div class="card"><div class="num">대안 A</div><h3>일반 챗봇 단독</h3><p>사내 문서를 모름 → 그럴듯하게 <b>지어낼 수 있음(환각)</b>, 출처 없음. 업무에 신뢰하기 어려움</p></div>
+            <div class="card"><div class="num">대안 B</div><h3>모델 재학습(파인튜닝)</h3><p>비싸고 느림. 문서가 바뀔 때마다 재학습 부담. 전문 인력·데이터 유출 위험 큼</p></div>
+            <div class="card accent"><div class="num">채택</div><h3>RAG (검색 증강)</h3><p>사내 문서를 근거로 답·출처 제시. <b>문서만 갱신하면 최신 반영</b>, 모델 재학습 불필요 → 빠르고 저렴·안전</p></div>
+          </div>
+          <div class="callout">
+            <span class="k">왜 우리에게 맞나</span>
+            <p>본 과제는 <b>정답이 이미 사내 문서에 존재</b>합니다. 따라서 새로 학습시키기보다 <b>문서를 잘 찾아 근거로 답하는 RAG</b>가 가장 적합하고, 망분리 안에서 데이터 유출 없이 운영할 수 있습니다.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">05</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 ARCHITECTURE -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">구성 · 아키텍처</div>
+        <h2 class="title">망분리 안에서 닫힌 단일 노드로 구성</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="arch-frame">
+            <div class="arch-badge">단일 GPU 노드 · 폐쇄망</div>
+            <div class="egress">외부 인터넷 egress <span class="x">= 0</span></div>
+            <div class="pipe">
+              <div class="stage">
+                <div class="st">사내 문서·로그</div>
+                <div class="sd">정답이 존재하는 원천</div>
+                <div class="src-list"><span class="chip">매뉴얼</span><span class="chip">로그규격</span><span class="chip">장애보고서</span><span class="chip">검증이력</span></div>
+              </div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage"><div class="st">수집·정제·청킹</div><div class="sd">문서 구조화·분할</div></div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage gpu"><span class="gpu-tag">GPU</span><div class="st">임베딩·벡터DB</div><div class="sd">의미 검색용 색인 생성</div></div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage gpu"><span class="gpu-tag">GPU</span><div class="st">검색·생성</div><div class="sd">리랭크 후 sLLM이 근거 기반 답변</div></div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage"><div class="st">현장 답변</div><div class="sd">출처·근거 함께 제시</div></div>
+            </div>
+            <div class="arch-foot">
+              <span>모든 데이터·추론이 <b>폐쇄망 단일 노드</b> 내에서 처리 — 외부 API 호출·데이터 반출 없음</span>
+              <span class="stack"><span class="tech">vLLM / Ollama</span><span class="tech">Vector DB</span><span class="tech">오픈소스 RAG</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">06</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 GANTT -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">전체 일정 · 약 3.5개월 (14주)</div>
+        <h2 class="title">HW 구축과 데이터·SW 준비를 병행한다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="gantt">
+            <div class="gm-row">
+              <div></div>
+              <div class="gm" style="grid-column:2/6;">M1 (1~4주)</div>
+              <div class="gm" style="grid-column:6/10;">M2 (5~8주)</div>
+              <div class="gm" style="grid-column:10/14;">M3 (9~12주)</div>
+              <div class="gm" style="grid-column:14/16;">M3.5</div>
+            </div>
+            <div class="wk-row">
+              <div></div>
+              <div class="wk">1</div><div class="wk">2</div><div class="wk">3</div><div class="wk">4</div><div class="wk">5</div><div class="wk">6</div><div class="wk">7</div><div class="wk">8</div><div class="wk">9</div><div class="wk">10</div><div class="wk">11</div><div class="wk">12</div><div class="wk">13</div><div class="wk">14</div>
+            </div>
+            <div class="gantt-body">
+              <div class="gdiv"><span>HW 준비완료(약 2개월)</span></div>
+              <div class="grow t-hw"><div class="gl">사양 확정·견적·발주/계약</div><div class="gtrack"><div class="bar hw" style="grid-column:1/3;"></div></div></div>
+              <div class="grow t-hw"><div class="gl">장비 입고·랙 설치·전원/배선</div><div class="gtrack"><div class="bar hw" style="grid-column:3/7;"></div></div></div>
+              <div class="grow t-hw"><div class="gl">환경 구축·망분리 연동·검수</div><div class="gtrack"><div class="bar hw" style="grid-column:7/9;">준비완료</div></div></div>
+              <div class="grow t-data"><div class="gl">데이터 범위·접근권한 협의(NW)</div><div class="gtrack"><div class="bar data" style="grid-column:1/3;"></div></div></div>
+              <div class="grow t-data"><div class="gl">데이터 수집·반입·정제·구조화</div><div class="gtrack"><div class="bar data" style="grid-column:2/7;"></div></div></div>
+              <div class="grow t-data"><div class="gl">청킹·품질검증·평가셋(정답셋) 구축</div><div class="gtrack"><div class="bar data" style="grid-column:5/10;"></div></div></div>
+              <div class="grow t-sw"><div class="gl">RAG 스택 설계·컴포넌트·보안검토</div><div class="gtrack"><div class="bar sw" style="grid-column:1/5;"></div></div></div>
+              <div class="grow t-sw"><div class="gl">파이프라인·프롬프트·리트리벌 설계</div><div class="gtrack"><div class="bar sw" style="grid-column:3/7;"></div></div></div>
+              <div class="grow t-sw"><div class="gl">임베딩·인덱싱 실행·파이프라인 통합</div><div class="gtrack"><div class="bar sw" style="grid-column:9/11;">GPU</div></div></div>
+              <div class="grow t-eval"><div class="gl">모델 선정기준·평가지표 정의</div><div class="gtrack"><div class="bar eval" style="grid-column:2/7;"></div></div></div>
+              <div class="grow t-eval"><div class="gl">모델 탑재·EXAONE·Qwen 벤치마크</div><div class="gtrack"><div class="bar eval" style="grid-column:10/13;">GPU</div></div></div>
+              <div class="grow t-eval"><div class="gl">PoC 실행·정확도/시간단축 측정·게이트</div><div class="gtrack"><div class="bar eval" style="grid-column:11/16;">게이트</div></div></div>
+            </div>
+            <div class="glegend">
+              <span class="lg"><span class="swatch" style="background:var(--ink);"></span>인프라(HW)</span>
+              <span class="lg"><span class="swatch" style="background:var(--magenta);"></span>데이터</span>
+              <span class="lg"><span class="swatch" style="background:var(--magenta-deep);"></span>SW(RAG 스택)</span>
+              <span class="lg"><span class="swatch" style="background:#F7D3E6;border:1px solid var(--magenta-line);"></span>모델·평가</span>
+              <span class="lg" style="color:var(--muted);">점선 = HW 준비 완료 시점 · 이전 구간은 데이터·SW 사전 병행</span>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">07</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 PRE-WORK DURING HW LEAD TIME -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">사전 병행 · HW 대기 2개월</div>
+        <h2 class="title">GPU를 기다리는 2개월을 빈 시간 없이 쓴다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th style="width:16%;">트랙</th><th>HW 대기 2개월 동안(사전) 할 일</th><th style="width:26%;">산출물</th></tr></thead>
+              <tbody>
+                <tr><td class="lab">데이터</td><td>수집범위·접근권한 협의 → 수집·반입 → 정제·구조화 → 청킹 설계 → 품질검증·정답셋 구축</td><td>정제 데이터셋 + 평가용 정답셋</td></tr>
+                <tr><td class="lab">SW (RAG 스택)</td><td>아키텍처·컴포넌트 선정(벡터DB·임베딩·추론서버) → 오픈소스 반입·보안검토 → 파이프라인·프롬프트 설계</td><td>RAG 스택 설계서 + 검증된 오픈소스 구성</td></tr>
+                <tr><td class="lab">모델·평가</td><td>EXAONE·Qwen 후보 조사·선정 기준 수립 → 평가 지표 정의(정확도·근거·응답시간)</td><td>모델 선정 기준 + 평가 체계</td></tr>
+                <tr><td class="lab">인프라(HW)</td><td>(병행) 사양 확정·견적·발주/계약 → 입고·설치·배선 → 환경 구축·망분리 연동·검수</td><td>추론 가능한 GPU 단일 노드</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <span class="k">효과</span>
+            <p>데이터·SW·평가 준비를 HW 구축과 <b>병행</b>하므로, <b>GPU 도착 즉시 임베딩·PoC에 착수</b>합니다. 전체 일정을 약 3.5개월로 단축하는 핵심입니다.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">08</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 DATA DETAIL -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">상세 · 데이터 준비·정제·검증</div>
+        <h2 class="title">RAG 성능의 7할은 데이터 품질에서 나온다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="plist">
+            <div class="pitem"><div class="ph">① 수집·반입</div><div class="pd">매뉴얼·로그규격·장애보고서·검증이력을 반입 (NW와 범위·접근권한 협의 선행)</div></div>
+            <div class="pitem"><div class="ph">② 정제</div><div class="pd">중복·노이즈 제거, 표·이미지 처리, 포맷 통일, 민감정보 점검 및 내부 접근통제</div></div>
+            <div class="pitem"><div class="ph">③ 구조화·청킹</div><div class="pd">문서를 검색 단위로 분할하고 출처·버전 등 메타데이터 부여</div></div>
+            <div class="pitem"><div class="ph">④ 검증·정답셋</div><div class="pd">품질 점검 + 평가용 정답셋(질문–근거–정답) 구축 → 정확도 측정의 기준</div></div>
+          </div>
+          <p class="note"><b>주의</b> — 본 단계가 가장 노동집약적이며 일정의 임계 경로입니다. 시범은 정제 가능한 데이터로 한정하고, 정답셋 품질이 측정 신뢰도를 좌우합니다.</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">09</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 SW DETAIL -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">상세 · SW (RAG 스택) 구축</div>
+        <h2 class="title">오픈소스 중심으로 라이선스 비용을 최소화</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="cards c2">
+            <div class="card"><div class="num">추론 서버</div><h3>sLLM 서빙</h3><p>vLLM / Ollama로 모델(EXAONE·Qwen)을 GPU에서 서빙</p></div>
+            <div class="card"><div class="num">검색 엔진</div><h3>임베딩 + 벡터DB</h3><p>문서를 의미 벡터로 색인하고 질문과 유사한 근거를 검색</p></div>
+            <div class="card"><div class="num">파이프라인</div><h3>검색 → 리랭크 → 생성</h3><p>오케스트레이션·프롬프트·리트리벌 설계로 근거 기반 답변 생성</p></div>
+            <div class="card"><div class="num">접근·보안</div><h3>사내 질의 UI · 망분리</h3><p>최소 웹 인터페이스 + 오픈소스 반입 절차·취약점 점검, 폐쇄망 내 설치</p></div>
+          </div>
+          <p class="note"><b>비용</b> — 상용 라이선스 의존을 줄이고 오픈소스를 기본으로 구성합니다. 모델은 EXAONE·Qwen 후보를 PoC에서 비교 후 결정합니다.</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">10</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 MODEL & EVALUATION -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">상세 · 모델 선정과 평가</div>
+        <h2 class="title">EXAONE·Qwen 병행 평가 후 게이트로 결정</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="split">
+            <div class="panel">
+              <h4>후보 모델 (둘 다 폐쇄망 적합)</h4>
+              <div class="tline"><span class="b">EXAONE</span><span>LG AI연구원 — <b>한국어 특화·그룹 정합</b>, NVIDIA 소버린 제휴</span></div>
+              <div class="tline"><span class="b">Qwen</span><span>Alibaba — <b>Apache 2.0(상용 자유)</b>, 소형 모델 유연(4bit ~17GB)</span></div>
+              <div class="tline"><span class="b">방식</span><span>PoC에서 <b>같은 데이터로 병행 벤치마크</b> 후 선정</span></div>
+            </div>
+            <div class="panel">
+              <h4>평가 지표 · 게이트 기준</h4>
+              <div class="tline"><span class="b">정확도</span><span>답변이 근거와 일치하는 정도</span></div>
+              <div class="tline"><span class="b">근거</span><span>출처(인용)의 정확성</span></div>
+              <div class="tline"><span class="b">속도</span><span>응답 시간 · 현장 수용도</span></div>
+              <div class="tline"><span class="b">게이트</span><span>사전 합의 임계 충족 시 <b>본투자 상정</b> (수치는 baseline 측정 후 확정)</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">11</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 BUDGET -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">투자 · 예산 (1억 미만)</div>
+        <h2 class="title">권장(S1) 기준 약 5,100만~7,800만 원</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th style="width:34%;">항목</th><th class="num">개략 추정 (권장 S1)</th><th>비고</th></tr></thead>
+              <tbody>
+                <tr><td class="lab">GPU (1 &#215; 96GB)</td><td class="num">1,100 ~ 1,500만</td><td>RTX PRO 6000 Blackwell급 · 32~33B FP16</td></tr>
+                <tr><td class="lab">서버 본체 (CPU·512GB RAM·NVMe)</td><td class="num">2,300 ~ 3,300만</td><td>단일 노드</td></tr>
+                <tr><td class="lab">스토리지 (코퍼스·벡터)</td><td class="num">500 ~ 900만</td><td>NAS / SSD</td></tr>
+                <tr><td class="lab">망분리 연동·설치·네트워크</td><td class="num">600 ~ 1,100만</td><td>폐쇄망 통제</td></tr>
+                <tr><td class="lab">SW·지원·예비비</td><td class="num">600 ~ 1,000만</td><td>오픈소스 + 지원</td></tr>
+                <tr class="hl-row"><td class="lab">합계 (1억 미만)</td><td class="num"><b>약 5,100만 ~ 7,800만</b></td><td><b>정식 견적 후 확정</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note"><b>주의</b> — 시장 참고가 기준 추정치이며 정식 견적이 필요합니다. 최소(S0, L40S 48GB) 구성 시 약 <b>4,500만~7,200만 원</b>.</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">12</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 EFFECTS / RISKS -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">기대 효과 · 리스크</div>
+        <h2 class="title">효과는 가설로, 전제는 명확하게</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="split">
+            <div class="panel">
+              <h4>기대 효과 (가설)</h4>
+              <div class="tline"><span class="b">&#8595;</span><span>정보 탐색·진단 시간 단축 — 반복 검색 자동화</span></div>
+              <div class="tline"><span class="b">&#8593;</span><span>대응 일관성 향상 — 근거 기반 답변</span></div>
+              <div class="tline"><span class="b">&#8593;</span><span>신규 인력 온보딩 가속 — 암묵지 자산화</span></div>
+              <div class="tline"><span class="b">!</span><span><b>정량 수치는 PoC baseline 측정 후 확정</b> — 현 단계 과도한 약속 지양</span></div>
+            </div>
+            <div class="panel">
+              <h4>리스크 · 전제</h4>
+              <div class="tline"><span class="b">&#183;</span><span><b>데이터 품질·정제 범위</b>가 최대 병목</span></div>
+              <div class="tline"><span class="b">&#183;</span><span>sLLM 품질은 프런티어보다 낮으나 <b>RAG 그라운딩으로 보완</b></span></div>
+              <div class="tline"><span class="b">&#183;</span><span>소규모는 <b>동시성·확장성 제한</b> (본투자 전제)</span></div>
+              <div class="tline"><span class="b">&#183;</span><span>NW 데이터 제공·접근권한 협의 필요</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">13</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 CONCLUSION / ASK -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">결론 · 승인 요청</div>
+        <h2 class="title">3.5개월 계획으로, 작게 시작하길 요청드립니다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="asklist">
+            <div class="ask"><div class="an">1</div><div class="at">1억 미만 소규모 시범(PoC) 투자 승인<span>단일 GPU 노드 · 약 5,000만~8,000만 원(정식 견적 후 확정) · 약 3.5개월 · 게이트 방식</span></div></div>
+            <div class="ask"><div class="an">2</div><div class="at">망분리 내 GPU 노드 구축 및 운영 승인<span>외부 egress 0 폐쇄 구성으로 내부 자료 유출 위협 차단</span></div></div>
+            <div class="ask"><div class="an">3</div><div class="at">NW 데이터 제공 협조 (조기 착수 핵심)<span>매뉴얼·로그규격·장애보고서·검증이력 — HW 대기 2개월 사전 작업에 필요</span></div></div>
+          </div>
+          <div class="callout">
+            <span class="k">한 줄 요약</span>
+            <p>큰 투자 이전에 <b>작게, 빈 시간 없이</b> 검증합니다. 게이트 결과로 본 투자 규모를 정합니다.</p>
+          </div>
+          <div class="next">
+            <b>Next.</b>
+            <span class="nstep">승인</span><span class="nsep">&#9656;</span>
+            <span class="nstep">발주·데이터 협의 (즉시)</span><span class="nsep">&#9656;</span>
+            <span class="nstep">사전 병행 작업 (2개월)</span><span class="nsep">&#9656;</span>
+            <span class="nstep">PoC·게이트 보고 (1.5개월)</span>
+          </div>
+          <p class="note">추진: AI Study WG(5인) / CQO · NW 데이터 오너십 협업 · 거버넌스 CQO</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 상세 추진계획</span><span class="pageno">14</span></div>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.snap'));
+  var total=slides.length;
+  var dotsWrap=document.getElementById('dots');
+  var progress=document.getElementById('progress');
+  var current=0;
+
+  slides.forEach(function(_,i){
+    var b=document.createElement('button');
+    b.className='dot'+(i===0?' active':'');
+    b.setAttribute('aria-label','슬라이드 '+(i+1));
+    b.addEventListener('click',function(){go(i);});
+    dotsWrap.appendChild(b);
+  });
+  var dots=Array.prototype.slice.call(dotsWrap.children);
+
+  function pad(n){return (n<10?'0':'')+n;}
+  function update(){
+    var idx=Math.round(deck.scrollTop/window.innerHeight);
+    idx=Math.max(0,Math.min(total-1,idx));
+    if(idx!==current){current=idx;}
+    dots.forEach(function(d,i){d.classList.toggle('active',i===current);});
+    progress.style.width=((current)/(total-1)*100)+'%';
+  }
+  function go(i){
+    i=Math.max(0,Math.min(total-1,i));
+    deck.scrollTo({top:i*window.innerHeight,behavior:'smooth'});
+  }
+  deck.addEventListener('scroll',function(){window.requestAnimationFrame(update);});
+  window.addEventListener('resize',update);
+  document.addEventListener('keydown',function(e){
+    if(['ArrowDown','ArrowRight','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();go(current+1);}
+    else if(['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(current-1);}
+    else if(e.key==='Home'){e.preventDefault();go(0);}
+    else if(e.key==='End'){e.preventDefault();go(total-1);}
+  });
+  update();
+})();
+</script>
+</body>
+</html>

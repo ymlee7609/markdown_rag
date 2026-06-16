@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유선NW RAG 소규모 시범 도입(1억 미만) — 투자 심의</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root{
+  --magenta:#E6007E;
+  --magenta-deep:#B30062;
+  --magenta-soft:#FCE7F2;
+  --magenta-line:#F6C7DE;
+  --ink:#17151B;
+  --ink-2:#46414D;
+  --muted:#8C8792;
+  --line:#E8E4EC;
+  --surface:#FFFFFF;
+  --surface-2:#F7F5F9;
+  --surface-3:#F0EDF3;
+  --paper:#EDEAF0;
+  --good:#E6007E;
+  --ok:#B6A8C0;
+  --weak:#CFCAD6;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{height:100%;}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"tnum" 1,"case" 1;
+}
+
+/* ---------- deck / scroll ---------- */
+.deck{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+}
+.snap{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  scroll-snap-align:center;
+  padding:0;
+}
+.slide{
+  position:relative;
+  width:min(100vw, calc(100vh * 16 / 9));
+  height:min(100vh, calc(100vw * 9 / 16));
+  background:var(--surface);
+  overflow:hidden;
+  container-type:size;
+  box-shadow:0 .6vh 4vh rgba(23,21,27,.14);
+}
+.pad{
+  position:absolute;
+  inset:0;
+  padding:3.1em 3.6em 2.4em;
+  font-size:1.12cqw;
+  line-height:1.5;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-size:.78em;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  display:flex;
+  align-items:center;
+  gap:.7em;
+}
+.eyebrow::before{
+  content:"";
+  width:1.7em;height:.2em;background:var(--magenta);border-radius:1em;
+}
+.title{
+  font-size:2.05em;
+  font-weight:800;
+  line-height:1.12;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-top:.5em;
+}
+.subtitle{
+  font-size:.96em;
+  color:var(--ink-2);
+  margin-top:.55em;
+  font-weight:500;
+  max-width:46em;
+}
+.headrule{
+  height:1px;background:var(--line);margin:.95em 0 1.1em;
+}
+
+/* ---------- footer chrome inside slide ---------- */
+.foot{
+  position:absolute;left:3.6em;right:3.6em;bottom:1.25em;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.66em;color:var(--muted);letter-spacing:.04em;
+}
+.foot .brand{font-weight:700;color:var(--ink-2);}
+.foot .brand b{color:var(--magenta);}
+.pageno{font-variant-numeric:tabular-nums;font-weight:600;}
+
+/* ---------- COVER ---------- */
+.cover{background:var(--ink);}
+.cover .pad{justify-content:center;}
+.cover-grid{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(120% 120% at 88% 12%, rgba(230,0,126,.30) 0%, rgba(230,0,126,0) 46%),
+    radial-gradient(90% 90% at 6% 96%, rgba(230,0,126,.12) 0%, rgba(230,0,126,0) 50%);
+}
+.cover-lines{
+  position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:100% 2.4em;
+  mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);
+}
+.cover .eyebrow{color:#FF66B8;}
+.cover .eyebrow::before{background:#FF66B8;}
+.cover-tag{
+  font-size:.72em;font-weight:600;letter-spacing:.04em;color:#C9C4D0;
+  border:1px solid rgba(255,255,255,.22);border-radius:2em;
+  padding:.42em 1em;display:inline-flex;gap:.6em;align-items:center;
+}
+.cover-tag b{color:#fff;}
+.cover h1{
+  color:#fff;font-weight:800;font-size:3.55em;line-height:1.08;letter-spacing:-.025em;
+  margin-top:.55em;
+}
+.cover h1 .hl{color:#FF4FAE;}
+.cover .lede{
+  color:#D7D2DD;font-size:1.05em;font-weight:500;margin-top:.95em;max-width:30em;line-height:1.55;
+}
+.cover .thesis{
+  margin-top:1.5em;font-size:1.18em;font-weight:700;color:#fff;letter-spacing:-.01em;
+  border-left:.28em solid var(--magenta);padding-left:.8em;
+}
+.cover-meta{
+  position:absolute;left:3.6em;right:3.6em;bottom:2.4em;
+  display:flex;gap:2.6em;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.16);padding-top:1.15em;
+}
+.cover-meta .m{display:flex;flex-direction:column;gap:.25em;}
+.cover-meta .mk{font-size:.66em;letter-spacing:.14em;text-transform:uppercase;color:#9B96A2;font-weight:700;}
+.cover-meta .mv{font-size:.92em;color:#EDEAF0;font-weight:600;}
+
+/* ---------- generic body areas ---------- */
+.body{flex:1;min-height:0;display:flex;flex-direction:column;}
+.lead{font-size:1.02em;color:var(--ink-2);font-weight:500;max-width:54em;}
+.lead b{color:var(--ink);font-weight:700;}
+
+/* cards grid */
+.cards{display:grid;gap:.85em;margin-top:1.05em;}
+.c2{grid-template-columns:repeat(2,1fr);}
+.c3{grid-template-columns:repeat(3,1fr);}
+.c4{grid-template-columns:repeat(4,1fr);}
+.c5{grid-template-columns:repeat(5,1fr);}
+.card{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;
+  padding:1.05em 1.1em;display:flex;flex-direction:column;gap:.45em;min-height:0;
+}
+.card .num{
+  font-size:.72em;font-weight:800;color:var(--magenta);letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;
+}
+.card h3{font-size:1.0em;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.25;}
+.card p{font-size:.83em;color:var(--ink-2);line-height:1.5;}
+.card.accent{background:var(--magenta-soft);border-color:var(--magenta-line);}
+.card.dark{background:var(--ink);border-color:var(--ink);}
+.card.dark h3{color:#fff;}
+.card.dark p{color:#CFCAD6;}
+.card.dark .num{color:#FF66B8;}
+
+/* key callout box */
+.callout{
+  margin-top:1.0em;background:var(--ink);border-radius:.7em;color:#fff;
+  padding:1.05em 1.3em;display:flex;align-items:center;gap:1em;
+}
+.callout .k{font-size:.72em;font-weight:800;letter-spacing:.12em;color:#FF66B8;text-transform:uppercase;white-space:nowrap;}
+.callout p{font-size:1.0em;font-weight:600;line-height:1.45;}
+.callout p b{color:#FF8FC6;}
+
+/* tables */
+.tbl-wrap{margin-top:1.0em;overflow:auto;}
+table{width:100%;border-collapse:collapse;font-size:.85em;}
+th,td{text-align:left;padding:.72em .9em;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4;}
+thead th{
+  background:var(--ink);color:#fff;font-weight:700;font-size:.92em;letter-spacing:.01em;
+  border-bottom:none;
+}
+thead th:first-child{border-top-left-radius:.5em;}
+thead th:last-child{border-top-right-radius:.5em;}
+tbody tr:nth-child(even){background:var(--surface-2);}
+td.lab{font-weight:700;color:var(--ink);white-space:nowrap;}
+td.num,th.num{font-variant-numeric:tabular-nums;}
+.mk-good{color:var(--magenta);font-weight:800;}
+.mk-ok{color:var(--ink-2);font-weight:700;}
+.mk-weak{color:var(--weak);font-weight:700;}
+.hl-row{background:var(--magenta-soft)!important;}
+.hl-row td{border-bottom-color:var(--magenta-line);}
+.note{font-size:.7em;color:var(--muted);margin-top:.7em;line-height:1.5;}
+.note b{color:var(--ink-2);}
+
+/* two-col split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1.4em;margin-top:1.0em;flex:1;min-height:0;}
+.panel{background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;padding:1.1em 1.2em;display:flex;flex-direction:column;}
+.panel h4{font-size:.74em;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);font-weight:800;margin-bottom:.7em;}
+.tline{display:flex;gap:.7em;padding:.5em 0;border-bottom:1px dashed var(--line);font-size:.86em;}
+.tline:last-child{border-bottom:none;}
+.tline .b{color:var(--magenta);font-weight:800;}
+.tline span{color:var(--ink-2);line-height:1.45;}
+.tline span b{color:var(--ink);}
+
+/* problem list */
+.plist{display:flex;flex-direction:column;gap:.62em;margin-top:1.0em;}
+.pitem{display:flex;gap:.9em;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);border-left:.28em solid var(--magenta);border-radius:.5em;padding:.8em 1em;}
+.pitem .ph{font-size:.92em;font-weight:700;color:var(--ink);white-space:nowrap;min-width:7.5em;}
+.pitem .pd{font-size:.84em;color:var(--ink-2);line-height:1.45;}
+
+/* ---------- architecture diagram ---------- */
+.arch-frame{
+  flex:1;min-height:0;margin-top:1.0em;
+  border:.16em dashed var(--magenta-line);border-radius:.8em;
+  background:linear-gradient(180deg,var(--magenta-soft) 0%, #FFF6FB 100%);
+  padding:1.1em 1.2em;position:relative;display:flex;flex-direction:column;
+}
+.arch-badge{
+  position:absolute;top:-.95em;left:1.4em;background:var(--magenta);color:#fff;
+  font-size:.72em;font-weight:800;letter-spacing:.06em;padding:.34em 1em;border-radius:2em;
+  display:flex;align-items:center;gap:.5em;
+}
+.egress{
+  position:absolute;top:-.95em;right:1.4em;background:var(--ink);color:#fff;
+  font-size:.72em;font-weight:800;letter-spacing:.04em;padding:.34em 1em;border-radius:2em;
+  display:flex;align-items:center;gap:.5em;
+}
+.egress .x{color:#FF66B8;font-weight:900;}
+.pipe{display:flex;align-items:stretch;gap:.35em;flex:1;min-height:0;margin-top:.4em;}
+.stage{
+  flex:1;background:#fff;border:1px solid var(--magenta-line);border-radius:.6em;
+  padding:.85em .7em;display:flex;flex-direction:column;gap:.4em;justify-content:center;position:relative;
+}
+.stage .st{font-size:.74em;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-.01em;}
+.stage .sd{font-size:.66em;color:var(--ink-2);line-height:1.35;}
+.stage.gpu{border:1.5px solid var(--magenta);background:#fff;}
+.gpu-tag{
+  position:absolute;top:-.7em;right:.5em;background:var(--magenta);color:#fff;
+  font-size:.58em;font-weight:800;letter-spacing:.05em;padding:.2em .55em;border-radius:1em;
+}
+.arrow{display:flex;align-items:center;color:var(--magenta);font-size:1.1em;font-weight:900;}
+.src-list{display:flex;flex-wrap:wrap;gap:.3em;margin-top:.15em;}
+.chip{font-size:.6em;font-weight:600;color:var(--magenta-deep);background:var(--magenta-soft);border:1px solid var(--magenta-line);border-radius:1em;padding:.18em .5em;}
+.arch-foot{
+  margin-top:.85em;display:flex;justify-content:space-between;align-items:center;gap:1em;
+  font-size:.68em;color:var(--ink-2);
+}
+.arch-foot .stack{display:flex;gap:.4em;flex-wrap:wrap;}
+.tech{font-size:.64em;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.24em .6em;}
+
+/* roadmap */
+.road{display:grid;grid-template-columns:repeat(4,1fr);gap:.6em;margin-top:1.0em;flex:1;min-height:0;}
+.phase{display:flex;flex-direction:column;background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;overflow:hidden;}
+.phase .ph-top{padding:.7em .9em;background:var(--ink);color:#fff;display:flex;flex-direction:column;gap:.15em;}
+.phase.rec .ph-top{background:var(--magenta);}
+.phase .pp{font-size:.66em;font-weight:800;letter-spacing:.1em;color:#FF99CC;text-transform:uppercase;}
+.phase.rec .pp{color:#FFD6EC;}
+.phase .pt{font-size:.96em;font-weight:800;letter-spacing:-.01em;}
+.phase .pdur{font-size:.66em;color:#C9C4D0;font-weight:600;}
+.phase.rec .pdur{color:#FFE4F2;}
+.phase .ph-body{padding:.8em .9em;display:flex;flex-direction:column;gap:.4em;flex:1;}
+.phase .ph-body li{font-size:.76em;color:var(--ink-2);line-height:1.4;list-style:none;padding-left:.9em;position:relative;}
+.phase .ph-body li::before{content:"";position:absolute;left:0;top:.55em;width:.32em;height:.32em;border-radius:50%;background:var(--magenta);}
+.gate{font-size:.66em;font-weight:800;color:var(--magenta-deep);background:var(--magenta-soft);border:1px dashed var(--magenta-line);border-radius:.4em;padding:.4em .55em;margin-top:auto;line-height:1.35;}
+
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:.85em;margin-top:1.0em;}
+.metric{background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;padding:1.0em 1.1em;display:flex;flex-direction:column;gap:.3em;}
+.metric .mv{font-size:1.7em;font-weight:800;color:var(--magenta);letter-spacing:-.02em;line-height:1;}
+.metric .ml{font-size:.78em;color:var(--ink-2);font-weight:600;line-height:1.35;}
+.metric .ms{font-size:.66em;color:var(--muted);}
+
+/* ask / conclusion */
+.asklist{display:flex;flex-direction:column;gap:.7em;margin-top:.4em;}
+.ask{display:flex;gap:1em;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:.7em;padding:1.0em 1.2em;}
+.ask .an{font-size:1.3em;font-weight:800;color:#fff;background:var(--magenta);width:1.7em;height:1.7em;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ask .at{font-size:.95em;font-weight:700;color:var(--ink);}
+.ask .at span{display:block;font-size:.82em;font-weight:500;color:var(--ink-2);margin-top:.2em;line-height:1.4;}
+.next{margin-top:1.0em;display:flex;align-items:center;gap:.7em;flex-wrap:wrap;font-size:.8em;color:var(--ink-2);}
+.next b{color:var(--magenta);font-weight:800;}
+.nstep{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.4em .8em;font-weight:600;color:var(--ink);}
+.nsep{color:var(--magenta);font-weight:900;}
+
+/* ---------- fixed chrome ---------- */
+.progress{position:fixed;top:0;left:0;height:.34vh;background:var(--magenta);width:0;z-index:50;transition:width .25s;}
+.dots{position:fixed;right:1.3vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.85vh;z-index:50;}
+.dot{width:.78vh;height:.78vh;border-radius:50%;background:rgba(23,21,27,.22);border:none;cursor:pointer;padding:0;transition:all .2s;}
+.dot.active{background:var(--magenta);transform:scale(1.45);}
+
+@media (prefers-reduced-motion:reduce){
+  .deck{scroll-behavior:auto;}
+  *{transition:none!important;}
+}
+
+/* ---------- mobile fallback ---------- */
+@media (max-width:760px){
+  .deck{scroll-snap-type:none;height:auto;overflow:visible;}
+  .snap{height:auto;min-height:auto;padding:0;}
+  .slide{width:100vw;height:auto;min-height:auto;aspect-ratio:auto;container-type:normal;box-shadow:none;border-bottom:.5vh solid var(--paper);}
+  .pad{position:relative;inset:auto;font-size:15px;padding:26px 18px 46px;min-height:auto;}
+  .cover{min-height:90vh;}
+  .cover .pad{min-height:90vh;}
+  .cover-meta,.foot{position:relative;left:auto;right:auto;bottom:auto;}
+  .cover-meta{margin-top:26px;}
+  .foot{margin-top:24px;}
+  .c2,.c3,.c4,.c5,.metrics,.road,.split,.arch .pipe{grid-template-columns:1fr;}
+  .pipe{flex-direction:column;}
+  .arrow{transform:rotate(90deg);justify-content:center;padding:.2em 0;}
+  .split{display:flex;flex-direction:column;}
+  .dots{display:none;}
+  .progress{display:none;}
+  .cover h1{font-size:2em;}
+  .cover .thesis{font-size:1.1em;}
+  .title{font-size:1.6em;}
+  .metric .mv{font-size:1.5em;}
+  .tbl-wrap{-webkit-overflow-scrolling:touch;}
+}
+
+@media print{
+  body{background:#fff;}
+  .deck{height:auto;overflow:visible;display:block;}
+  .snap{height:auto;page-break-after:always;display:block;}
+  .slide{width:100%;height:auto;aspect-ratio:16/9;box-shadow:none;page-break-inside:avoid;}
+  .dots,.progress{display:none;}
+  @page{size:landscape;margin:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="dots" id="dots"></div>
+
+
+<div class="deck" id="deck">
+
+  <!-- 01 COVER -->
+  <section class="snap">
+    <div class="slide cover">
+      <div class="cover-grid"></div>
+      <div class="cover-lines"></div>
+      <div class="pad">
+        <div style="display:flex;gap:.7em;align-items:center;">
+          <span class="cover-tag"><b>U+</b> CQO · AI Study WG</span>
+          <span class="cover-tag">소규모 시범 · 1억 미만</span>
+        </div>
+        <h1>유선NW 운영지원<br><span class="hl">RAG 에이전트</span> 소규모 시범</h1>
+        <p class="lede">큰 투자에 앞서, 단일 GPU 노드·단일 시나리오로 RAG의 실현성과 효과를 1억 미만으로 먼저 검증하는 진입 단계 투자(안)</p>
+        <p class="thesis">크게 결정하기 전에, 작게 확인합니다. 망분리 안에서, 1억 미만으로.</p>
+      </div>
+      <div class="cover-meta">
+        <div class="m"><span class="mk">작성</span><span class="mv">AI Study WG (5인) / CQO</span></div>
+        <div class="m"><span class="mk">대상 분야</span><span class="mv">유선 네트워크 운영</span></div>
+        <div class="m"><span class="mk">투자 규모</span><span class="mv">1억 미만 · 단일 노드</span></div>
+        <div class="m"><span class="mk">보안등급</span><span class="mv">사내한</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 EXEC SUMMARY -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">심의 요지 · Executive Summary</div>
+        <h2 class="title">큰 투자 전에, 1억 미만으로 먼저 검증한다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="cards c4">
+            <div class="card"><div class="num">WHAT</div><h3>소규모 시범 (PoC)</h3><p>단일 유스케이스(장애처리 로그해석)로 사내 지식 기반 RAG 에이전트의 실현성·효과를 검증</p></div>
+            <div class="card"><div class="num">WHY 소규모</div><h3>실패 비용 최소화</h3><p>RAG·sLLM은 아직 학습 단계. 단일 GPU 노드·단일 시나리오로 작게 시작해 리스크를 통제</p></div>
+            <div class="card"><div class="num">NEED</div><h3>단일 GPU 노드</h3><p>망분리 내부에 GPU 1노드 + sLLM(EXAONE·Qwen) + 오픈소스 RAG 스택</p></div>
+            <div class="card accent"><div class="num">ASK</div><h3>약 5,000만~8,000만</h3><p>1억 미만·단일 노드. 정식 견적 후 확정, 게이트 방식 집행</p></div>
+          </div>
+          <div class="callout">
+            <span class="k">핵심 메시지</span>
+            <p>본 투자(약 2억 규모) 이전에 <b>“되는지”를 1억 미만으로 먼저 확인</b>하는 진입 단계 투자입니다. PoC 게이트를 통과하면 확장 투자를 별도로 상정합니다.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">02</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 WHY SMALL -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">투자 방식 · 왜 소규모로</div>
+        <h2 class="title">크게 결정하기 전에, 작게 확인한다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <p class="lead">RAG·sLLM 도입은 데이터·모델·운영 전반의 <b>시행착오가 전제</b>됩니다. 처음부터 큰 인프라를 상정하기보다, 작은 구성으로 효과와 실현성을 확인한 뒤 규모를 정하는 것이 합리적입니다.</p>
+          <div class="cards c4">
+            <div class="card"><div class="num">01</div><h3>검증 우선</h3><p>큰 투자 전, 작은 비용으로 실현성·효과를 확인</p></div>
+            <div class="card"><div class="num">02</div><h3>실패 비용 최소화</h3><p>단일 노드·단일 시나리오 → 미달 시 손실 최소</p></div>
+            <div class="card"><div class="num">03</div><h3>빠른 착수</h3><p>단일 GPU는 조달·구축이 빠름 → 수개월 내 첫 결과</p></div>
+            <div class="card"><div class="num">04</div><h3>자산 승계</h3><p>PoC 데이터·파이프라인은 본 투자로 그대로 승계</p></div>
+          </div>
+          <div class="callout">
+            <span class="k">관점</span>
+            <p>이 자료는 <b>“축소된 본투자”가 아니라 “본투자 진입을 위한 게이트형 시범”</b>입니다. 결과 데이터로 다음 투자 규모를 결정합니다.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">03</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 DATA x SCENARIO -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">대상 · 데이터와 시나리오</div>
+        <h2 class="title">데이터는 정제 가능한 범위로, 시나리오는 하나로</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="split">
+            <div class="panel">
+              <h4>활용 데이터 (유선NW)</h4>
+              <div class="tline"><span class="b">·</span><span><b>장비·단말 매뉴얼</b> — 설치·설정·운용 문서</span></div>
+              <div class="tline"><span class="b">·</span><span><b>로그 규격</b> — 메시지·코드·필드 정의</span></div>
+              <div class="tline"><span class="b">·</span><span><b>장애 보고서</b> — 과거 장애 원인·조치 이력</span></div>
+              <div class="tline"><span class="b">·</span><span><b>장비·단말 검증 이력</b> — 검증 결과·이슈 기록</span></div>
+            </div>
+            <div class="panel">
+              <h4>시범 시나리오</h4>
+              <div class="tline"><span class="b">1순위</span><span><b>장애처리 로그 해석 + 유사사례 검색</b> — 효과가 가장 가시적</span></div>
+              <div class="tline"><span class="b">확장</span><span>개발·검증 Q&amp;A 지원 (게이트 후)</span></div>
+              <div class="tline"><span class="b">확장</span><span>불만콜 응대 근거 검색 (게이트 후)</span></div>
+              <div class="tline"><span class="b">원칙</span><span>시범은 <b>단일 시나리오에 집중</b> — 효과 측정을 단순·명확하게</span></div>
+            </div>
+          </div>
+          <p class="note"><b>전제</b> — 데이터 품질·정제 범위와 접근권한 협의가 성패의 핵심. 시범 단계는 정제 가능한 데이터로 한정합니다.</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">04</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ARCHITECTURE -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">구성 · 아키텍처</div>
+        <h2 class="title">망분리 안에서 닫힌 단일 노드 파이프라인</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="arch-frame">
+            <div class="arch-badge">단일 GPU 노드 · 폐쇄망</div>
+            <div class="egress">외부 인터넷 egress <span class="x">= 0</span></div>
+            <div class="pipe">
+              <div class="stage">
+                <div class="st">사내 문서·로그</div>
+                <div class="sd">정답이 존재하는 원천</div>
+                <div class="src-list"><span class="chip">매뉴얼</span><span class="chip">로그규격</span><span class="chip">장애보고서</span><span class="chip">검증이력</span></div>
+              </div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage"><div class="st">수집·정제·청킹</div><div class="sd">문서 구조화·분할</div></div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage gpu"><span class="gpu-tag">GPU</span><div class="st">임베딩·벡터DB</div><div class="sd">의미 검색용 색인 생성</div></div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage gpu"><span class="gpu-tag">GPU</span><div class="st">검색·생성</div><div class="sd">리랭크 후 sLLM이 근거 기반 답변</div></div>
+              <div class="arrow">&#8594;</div>
+              <div class="stage"><div class="st">현장 답변</div><div class="sd">출처·근거 함께 제시</div></div>
+            </div>
+            <div class="arch-foot">
+              <span>모든 데이터·추론이 <b>폐쇄망 단일 노드</b> 내에서 처리 — 외부 API 호출·데이터 반출 없음</span>
+              <span class="stack"><span class="tech">vLLM / Ollama</span><span class="tech">Vector DB</span><span class="tech">오픈소스 RAG</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">05</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 MODEL: EXAONE vs QWEN -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">sLLM 선정 · 모델 비교</div>
+        <h2 class="title">EXAONE과 Qwen, 둘 다 폐쇄망에 적합하다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th style="width:14%;">항목</th><th>EXAONE — LG AI연구원</th><th>Qwen — Alibaba</th></tr></thead>
+              <tbody>
+                <tr><td class="lab">라이선스</td><td>그룹사·파트너 상용 공급 (가중치 비공개, 관계 기반)</td><td><b>Apache 2.0</b> — 완전 오픈·상용 제약 없음, 가중치 자유 다운로드</td></tr>
+                <tr><td class="lab">한국어</td><td><span class="mk-good">&#9678;</span> 한국어 특화 — 균형 코퍼스·전용 토크나이저</td><td><span class="mk-ok">&#9675;</span> 119개 언어 다국어, 한국어 벤치 우수 (한국 특화지식 일부 격차)</td></tr>
+                <tr><td class="lab">문서·도면 판독</td><td><span class="mk-good">&#9678;</span> EXAONE 4.5 VLM — 산업문서·도면 강점</td><td><span class="mk-ok">&#9675;</span> Qwen3.6-27B 멀티모달(비전) 포함</td></tr>
+                <tr><td class="lab">소형 모델</td><td>1.2B · 32B · 33B(VLM)</td><td>27B dense · 35B-A3B 등 — 단일 GPU 친화 (4bit ~17GB)</td></tr>
+                <tr><td class="lab">전략 정합</td><td><span class="mk-good">&#9678;</span> LG family · NVIDIA 소버린 제휴</td><td>글로벌 검증 · 커뮤니티/툴 생태계</td></tr>
+                <tr><td class="lab">망분리 적합</td><td><span class="mk-good">&#9678;</span></td><td><span class="mk-good">&#9678;</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <span class="k">권고</span>
+            <p>PoC 게이트에서 <b>동일 데이터로 병행 벤치마크</b> 후 결정. 그룹 정합·한국어는 <b>EXAONE</b>, 라이선스 자유도·소형 모델 유연성은 <b>Qwen</b>이 우위.</p>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">06</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 HARDWARE -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">구성 · 하드웨어</div>
+        <h2 class="title">단일 GPU 노드 — 두 가지 소규모 안</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th style="width:18%;">구분</th><th>최소 — S0</th><th>권장 — S1</th></tr></thead>
+              <tbody>
+                <tr><td class="lab">GPU</td><td>1 &#215; L40S 48GB</td><td><b>1 &#215; RTX PRO 6000 Blackwell 96GB</b></td></tr>
+                <tr><td class="lab">운용 가능 모델</td><td>~14B FP16 / ~27B INT8</td><td><b>~32–33B FP16</b> / 70B 4bit</td></tr>
+                <tr><td class="lab">동시 사용</td><td>소수 (PoC)</td><td>소수 ~ 소규모 파일럿</td></tr>
+                <tr><td class="lab">폼팩터</td><td>1노드 (서버/워크스테이션)</td><td>1노드 (서버/워크스테이션)</td></tr>
+                <tr><td class="lab">강점</td><td>최저 비용</td><td>32–33B FP16 헤드룸 · Blackwell 수명</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note"><b>VRAM 근거</b> — 33B FP16 &#8776; 64GB(96GB 카드 또는 2&#215;48GB 필요), INT8 &#8776; 33GB · Qwen3.6-27B 4bit &#8776; 17GB / 35B-A3B 4bit &#8776; 21GB. 정밀 사양은 PoC 모델 확정 후 산정합니다.</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">07</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 BUDGET -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">투자 · 예산 (1억 미만)</div>
+        <h2 class="title">권장(S1) 기준 약 5,100만~7,800만 원</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th style="width:34%;">항목</th><th class="num">개략 추정 (권장 S1)</th><th>비고</th></tr></thead>
+              <tbody>
+                <tr><td class="lab">GPU (1 &#215; 96GB)</td><td class="num">1,100 ~ 1,500만</td><td>RTX PRO 6000 Blackwell급</td></tr>
+                <tr><td class="lab">서버 본체 (CPU·512GB RAM·NVMe)</td><td class="num">2,300 ~ 3,300만</td><td>단일 노드</td></tr>
+                <tr><td class="lab">스토리지 (코퍼스·벡터)</td><td class="num">500 ~ 900만</td><td>NAS / SSD</td></tr>
+                <tr><td class="lab">망분리 연동·설치·네트워크</td><td class="num">600 ~ 1,100만</td><td>폐쇄망 통제</td></tr>
+                <tr><td class="lab">SW·지원·예비비</td><td class="num">600 ~ 1,000만</td><td>오픈소스 + 지원</td></tr>
+                <tr class="hl-row"><td class="lab">합계 (1억 미만)</td><td class="num"><b>약 5,100만 ~ 7,800만</b></td><td><b>정식 견적 후 확정</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note"><b>주의</b> — 시장 참고가 기준 추정치이며 정식 견적이 필요합니다. 최소(S0, L40S) 구성 시 약 <b>4,500만~7,200만 원</b>. 클라우드 대비 비교는 본투자 자료 참조.</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">08</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 ROADMAP -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">일정 · 게이트형 진입</div>
+        <h2 class="title">시범으로 확인하고, 결과로 본투자를 정한다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="road" style="grid-template-columns:repeat(3,1fr);">
+            <div class="phase">
+              <div class="ph-top"><span class="pp">Phase 0</span><span class="pt">환경 구축</span><span class="pdur">약 1개월</span></div>
+              <ul class="ph-body">
+                <li>단일 GPU 노드 설치·발주</li>
+                <li>망분리 연동·접근통제</li>
+                <li>오픈소스 RAG 스택 구성</li>
+                <li>데이터 수집 범위 협의</li>
+              </ul>
+            </div>
+            <div class="phase rec">
+              <div class="ph-top"><span class="pp">Phase 1</span><span class="pt">PoC</span><span class="pdur">약 2~3개월</span></div>
+              <ul class="ph-body">
+                <li>장애처리 로그해석 단일 시나리오</li>
+                <li>EXAONE·Qwen 병행 벤치마크</li>
+                <li>정확도·시간단축 측정</li>
+                <div class="gate">게이트 — 정확도·시간단축 기준 충족 시 본투자 상정</div>
+              </ul>
+            </div>
+            <div class="phase">
+              <div class="ph-top"><span class="pp">Phase 2</span><span class="pt">본투자 검토</span><span class="pdur">게이트 후</span></div>
+              <ul class="ph-body">
+                <li>효과 입증 시 확산 결정</li>
+                <li>본 투자(약 2억 Tier2) 별도 상정</li>
+                <li>시나리오·사용자 확대</li>
+                <li>운영·거버넌스 정착</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">09</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 EFFECTS / RISKS -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">기대 효과 · 리스크</div>
+        <h2 class="title">효과는 가설로, 전제는 명확하게</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="split">
+            <div class="panel">
+              <h4>기대 효과 (가설)</h4>
+              <div class="tline"><span class="b">&#8595;</span><span>정보 탐색·진단 시간 단축 — 반복 검색 자동화</span></div>
+              <div class="tline"><span class="b">&#8593;</span><span>대응 일관성 향상 — 근거 기반 답변</span></div>
+              <div class="tline"><span class="b">&#8593;</span><span>신규 인력 온보딩 가속 — 암묵지 자산화</span></div>
+              <div class="tline"><span class="b">!</span><span><b>정량 수치는 PoC baseline 측정 후 확정</b> — 현 단계 과도한 약속 지양</span></div>
+            </div>
+            <div class="panel">
+              <h4>리스크 · 전제</h4>
+              <div class="tline"><span class="b">&#183;</span><span><b>데이터 품질·정제 범위</b>가 최대 병목</span></div>
+              <div class="tline"><span class="b">&#183;</span><span>sLLM 품질은 프런티어보다 낮으나 <b>RAG 그라운딩으로 보완</b></span></div>
+              <div class="tline"><span class="b">&#183;</span><span>소규모는 <b>동시성·확장성 제한</b> (본투자 전제)</span></div>
+              <div class="tline"><span class="b">&#183;</span><span>NW 데이터 제공·접근권한 협의 필요</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">10</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 CONCLUSION / ASK -->
+  <section class="snap">
+    <div class="slide">
+      <div class="pad">
+        <div class="eyebrow">결론 · 승인 요청</div>
+        <h2 class="title">작게 시작하는 것을 승인 요청드립니다</h2>
+        <div class="headrule"></div>
+        <div class="body">
+          <div class="asklist">
+            <div class="ask"><div class="an">1</div><div class="at">1억 미만 소규모 시범(PoC) 투자 승인<span>단일 GPU 노드 · 약 5,000만~8,000만 원 (정식 견적 후 확정) · 게이트 방식</span></div></div>
+            <div class="ask"><div class="an">2</div><div class="at">망분리 내 GPU 노드 구축 및 운영 승인<span>외부 egress 0 폐쇄 구성으로 내부 자료 유출 위협 차단</span></div></div>
+            <div class="ask"><div class="an">3</div><div class="at">NW 데이터 제공 협조<span>매뉴얼 · 로그규격 · 장애보고서 · 검증이력 (시범 범위)</span></div></div>
+          </div>
+          <div class="callout">
+            <span class="k">한 줄 요약</span>
+            <p>큰 투자 이전에 <b>작게 검증</b>합니다. 게이트 결과로 본 투자 규모를 정합니다.</p>
+          </div>
+          <div class="next">
+            <b>Next.</b>
+            <span class="nstep">승인</span><span class="nsep">&#9656;</span>
+            <span class="nstep">견적·발주 (Phase 0)</span><span class="nsep">&#9656;</span>
+            <span class="nstep">PoC 단일 시나리오 (Phase 1)</span><span class="nsep">&#9656;</span>
+            <span class="nstep">게이트 보고 → 본투자 상정</span>
+          </div>
+          <p class="note">추진: AI Study WG(5인) / CQO · NW 데이터 오너십 협업 · 거버넌스 CQO</p>
+        </div>
+        <div class="foot"><span class="brand"><b>U+</b> CQO AI Study WG</span><span>유선NW 운영지원 RAG · 소규모 시범 도입</span><span class="pageno">11</span></div>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.snap'));
+  var total=slides.length;
+  var dotsWrap=document.getElementById('dots');
+  var progress=document.getElementById('progress');
+  var current=0;
+
+  slides.forEach(function(_,i){
+    var b=document.createElement('button');
+    b.className='dot'+(i===0?' active':'');
+    b.setAttribute('aria-label','슬라이드 '+(i+1));
+    b.addEventListener('click',function(){go(i);});
+    dotsWrap.appendChild(b);
+  });
+  var dots=Array.prototype.slice.call(dotsWrap.children);
+
+  function pad(n){return (n<10?'0':'')+n;}
+  function update(){
+    var idx=Math.round(deck.scrollTop/window.innerHeight);
+    idx=Math.max(0,Math.min(total-1,idx));
+    if(idx!==current){current=idx;}
+    dots.forEach(function(d,i){d.classList.toggle('active',i===current);});
+    progress.style.width=((current)/(total-1)*100)+'%';
+  }
+  function go(i){
+    i=Math.max(0,Math.min(total-1,i));
+    deck.scrollTo({top:i*window.innerHeight,behavior:'smooth'});
+  }
+  deck.addEventListener('scroll',function(){window.requestAnimationFrame(update);});
+  window.addEventListener('resize',update);
+  document.addEventListener('keydown',function(e){
+    if(['ArrowDown','ArrowRight','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();go(current+1);}
+    else if(['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(current-1);}
+    else if(e.key==='Home'){e.preventDefault();go(0);}
+    else if(e.key==='End'){e.preventDefault();go(total-1);}
+  });
+  update();
+})();
+</script>
+</body>
+</html>

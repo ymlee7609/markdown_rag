@@ -1,0 +1,92 @@
+[
+  {
+    "file": "IETF_RFC/rfc7932__sec-03.md",
+    "size_kb": 266.2,
+    "suggested_parts": 7
+  },
+  {
+    "file": "IETF_RFC/rfc1271__sec-01.md",
+    "size_kb": 162.5,
+    "suggested_parts": 4
+  },
+  {
+    "file": "IETF_RFC/rfc1757__sec-02.md",
+    "size_kb": 161.6,
+    "suggested_parts": 4
+  },
+  {
+    "file": "IETF_RFC/rfc1742__sec-01.md",
+    "size_kb": 145.6,
+    "suggested_parts": 4
+  },
+  {
+    "file": "IETF_RFC/rfc9129__sec-02.md",
+    "size_kb": 131.3,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc4939__sec-01.md",
+    "size_kb": 131.2,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc4295__sec-01.md",
+    "size_kb": 130.5,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc9182__sec-03.md",
+    "size_kb": 126.3,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc1382__sec-01.md",
+    "size_kb": 124.3,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc1695__sec-02.md",
+    "size_kb": 121.9,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc9130__sec-02.md",
+    "size_kb": 119.4,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc1213__sec-01.md",
+    "size_kb": 118.4,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc8776__sec-01.md",
+    "size_kb": 113.6,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc3636__sec-01.md",
+    "size_kb": 113.1,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc6475__sec-01.md",
+    "size_kb": 110.7,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc1289__sec-01.md",
+    "size_kb": 105.5,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc1513__sec-01.md",
+    "size_kb": 105.4,
+    "suggested_parts": 3
+  },
+  {
+    "file": "IETF_RFC/rfc9826__sec-02.md",
+    "size_kb": 100.2,
+    "suggested_parts": 3
+  }
+]

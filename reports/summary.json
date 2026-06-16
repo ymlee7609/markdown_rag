@@ -1,0 +1,24 @@
+{
+  "input_root": "/home/ymlee/work/markdown_rag/input",
+  "total_files": 27841,
+  "total_mb": 391.01,
+  "avg_kb": 14.38,
+  "in_optimal_range_8_to_80kb": {
+    "count": 6854,
+    "ratio": 0.246,
+    "target_min_ratio": 0.85
+  },
+  "distribution": {
+    "1-5KB": 5727,
+    "0-1KB": 13499,
+    "50-100KB": 1554,
+    "100-500KB": 790,
+    "1MB+": 3,
+    "10-20KB": 2006,
+    "5-10KB": 1043,
+    "20-50KB": 3214,
+    "500KB-1MB": 5
+  },
+  "merge_candidate_dirs": 13,
+  "split_candidate_files": 797
+}

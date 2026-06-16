@@ -1,0 +1,49 @@
+{
+  "total_records": 10,
+  "validate_count": 4,
+  "skip_count": 6,
+  "doc_calls": 2,
+  "chunk_calls": 5,
+  "avg_chunk_latency": 1.9687522649765015,
+  "elapsed": 41.39181303977966,
+  "status_counts": {
+    "skipped": 6,
+    "validated": 4
+  },
+  "per_tag": {
+    "proto:nat": {
+      "candidate_count": 3,
+      "validated_count": 2,
+      "rejected_count": 1
+    },
+    "proto:rip": {
+      "candidate_count": 1,
+      "validated_count": 0,
+      "rejected_count": 1
+    },
+    "proto:eigrp": {
+      "candidate_count": 1,
+      "validated_count": 0,
+      "rejected_count": 1
+    },
+    "feat:power-supply": {
+      "candidate_count": 1,
+      "validated_count": 0,
+      "rejected_count": 1
+    }
+  },
+  "top_reasons_md": "(none collected — use --keep-reasons)",
+  "sample_validated_md": "- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/00_front-matter.md::chu` → ['proto:nat']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/02_fifth-edition.md::ch` → ['proto:nat']",
+  "sample_rejected_md": "- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/00_front-matter.md::chu` → ['proto:nat']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/02_fifth-edition.md::ch` → ['proto:rip']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/02_fifth-edition.md::ch` → ['feat:power-supply', 'proto:eigrp']",
+  "args": {
+    "in": "/home/ymlee/work/markdown_rag/data/ontology/chunk_enrichment.jsonl.gz",
+    "out": "/home/ymlee/work/markdown_rag/data/ontology/chunk_enrichment_validated.jsonl.gz",
+    "only_tier": "theory,implementation",
+    "suspect_tags": "proto:nat,proto:rip,feat:power-supply",
+    "min_candidates": 2,
+    "doc_broadcast": true,
+    "limit": 10,
+    "dry_run": true
+  },
+  "generated_at": "2026-05-22T15:43:46.689940"
+}

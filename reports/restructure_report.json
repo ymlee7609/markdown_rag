@@ -1,0 +1,23 @@
+{
+  "input": "/home/ymlee/work/markdown_rag/input",
+  "output": "/home/ymlee/work/markdown_rag/input_optimized",
+  "policy": {
+    "merge_target_kb": 30,
+    "split_target_kb": 40,
+    "stub_threshold_bytes": 1024
+  },
+  "stats": {
+    "files_seen": 9791,
+    "copied_as_is": 8017,
+    "merged_dirs": 13,
+    "merged_source_files": 17245,
+    "merged_output_files": 484,
+    "split_source_files": 781,
+    "split_output_files": 3630,
+    "excluded_toc": 46,
+    "excluded_stub": 991,
+    "excluded_backup": 0,
+    "errors": [],
+    "error_count": 0
+  }
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "dir": "가입자망장비_manual/다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1",
+    "file_count": 2176,
+    "total_mb": 1.95,
+    "avg_kb": 0.92,
+    "small_file_ratio": 0.94,
+    "suggested_segments": 67
+  },
+  {
+    "dir": "가입자망장비_manual/다산_L3/[V6824XG]_UMN_KO_160621_V2",
+    "file_count": 1690,
+    "total_mb": 1.6,
+    "avg_kb": 0.97,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 55
+  },
+  {
+    "dir": "가입자망장비_manual/다산_L3/_V6848XG__UMNnos1.01_KO_150423_V3 1",
+    "file_count": 1687,
+    "total_mb": 1.61,
+    "avg_kb": 0.97,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 55
+  },
+  {
+    "dir": "가입자망장비_manual/다산_L3/V5524XG_UMN_3.41_KO_080811",
+    "file_count": 1515,
+    "total_mb": 1.47,
+    "avg_kb": 0.99,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 50
+  },
+  {
+    "dir": "가입자망장비_manual/다산_OLT/_V8500__UMN_NOS5.21_KO_150304_V2",
+    "file_count": 1496,
+    "total_mb": 1.46,
+    "avg_kb": 1.0,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 50
+  },
+  {
+    "dir": "가입자망장비_manual/다산_L2/_V2708M__UMNnos1.01_KO_180312_V1.0",
+    "file_count": 1495,
+    "total_mb": 1.43,
+    "avg_kb": 0.98,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 49
+  },
+  {
+    "dir": "가입자망장비_manual/다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0",
+    "file_count": 1470,
+    "total_mb": 1.48,
+    "avg_kb": 1.03,
+    "small_file_ratio": 0.92,
+    "suggested_segments": 51
+  },
+  {
+    "dir": "가입자망장비_manual/다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1",
+    "file_count": 1311,
+    "total_mb": 1.24,
+    "avg_kb": 0.97,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 42
+  },
+  {
+    "dir": "가입자망장비_manual/다산_L2/[V27xxGB_LGU]_UMNnos1.28_KO_141203_V1",
+    "file_count": 1293,
+    "total_mb": 1.22,
+    "avg_kb": 0.96,
+    "small_file_ratio": 0.93,
+    "suggested_segments": 42
+  },
+  {
+    "dir": "가입자망장비_manual/유비쿼스_OLT/U95xxH_SW_User Guide",
+    "file_count": 1059,
+    "total_mb": 1.26,
+    "avg_kb": 1.22,
+    "small_file_ratio": 0.87,
+    "suggested_segments": 43
+  },
+  {
+    "dir": "가입자망장비_manual/유비쿼스_OLT/U9024A-10G_SW_User Guide",
+    "file_count": 936,
+    "total_mb": 1.11,
+    "avg_kb": 1.21,
+    "small_file_ratio": 0.88,
+    "suggested_segments": 38
+  },
+  {
+    "dir": "가입자망장비_manual/유비쿼스_L2/E5924LB_SW_User Guide",
+    "file_count": 590,
+    "total_mb": 0.67,
+    "avg_kb": 1.16,
+    "small_file_ratio": 0.88,
+    "suggested_segments": 23
+  },
+  {
+    "dir": "가입자망장비_manual/유비쿼스_L2/E5924L_SW_User Guide",
+    "file_count": 571,
+    "total_mb": 0.66,
+    "avg_kb": 1.18,
+    "small_file_ratio": 0.88,
+    "suggested_segments": 23
+  }
+]

@@ -1,0 +1,311 @@
+{
+  "total_records": 515043,
+  "validate_count": 9635,
+  "skip_count": 504408,
+  "doc_calls": 646,
+  "chunk_calls": 12262,
+  "avg_chunk_latency": 3.0203868074639066,
+  "elapsed": 22814.681118011475,
+  "status_counts": {
+    "broadcast_only": 4307,
+    "skipped": 504408,
+    "validated": 5161,
+    "parse_error": 167
+  },
+  "per_tag": {
+    "proto:rip": {
+      "candidate_count": 1181,
+      "validated_count": 375,
+      "rejected_count": 806
+    },
+    "proto:ripng": {
+      "candidate_count": 37,
+      "validated_count": 23,
+      "rejected_count": 14
+    },
+    "proto:eigrp": {
+      "candidate_count": 420,
+      "validated_count": 201,
+      "rejected_count": 219
+    },
+    "proto:nat": {
+      "candidate_count": 2740,
+      "validated_count": 499,
+      "rejected_count": 2241
+    },
+    "proto:bgp": {
+      "candidate_count": 843,
+      "validated_count": 426,
+      "rejected_count": 417
+    },
+    "proto:mpls": {
+      "candidate_count": 122,
+      "validated_count": 68,
+      "rejected_count": 54
+    },
+    "proto:tls": {
+      "candidate_count": 59,
+      "validated_count": 10,
+      "rejected_count": 49
+    },
+    "proto:udp": {
+      "candidate_count": 372,
+      "validated_count": 98,
+      "rejected_count": 274
+    },
+    "proto:ipv4": {
+      "candidate_count": 310,
+      "validated_count": 157,
+      "rejected_count": 153
+    },
+    "proto:isis": {
+      "candidate_count": 220,
+      "validated_count": 126,
+      "rejected_count": 94
+    },
+    "proto:ospf": {
+      "candidate_count": 1140,
+      "validated_count": 703,
+      "rejected_count": 437
+    },
+    "proto:acl": {
+      "candidate_count": 727,
+      "validated_count": 414,
+      "rejected_count": 313
+    },
+    "concept:ospf-area": {
+      "candidate_count": 494,
+      "validated_count": 264,
+      "rejected_count": 230
+    },
+    "proto:vlan": {
+      "candidate_count": 2721,
+      "validated_count": 1563,
+      "rejected_count": 1158
+    },
+    "proto:ntp": {
+      "candidate_count": 139,
+      "validated_count": 81,
+      "rejected_count": 58
+    },
+    "proto:ipv6": {
+      "candidate_count": 572,
+      "validated_count": 326,
+      "rejected_count": 246
+    },
+    "proto:ospfv3": {
+      "candidate_count": 86,
+      "validated_count": 34,
+      "rejected_count": 52
+    },
+    "proto:tcp": {
+      "candidate_count": 488,
+      "validated_count": 175,
+      "rejected_count": 313
+    },
+    "proto:ppp": {
+      "candidate_count": 78,
+      "validated_count": 7,
+      "rejected_count": 71
+    },
+    "proto:qos": {
+      "candidate_count": 300,
+      "validated_count": 94,
+      "rejected_count": 206
+    },
+    "proto:lldp": {
+      "candidate_count": 35,
+      "validated_count": 15,
+      "rejected_count": 20
+    },
+    "feat:port-mirroring": {
+      "candidate_count": 1063,
+      "validated_count": 658,
+      "rejected_count": 405
+    },
+    "proto:stp": {
+      "candidate_count": 1230,
+      "validated_count": 831,
+      "rejected_count": 399
+    },
+    "feat:power-supply": {
+      "candidate_count": 725,
+      "validated_count": 193,
+      "rejected_count": 532
+    },
+    "proto:ndp": {
+      "candidate_count": 55,
+      "validated_count": 30,
+      "rejected_count": 25
+    },
+    "proto:snmp": {
+      "candidate_count": 479,
+      "validated_count": 313,
+      "rejected_count": 166
+    },
+    "proto:arp": {
+      "candidate_count": 780,
+      "validated_count": 474,
+      "rejected_count": 306
+    },
+    "concept:ospf-lsa": {
+      "candidate_count": 285,
+      "validated_count": 120,
+      "rejected_count": 165
+    },
+    "concept:ospf-neighbor": {
+      "candidate_count": 101,
+      "validated_count": 46,
+      "rejected_count": 55
+    },
+    "concept:mac-learning": {
+      "candidate_count": 128,
+      "validated_count": 78,
+      "rejected_count": 50
+    },
+    "feat:clock-config": {
+      "candidate_count": 145,
+      "validated_count": 78,
+      "rejected_count": 67
+    },
+    "proto:icmp": {
+      "candidate_count": 333,
+      "validated_count": 111,
+      "rejected_count": 222
+    },
+    "proto:vrrp": {
+      "candidate_count": 118,
+      "validated_count": 89,
+      "rejected_count": 29
+    },
+    "proto:mstp": {
+      "candidate_count": 338,
+      "validated_count": 207,
+      "rejected_count": 131
+    },
+    "proto:rstp": {
+      "candidate_count": 592,
+      "validated_count": 277,
+      "rejected_count": 315
+    },
+    "feat:dot1q-tunnel": {
+      "candidate_count": 134,
+      "validated_count": 98,
+      "rejected_count": 36
+    },
+    "proto:ssh": {
+      "candidate_count": 130,
+      "validated_count": 53,
+      "rejected_count": 77
+    },
+    "proto:dhcp": {
+      "candidate_count": 1018,
+      "validated_count": 587,
+      "rejected_count": 431
+    },
+    "proto:pppoe": {
+      "candidate_count": 36,
+      "validated_count": 13,
+      "rejected_count": 23
+    },
+    "concept:vlan-trunk": {
+      "candidate_count": 160,
+      "validated_count": 98,
+      "rejected_count": 62
+    },
+    "proto:dhcpv6": {
+      "candidate_count": 95,
+      "validated_count": 56,
+      "rejected_count": 39
+    },
+    "proto:lacp": {
+      "candidate_count": 132,
+      "validated_count": 68,
+      "rejected_count": 64
+    },
+    "proto:syslog": {
+      "candidate_count": 246,
+      "validated_count": 104,
+      "rejected_count": 142
+    },
+    "concept:stp-root-bridge": {
+      "candidate_count": 28,
+      "validated_count": 14,
+      "rejected_count": 14
+    },
+    "proto:igmp": {
+      "candidate_count": 1414,
+      "validated_count": 666,
+      "rejected_count": 748
+    },
+    "concept:bgp-as-path": {
+      "candidate_count": 155,
+      "validated_count": 73,
+      "rejected_count": 82
+    },
+    "proto:mld": {
+      "candidate_count": 40,
+      "validated_count": 18,
+      "rejected_count": 22
+    },
+    "feat:port-security": {
+      "candidate_count": 105,
+      "validated_count": 58,
+      "rejected_count": 47
+    },
+    "feat:storm-control": {
+      "candidate_count": 57,
+      "validated_count": 31,
+      "rejected_count": 26
+    },
+    "proto:icmpv6": {
+      "candidate_count": 11,
+      "validated_count": 0,
+      "rejected_count": 11
+    },
+    "proto:nat64": {
+      "candidate_count": 4,
+      "validated_count": 1,
+      "rejected_count": 3
+    },
+    "feat:mac-address-table": {
+      "candidate_count": 133,
+      "validated_count": 81,
+      "rejected_count": 52
+    },
+    "proto:radius": {
+      "candidate_count": 122,
+      "validated_count": 64,
+      "rejected_count": 58
+    },
+    "feat:firmware-upgrade": {
+      "candidate_count": 369,
+      "validated_count": 154,
+      "rejected_count": 215
+    },
+    "feat:console-access": {
+      "candidate_count": 132,
+      "validated_count": 77,
+      "rejected_count": 55
+    },
+    "proto:gpon": {
+      "candidate_count": 40,
+      "validated_count": 25,
+      "rejected_count": 15
+    }
+  },
+  "top_reasons_md": "(none collected — use --keep-reasons)",
+  "sample_validated_md": "- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:ripng']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:eigrp']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:mpls']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:ripng']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:tls']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:eigrp', 'proto:ripng']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:eigrp']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:eigrp', 'proto:isis', 'proto:ospf']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:ripng']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:ripng']",
+  "sample_rejected_md": "- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:rip']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat', 'proto:rip']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:bgp', 'proto:nat', 'proto:rip']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat', 'proto:rip']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:nat', 'proto:rip', 'proto:udp']\n- `/home/ymlee/work/markdown_rag/input_optimized/Cisco_CCIE/CCIE_Vol1/05_part-iii-ip-igp-rout` → ['proto:rip']",
+  "args": {
+    "in": "/home/ymlee/work/markdown_rag/data/ontology/chunk_enrichment.jsonl.gz",
+    "out": "/home/ymlee/work/markdown_rag/data/ontology/chunk_enrichment_validated.jsonl.gz",
+    "only_tier": "theory,implementation",
+    "suspect_tags": "proto:nat,proto:rip,feat:power-supply",
+    "min_candidates": 2,
+    "doc_broadcast": true,
+    "limit": null,
+    "dry_run": false
+  },
+  "generated_at": "2026-05-22T22:24:54.079073"
+}
