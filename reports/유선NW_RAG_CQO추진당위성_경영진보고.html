@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유선NW 운영지원 사내 지식 AI — CQO 추진 당위성 (NW부문과 중복 아님)</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root{
+  --magenta:#E6007E;
+  --magenta-deep:#B30062;
+  --magenta-soft:#FCE7F2;
+  --magenta-line:#F6C7DE;
+  --ink:#17151B;
+  --ink-2:#46414D;
+  --muted:#8C8792;
+  --line:#E8E4EC;
+  --surface:#FFFFFF;
+  --surface-2:#F7F5F9;
+  --paper:#EDEAF0;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"tnum" 1,"case" 1;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ---------- single slide frame ---------- */
+.stage-wrap{
+  width:min(100vw, calc(100vh * 16 / 9));
+  height:min(100vh, calc(100vw * 9 / 16));
+}
+.slide{
+  position:relative;
+  width:100%;
+  height:100%;
+  background:var(--surface);
+  overflow:hidden;
+  container-type:size;
+  box-shadow:0 .6vh 4vh rgba(23,21,27,.14);
+}
+.pad{
+  position:absolute;
+  inset:0;
+  padding:2.8em 3.4em 2.1em;
+  font-size:1.12cqw;
+  line-height:1.5;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- type ---------- */
+.eyebrow{
+  font-size:.78em;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  display:flex;
+  align-items:center;
+  gap:.7em;
+}
+.eyebrow::before{
+  content:"";
+  width:1.7em;height:.2em;background:var(--magenta);border-radius:1em;
+}
+.title{
+  font-size:1.92em;
+  font-weight:800;
+  line-height:1.14;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-top:.45em;
+}
+.title .hl{color:var(--magenta);}
+.lede{
+  font-size:.95em;
+  color:var(--ink-2);
+  margin-top:.55em;
+  font-weight:500;
+  max-width:64em;
+  line-height:1.55;
+}
+.lede b{color:var(--ink);font-weight:700;}
+.headrule{height:1px;background:var(--line);margin:.85em 0 0;}
+
+.body{flex:1;min-height:0;display:flex;flex-direction:column;}
+
+/* ---------- versus (role split) ---------- */
+.versus{display:grid;grid-template-columns:1fr 3em 1fr;align-items:stretch;margin-top:.95em;}
+.vs{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:.75em;
+  padding:.95em 1.1em;display:flex;flex-direction:column;gap:.45em;
+}
+.vs.ours{background:var(--magenta-soft);border-color:var(--magenta-line);}
+.vs-head{display:flex;flex-direction:column;gap:.12em;margin-bottom:.1em;}
+.vs-org{font-size:.66em;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.vs.ours .vs-org{color:var(--magenta);}
+.vs-role{font-size:1.0em;font-weight:800;color:var(--ink);letter-spacing:-.01em;line-height:1.22;}
+.vs-role b{color:var(--magenta-deep);}
+.vsline{display:flex;gap:.5em;font-size:.8em;line-height:1.42;padding:.28em 0;border-top:1px dashed var(--line);}
+.vs.ours .vsline{border-top-color:var(--magenta-line);}
+.vsline .vk{font-weight:700;color:var(--magenta);white-space:nowrap;min-width:3.4em;}
+.vs.ours .vsline .vk{color:var(--magenta-deep);}
+.vsline .vv{color:var(--ink-2);}
+.vsline .vv b{color:var(--ink);font-weight:700;}
+.vs-mid{display:flex;align-items:center;justify-content:center;}
+.vs-mid .neq{
+  width:2.1em;height:2.1em;border-radius:50%;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:1.1em;font-weight:800;
+  box-shadow:0 .3vh 1.2vh rgba(23,21,27,.22);
+}
+
+/* ---------- reasons (why CQO must do it) ---------- */
+.reasons-lead{
+  font-size:.78em;font-weight:800;letter-spacing:.04em;color:var(--magenta-deep);
+  margin:.95em 0 .15em;display:flex;align-items:center;gap:.55em;
+}
+.reasons-lead::before{content:"";width:1.2em;height:.18em;background:var(--magenta);border-radius:1em;}
+.reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:.7em;margin-top:.45em;flex:1;min-height:0;}
+.reason{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:.75em;
+  padding:.95em 1.05em;display:flex;flex-direction:column;gap:.4em;min-height:0;
+}
+.reason .rn{
+  width:1.65em;height:1.65em;border-radius:.45em;background:var(--magenta);color:#fff;
+  font-weight:800;font-size:.92em;display:flex;align-items:center;justify-content:center;
+}
+.reason h3{font-size:.96em;font-weight:800;color:var(--ink);letter-spacing:-.01em;line-height:1.26;}
+.reason p{font-size:.79em;color:var(--ink-2);line-height:1.52;flex:1;}
+.reason .key{
+  margin-top:auto;padding-top:.55em;border-top:1px dashed var(--magenta-line);
+  font-size:.79em;font-weight:700;color:var(--magenta-deep);line-height:1.38;
+  display:flex;gap:.4em;align-items:flex-start;
+}
+.reason .key::before{content:"\2713";font-weight:900;color:var(--magenta);}
+
+/* ---------- closing ---------- */
+.close{
+  margin-top:.95em;background:var(--ink);border-radius:.75em;color:#fff;
+  padding:1.0em 1.35em;display:flex;align-items:center;gap:1.4em;
+}
+.close .ck{
+  font-size:.72em;font-weight:800;letter-spacing:.12em;color:#FF66B8;
+  text-transform:uppercase;white-space:nowrap;align-self:flex-start;margin-top:.2em;
+}
+.close .cwrap{flex:1;display:flex;flex-direction:column;gap:.28em;}
+.close .cbig{font-size:1.18em;font-weight:800;line-height:1.3;letter-spacing:-.01em;}
+.close .cbig b{color:#FF8FC6;}
+.close .csub{font-size:.78em;font-weight:500;color:#CFCAD6;line-height:1.45;}
+.chips{display:flex;flex-direction:column;gap:.35em;align-items:flex-end;}
+.chip{
+  font-size:.68em;font-weight:700;color:#fff;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.22);border-radius:2em;padding:.36em .8em;white-space:nowrap;
+}
+.chip b{color:#FF8FC6;}
+
+/* ---------- footer ---------- */
+.foot{
+  margin-top:.8em;display:flex;justify-content:space-between;align-items:center;
+  font-size:.65em;color:var(--muted);letter-spacing:.04em;
+}
+.foot .brand{font-weight:700;color:var(--ink-2);}
+.foot .brand b{color:var(--magenta);}
+
+/* ---------- mobile fallback ---------- */
+@media (max-width:760px){
+  body{display:block;}
+  .stage-wrap{width:100vw;height:auto;}
+  .slide{height:auto;min-height:auto;aspect-ratio:auto;container-type:normal;box-shadow:none;}
+  .pad{position:relative;inset:auto;font-size:15px;padding:24px 18px 32px;}
+  .versus{grid-template-columns:1fr;gap:.6em;}
+  .vs-mid{padding:.2em 0;}
+  .vs-mid .neq{width:1.8em;height:1.8em;}
+  .reasons{grid-template-columns:1fr;}
+  .close{flex-direction:column;align-items:flex-start;gap:.7em;}
+  .chips{flex-direction:row;flex-wrap:wrap;align-items:flex-start;}
+  .title{font-size:1.5em;}
+}
+
+@media print{
+  body{background:#fff;display:block;}
+  .stage-wrap{width:100%;height:auto;}
+  .slide{width:100%;height:auto;aspect-ratio:16/9;box-shadow:none;}
+  @page{size:landscape;margin:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="stage-wrap">
+  <div class="slide">
+    <div class="pad">
+      <div class="eyebrow">투자 차별화 · 중복 아님 · 경영진 보고 (One-Pager)</div>
+      <h2 class="title">NW는 현장에 적용, CQO는 전사 <span class="hl">기반</span>을 만듭니다</h2>
+      <p class="lede">NW부문이 네트워크 운영 업무에 RAG를 적용하는 동안, CQO는 전 부문이 함께 쓸 <b>RAG 기술 역량</b>과 <b>AI가 읽을 수 있는 자료(AI Readable) 표준</b>, <b>품질 평가 체계</b>를 확보합니다. 겹치지 않게 분담하고, 서로를 끌어올립니다.</p>
+      <div class="headrule"></div>
+
+      <div class="body">
+
+        <!-- ROLE SPLIT : NW ≠ CQO -->
+        <div class="versus">
+          <div class="vs">
+            <div class="vs-head">
+              <span class="vs-org">NW부문</span>
+              <span class="vs-role">현장에 <b>적용</b> · 수직(도메인 깊이)</span>
+            </div>
+            <div class="vsline"><span class="vk">목적</span><span class="vv">네트워크 운영·장애처리 <b>업무 효율화</b></span></div>
+            <div class="vsline"><span class="vk">산출물</span><span class="vv">해당 부문 전용 운영 도우미</span></div>
+            <div class="vsline"><span class="vk">수혜</span><span class="vv">NW부문 현장</span></div>
+          </div>
+
+          <div class="vs-mid"><span class="neq">&#8800;</span></div>
+
+          <div class="vs ours">
+            <div class="vs-head">
+              <span class="vs-org">CQO</span>
+              <span class="vs-role">전사 <b>기반</b> 확보 · 수평(공통 자산)</span>
+            </div>
+            <div class="vsline"><span class="vk">목적</span><span class="vv"><b>RAG 역량 + AI Readable 표준 + 품질 평가체계</b> 확보</span></div>
+            <div class="vsline"><span class="vk">산출물</span><span class="vv">전 부문이 재사용하는 품질 기반</span></div>
+            <div class="vsline"><span class="vk">수혜</span><span class="vv">NW 포함 모든 부문</span></div>
+          </div>
+        </div>
+
+        <!-- WHY CQO MUST DO IT -->
+        <div class="reasons-lead">그래서 CQO가 직접 해야만 합니다</div>
+        <div class="reasons">
+          <div class="reason">
+            <div class="rn">1</div>
+            <h3>품질은 위임할 수 없습니다</h3>
+            <p>AI 답변의 정확성과 근거를 검증하는 기준을 세우는 일은 CQO 본연의 책무입니다. 직접 만들어 봐야, 어느 부문의 RAG든 제대로 평가할 수 있습니다.</p>
+            <div class="key">만들 줄 알아야, 검증할 수 있습니다</div>
+          </div>
+          <div class="reason">
+            <div class="rn">2</div>
+            <h3>AI Readable은 전사 자산입니다</h3>
+            <p>문서를 AI가 정확히 읽고 인용하도록 정제·구조화하는 표준은 RAG 성능의 7할입니다. CQO가 한 번 정립하면 NW를 포함한 모든 부문이 그대로 재사용합니다.</p>
+            <div class="key">한 번 만들어, 모두가 재사용합니다</div>
+          </div>
+          <div class="reason">
+            <div class="rn">3</div>
+            <h3>지금 잡지 않으면 난립합니다</h3>
+            <p>기반을 선점하지 않으면 부문마다 제각각 도구를 만들어 품질·보안·중복을 통제할 수 없습니다. 표준과 게이트를 지금 CQO가 잡아야 난립을 막습니다.</p>
+            <div class="key">표준 공백을 먼저 메웁니다</div>
+          </div>
+        </div>
+
+        <!-- CLOSING : not duplicate, but anti-duplicate -->
+        <div class="close">
+          <span class="ck">결론</span>
+          <div class="cwrap">
+            <p class="cbig">중복 투자가 아니라, <b>중복을 막는 투자</b>입니다.</p>
+            <p class="csub">CQO가 만드는 품질 기반은 NW를 포함한 모든 부문의 RAG 신뢰도를 끌어올립니다. 데이터·범위는 NW부문과 분담하고, 결과는 공유합니다.</p>
+          </div>
+          <div class="chips">
+            <span class="chip"><b>RAG 역량</b> 내재화</span>
+            <span class="chip"><b>AI Readable</b> 표준</span>
+            <span class="chip"><b>품질 평가·게이트</b></span>
+            <span class="chip">NW와 <b>분담·공유</b></span>
+          </div>
+        </div>
+
+        <div class="foot">
+          <span class="brand"><b>U+</b> CQO · AI Study WG</span>
+          <span>유선NW 운영지원 사내 지식 AI · CQO 추진 당위성 (NW부문 과제와 분담·상호보완)</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

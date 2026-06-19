@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유선NW 운영지원 사내 지식 AI — 투자 필요성 (경영진 1장 보고)</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root{
+  --magenta:#E6007E;
+  --magenta-deep:#B30062;
+  --magenta-soft:#FCE7F2;
+  --magenta-line:#F6C7DE;
+  --ink:#17151B;
+  --ink-2:#46414D;
+  --muted:#8C8792;
+  --line:#E8E4EC;
+  --surface:#FFFFFF;
+  --surface-2:#F7F5F9;
+  --paper:#EDEAF0;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"tnum" 1,"case" 1;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ---------- single slide frame ---------- */
+.stage-wrap{
+  width:min(100vw, calc(100vh * 16 / 9));
+  height:min(100vh, calc(100vw * 9 / 16));
+}
+.slide{
+  position:relative;
+  width:100%;
+  height:100%;
+  background:var(--surface);
+  overflow:hidden;
+  container-type:size;
+  box-shadow:0 .6vh 4vh rgba(23,21,27,.14);
+}
+.pad{
+  position:absolute;
+  inset:0;
+  padding:3.1em 3.6em 2.4em;
+  font-size:1.12cqw;
+  line-height:1.5;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- type ---------- */
+.eyebrow{
+  font-size:.78em;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  display:flex;
+  align-items:center;
+  gap:.7em;
+}
+.eyebrow::before{
+  content:"";
+  width:1.7em;height:.2em;background:var(--magenta);border-radius:1em;
+}
+.title{
+  font-size:2.0em;
+  font-weight:800;
+  line-height:1.14;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-top:.5em;
+}
+.title .hl{color:var(--magenta);}
+.lede{
+  font-size:.98em;
+  color:var(--ink-2);
+  margin-top:.6em;
+  font-weight:500;
+  max-width:62em;
+  line-height:1.55;
+}
+.lede b{color:var(--ink);font-weight:700;}
+.headrule{height:1px;background:var(--line);margin:.95em 0 0;}
+
+.body{flex:1;min-height:0;display:flex;flex-direction:column;}
+
+/* ---------- narrative arc (3 acts) ---------- */
+.arc{display:flex;align-items:stretch;gap:.2em;margin-top:1.05em;flex:1;min-height:0;}
+.act{
+  flex:1;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:.75em;padding:1.15em 1.2em 1.0em;
+  display:flex;flex-direction:column;gap:.55em;min-height:0;
+}
+.act.dest{background:var(--magenta-soft);border-color:var(--magenta-line);}
+.act-tag{display:flex;align-items:baseline;gap:.55em;}
+.act-tag .when{
+  font-size:1.12em;font-weight:800;letter-spacing:-.01em;color:var(--magenta);
+}
+.act.dest .act-tag .when{color:var(--magenta-deep);}
+.act-tag .what{
+  font-size:.66em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);
+}
+.act h3{
+  font-size:1.04em;font-weight:800;color:var(--ink);letter-spacing:-.01em;line-height:1.28;
+}
+.act p{
+  font-size:.83em;color:var(--ink-2);line-height:1.58;flex:1;
+}
+.act .punch{
+  margin-top:auto;padding-top:.6em;border-top:1px dashed var(--magenta-line);
+  font-size:.82em;font-weight:700;color:var(--magenta-deep);line-height:1.4;
+  display:flex;gap:.4em;align-items:flex-start;
+}
+.act .punch::before{content:"\2192";font-weight:900;color:var(--magenta);}
+
+/* connector between acts */
+.link{
+  flex:0 0 auto;width:2.6em;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:.3em;align-self:center;
+}
+.link .word{
+  font-size:.62em;font-weight:800;color:var(--magenta-deep);
+  letter-spacing:.02em;white-space:nowrap;text-align:center;line-height:1.1;
+}
+.link .ar{color:var(--magenta);font-size:1.5em;font-weight:900;line-height:1;}
+
+/* ---------- closing callout ---------- */
+.close{
+  margin-top:1.0em;background:var(--ink);border-radius:.75em;color:#fff;
+  padding:1.05em 1.4em;display:flex;align-items:center;gap:1.4em;
+}
+.close .ck{
+  font-size:.72em;font-weight:800;letter-spacing:.12em;color:#FF66B8;
+  text-transform:uppercase;white-space:nowrap;
+}
+.close .cmsg{font-size:1.0em;font-weight:600;line-height:1.45;flex:1;}
+.close .cmsg b{color:#FF8FC6;}
+.chips{display:flex;gap:.45em;flex-wrap:wrap;justify-content:flex-end;}
+.chip{
+  font-size:.68em;font-weight:700;color:#fff;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.22);border-radius:2em;padding:.4em .85em;white-space:nowrap;
+}
+.chip b{color:#FF8FC6;}
+
+/* ---------- footer ---------- */
+.foot{
+  margin-top:.95em;display:flex;justify-content:space-between;align-items:center;
+  font-size:.66em;color:var(--muted);letter-spacing:.04em;
+}
+.foot .brand{font-weight:700;color:var(--ink-2);}
+.foot .brand b{color:var(--magenta);}
+.foot .src{font-style:normal;}
+
+/* ---------- mobile fallback ---------- */
+@media (max-width:760px){
+  body{display:block;}
+  .stage-wrap{width:100vw;height:auto;}
+  .slide{height:auto;min-height:auto;aspect-ratio:auto;container-type:normal;box-shadow:none;}
+  .pad{position:relative;inset:auto;font-size:15px;padding:26px 18px 34px;}
+  .arc{flex-direction:column;}
+  .link{width:auto;flex-direction:row;padding:.2em 0;}
+  .link .ar{transform:rotate(90deg);}
+  .close{flex-direction:column;align-items:flex-start;gap:.8em;}
+  .chips{justify-content:flex-start;}
+  .title{font-size:1.55em;}
+}
+
+@media print{
+  body{background:#fff;display:block;}
+  .stage-wrap{width:100%;height:auto;}
+  .slide{width:100%;height:auto;aspect-ratio:16/9;box-shadow:none;}
+  @page{size:landscape;margin:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="stage-wrap">
+  <div class="slide">
+    <div class="pad">
+      <div class="eyebrow">투자 필요성 · 경영진 보고 (One-Pager)</div>
+      <h2 class="title">정답은 이미 <span class="hl">사내 문서</span>에 있습니다 — 작게 검증하고, 확실히 키웁니다</h2>
+      <p class="lede">유선 네트워크 운영의 지식을 <b>가장 잘 아는 사람의 속도로, 모두가 답을 찾게 만드는 일</b>입니다. 큰 결정을 서두르지 않고, 일정·비용·범위를 통제한 시범으로 그 가치를 먼저 증명하려 합니다.</p>
+      <div class="headrule"></div>
+
+      <div class="body">
+        <div class="arc">
+
+          <!-- ACT 1 : 배경 -->
+          <div class="act">
+            <div class="act-tag"><span class="when">지금</span><span class="what">배경</span></div>
+            <h3>지식은 있는데, 찾는 데 시간이 걸립니다</h3>
+            <p>운영 노하우가 매뉴얼·장애보고서·검증이력에 흩어져 있어, 진단과 원인분석이 소수 숙련자에게 쏠립니다. 불만콜·장애처리마다 비슷한 사례를 매번 다시 찾고, 담당자와 시간대에 따라 대응 품질이 달라집니다.</p>
+            <div class="punch">정답은 사내에 있지만, 흩어져 있습니다</div>
+          </div>
+
+          <div class="link"><span class="word">그래서</span><span class="ar">&#8594;</span></div>
+
+          <!-- ACT 2 : 당위성 -->
+          <div class="act">
+            <div class="act-tag"><span class="when">그래서</span><span class="what">추진 당위성</span></div>
+            <h3>큰 투자 전에, 통제된 시범으로 먼저 증명합니다</h3>
+            <p>필요한 답은 이미 우리 문서 안에 있으니, 새 기술을 사오기보다 잘 찾아주면 됩니다. 그래서 일정·비용·범위를 모두 가둔 <b>1억 미만·약 3.5개월</b> 시범으로 효과를 확인하고, 그 결과로 본투자 규모를 정합니다. 모든 자료는 망분리 안에서만 다룹니다.</p>
+            <div class="punch">사오지 말고, 찾게 만듭니다 — 작게, 안전하게</div>
+          </div>
+
+          <div class="link"><span class="word">그 결과</span><span class="ar">&#8594;</span></div>
+
+          <!-- ACT 3 : 효과 -->
+          <div class="act dest">
+            <div class="act-tag"><span class="when">앞으로</span><span class="what">기대 효과</span></div>
+            <h3>시간을 줄이고, 경험을 자산으로 남깁니다</h3>
+            <p>반복 검색이 자동화되어 탐색·진단 시간이 줄고, 근거 기반 답변으로 대응의 일관성이 올라갑니다. 베테랑의 노하우가 자산으로 축적되어 신규 인력 적응이 빨라지고, 한 업무에서 검증한 방식은 다른 운영 업무로 그대로 확장됩니다.</p>
+            <div class="punch">빨라지고, 일관되고, 자산으로 남습니다</div>
+          </div>
+
+        </div>
+
+        <div class="close">
+          <span class="ck">요청</span>
+          <p class="cmsg">큰 결정을 서두르지 않습니다. <b>빈 시간 없이 작게 검증</b>하고, 그 결과(게이트)로 본투자 규모를 판단할 수 있도록 시범 추진을 승인해 주시길 요청드립니다.</p>
+          <div class="chips">
+            <span class="chip"><b>1억 미만</b> 시범</span>
+            <span class="chip">약 <b>3.5개월</b></span>
+            <span class="chip">외부 유출 <b>0</b></span>
+            <span class="chip"><b>게이트형</b> 의사결정</span>
+          </div>
+        </div>
+
+        <div class="foot">
+          <span class="brand"><b>U+</b> CQO · AI Study WG</span>
+          <span class="src">유선NW 운영지원 사내 지식 AI · 투자 필요성 요약 (상세 추진계획 별첨)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
