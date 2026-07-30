@@ -1,0 +1,707 @@
+{
+  "version": "1.0.0",
+  "description": "가입자망장비 매뉴얼 RAG 검증 데이터셋 - 벤더 6종 x 유형 4종 = 24 케이스. 모든 근거는 코퍼스 실제 파일/행 기준으로 검증됨(부정 케이스는 grep 매칭 0건 확인).",
+  "corpus_root": "input_optimized/가입자망장비_manual",
+  "vendors": [
+    "다산_L2",
+    "다산_L3",
+    "다산_OLT",
+    "유비쿼스_L2",
+    "유비쿼스_L3",
+    "유비쿼스_OLT"
+  ],
+  "categories": {
+    "spec_value": 6,
+    "command_syntax": 6,
+    "diagnostics": 6,
+    "negative": 6
+  },
+  "category_definitions": {
+    "spec_value": "수치 제원·기본값. 유비쿼스는 HW 설치가이드의 전원/온도/무게 사양표, 다산은 SW 매뉴얼의 명령 파라미터 범위·Default 값. 다산 디렉터리에는 HW 설치가이드가 존재하지 않아 사양표 질문이 성립하지 않음.",
+    "command_syntax": "명령어 문법 및 설정 절차. 정답은 명령 토큰 순서까지 일치해야 함.",
+    "diagnostics": "진단·상태확인·LED/알람. show 계열 명령과 LED 색상 의미 해석 포함.",
+    "negative": "근거 부재 또는 잘못된 전제. 검색 결과가 존재하더라도 유보(abstain)하거나 전제를 교정해야 정답."
+  },
+  "pass_criteria": {
+    "hit_at_k": 5,
+    "require_keyword_match": true,
+    "negative_requires_abstain": true,
+    "negative_forbids_cited_path": true
+  },
+  "negative_flavors": {
+    "missing_doc_type": "해당 벤더 디렉터리에 그 종류의 문서 자체가 없음",
+    "substring_false_match": "질의어가 무관한 토큰의 부분문자열로 매칭되어 오검색 유도",
+    "cross_vendor_syntax": "타 벤더 전용 명령을 이 벤더 것으로 전제하고 질문",
+    "sibling_model_leak": "형제 모델 문서에만 있는 값을 대상 모델 값으로 전이시킬 위험",
+    "out_of_corpus_spec": "코퍼스 전체에 존재하지 않는 사양 항목"
+  },
+  "test_cases": [
+    {
+      "id": "DSN-L2-SPEC-001",
+      "vendor": "다산_L2",
+      "category": "spec_value",
+      "polarity": "positive",
+      "query": "다산 V3024V에서 threshold cpu 명령의 최대 임계값 기본값과 측정 시간 간격 기본값은?",
+      "expected_path_contains": "다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04",
+      "expected_keywords": [
+        "threshold cpu",
+        "70%",
+        "30%",
+        "60"
+      ],
+      "expected_answer": "최대 임계값 기본값 70%, 최소 임계값 기본값 30%, 측정 시간 간격 기본값 60초(5/60/600초 중 선택).",
+      "evidence": [
+        {
+          "file": "다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04.md",
+          "line": 847,
+          "text": "threshold cpu <21-100> {5|60|600} [<20-100> {5|60|600}] ... <21-100> :최대 임계값(단위: %), Default : 70% / 5|60|600: 5초, 60초(Default), 600초 / <20-100> :최소 임계값(단위: %), Default : 30%",
+          "quote_type": "summary"
+        }
+      ],
+      "notes": "표 셀 안에 <br> 로 여러 기본값이 압축된 케이스. 셀 전체가 한 청크에 들어가야 3개 값을 모두 답할 수 있음. V3024VB 명령어매뉴얼 sec-04:860 에 동일 표가 중복 존재하므로 둘 중 어느 쪽이 검색돼도 정답 인정."
+    },
+    {
+      "id": "DSN-L2-CMD-001",
+      "vendor": "다산_L2",
+      "category": "command_syntax",
+      "polarity": "positive",
+      "query": "다산 V29xxGB 스위치에서 VLAN 2를 생성하고 2번 포트를 untagged로 할당한 뒤 PVID를 지정하는 명령어는?",
+      "expected_path_contains": "다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-022",
+      "expected_keywords": [
+        "vlan create",
+        "vlan add",
+        "untagged",
+        "vlan pvid",
+        "bridge"
+      ],
+      "expected_answer": "bridge 설정 모드에서 `vlan create 2` → `vlan add 2 2 untagged` → `vlan pvid 2 2` 순서로 입력한다.",
+      "evidence": [
+        {
+          "file": "다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-022.md",
+          "line": 246,
+          "text": "[설정 예제 1] 포트 기반 VLAN 설정 — SWITCH(bridge)# vlan create2 / vlan del 1 2,3,4 / vlan add2 2untagged / vlan pvid2 2 (VLAN 2,3,4 를 만들어 2·3·4번 포트를 각각 할당)",
+          "quote_type": "summary",
+          "line_end": 272
+        }
+      ],
+      "notes": "PDF 추출 시 공백이 소실되어 원문이 'vlan create2', 'vlan add2 2untagged' 로 저장됨. 사용자는 정상 표기로 질의하므로 토큰 정규화/부분일치가 없으면 BM25가 miss. 코퍼스 전반이 이 상태라 우선순위 높음."
+    },
+    {
+      "id": "DSN-L2-DIAG-001",
+      "vendor": "다산_L2",
+      "category": "diagnostics",
+      "polarity": "positive",
+      "query": "다산 V3024V에서 현재 CPU 평균 사용량과 설정된 임계값을 함께 확인하려면 어떤 명령을 쓰나?",
+      "expected_path_contains": "다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04",
+      "expected_keywords": [
+        "show cpuload",
+        "Enable",
+        "Global",
+        "CPU"
+      ],
+      "expected_answer": "Enable 또는 Global 모드에서 `show cpuload` 를 사용한다. 메모리 상태는 `show memory system`.",
+      "evidence": [
+        {
+          "file": "다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04.md",
+          "line": 860,
+          "text": "|show cpuload|Enable/Global|사용자 장비의CPU사용량 임계값과CPU평균 사용량을 확인합니다.|",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04.md",
+          "line": 898,
+          "text": "|show memory system|Enable/Global|장비 메모리 상태와 메모리량 임계값을 확인합니다.|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "명령 모드(Enable/Global)까지 답에 포함되는지 확인. 표 형식이라 명령명과 모드가 같은 행에 있어야 함."
+    },
+    {
+      "id": "DSN-L2-NEG-001",
+      "vendor": "다산_L2",
+      "category": "negative",
+      "polarity": "negative",
+      "negative_flavor": "missing_doc_type",
+      "query": "다산 V3024V 스위치의 동작 온도 범위와 최대 소비 전력은?",
+      "expected_behavior": "abstain",
+      "expected_answer": "제공된 다산 L2 매뉴얼은 명령어/사용 설명서로 하드웨어 설치 사양이 포함되어 있지 않아 확인할 수 없습니다.",
+      "absence_evidence": {
+        "command": "grep -rn '동작 온도 *:\\|입력 전압\\|소비 전력 *:' --include='*.md' 다산_L2",
+        "match_count": 0,
+        "note": "다산_L2 132개 문서 전부 UMN(SW 매뉴얼). HW Installation Guide 부재."
+      },
+      "fail_if_answer_contains": [
+        "0 ~ 50",
+        "-20 ~ 60",
+        "Watt",
+        "℃"
+      ],
+      "must_not_cite_path_contains": [
+        "유비쿼스_"
+      ],
+      "wrong_answer_example": "V3024V의 동작 온도는 0~50°C이며 최대 소비 전력은 110W입니다.",
+      "notes": "문서 종류 자체가 없는 케이스. 유비쿼스 HW 설치가이드 사양표가 의미상 유사해 상위 랭크될 수 있어 벤더 경계를 넘는지 확인. 다산_L2에 EEE(소비전력 절감) 설명이 있어 '소비 전력' 키워드로 오검색되는 것도 함정."
+    },
+    {
+      "id": "DSN-L3-SPEC-001",
+      "vendor": "다산_L3",
+      "category": "spec_value",
+      "polarity": "positive",
+      "query": "다산 V6824XG에서 MST Instance의 브리지 우선도를 설정할 수 있는 값의 범위는?",
+      "expected_path_contains": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-025",
+      "expected_keywords": [
+        "spanning-tree mst",
+        "priority",
+        "61440",
+        "Bridge"
+      ],
+      "expected_answer": "`spanning-tree mst <instance-id> priority <priority>` 로 0 ~ 61440 범위에서 설정한다 (Bridge 모드).",
+      "evidence": [
+        {
+          "file": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-025.md",
+          "line": 244,
+          "text": "|spanning-tree mst _instance-id_ priority _priority_|Bridge|MST Instance의 브리지 우선도 값을<0 – 61440>의 범위에서 설정합니다.|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "동일 파일 528행에 `spanning-tree vlan <vlan-id> priority` 가 같은 <0 – 61440> 범위로 존재. MST와 VLAN 인스턴스를 구분해 답하는지 확인(둘 다 검색되면 혼동 가능). 범위 표기에 en-dash(–)가 사용됨."
+    },
+    {
+      "id": "DSN-L3-CMD-001",
+      "vendor": "다산_L3",
+      "category": "command_syntax",
+      "polarity": "positive",
+      "query": "다산 V6824XG에서 새 VLAN을 만들 때 vlan create 명령의 인자로 무엇을 지정하나?",
+      "expected_path_contains": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-022",
+      "expected_keywords": [
+        "vlan create",
+        "vlan-name",
+        "Bridge",
+        "vlan add",
+        "tagged"
+      ],
+      "expected_answer": "VLAN ID가 아니라 VLAN 이름(vlan-name)을 지정한다. `vlan create <vlan-name>` 으로 만들고, `vlan add <vlan-name> <port-number> {tagged|untagged}` 로 포트를 할당한다.",
+      "evidence": [
+        {
+          "file": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-022.md",
+          "line": 307,
+          "text": "|vlan create _vlan-name_|Bridge|VLAN이름을 지정하여 새로운VLAN을 만듭니다.|",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-022.md",
+          "line": 362,
+          "text": "|vlan add _vlan-name_ _port-number_ {tagged|untagged}|Bridge|VLAN에 속하는 포트를 지정하고 해당 포트의 속성을tagged나untagged로 설정합니다.|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "핵심 변별점: 동일 벤더 내에서도 L2(V29xxGB)는 `vlan create <vlan-id>`(숫자), L3(V6824XG)는 `vlan create <vlan-name>`(이름) 으로 인자 타입이 다름. DSN-L2-CMD-001 과 짝을 이루는 케이스로, 두 문서가 섞이면 둘 중 하나는 반드시 틀림. part-022:319 의 실제 예제는 `vlan createA`(이름 A)."
+    },
+    {
+      "id": "DSN-L3-DIAG-001",
+      "vendor": "다산_L3",
+      "category": "diagnostics",
+      "polarity": "positive",
+      "query": "다산 V6824XG에서 Fan이 25도에 동작을 시작하고 5도에 멈추도록 설정한 뒤 상태를 확인하는 명령은?",
+      "expected_path_contains": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-014",
+      "expected_keywords": [
+        "threshold fan",
+        "show status fan",
+        "25",
+        "5",
+        "AUTO"
+      ],
+      "expected_answer": "`threshold fan 25 5` 로 설정하고 `show status fan` 으로 확인한다. 출력에 'Fan threshold : Run 25 C / Stop 5 C' 와 'Fan operation : AUTO' 가 표시된다.",
+      "evidence": [
+        {
+          "file": "다산_L3/[V6824XG]_UMN_KO_160621_V2/part-014.md",
+          "line": 141,
+          "text": "SWITCH(config)# threshold fan25 5 → show status fan → Fan operation : AUTO / Fan threshold : Run  25 C / Stop   5 C  (설정 예제 10)",
+          "quote_type": "summary"
+        }
+      ],
+      "notes": "명령과 그 출력이 같은 코드블록에 있음. 청크가 중간에서 잘리면 '설정은 했는데 확인 결과를 모르는' 부분 답변이 나옴. 인접 예제(125행 `threshold temp45` + `show status temp`)와 혼동하지 않는지도 확인."
+    },
+    {
+      "id": "DSN-L3-NEG-001",
+      "vendor": "다산_L3",
+      "category": "negative",
+      "polarity": "negative",
+      "negative_flavor": "substring_false_match",
+      "query": "다산 V6824XG의 전면 LED가 녹색과 주황색일 때 각각 어떤 상태를 의미하나?",
+      "expected_behavior": "abstain",
+      "expected_answer": "제공된 다산 L3 매뉴얼(SW 사용 설명서)에는 LED 색상별 상태표가 없습니다. LED 표시는 하드웨어 설치 설명서에 기술되는데 해당 문서가 코퍼스에 없습니다.",
+      "absence_evidence": {
+        "command": "grep -rn '녹색' --include='*.md' 다산_L3",
+        "match_count": 0,
+        "note": "다산_L3 전체에서 LED 색상어 0건(녹색/주황/점등/점멸 각 0). 'LED' 자체는 92건 매칭되지만 전부 포트 상태표의 'INSTALLED' 컬럼 헤더가 부분문자열로 걸린 것이며 LED 정보가 아님."
+      },
+      "fail_if_answer_contains": [
+        "녹색",
+        "주황",
+        "점멸",
+        "PWR"
+      ],
+      "must_not_cite_path_contains": [
+        "유비쿼스_"
+      ],
+      "wrong_answer_example": "녹색 점등은 정상 링크, 주황 점등은 Fail 상태를 의미합니다.",
+      "notes": "부분문자열 오검색 트랩. 'LED' 로 검색하면 `NO TYPE PVID STATUS MODE FLOWCTRL INSTALLED` 헤더 행이 다수 걸리지만 실제 LED 정보는 0건. 형태소/토큰 경계 처리가 없으면 무관한 청크를 근거로 답변함. 유비쿼스 E6100 LED 표(녹색/주황)가 실제로 존재하므로 벤더 경계를 넘어 끌어오는지도 함께 확인."
+    },
+    {
+      "id": "DSN-OLT-SPEC-001",
+      "vendor": "다산_OLT",
+      "category": "spec_value",
+      "polarity": "positive",
+      "query": "다산 V8500M에서 PIM DR Priority의 설정 가능 범위와 기본값은?",
+      "expected_path_contains": "다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-029",
+      "expected_keywords": [
+        "DR Priority",
+        "4294967294",
+        "기본값",
+        "1"
+      ],
+      "expected_answer": "0 ~ 4294967294 범위에서 설정 가능하며 기본값은 1이다.",
+      "evidence": [
+        {
+          "file": "다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-029.md",
+          "line": 411,
+          "text": "DR Priority는 <0-4294967294> 범위에서 설정할 수 있으며, V8500M에 설정되어 있는 기본값은 1 입니다.",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "다산_L3 V6824XG part-036:143 에 모델명만 바뀐 동일 문장이 존재. 모델명을 근거로 올바른 문서를 고르는지 확인하는 케이스(둘 다 값은 같아 답은 맞지만, 출처가 틀리면 path 검증에서 탈락)."
+    },
+    {
+      "id": "DSN-OLT-CMD-001",
+      "vendor": "다산_OLT",
+      "category": "command_syntax",
+      "polarity": "positive",
+      "query": "다산 V5724G-10G OLT에서 특정 ONU 프로파일이 적용된 ONU 목록을 조회하는 명령은?",
+      "expected_path_contains": "다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-053",
+      "expected_keywords": [
+        "show onu-profile onu-list",
+        "profile-name",
+        "Pon-olt",
+        "ONU"
+      ],
+      "expected_answer": "`show onu-profile onu-list <profile-name>` 을 Pon / Pon-olt / Onu-profile 모드에서 사용한다.",
+      "evidence": [
+        {
+          "file": "다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-053.md",
+          "line": 319,
+          "text": "|show onu-profile onu-list _profile-name_|Pon / Pon-olt / Onu-profile|현재 만들어진Profile이 적용된ONU(ONT)들의 리스트를 보여줍니다.|",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "다산_OLT/_V5724G-10G_LGU__UMNnos1.03L_KO_150909_V1/part-053.md",
+          "line": 375,
+          "text": "SWITCH(config-pon-olt[1/1])# show onu-profile onu-list AAA",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "유사 명령 `show onu-profile <profile-name>`(313행)과 구분해야 함. 'onu-list' 서브키워드 유무가 정답을 가름. 실행 예제(375행)가 별도 청크에 있어 정의+예제를 함께 제시하는지도 관찰."
+    },
+    {
+      "id": "DSN-OLT-DIAG-001",
+      "vendor": "다산_OLT",
+      "category": "diagnostics",
+      "polarity": "positive",
+      "query": "다산 V8500M에서 FAN 장애 발생 시 외부 알람 LED가 점등되도록 하려면 어떻게 설정하며, SNMP Alarm Severity와 알람 LED는 어떻게 매칭되나?",
+      "expected_path_contains": "다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-005",
+      "expected_keywords": [
+        "alarm-led level",
+        "fan-fail",
+        "critical",
+        "major",
+        "minor"
+      ],
+      "expected_answer": "Global 모드에서 `alarm-led level fan-fail {critical|major|minor}` 로 설정한다. 매칭은 critical→CRIT LED, major→MAJ LED, minor/warning/intermediate→MIN LED.",
+      "evidence": [
+        {
+          "file": "다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-005.md",
+          "line": 279,
+          "text": "|critical|CRIT(critical) LED| / |major|MAJ(major) LED| / |minor, warning, intermediate|MIN(minor) LED|  (5.1.2 외부 알람 LED 설정)",
+          "quote_type": "summary"
+        },
+        {
+          "file": "다산_OLT/[V8500M]_UMN_NOS6.06_KO_190822_V1.0/part-005.md",
+          "line": 294,
+          "text": "|alarm-led level fan-fail {critical|major|minor}||FAN동작에 에러가 발생할 경우 알람LED의 동작Level을 설정합니다.|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "2-hop 질문. 매칭표(279행)와 명령표(294행)가 서로 다른 청크에 있을 가능성이 높아 multi-chunk 종합 능력을 검증. fan-fail / fan-remove / temperature / power-fail 중 정확히 fan-fail 을 고르는지도 확인."
+    },
+    {
+      "id": "DSN-OLT-NEG-001",
+      "vendor": "다산_OLT",
+      "category": "negative",
+      "polarity": "negative",
+      "negative_flavor": "cross_vendor_syntax",
+      "query": "다산 V8500M OLT에서 self-loop-detection 명령으로 포트의 셀프 루프 감지를 설정하는 방법은?",
+      "expected_behavior": "reject_premise",
+      "expected_answer": "다산 V8500M에는 `self-loop-detection` 명령이 없습니다. 해당 명령은 유비쿼스 E57xxRC 계열의 문법입니다.",
+      "absence_evidence": {
+        "command": "grep -rn 'self-loop-detection' --include='*.md' 다산_L2 다산_L3 다산_OLT",
+        "match_count": 0,
+        "correct_owner": {
+          "file": "유비쿼스_L2/E57xxRC_SW_User Guide__sec-08.md",
+          "line": 56,
+          "match_count_in_owner": 43
+        }
+      },
+      "fail_if_answer_contains": [
+        "SWITCH(config)# self-loop",
+        "no self-loop-detection",
+        "SWITCH(bridge)#"
+      ],
+      "must_not_cite_path_contains": [
+        "유비쿼스_"
+      ],
+      "wrong_answer_example": "SWITCH(config)# interface gi2 후 self-loop-detection 을 입력하면 활성화됩니다.",
+      "notes": "교차벤더 문법 트랩(다산 → 유비쿼스 방향). 유비쿼스_L2 에 43건이 있어 벤더 필터가 없으면 반드시 그쪽을 근거로 답함. 다산의 유사 기능은 STP 계열이므로 '다산에는 없다 + 유비쿼스 문법이다' 를 짚어야 정답."
+    },
+    {
+      "id": "UBQ-L2-SPEC-001",
+      "vendor": "유비쿼스_L2",
+      "category": "spec_value",
+      "polarity": "positive",
+      "query": "유비쿼스 E5924L과 E5924LB의 전원 규격상 최대 소비 전력은 각각 얼마인가?",
+      "expected_path_contains": "유비쿼스_L2/E5924L",
+      "expected_keywords": [
+        "E5924L",
+        "E5924LB",
+        "110",
+        "120",
+        "Watt"
+      ],
+      "expected_answer": "E5924L은 max 110 Watt, E5924LB는 max 120 Watt.",
+      "evidence": [
+        {
+          "file": "유비쿼스_L2/E5924L_HW_Installtion Guide.md",
+          "line": 815,
+          "text": "- 소비 전력: max 110 Watt",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "유비쿼스_L2/E5924LB_HW_Installtion Guide.md",
+          "line": 906,
+          "text": "- 소비 전력: max 120 Watt",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "모델명이 1글자(B) 차이라 임베딩상 거의 구분되지 않음. 두 문서를 모두 검색해 값을 각각 귀속시켜야 정답. 한쪽만 검색해 양쪽에 같은 값을 쓰면 오답. 파일명 오타('Installtion')가 있어 파일명 기반 필터에도 주의."
+    },
+    {
+      "id": "UBQ-L2-CMD-001",
+      "vendor": "유비쿼스_L2",
+      "category": "command_syntax",
+      "polarity": "positive",
+      "query": "유비쿼스 E57xxRC 스위치에서 VLAN 1000을 생성하려면 어떤 명령을 입력하나?",
+      "expected_path_contains": "유비쿼스_L2/E57xxRC_SW_User Guide__sec-04",
+      "expected_keywords": [
+        "Switch(config)#",
+        "vlan",
+        "1000",
+        "configure terminal"
+      ],
+      "expected_answer": "global configuration 모드에서 `Switch(config)# vlan 1000` 을 입력한다. (VLAN ID 범위 1-4094)",
+      "evidence": [
+        {
+          "file": "유비쿼스_L2/E57xxRC_SW_User Guide__sec-04.md",
+          "line": 83,
+          "text": "Switch(config)# vlan  1000",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "유비쿼스는 Cisco 유사 문법(`vlan <id>`)이고 다산은 `vlan create`. DSN-L2-CMD-001 과 정반대 문법이라 벤더 혼동 시 즉시 오답. 원문에 'vlan' 과 '1000' 사이 공백이 2칸이라 공백 정규화 확인 포인트."
+    },
+    {
+      "id": "UBQ-L2-DIAG-001",
+      "vendor": "유비쿼스_L2",
+      "category": "diagnostics",
+      "polarity": "positive",
+      "query": "유비쿼스 E57xxRC에서 포트의 self-loop 감지 설정 상태를 조회하는 명령과, 출력에서 확인 가능한 항목은?",
+      "expected_path_contains": "유비쿼스_L2/E57xxRC_SW_User Guide__sec-08",
+      "expected_keywords": [
+        "show self-loop-detection",
+        "show running-config",
+        "ifname",
+        "shutdown",
+        "remain_time"
+      ],
+      "expected_answer": "privileged EXEC 모드에서 `show self-loop-detection` 또는 `show running-config` 를 사용한다. 출력에는 ifname, ld, link, shutdown, set_time, remain_time, count, last-occur 컬럼이 표시된다.",
+      "evidence": [
+        {
+          "file": "유비쿼스_L2/E57xxRC_SW_User Guide__sec-08.md",
+          "line": 56,
+          "text": "포트의 self-loop 감지 기능 설정 상태를 조회하려면, privileged EXEC 명령 show running-config 나 show self-loop-detection 을 사용합니다. (7.5.3 Displaying Self-loop Status)",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "유비쿼스 SW 매뉴얼 특유의 백틱 분절 표기(`포트의` self-loop `감지 기능` ...)로 한글과 영문이 백틱으로 쪼개져 있음. 백틱을 토큰 경계로 처리하지 않으면 한국어 질의가 매칭되지 않음. 코퍼스 내 유비쿼스 SW 문서 전반에 해당되는 구조적 이슈."
+    },
+    {
+      "id": "UBQ-L2-NEG-001",
+      "vendor": "유비쿼스_L2",
+      "category": "negative",
+      "polarity": "negative",
+      "negative_flavor": "cross_vendor_syntax",
+      "query": "유비쿼스 E57xxRC에서 threshold cpu 명령으로 CPU 사용량 임계값을 70%로 설정하고 show cpuload로 확인하는 절차는?",
+      "expected_behavior": "reject_premise",
+      "expected_answer": "유비쿼스 E57xxRC에는 `threshold cpu` / `show cpuload` 명령이 없습니다. 두 명령 모두 다산 NOS 계열 문법입니다.",
+      "absence_evidence": {
+        "command": "grep -rn 'threshold cpu\\|show cpuload' --include='*.md' 유비쿼스_L2 유비쿼스_L3 유비쿼스_OLT",
+        "match_count": 0,
+        "correct_owner": "다산_L2/_V3024V__UMNnos1.01_KO_190926_V1.0__sec-04.md:847,860"
+      },
+      "fail_if_answer_contains": [
+        "threshold cpu 70",
+        "show cpuload",
+        "Default : 70%"
+      ],
+      "must_not_cite_path_contains": [
+        "다산_"
+      ],
+      "wrong_answer_example": "Switch(config)# threshold cpu 70 60 으로 설정한 뒤 Switch# show cpuload 로 확인합니다.",
+      "notes": "교차벤더 문법 트랩(유비쿼스 → 다산 방향). DSN-OLT-NEG-001 과 방향이 반대인 쌍으로, 한쪽만 통과하면 벤더 필터가 단방향으로만 걸린 것. 질의에 '70%'라는 구체 수치가 들어 있어 다산 문서의 'Default : 70%' 청크가 강하게 끌려옴."
+    },
+    {
+      "id": "UBQ-L3-SPEC-001",
+      "vendor": "유비쿼스_L3",
+      "category": "spec_value",
+      "polarity": "positive",
+      "query": "유비쿼스 E6100의 무게와 최대 소비 전력, 그리고 지원하는 입력 전압은?",
+      "expected_path_contains": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide",
+      "expected_keywords": [
+        "E6100",
+        "9.1",
+        "155",
+        "100 ~ 240VAC",
+        "-48V"
+      ],
+      "expected_answer": "무게 최대 9.1kg, 최대 소비 전력 155 Watt, 입력 전압 AC 100~240VAC(50~60Hz) 또는 DC -48V/+24V. 동작 온도는 0~50°C.",
+      "evidence": [
+        {
+          "file": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide.md",
+          "line": 350,
+          "text": "|무게|최대 9.1 kg|",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide.md",
+          "line": 352,
+          "text": "|전원 입력 사양|• 입력 전압 : AC : 100 ~ 240VAC, 50 ~ 60Hz / DC : -48V or +24V|",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide.md",
+          "line": 354,
+          "text": "|소비 전력|최대 155 Watt|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "형제 모델 E6124 는 소비 전력(155W)·동작 온도(0~50°C)가 완전히 동일하고 무게만 7.6kg 로 다름. 즉 무게 한 항목만 틀리기 쉬운 구조. E6124 문서를 근거로 답해도 두 값은 맞고 무게만 틀리므로, 부분 정답을 잡아내려면 무게 키워드 검증이 필수."
+    },
+    {
+      "id": "UBQ-L3-CMD-001",
+      "vendor": "유비쿼스_L3",
+      "category": "command_syntax",
+      "polarity": "positive",
+      "query": "유비쿼스 E6124에서 VRRP 백업 라우터의 우선순위를 200으로 설정하는 명령과, 설정 가능 범위 및 기본값은?",
+      "expected_path_contains": "유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제17장_VRRP",
+      "expected_keywords": [
+        "router vrrp",
+        "priority",
+        "200",
+        "254",
+        "default는100"
+      ],
+      "expected_answer": "`Switch(config)# router vrrp <virtual-ID> <interface-name>` 로 진입 후 `Switch(config-router)# priority 200`. 범위는 1~254이며 기본값은 100.",
+      "evidence": [
+        {
+          "file": "유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제17장_VRRP.md",
+          "line": 175,
+          "text": "priority 명령을 사용해서 백업 가상 라우터의 우선 순위를 1 ~ 254 범위로 설정할 수 있다.",
+          "quote_type": "verbatim"
+        },
+        {
+          "file": "유비쿼스_L3/E61xx/LGU _Manual_E6124_Series_User Guide_제17장_VRRP.md",
+          "line": 262,
+          "text": "|priority _level_ 예제: Switch(config-router)#priority 200|VRRP의 운선 순위 값을 설정한다. - default는100|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "범위(175행 산문)와 기본값(262행 표)이 서로 다른 위치에 있는 2-hop. 262행 원문에 오타('운선 순위')가 있어 '우선순위' 질의와 정확히 일치하지 않음 — 오타 내성 확인 포인트. 주의: `router vrrp` 는 다산_L3 에도 26건 존재하므로 교차벤더 트랩으로는 쓸 수 없음(그래서 positive)."
+    },
+    {
+      "id": "UBQ-L3-DIAG-001",
+      "vendor": "유비쿼스_L3",
+      "category": "diagnostics",
+      "polarity": "positive",
+      "query": "유비쿼스 E6100에서 PWR(A) LED가 주황색으로 켜져 있으면 어떤 상태이며, FAN LED가 꺼져 있으면 무슨 의미인가?",
+      "expected_path_contains": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide",
+      "expected_keywords": [
+        "PWR",
+        "주황",
+        "Fail",
+        "FAN",
+        "정지"
+      ],
+      "expected_answer": "PWR(A) 주황 점등은 파워A가 실장되었으나 Fail이거나 전원 off 상태를 의미한다(미실장이면 소등). FAN LED 소등은 FAN 강제 정지 또는 동작 정지 상태를 의미한다.",
+      "evidence": [
+        {
+          "file": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide.md",
+          "line": 157,
+          "text": "|PWR(A)/(B)|ON (녹색)/ON (주황)/OFF|파워A(B)정상운영/파워A(B)실장이나Fail또는 전원off상태/파워 미실장|",
+          "quote_type": "summary"
+        },
+        {
+          "file": "유비쿼스_L3/E61xx/E6100_HW_Installtion Guide.md",
+          "line": 159,
+          "text": "|FAN|ON (녹색)/OFF|FAN NORMAL상태/FAN강제 정지/동작 정지 상태|",
+          "quote_type": "summary"
+        }
+      ],
+      "notes": "LED 표는 동작/기능이 <br> 로 다중 매핑된 단일 셀. 색상↔의미를 순서대로 정렬해 읽어야 하며, 잘못 정렬하면 '주황=정상' 같은 반대 답이 나옴. 같은 파일 79행의 LINK/ACT LED 표(주황=데이터 Threshold 상태)와 혼동하지 않는지도 확인."
+    },
+    {
+      "id": "UBQ-L3-NEG-001",
+      "vendor": "유비쿼스_L3",
+      "category": "negative",
+      "polarity": "negative",
+      "negative_flavor": "sibling_model_leak",
+      "query": "유비쿼스 P8624XG 스위치의 최대 소비 전력과 무게는?",
+      "expected_behavior": "abstain",
+      "expected_answer": "P8624XG 설치 가이드에는 소비 전력·무게 사양표가 없어 확인할 수 없습니다.",
+      "absence_evidence": {
+        "command": "grep -rn '소비 전력\\|무게\\|동작 온도' 유비쿼스_L3/P8624",
+        "match_count": 0,
+        "note": "P8624XG_HW_Installation Guide.md 는 구성요소/전면도/LED/설치/콘솔/IP설정 섹션만 포함. 사양표 섹션 부재. 반면 형제 모델 E6100(350,354행)·E6124(410,414행)에는 존재."
+      },
+      "fail_if_answer_contains": [
+        "155",
+        "9.1",
+        "7.6",
+        "Watt"
+      ],
+      "must_not_cite_path_contains": [
+        "E61xx",
+        "다산_"
+      ],
+      "wrong_answer_example": "P8624XG의 최대 소비 전력은 155 Watt이고 무게는 9.1kg입니다.",
+      "notes": "형제 모델 정보 전이 트랩. 같은 유비쿼스_L3 디렉터리 안의 E6100/E6124 사양표가 매우 높은 유사도로 검색되며 '유비쿼스 L3 스위치 사양'으로는 문맥이 맞아 보임. 모델명 단위 귀속을 검증하는 케이스 — 벤더 필터만으로는 못 막고 모델 단위 메타데이터가 필요."
+    },
+    {
+      "id": "UBQ-OLT-SPEC-001",
+      "vendor": "유비쿼스_OLT",
+      "category": "spec_value",
+      "polarity": "positive",
+      "query": "유비쿼스 U9500H OLT의 DC 입력 전압 범위와 최대 소비 전력은?",
+      "expected_path_contains": "유비쿼스_OLT/U9500H_HW_installation Guide",
+      "expected_keywords": [
+        "U9500H",
+        "DC",
+        "-44V",
+        "-56V",
+        "1550"
+      ],
+      "expected_answer": "DC -44V ~ -56V, 최대 소비 전력 Max. 1550W.",
+      "evidence": [
+        {
+          "file": "유비쿼스_OLT/U9500H_HW_installation Guide.md",
+          "line": 549,
+          "text": "DC 전원을 사용하는 U9500H 에 공급되어야 하는 전원의 규격은 다음과 같습니다. - 전압 : DC –44V ~ -56V - 소비 전력 : Max. 1550(W)",
+          "quote_type": "summary"
+        },
+        {
+          "file": "유비쿼스_OLT/U9500H_HW_installation Guide.md",
+          "line": 708,
+          "text": "|소비 전력|• Max. 1550(W)|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "산문(549행)과 사양표(708행)에 중복 기재. 표 청크 검색 여부 확인. 원문 전압 기호가 en-dash(–)와 hyphen(-) 혼용이라 정규화 확인 포인트. 형제 모델 U9532H(694W/768W), U9024A-10G(149/164W)와 값이 크게 달라 모델 혼동 시 즉시 드러남."
+    },
+    {
+      "id": "UBQ-OLT-CMD-001",
+      "vendor": "유비쿼스_OLT",
+      "category": "command_syntax",
+      "polarity": "positive",
+      "query": "유비쿼스 U95xxH OLT의 ONU 등록 모드에서 Auto와 Manual의 동작 차이는?",
+      "expected_path_contains": "유비쿼스_OLT/U95xxH_SW_User Guide/part-028",
+      "expected_keywords": [
+        "Auto",
+        "Manual",
+        "discovery",
+        "topology",
+        "block-list",
+        "onu-map"
+      ],
+      "expected_answer": "Auto는 discovery로 발견된 신규 ONU가 등록된 Type이고(onu-map에 존재) 최대 등록 가능 개수를 넘지 않으면 topology에 자동 등록하고 default service-policy의 SLA/BRIDGE/IGMP-MAP을 할당한다. Manual은 topology에 없는 신규 ONU를 등록하지 않고 block-list로 보내 서비스를 차단하므로, 관리자가 미리 topology에 ONU를 등록해야 한다.",
+      "evidence": [
+        {
+          "file": "유비쿼스_OLT/U95xxH_SW_User Guide/part-028.md",
+          "line": 33,
+          "text": "Auto : PON chip 에서 주기적인 discovery 를 통해 신규 ONU 의 등록 여부를 시스템에 알리고 ... 자동으로 topology 에 등록한다. 또한 default service-policy 에서 할당한 SLA/BRIDGE/IGMP-MAP 을 할당한다.",
+          "quote_type": "summary"
+        },
+        {
+          "file": "유비쿼스_OLT/U95xxH_SW_User Guide/part-028.md",
+          "line": 45,
+          "text": "Manual : ... 추가적인 등록 절차를 수행하지 않고 block-list 에 ONU 를 보내 더 이상 서비스를 할 수 없게 한다.",
+          "quote_type": "summary"
+        }
+      ],
+      "notes": "비교형 질문 - Auto/Manual 두 청크를 모두 회수해야 완전한 답. 한쪽만 회수하면 절반짜리 답변이 됨. 동일 내용이 U9024A-10G_SW_User Guide/part-028.md:448,450 및 U95xxH part-030:507,509 에 중복 존재하므로 모델 귀속(U95xxH)까지 맞는지 확인. 백틱 분절 표기 케이스이기도 함."
+    },
+    {
+      "id": "UBQ-OLT-DIAG-001",
+      "vendor": "유비쿼스_OLT",
+      "category": "diagnostics",
+      "polarity": "positive",
+      "query": "유비쿼스 U95xxH OLT에서 특정 ONU의 RSSI와 광 특성치를 확인하는 명령은?",
+      "expected_path_contains": "유비쿼스_OLT/U95xxH_SW_User Guide/part-029",
+      "expected_keywords": [
+        "show pon olt ddmi",
+        "RSSI",
+        "onu-id",
+        "Privileged"
+      ],
+      "expected_answer": "Privileged 모드에서 `show pon olt ddmi <IF_NAME> <onu-id|idle>` 을 사용한다.",
+      "evidence": [
+        {
+          "file": "유비쿼스_OLT/U95xxH_SW_User Guide/part-029.md",
+          "line": 415,
+          "text": "|Show pon olt ddmi IF_NAME <onu-id | idle>|특정ONU나Idle time의RSSI와 광 특성치를 확인한다.|Privileged|",
+          "quote_type": "verbatim"
+        }
+      ],
+      "notes": "U9024A-10G_SW_User Guide/part-030.md:240 에는 동일 명령이 'ddm'(i 없음)으로 표기됨 — 모델 간 철자 차이. 어느 모델을 물었는지에 따라 ddmi/ddm 이 갈리므로 모델 귀속 검증 포함. 원문 대문자 'Show' 표기라 대소문자 정규화도 필요."
+    },
+    {
+      "id": "UBQ-OLT-NEG-001",
+      "vendor": "유비쿼스_OLT",
+      "category": "negative",
+      "polarity": "negative",
+      "negative_flavor": "out_of_corpus_spec",
+      "query": "유비쿼스 U9500H OLT의 MTBF(평균 고장 간격)는 몇 시간인가?",
+      "expected_behavior": "abstain",
+      "expected_answer": "제공된 매뉴얼에서 MTBF 정보를 찾을 수 없습니다.",
+      "absence_evidence": {
+        "command": "grep -rin 'MTBF' --include='*.md' input_optimized/가입자망장비_manual",
+        "match_count": 0,
+        "note": "코퍼스 579개 문서 전체에 MTBF 언급 0건."
+      },
+      "fail_if_answer_contains": [
+        "시간",
+        "hours",
+        "만 시간",
+        "MTBF는 약"
+      ],
+      "wrong_answer_example": "U9500H의 MTBF는 약 200,000시간입니다.",
+      "notes": "코퍼스 전체 부재 케이스. U9500H 사양표 청크(동작 온도/소비 전력/무게)가 높은 유사도로 검색되지만 MTBF 값은 없음. '관련 문서를 찾음 = 답이 있음'으로 처리하는 구현이 수치를 지어내며 실패. 6개 negative 중 유일하게 어떤 벤더 문서로도 답할 수 없는 절대 부재 케이스."
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "version": "0.1.0",
+  "description": "가입자망장비 매뉴얼 RAG 검증 데이터셋 - 샘플 4건 (정답 2, 오답 2). 확장 전 포맷 확정용.",
+  "corpus_root": "input_optimized/가입자망장비_manual",
+  "categories": {
+    "manual_spec": 1,
+    "manual_command": 1,
+    "manual_unanswerable": 1,
+    "manual_cross_vendor": 1
+  },
+  "pass_criteria": {
+    "hit_at_k": 5,
+    "require_keyword_match": true,
+    "negative_requires_abstain": true
+  },
+  "test_cases": [
+    {
+      "id": "MAN-POS-001",
+      "category": "manual_spec",
+      "polarity": "positive",
+      "query": "유비쿼스 U9500H OLT의 DC 입력 전압 범위와 최대 소비 전력은?",
+      "expected_path_contains": "유비쿼스_OLT/U9500H_HW_installation Guide",
+      "expected_keywords": ["U9500H", "DC", "-44V", "-56V", "1550"],
+      "expected_answer": "DC -44V ~ -56V, 최대 소비 전력 Max. 1550W",
+      "evidence": [
+        {
+          "file": "유비쿼스_OLT/U9500H_HW_installation Guide.md",
+          "line": 549,
+          "text": "DC 전원을 사용하는 U9500H 에 공급되어야 하는 전원의 규격은 다음과 같습니다. - 전압 : DC –44V ~ -56V - 소비 전력 : Max. 1550(W)"
+        },
+        {
+          "file": "유비쿼스_OLT/U9500H_HW_installation Guide.md",
+          "line": 708,
+          "text": "|소비 전력|• Max. 1550(W)|"
+        }
+      ],
+      "notes": "단일 문서 내 산문(549행) + 사양표(708행) 두 곳에 중복 기재. 표 형식 청크가 검색되는지 확인하는 케이스. 원문 전압 기호가 en-dash(–)와 hyphen(-)이 섞여 있어 정규화 여부도 함께 검증됨."
+    },
+    {
+      "id": "MAN-POS-002",
+      "category": "manual_command",
+      "polarity": "positive",
+      "query": "다산 V29xxGB 스위치에서 VLAN 2를 생성하고 2번 포트를 untagged로 할당한 뒤 PVID를 지정하는 명령어는?",
+      "expected_path_contains": "다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-022",
+      "expected_keywords": ["vlan create", "vlan add", "untagged", "vlan pvid", "bridge"],
+      "expected_answer": "bridge 설정 모드에서 `vlan create 2` → `vlan add 2 2 untagged` → `vlan pvid 2 2` 순서로 입력한다.",
+      "evidence": [
+        {
+          "file": "다산_L2/[V29xxGB]_UMNnos1.01_KO_200423_V1/part-022.md",
+          "line": 263,
+          "text": "SWITCH(bridge)# vlan create2 / vlan add2 2untagged / vlan pvid2 2 (8.2.12 설정 예제 1: 포트 기반 VLAN 설정)"
+        }
+      ],
+      "notes": "PDF 추출 과정에서 공백이 소실되어 원문이 'vlan create2', 'vlan add2 2untagged' 로 저장됨. 사용자는 정상 표기('vlan create 2')로 질의하므로 토큰 정규화/부분일치가 동작하지 않으면 BM25가 miss 남. 청크 경계 검증 포인트이기도 함(명령 3줄이 한 코드블록에 있어야 완전한 답변 가능)."
+    },
+    {
+      "id": "MAN-NEG-001",
+      "category": "manual_unanswerable",
+      "polarity": "negative",
+      "negative_type": "out_of_corpus_spec",
+      "query": "유비쿼스 U9500H OLT의 MTBF(평균 고장 간격)는 몇 시간인가?",
+      "expected_behavior": "abstain",
+      "expected_answer": "제공된 매뉴얼에서 해당 정보를 찾을 수 없습니다.",
+      "absence_evidence": {
+        "command": "grep -rin 'MTBF' --include='*.md' input_optimized/가입자망장비_manual",
+        "match_count": 0
+      },
+      "fail_if_answer_contains": ["시간", "hours", "만 시간", "MTBF는 약"],
+      "wrong_answer_example": "U9500H의 MTBF는 약 200,000시간입니다.",
+      "notes": "존재하지 않는 사양을 묻는 환각 트랩. U9500H 사양표 청크(동작 온도/소비 전력/무게)는 높은 유사도로 검색되지만 MTBF 값은 없음. '관련 문서를 찾았다 = 답이 있다'로 처리하는 구현에서 수치를 지어내며 실패함. 검색 결과가 있어도 근거 부재 시 유보하는지 확인."
+    },
+    {
+      "id": "MAN-NEG-002",
+      "category": "manual_cross_vendor",
+      "polarity": "negative",
+      "negative_type": "false_premise_cross_vendor",
+      "query": "유비쿼스 E57xxRC 스위치에서 vlan create 명령으로 VLAN을 생성하는 방법은?",
+      "expected_behavior": "reject_premise",
+      "expected_answer": "유비쿼스 E57xxRC에는 'vlan create' 명령이 없습니다. 해당 문법은 다산 NOS 계열이며, E57xxRC는 `Switch(config)# vlan <vlan-id>` 형식을 사용합니다.",
+      "absence_evidence": {
+        "command": "grep -rn 'vlan create' --include='*.md' 유비쿼스_L2 유비쿼스_L3 유비쿼스_OLT",
+        "match_count": 0,
+        "correct_syntax_ref": {
+          "file": "유비쿼스_L2/E57xxRC_SW_User Guide__sec-04.md",
+          "line": 83,
+          "text": "Switch(config)# vlan  1000"
+        }
+      },
+      "must_not_cite_path_contains": ["다산_"],
+      "fail_if_answer_contains": ["SWITCH(bridge)#", "vlan add", "vlan pvid"],
+      "wrong_answer_example": "SWITCH(bridge)# vlan create 100 명령으로 생성한 뒤 vlan add 100 1 untagged 로 포트를 할당합니다.",
+      "notes": "벤더 교차 오염 트랩. 질의에 '유비쿼스'가 있으나 'vlan create'는 다산 문서에만 존재하므로, 벤더 메타데이터 필터 없이 키워드 유사도만 쓰면 다산_L2 청크를 근거로 답하게 됨. 잘못된 전제를 지적하고 벤더를 교정하는지 확인."
+    }
+  ]
+}
